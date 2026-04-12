@@ -35,6 +35,20 @@
         }
         .login-box input:focus { outline: none; border-color: #8B1A2B; }
 
+        /* Tabs */
+        .admin-tabs {
+            display: flex; gap: 0; margin-bottom: 25px; border-bottom: 3px solid #8B1A2B;
+        }
+        .admin-tab {
+            padding: 12px 30px; background: #e8ddd4; border: none; border-radius: 10px 10px 0 0;
+            font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
+            cursor: pointer; color: #666; transition: all 0.2s;
+        }
+        .admin-tab.active { background: #8B1A2B; color: white; }
+        .admin-tab:hover:not(.active) { background: #d4c5b9; }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
         /* Buttons */
         .btn {
             display: inline-block; padding: 10px 24px; border-radius: 8px; border: none;
@@ -49,29 +63,32 @@
         .btn-secondary:hover { background: #5a6268; }
         .btn-success { background: #28a745; color: white; }
         .btn-success:hover { background: #218838; }
+        .btn-warning { background: #ffc107; color: #333; }
+        .btn-warning:hover { background: #e0a800; }
         .btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-        /* Event list */
+        /* Item list */
         .section-title {
             font-size: 1.3rem; color: #8B1A2B; margin-bottom: 20px;
             padding-bottom: 10px; border-bottom: 2px solid #f0e6de;
         }
-        .event-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
-        .event-item {
+        .item-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .item-card {
             background: white; border-radius: 10px; padding: 15px 20px;
             display: flex; align-items: center; gap: 15px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
         }
-        .event-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
-        .event-item-info { flex: 1; }
-        .event-item-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
-        .event-item-info span { font-size: 0.8rem; color: #888; }
-        .event-item .btn { font-size: 0.8rem; padding: 6px 14px; }
+        .item-card img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .item-card .item-info { flex: 1; }
+        .item-card .item-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+        .item-card .item-info span { font-size: 0.8rem; color: #888; }
+        .item-card .item-actions { display: flex; gap: 6px; }
+        .item-card .btn { font-size: 0.8rem; padding: 6px 14px; }
 
-        /* Add form */
+        /* Form */
         .add-form {
             background: white; border-radius: 12px; padding: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 30px;
         }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; font-weight: 500; margin-bottom: 6px; color: #555; }
@@ -80,15 +97,11 @@
             font-size: 0.95rem; font-family: 'Poppins', sans-serif;
         }
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #8B1A2B; }
-        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-group textarea { min-height: 120px; resize: vertical; }
         .form-group small { color: #888; font-size: 0.8rem; }
+        .image-preview { margin-top: 10px; max-width: 200px; border-radius: 8px; display: none; }
 
-        .image-preview {
-            margin-top: 10px; max-width: 200px; border-radius: 8px;
-            display: none;
-        }
-
-        /* Status messages */
+        /* Status */
         .status {
             padding: 12px 20px; border-radius: 8px; margin-bottom: 20px;
             font-size: 0.9rem; display: none;
@@ -97,26 +110,30 @@
         .status.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
         .status.info { display: block; background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
 
-        .actions-bar { display: flex; gap: 10px; margin-bottom: 25px; }
-        .logout-btn { font-size: 0.85rem; padding: 6px 16px; }
-
-        /* Loading */
+        .actions-bar { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
         .loading { text-align: center; padding: 40px; color: #888; }
+
+        /* Move buttons */
+        .btn-move { background: #e8ddd4; color: #555; padding: 4px 10px; font-size: 0.75rem; }
+        .btn-move:hover { background: #d4c5b9; }
     </style>
 </head>
 <body>
 
 <div class="admin-header">
-    <h1>SED'OCC - Administration des Evenements</h1>
-    <a href="index.html">Retour au site</a>
+    <h1>SED'OCC - Administration</h1>
+    <div>
+        <a href="index.html" style="margin-right:15px;">Voir le site</a>
+        <a href="#" onclick="logout(); return false;">Deconnexion</a>
+    </div>
 </div>
 
 <!-- LOGIN SCREEN -->
 <div id="login-screen">
     <div class="login-box">
         <h2>Connexion</h2>
-        <p>Entrez le mot de passe d'administration pour gerer les evenements du site.</p>
-        <input type="password" id="token-input" placeholder="Mot de passe">
+        <p>Entrez le mot de passe d'administration pour gerer le site.</p>
+        <input type="password" id="token-input" placeholder="Mot de passe" onkeypress="if(event.key==='Enter')login()">
         <br>
         <button class="btn btn-primary" onclick="login()">Se connecter</button>
         <div id="login-error" class="status" style="margin-top:15px;"></div>
@@ -129,45 +146,132 @@
 
         <div id="status-msg" class="status"></div>
 
-        <div class="actions-bar">
-            <button class="btn btn-success" onclick="showAddForm()">+ Ajouter un evenement</button>
-            <button class="btn btn-secondary logout-btn" onclick="logout()">Deconnexion</button>
+        <!-- TABS -->
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('evenements')">Evenements</button>
+            <button class="admin-tab" onclick="switchTab('equipe')">Equipe</button>
+            <button class="admin-tab" onclick="switchTab('actualites')">Actualites</button>
         </div>
 
-        <!-- ADD/EDIT FORM (hidden by default) -->
-        <div id="add-form-container" style="display:none; margin-bottom:30px;">
-            <div class="add-form">
-                <h2 class="section-title" id="form-title">Ajouter un evenement</h2>
-                <div class="form-group">
-                    <label>Titre de l'evenement *</label>
-                    <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
+        <!-- ==================== EVENEMENTS TAB ==================== -->
+        <div id="tab-evenements" class="tab-panel active">
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showEventForm()">+ Ajouter un evenement</button>
+            </div>
+
+            <div id="event-form-container" style="display:none;">
+                <div class="add-form">
+                    <h2 class="section-title">Ajouter un evenement</h2>
+                    <div class="form-group">
+                        <label>Titre *</label>
+                        <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="text" id="ev-date" placeholder="Ex: 15 mars 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" id="ev-image" accept="image/*" onchange="previewImg(this, 'ev-image-preview')">
+                        <img id="ev-image-preview" class="image-preview">
+                        <small>Formats : JPG, PNG. Taille recommandee : 800x600px</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Description (optionnel)</label>
+                        <textarea id="ev-content" placeholder="Decrivez l'evenement..."></textarea>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-primary" id="ev-save-btn" onclick="saveEvent()">Enregistrer</button>
+                        <button class="btn btn-secondary" onclick="hideEventForm()">Annuler</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Date *</label>
-                    <input type="text" id="ev-date" placeholder="Ex: 15 mars 2026">
-                </div>
-                <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" id="ev-image" accept="image/*" onchange="previewImage(this)">
-                    <img id="image-preview" class="image-preview">
-                    <small>Formats acceptes : JPG, PNG. Taille recommandee : 800x600px</small>
-                </div>
-                <div class="form-group">
-                    <label>Description (optionnel)</label>
-                    <textarea id="ev-content" placeholder="Decrivez l'evenement ici... Vous pouvez utiliser du HTML simple comme <strong>gras</strong>, <em>italique</em>, <a href='...'>liens</a>"></textarea>
-                    <small>Laissez vide si l'evenement n'a pas de description detaillee.</small>
-                </div>
-                <div style="display:flex; gap:10px;">
-                    <button class="btn btn-primary" id="save-btn" onclick="saveEvent()">Enregistrer</button>
-                    <button class="btn btn-secondary" onclick="hideAddForm()">Annuler</button>
-                </div>
+            </div>
+
+            <h2 class="section-title">Evenements existants</h2>
+            <div id="event-list" class="item-list">
+                <div class="loading">Chargement...</div>
             </div>
         </div>
 
-        <!-- EVENT LIST -->
-        <h2 class="section-title">Evenements existants</h2>
-        <div id="event-list" class="event-list">
-            <div class="loading">Chargement des evenements...</div>
+        <!-- ==================== EQUIPE TAB ==================== -->
+        <div id="tab-equipe" class="tab-panel">
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showMemberForm()">+ Ajouter un membre</button>
+            </div>
+
+            <div id="member-form-container" style="display:none;">
+                <div class="add-form">
+                    <h2 class="section-title" id="member-form-title">Ajouter un membre</h2>
+                    <div class="form-group">
+                        <label>Nom complet *</label>
+                        <input type="text" id="mb-name" placeholder="Ex: Marie DUPONT">
+                    </div>
+                    <div class="form-group">
+                        <label>Role *</label>
+                        <input type="text" id="mb-role" placeholder="Ex: Benevole, Correspondante Toulouse...">
+                    </div>
+                    <div class="form-group">
+                        <label>Mission / Description</label>
+                        <input type="text" id="mb-mission" placeholder="Ex: Communication digitale & reseaux sociaux">
+                    </div>
+                    <div class="form-group">
+                        <label>Citation (optionnel)</label>
+                        <input type="text" id="mb-quote" placeholder="Ex: Mon engagement est ne d'une conviction...">
+                    </div>
+                    <div class="form-group">
+                        <label>Email de contact (optionnel)</label>
+                        <input type="email" id="mb-email" placeholder="Ex: sedocc31@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Photo</label>
+                        <input type="file" id="mb-photo" accept="image/*" onchange="previewImg(this, 'mb-photo-preview')">
+                        <img id="mb-photo-preview" class="image-preview">
+                        <small>Photo de profil. Format : JPG ou PNG.</small>
+                    </div>
+                    <input type="hidden" id="mb-edit-index" value="-1">
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-primary" id="mb-save-btn" onclick="saveMember()">Enregistrer</button>
+                        <button class="btn btn-secondary" onclick="hideMemberForm()">Annuler</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Membres de l'equipe</h2>
+            <div id="member-list" class="item-list">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- ==================== ACTUALITES TAB ==================== -->
+        <div id="tab-actualites" class="tab-panel">
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showActuForm()">+ Ajouter une actualite</button>
+            </div>
+
+            <div id="actu-form-container" style="display:none;">
+                <div class="add-form">
+                    <h2 class="section-title" id="actu-form-title">Ajouter une actualite</h2>
+                    <div class="form-group">
+                        <label>Titre *</label>
+                        <input type="text" id="ac-title" placeholder="Ex: Nouvelle etude sur le SEDh">
+                    </div>
+                    <div class="form-group">
+                        <label>Contenu *</label>
+                        <textarea id="ac-content" style="min-height:200px;" placeholder="Redigez l'actualite ici... Vous pouvez utiliser du HTML : <p>paragraphe</p>, <strong>gras</strong>, <a href='url'>lien</a>, <ul><li>liste</li></ul>"></textarea>
+                        <small>Utilisez des balises HTML pour la mise en forme. Chaque paragraphe doit etre entre &lt;p&gt; et &lt;/p&gt;.</small>
+                    </div>
+                    <input type="hidden" id="ac-edit-index" value="-1">
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-primary" id="ac-save-btn" onclick="saveActu()">Enregistrer</button>
+                        <button class="btn btn-secondary" onclick="hideActuForm()">Annuler</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Actualites existantes</h2>
+            <div id="actu-list" class="item-list">
+                <div class="loading">Chargement...</div>
+            </div>
         </div>
 
     </div>
@@ -175,49 +279,47 @@
 
 <script>
 const REPO = 'Therese-Borin-Pepe/sedocc-site';
-const JSON_PATH = 'data/evenements.json';
+const EVENTS_PATH = 'data/evenements.json';
+const EQUIPE_PATH = 'data/equipe.json';
+const ACTUS_PATH = 'data/actualites.json';
 let githubToken = '';
-let evenements = [];
-let jsonSha = '';
+let evenements = [], equipe = [], actualites = [];
+let eventsSha = '', equipeSha = '', actusSha = '';
 
-// Check saved token on load
+// Auto-login
 (function() {
     const saved = localStorage.getItem('sedocc_admin_token');
-    if (saved) {
-        githubToken = saved;
-        verifyToken();
-    }
+    if (saved) { githubToken = saved; verifyToken(); }
 })();
 
+// ===== AUTH =====
 async function login() {
-    const input = document.getElementById('token-input');
-    githubToken = input.value.trim();
+    githubToken = document.getElementById('token-input').value.trim();
     if (!githubToken) return;
     await verifyToken();
 }
 
 async function verifyToken() {
     try {
-        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${EVENTS_PATH}`, {
             headers: { 'Authorization': `token ${githubToken}` }
         });
         if (res.ok) {
             localStorage.setItem('sedocc_admin_token', githubToken);
             document.getElementById('login-screen').style.display = 'none';
             document.getElementById('admin-screen').style.display = 'block';
-            await loadEvents();
+            await Promise.all([loadEvents(), loadEquipe(), loadActus()]);
         } else {
-            showLoginError('Mot de passe incorrect ou acces refuse.');
+            showLoginError('Mot de passe incorrect.');
         }
     } catch (e) {
-        showLoginError('Erreur de connexion. Verifiez votre connexion internet.');
+        showLoginError('Erreur de connexion.');
     }
 }
 
 function showLoginError(msg) {
     const el = document.getElementById('login-error');
-    el.className = 'status error';
-    el.textContent = msg;
+    el.className = 'status error'; el.textContent = msg;
 }
 
 function logout() {
@@ -229,177 +331,54 @@ function logout() {
     document.getElementById('login-error').className = 'status';
 }
 
-async function loadEvents() {
+// ===== TABS =====
+function switchTab(tab) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// ===== GITHUB HELPERS =====
+async function loadJsonFromGithub(path) {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+        headers: { 'Authorization': `token ${githubToken}` }
+    });
+    const data = await res.json();
+    const content = atob(data.content.replace(/\n/g, ''));
+    const parsed = JSON.parse(new TextDecoder().decode(Uint8Array.from(content, c => c.charCodeAt(0))));
+    return { data: parsed, sha: data.sha };
+}
+
+async function saveJsonToGithub(path, data, sha, message) {
+    const jsonContent = JSON.stringify(data, null, 2);
+    const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message, content: base64, sha })
+    });
+    if (!res.ok) { const err = await res.json(); throw new Error(err.message); }
+    return (await res.json()).content.sha;
+}
+
+async function uploadImage(path, file) {
+    const base64 = await fileToBase64(file);
+    // Check if file exists first
+    let sha = undefined;
     try {
-        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+        const check = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
             headers: { 'Authorization': `token ${githubToken}` }
         });
-        const data = await res.json();
-        jsonSha = data.sha;
-        const content = atob(data.content.replace(/\n/g, ''));
-        evenements = JSON.parse(new TextDecoder().decode(
-            Uint8Array.from(content, c => c.charCodeAt(0))
-        ));
-        renderEventList();
-    } catch (e) {
-        document.getElementById('event-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
-    }
-}
-
-function renderEventList() {
-    const list = document.getElementById('event-list');
-    if (evenements.length === 0) {
-        list.innerHTML = '<p style="color:#888;">Aucun evenement pour le moment.</p>';
-        return;
-    }
-    list.innerHTML = evenements.map((ev, i) => `
-        <div class="event-item">
-            <img src="https://raw.githubusercontent.com/${REPO}/main/${ev.image}" alt="${ev.title}"
-                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect fill=%22%23ddd%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2210%22>Image</text></svg>'">
-            <div class="event-item-info">
-                <h3>${ev.title}</h3>
-                <span>${ev.date}</span>
-            </div>
-            <button class="btn btn-danger" onclick="deleteEvent(${i})">Supprimer</button>
-        </div>
-    `).join('');
-}
-
-function showAddForm() {
-    document.getElementById('add-form-container').style.display = 'block';
-    document.getElementById('ev-title').value = '';
-    document.getElementById('ev-date').value = '';
-    document.getElementById('ev-image').value = '';
-    document.getElementById('ev-content').value = '';
-    document.getElementById('image-preview').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function hideAddForm() {
-    document.getElementById('add-form-container').style.display = 'none';
-}
-
-function previewImage(input) {
-    const preview = document.getElementById('image-preview');
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
-async function saveEvent() {
-    const title = document.getElementById('ev-title').value.trim();
-    const date = document.getElementById('ev-date').value.trim();
-    const content = document.getElementById('ev-content').value.trim();
-    const imageInput = document.getElementById('ev-image');
-
-    if (!title || !date) {
-        showStatus('Veuillez remplir le titre et la date.', 'error');
-        return;
-    }
-
-    const saveBtn = document.getElementById('save-btn');
-    saveBtn.disabled = true;
-    saveBtn.textContent = 'Enregistrement...';
-
-    try {
-        // Generate ID from title
-        const id = title.toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-|-$/g, '');
-
-        let imagePath = 'images/evenements/ateliers.png'; // default image
-
-        // Upload image if provided
-        if (imageInput.files && imageInput.files[0]) {
-            const file = imageInput.files[0];
-            const ext = file.name.split('.').pop().toLowerCase();
-            const imgFileName = `${id}.${ext}`;
-            imagePath = `images/evenements/${imgFileName}`;
-
-            const base64 = await fileToBase64(file);
-            await fetch(`https://api.github.com/repos/${REPO}/contents/${imagePath}`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `token ${githubToken}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: `Ajout image: ${imgFileName}`,
-                    content: base64
-                })
-            });
-        }
-
-        // Wrap plain text in paragraphs if no HTML tags
-        let finalContent = content;
-        if (content && !content.includes('<')) {
-            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
-        }
-
-        // Add event to beginning of array
-        const newEvent = { id, title, date, image: imagePath, content: finalContent };
-        evenements.unshift(newEvent);
-
-        // Save to GitHub
-        await saveToGithub(`Ajout evenement: ${title}`);
-
-        showStatus(`Evenement "${title}" ajoute avec succes ! Le site sera mis a jour dans quelques secondes.`, 'success');
-        hideAddForm();
-        renderEventList();
-    } catch (e) {
-        showStatus('Erreur: ' + e.message, 'error');
-    }
-
-    saveBtn.disabled = false;
-    saveBtn.textContent = 'Enregistrer';
-}
-
-async function deleteEvent(index) {
-    const ev = evenements[index];
-    if (!confirm(`Voulez-vous vraiment supprimer "${ev.title}" ?`)) return;
-
-    evenements.splice(index, 1);
-
-    try {
-        await saveToGithub(`Suppression evenement: ${ev.title}`);
-        showStatus(`Evenement "${ev.title}" supprime. Le site sera mis a jour dans quelques secondes.`, 'success');
-        renderEventList();
-    } catch (e) {
-        showStatus('Erreur: ' + e.message, 'error');
-        await loadEvents(); // reload in case of error
-    }
-}
-
-async function saveToGithub(commitMessage) {
-    const jsonContent = JSON.stringify(evenements, null, 2);
-    const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
-
-    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+        if (check.ok) { sha = (await check.json()).sha; }
+    } catch(e) {}
+    const body = { message: `Upload image: ${path.split('/').pop()}`, content: base64 };
+    if (sha) body.sha = sha;
+    await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
         method: 'PUT',
-        headers: {
-            'Authorization': `token ${githubToken}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            message: commitMessage,
-            content: base64,
-            sha: jsonSha
-        })
+        headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
     });
-
-    if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || 'Erreur GitHub');
-    }
-
-    const result = await res.json();
-    jsonSha = result.content.sha;
 }
 
 function fileToBase64(file) {
@@ -411,14 +390,316 @@ function fileToBase64(file) {
     });
 }
 
+function previewImg(input, previewId) {
+    const preview = document.getElementById(previewId);
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function generateId(text) {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 function showStatus(msg, type) {
     const el = document.getElementById('status-msg');
-    el.className = `status ${type}`;
-    el.textContent = msg;
+    el.className = `status ${type}`; el.textContent = msg;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (type === 'success') {
-        setTimeout(() => { el.className = 'status'; }, 8000);
+    if (type === 'success') setTimeout(() => { el.className = 'status'; }, 8000);
+}
+
+// ===== EVENEMENTS =====
+async function loadEvents() {
+    try {
+        const result = await loadJsonFromGithub(EVENTS_PATH);
+        evenements = result.data; eventsSha = result.sha;
+        renderEventList();
+    } catch (e) {
+        document.getElementById('event-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
     }
+}
+
+function renderEventList() {
+    const list = document.getElementById('event-list');
+    if (!evenements.length) { list.innerHTML = '<p style="color:#888;">Aucun evenement.</p>'; return; }
+    list.innerHTML = evenements.map((ev, i) => `
+        <div class="item-card">
+            <img src="https://raw.githubusercontent.com/${REPO}/main/${ev.image}" alt="${ev.title}"
+                 onerror="this.style.background='#ddd'">
+            <div class="item-info">
+                <h3>${ev.title}</h3>
+                <span>${ev.date}</span>
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-danger" onclick="deleteEvent(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showEventForm() {
+    document.getElementById('event-form-container').style.display = 'block';
+    ['ev-title','ev-date','ev-content'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ev-image').value = '';
+    document.getElementById('ev-image-preview').style.display = 'none';
+}
+function hideEventForm() { document.getElementById('event-form-container').style.display = 'none'; }
+
+async function saveEvent() {
+    const title = document.getElementById('ev-title').value.trim();
+    const date = document.getElementById('ev-date').value.trim();
+    const content = document.getElementById('ev-content').value.trim();
+    const imageInput = document.getElementById('ev-image');
+    if (!title || !date) { showStatus('Remplissez le titre et la date.', 'error'); return; }
+
+    const btn = document.getElementById('ev-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(title);
+        let imagePath = 'images/evenements/ateliers.png';
+        if (imageInput.files && imageInput.files[0]) {
+            const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
+            imagePath = `images/evenements/${id}.${ext}`;
+            await uploadImage(imagePath, imageInput.files[0]);
+        }
+        let finalContent = content;
+        if (content && !content.includes('<')) {
+            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
+        }
+        evenements.unshift({ id, title, date, image: imagePath, content: finalContent });
+        eventsSha = await saveJsonToGithub(EVENTS_PATH, evenements, eventsSha, `Ajout evenement: ${title}`);
+        showStatus(`Evenement "${title}" ajoute ! Mise a jour dans quelques secondes.`, 'success');
+        hideEventForm(); renderEventList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deleteEvent(index) {
+    if (!confirm(`Supprimer "${evenements[index].title}" ?`)) return;
+    const title = evenements[index].title;
+    evenements.splice(index, 1);
+    try {
+        eventsSha = await saveJsonToGithub(EVENTS_PATH, evenements, eventsSha, `Suppression: ${title}`);
+        showStatus(`"${title}" supprime.`, 'success'); renderEventList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEvents(); }
+}
+
+// ===== EQUIPE =====
+async function loadEquipe() {
+    try {
+        const result = await loadJsonFromGithub(EQUIPE_PATH);
+        equipe = result.data; equipeSha = result.sha;
+        renderMemberList();
+    } catch (e) {
+        document.getElementById('member-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
+    }
+}
+
+function renderMemberList() {
+    const list = document.getElementById('member-list');
+    if (!equipe.length) { list.innerHTML = '<p style="color:#888;">Aucun membre.</p>'; return; }
+    list.innerHTML = equipe.map((m, i) => `
+        <div class="item-card">
+            <img src="https://raw.githubusercontent.com/${REPO}/main/${m.photo}" alt="${m.name}"
+                 style="border-radius:50%;" onerror="this.style.background='#ddd'">
+            <div class="item-info">
+                <h3>${m.name}</h3>
+                <span>${m.role}</span>
+            </div>
+            <div class="item-actions">
+                ${i > 0 ? `<button class="btn btn-move" onclick="moveMember(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${i < equipe.length-1 ? `<button class="btn btn-move" onclick="moveMember(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-warning" onclick="editMember(${i})">Modifier</button>
+                <button class="btn btn-danger" onclick="deleteMember(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showMemberForm(editIndex) {
+    document.getElementById('member-form-container').style.display = 'block';
+    document.getElementById('mb-edit-index').value = editIndex !== undefined ? editIndex : -1;
+    document.getElementById('member-form-title').textContent = editIndex !== undefined ? 'Modifier un membre' : 'Ajouter un membre';
+    if (editIndex !== undefined) {
+        const m = equipe[editIndex];
+        document.getElementById('mb-name').value = m.name;
+        document.getElementById('mb-role').value = m.role;
+        document.getElementById('mb-mission').value = m.mission || '';
+        document.getElementById('mb-quote').value = m.quote || '';
+        document.getElementById('mb-email').value = m.email || '';
+        document.getElementById('mb-photo-preview').style.display = 'none';
+    } else {
+        ['mb-name','mb-role','mb-mission','mb-quote','mb-email'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('mb-photo-preview').style.display = 'none';
+    }
+    document.getElementById('mb-photo').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function hideMemberForm() { document.getElementById('member-form-container').style.display = 'none'; }
+function editMember(i) { showMemberForm(i); }
+
+async function saveMember() {
+    const name = document.getElementById('mb-name').value.trim();
+    const role = document.getElementById('mb-role').value.trim();
+    const mission = document.getElementById('mb-mission').value.trim();
+    const quote = document.getElementById('mb-quote').value.trim();
+    const email = document.getElementById('mb-email').value.trim();
+    const photoInput = document.getElementById('mb-photo');
+    const editIndex = parseInt(document.getElementById('mb-edit-index').value);
+
+    if (!name || !role) { showStatus('Remplissez le nom et le role.', 'error'); return; }
+
+    const btn = document.getElementById('mb-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(name);
+        let photoPath = editIndex >= 0 ? equipe[editIndex].photo : 'images/team/default.png';
+
+        if (photoInput.files && photoInput.files[0]) {
+            const ext = photoInput.files[0].name.split('.').pop().toLowerCase();
+            photoPath = `images/team/${id}.${ext}`;
+            await uploadImage(photoPath, photoInput.files[0]);
+        }
+
+        const member = { id, name, role, mission, quote, photo: photoPath, email };
+
+        if (editIndex >= 0) {
+            equipe[editIndex] = member;
+            equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Modification membre: ${name}`);
+            showStatus(`"${name}" modifie.`, 'success');
+        } else {
+            equipe.push(member);
+            equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Ajout membre: ${name}`);
+            showStatus(`"${name}" ajoute a l'equipe !`, 'success');
+        }
+        hideMemberForm(); renderMemberList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deleteMember(index) {
+    if (!confirm(`Supprimer "${equipe[index].name}" de l'equipe ?`)) return;
+    const name = equipe[index].name;
+    equipe.splice(index, 1);
+    try {
+        equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Suppression membre: ${name}`);
+        showStatus(`"${name}" supprime.`, 'success'); renderMemberList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEquipe(); }
+}
+
+async function moveMember(index, direction) {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= equipe.length) return;
+    [equipe[index], equipe[newIndex]] = [equipe[newIndex], equipe[index]];
+    try {
+        equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Reordonnement equipe`);
+        renderMemberList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEquipe(); }
+}
+
+// ===== ACTUALITES =====
+async function loadActus() {
+    try {
+        const result = await loadJsonFromGithub(ACTUS_PATH);
+        actualites = result.data; actusSha = result.sha;
+        renderActuList();
+    } catch (e) {
+        document.getElementById('actu-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
+    }
+}
+
+function renderActuList() {
+    const list = document.getElementById('actu-list');
+    if (!actualites.length) { list.innerHTML = '<p style="color:#888;">Aucune actualite.</p>'; return; }
+    list.innerHTML = actualites.map((a, i) => `
+        <div class="item-card">
+            <div class="item-info" style="flex:1;">
+                <h3>${a.title}</h3>
+                <span>${a.content.replace(/<[^>]*>/g, '').substring(0, 80)}...</span>
+            </div>
+            <div class="item-actions">
+                ${i > 0 ? `<button class="btn btn-move" onclick="moveActu(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${i < actualites.length-1 ? `<button class="btn btn-move" onclick="moveActu(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-warning" onclick="editActu(${i})">Modifier</button>
+                <button class="btn btn-danger" onclick="deleteActu(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showActuForm() {
+    document.getElementById('actu-form-container').style.display = 'block';
+    document.getElementById('ac-edit-index').value = -1;
+    document.getElementById('actu-form-title').textContent = 'Ajouter une actualite';
+    document.getElementById('ac-title').value = '';
+    document.getElementById('ac-content').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function hideActuForm() { document.getElementById('actu-form-container').style.display = 'none'; }
+
+function editActu(i) {
+    document.getElementById('actu-form-container').style.display = 'block';
+    document.getElementById('ac-edit-index').value = i;
+    document.getElementById('actu-form-title').textContent = 'Modifier une actualite';
+    document.getElementById('ac-title').value = actualites[i].title;
+    document.getElementById('ac-content').value = actualites[i].content;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function saveActu() {
+    const title = document.getElementById('ac-title').value.trim();
+    const content = document.getElementById('ac-content').value.trim();
+    const editIndex = parseInt(document.getElementById('ac-edit-index').value);
+    if (!title || !content) { showStatus('Remplissez le titre et le contenu.', 'error'); return; }
+
+    const btn = document.getElementById('ac-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(title);
+        let finalContent = content;
+        if (!content.includes('<')) {
+            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
+        }
+        const actu = { id, title, content: finalContent };
+
+        if (editIndex >= 0) {
+            actualites[editIndex] = actu;
+            actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Modification actualite: ${title}`);
+            showStatus(`"${title}" modifie.`, 'success');
+        } else {
+            actualites.unshift(actu);
+            actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Ajout actualite: ${title}`);
+            showStatus(`"${title}" ajoute !`, 'success');
+        }
+        hideActuForm(); renderActuList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deleteActu(index) {
+    if (!confirm(`Supprimer "${actualites[index].title}" ?`)) return;
+    const title = actualites[index].title;
+    actualites.splice(index, 1);
+    try {
+        actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Suppression actualite: ${title}`);
+        showStatus(`"${title}" supprime.`, 'success'); renderActuList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActus(); }
+}
+
+async function moveActu(index, direction) {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= actualites.length) return;
+    [actualites[index], actualites[newIndex]] = [actualites[newIndex], actualites[index]];
+    try {
+        actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Reordonnement actualites`);
+        renderActuList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActus(); }
 }
 </script>
 

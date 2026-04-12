@@ -1,0 +1,65 @@
+[
+  {
+    "id": "therese-borin",
+    "name": "Thérèse BORIN",
+    "role": "Présidente",
+    "mission": "Coordination générale & représentation de l'association",
+    "quote": "Mon engagement est né d'une conviction : rendre visible l'invisible.",
+    "photo": "images/team/therese.png",
+    "email": ""
+  },
+  {
+    "id": "pascale-fermaud-billard",
+    "name": "Pascale Fermaud BILLARD",
+    "role": "Vice-Présidente",
+    "mission": "Soutien stratégique & relais auprès des partenaires",
+    "quote": "Nous avançons ensemble pour que chaque voix soit entendue.",
+    "photo": "images/team/pascale.png",
+    "email": ""
+  },
+  {
+    "id": "delphine-mir",
+    "name": "Delphine MIR",
+    "role": "Secrétaire",
+    "mission": "Gestion administrative & organisation des événements",
+    "quote": "Mon rôle, c'est de créer du lien entre toutes nos actions.",
+    "photo": "images/team/delphine.png",
+    "email": ""
+  },
+  {
+    "id": "marie-helene-carrier",
+    "name": "Marie-Hélène CARRIER",
+    "role": "Trésorière",
+    "mission": "Gestion financière & suivi des budgets",
+    "quote": "Une association saine passe par une gestion transparente.",
+    "photo": "images/team/marie-helene.png",
+    "email": ""
+  },
+  {
+    "id": "marjorie-armaing",
+    "name": "Marjorie ARMAING",
+    "role": "Community Manager",
+    "mission": "Communication digitale & réseaux sociaux",
+    "quote": "Ma mission : donner de la visibilité à notre cause, chaque jour.",
+    "photo": "images/team/marjorie.png",
+    "email": ""
+  },
+  {
+    "id": "carine-delporte",
+    "name": "Carine DELPORTE",
+    "role": "Correspondante Perpignan",
+    "mission": "Relais précieux pour développer notre présence locale\nPyrénées-Orientales (66) \u2022 Hérault (34)",
+    "quote": "Je vais apporter mon expérience, mon écoute et mon énergie pour soutenir la communauté",
+    "photo": "images/team/carine.png",
+    "email": "sedocc66@gmail.com"
+  },
+  {
+    "id": "verone-delamarche",
+    "name": "Vérone DELAMARCHE",
+    "role": "Correspondante Ariège",
+    "mission": "Elle est déjà à votre écoute pour couvrir vos actualités et projets locaux.",
+    "quote": "",
+    "photo": "images/team/verone.png",
+    "email": "sedocc09@gmail.com"
+  }
+]

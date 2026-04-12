@@ -55,42 +55,20 @@
 
     <section class="page-content">
         <div class="container">
-            <div class="actu-grid">
-                <article class="actu-card">
-                    <h3>Avancées en recherche génétique</h3>
-                    <p>Le sous-type hypermobile du SED (SEDh) reste le seul sans cause génétique clairement identifiée. Cependant, des recherches récentes menées par le laboratoire Norris à l'Université médicale de Caroline du Sud (MUSC) ont permis d'identifier un gène candidat fort, grâce au séquençage de plus de 1000 patients diagnostiqués selon les critères de 2017. Des études sur des modèles murins utilisant l'édition génomique CRISPR-Cas9 ont renforcé cette hypothèse.</p>
-                    <p>L'étude HEDGE (Hypermobile Ehlers-Danlos Genetic Evaluation) est une initiative mondiale visant à identifier les causes génétiques du SEDh. Les résultats préliminaires présentés en novembre 2024 ont suscité un grand intérêt, avec des publications scientifiques prévues en 2025.</p>
-                </article>
-
-                <article class="actu-card">
-                    <h3>Diagnostics et classification</h3>
-                    <p>Le consortium international sur les SED et les troubles du spectre de l'hypermobilité (TSH) travaille sur une révision des critères diagnostiques et de la classification internationale des SED, prévue pour fin 2026. Cette mise à jour vise à améliorer le diagnostic, réduire les délais et proposer des parcours de soins adaptés.</p>
-                    <p><a href="https://www.ehlers-danlos.com/road-to-2026/fr/" target="_blank">The Ehlers Danlos Society</a></p>
-                    <p>Des outils d'IA tels que GestaltMML combinent des images faciales et des données cliniques pour améliorer le diagnostic des maladies génétiques rares, y compris les SED. Ces technologies pourraient réduire l'errance diagnostique en orientant plus rapidement vers les bons tests génétiques.</p>
-                </article>
-
-                <article class="actu-card">
-                    <h3>Essais cliniques en cours</h3>
-                    <p>Plusieurs essais sont en cours en France, coordonnés par la filière <a href="https://www.filiere-oscar.fr/22963-syndromes-d-ehlers-danlos-non-vasculaires.htm" target="_blank">OSCAR</a>.</p>
-                    <ul>
-                        <li><strong>OXYSED</strong> : évalue l'impact de l'oxygénothérapie sur la fatigue chez les patients atteints de SEDh.</li>
-                        <li><strong>SEDSKIN</strong> : analyse les effets du "cross-linking" sur la peau des patients SEDh et SED classique.</li>
-                        <li><strong>AECED</strong> : étudie les atteintes artérielles dans le SED classique.</li>
-                        <li><strong>CYPHOVASC</strong> : porte sur les atteintes vasculaires du SED cyphoscoliotique.</li>
-                    </ul>
-                    <p>Ces études visent à mieux comprendre les manifestations spécifiques de chaque sous-type et à adapter les prises en charge.</p>
-                </article>
-
-                <article class="actu-card">
-                    <h3>Innovations thérapeutiques en développement</h3>
-                    <p>L'essai clinique de phase 3 DiSCOVER évalue l'efficacité du céliprolol (EDSIVO) chez les patients atteints de SED vasculaire avec mutation COL3A1. Ce traitement a reçu la désignation de thérapie innovante par la FDA en 2022.</p>
-                    <p><a href="https://thevedsmovement.org/2022/06/28/acer-therapeutics-announces-initiation-of-its-pivotal-phase-3-discover-trial-of-edsivo-celiprolol-for-the-treatment-of-vascular-ehlers-danlos-syndrome/" target="_blank">The Veds Movement</a></p>
-                    <p>Une étude financée par un don de 2 millions de dollars explore les liens entre le SEDh et des troubles gastro-intestinaux tels que le POTS, le SAMA, la dysautonomie et l'hyperperméabilité intestinale. L'objectif est d'identifier des thérapies ciblées et des stratégies de gestion adaptées. <a href="https://www.ehlers-danlos.com/heds-gi-research-announced/" target="_blank">The Ehlers Danlos Society</a></p>
-                    <p>Des approches innovantes, telles que la thérapie génique, l'édition de l'ADN/ARN et des traitements pharmacologiques ciblant des voies spécifiques, sont à l'étude pour les troubles du tissu conjonctif, y compris certains sous-types de SED.</p>
-                </article>
+            <div class="actu-grid" id="actu-grid">
+                <!-- Chargé dynamiquement depuis data/actualites.json -->
             </div>
         </div>
     </section>
+    <script>
+        fetch('data/actualites.json')
+            .then(r => r.json())
+            .then(actus => {
+                document.getElementById('actu-grid').innerHTML = actus.map(a =>
+                    `<article class="actu-card"><h3>${a.title}</h3>${a.content}</article>`
+                ).join('');
+            });
+    </script>
 
     <footer class="footer">
         <div class="container">

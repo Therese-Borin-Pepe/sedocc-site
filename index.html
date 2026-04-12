@@ -115,78 +115,8 @@
             <div class="section-header">
                 <h2>Présentation de l'équipe</h2>
             </div>
-
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/therese.png" alt="Thérèse BORIN">
-                    </div>
-                    <h3>Thérèse BORIN</h3>
-                    <div class="member-role">Présidente</div>
-                    <p class="member-mission">Coordination générale &amp; représentation de l'association</p>
-                    <p class="member-quote">"Mon engagement est né d'une conviction : rendre visible l'invisible."</p>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/pascale.png" alt="Pascale Fermaud BILLARD">
-                    </div>
-                    <h3>Pascale Fermaud BILLARD</h3>
-                    <div class="member-role">Vice-Présidente</div>
-                    <p class="member-mission">Soutien stratégique &amp; relais auprès des partenaires</p>
-                    <p class="member-quote">"Nous avançons ensemble pour que chaque voix soit entendue."</p>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/delphine.png" alt="Delphine MIR">
-                    </div>
-                    <h3>Delphine MIR</h3>
-                    <div class="member-role">Secrétaire</div>
-                    <p class="member-mission">Gestion administrative &amp; organisation des événements</p>
-                    <p class="member-quote">"Mon rôle, c'est de créer du lien entre toutes nos actions."</p>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/marie-helene.png" alt="Marie-Hélène CARRIER">
-                    </div>
-                    <h3>Marie-Hélène CARRIER</h3>
-                    <div class="member-role">Trésorière</div>
-                    <p class="member-mission">Gestion financière &amp; suivi des budgets</p>
-                    <p class="member-quote">"Une association saine passe par une gestion transparente."</p>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/marjorie.png" alt="Marjorie ARMAING">
-                    </div>
-                    <h3>Marjorie ARMAING</h3>
-                    <div class="member-role">Community Manager</div>
-                    <p class="member-mission">Communication digitale &amp; réseaux sociaux</p>
-                    <p class="member-quote">"Ma mission : donner de la visibilité à notre cause, chaque jour."</p>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/carine.png" alt="Carine DELPORTE">
-                    </div>
-                    <h3>Carine DELPORTE</h3>
-                    <div class="member-role">Correspondante Perpignan</div>
-                    <p class="member-mission">Relais précieux pour développer notre présence locale<br>Pyrénées-Orientales (66) &bull; Hérault (34)</p>
-                    <p class="member-quote">"Je vais apporter mon expérience, mon écoute et mon énergie pour soutenir la communauté"</p>
-                    <a href="mailto:sedocc66@gmail.com" class="member-contact">sedocc66@gmail.com</a>
-                </div>
-
-                <div class="team-member">
-                    <div class="member-photo">
-                        <img src="images/team/verone.png" alt="Vérone DELAMARCHE">
-                    </div>
-                    <h3>Vérone DELAMARCHE</h3>
-                    <div class="member-role">Correspondante Ariège</div>
-                    <p class="member-mission">Elle est déjà à votre écoute pour couvrir vos actualités et projets locaux.</p>
-                    <a href="mailto:sedocc09@gmail.com" class="member-contact">sedocc09@gmail.com</a>
-                </div>
+            <div class="team-grid" id="team-grid">
+                <!-- Chargé dynamiquement depuis data/equipe.json -->
             </div>
         </div>
     </section>
@@ -246,5 +176,30 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        fetch('data/equipe.json')
+            .then(r => r.json())
+            .then(equipe => {
+                const grid = document.getElementById('team-grid');
+                if (!grid) return;
+                grid.innerHTML = equipe.map(m => {
+                    let html = `<div class="team-member">
+                        <div class="member-photo">
+                            <img src="${m.photo}" alt="${m.name}">
+                        </div>
+                        <h3>${m.name}</h3>
+                        <div class="member-role">${m.role}</div>
+                        <p class="member-mission">${m.mission.replace(/\n/g, '<br>')}</p>`;
+                    if (m.quote) {
+                        html += `<p class="member-quote">"${m.quote}"</p>`;
+                    }
+                    if (m.email) {
+                        html += `<a href="mailto:${m.email}" class="member-contact">${m.email}</a>`;
+                    }
+                    html += `</div>`;
+                    return html;
+                }).join('');
+            });
+    </script>
 </body>
 </html>
