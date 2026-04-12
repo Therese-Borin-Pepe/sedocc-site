@@ -697,6 +697,14 @@ a.btn-secondary:hover {
     gap: var(--spacing-xl);
 }
 
+.team-benevoles {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    font-size: 1.1rem;
+    color: var(--text-medium);
+    font-style: italic;
+}
+
 .team-member {
     text-align: center;
     padding: var(--spacing-lg);
