@@ -74,7 +74,6 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 8px !important; /* On remplace var(--spacing-md) par 8px */
     color: var(--heading-color);
 }
-}
  CSS Variables & Reset
    ========================================== */
 
@@ -2513,4 +2512,5 @@ p {
         padding: 12px 20px;
         word-break: break-word;
     }
+}
 }
