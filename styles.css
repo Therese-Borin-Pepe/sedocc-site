@@ -1016,7 +1016,7 @@ a.btn-secondary:hover {
     }
 }
 .page-bubbles .bubble {
-        opacity: 0.6 !important;
+        opacity: 0.4 !important;
         display: block !important;
         visibility: visible !important;
     }
