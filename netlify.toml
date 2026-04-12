@@ -1,0 +1,157 @@
+# Configuration Netlify pour SED'OCC
+
+[build]
+  publish = "."
+  command = ""
+
+# Redirections des anciennes URLs WordPress vers les nouvelles pages
+[[redirects]]
+  from = "/notre-association/"
+  to = "/index.html"
+  status = 301
+
+[[redirects]]
+  from = "/notre-association/adhesion-et-soutien-2/"
+  to = "/adhesion.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/"
+  to = "/sed.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/diagnostic/"
+  to = "/diagnostic.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/traitements-prises-en-charge/"
+  to = "/traitements.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/traitements-prises-en-charge/traitements/"
+  to = "/traitements.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/actualites-medicales/"
+  to = "/actualites-medicales.html"
+  status = 301
+
+[[redirects]]
+  from = "/quest-ce-que-le-sed/impacts-surla-vie-quotidienne/"
+  to = "/impacts.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/"
+  to = "/evenements.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/cafe-parole/"
+  to = "/evenements/cafe-parole.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/cafe-parole-sedocc-france/"
+  to = "/evenements/cafe-parole-sedocc-france.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/cure-balaruc-les-bains-dans-lherault/"
+  to = "/evenements/cure-balaruc-les-bains.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/revivez-la-conference-sur-le-syndrome-dehlers-danlos-a-toulouse/"
+  to = "/evenements/conference-toulouse-replay.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/le-syndrome-ehlers-danlos-photo-de-valerie-aroca-troyano/"
+  to = "/evenements/photo-valerie-aroca.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/cafe-parole-27-11-2025-anime-par-alexe-munoz-thibault/"
+  to = "/evenements/cafe-parole-novembre-2025.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/conference-sur-les-syndromes-ehlers-danlos-a-toulouse/"
+  to = "/evenements/conference-toulouse.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/les-ateliers-du-septembre-2025/"
+  to = "/evenements/ateliers-septembre-2025.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/le-forum-des-associations/"
+  to = "/evenements/forum-associations.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/les-ateliers-du-octubre-2025/"
+  to = "/evenements/ateliers-octobre-2025.html"
+  status = 301
+
+[[redirects]]
+  from = "/ressources/"
+  to = "/ressources.html"
+  status = 301
+
+[[redirects]]
+  from = "/vos-droits-mdph-ald/"
+  to = "/droits.html"
+  status = 301
+
+[[redirects]]
+  from = "/mentions-legales/"
+  to = "/mentions-legales.html"
+  status = 301
+
+[[redirects]]
+  from = "/politique-de-confidentialite/"
+  to = "/politique-confidentialite.html"
+  status = 301
+
+[[redirects]]
+  from = "/politique-de-cookies-ue/"
+  to = "/politique-cookies.html"
+  status = 301
+
+[[redirects]]
+  from = "/gallery/"
+  to = "/index.html"
+  status = 301
+
+# Headers sécurité et performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self'"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+[[headers]]
+  for = "/documents/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Page 404
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
