@@ -1015,7 +1015,12 @@ a.btn-secondary:hover {
         grid-template-columns: 1fr;
     }
 }
-
+.page-bubbles .bubble {
+        opacity: 0.8 !important;
+        display: block !important;
+        visibility: visible !important;
+    }
+}
 /* ==========================================
    Sub-pages: Page Header & Content
    ========================================== */
