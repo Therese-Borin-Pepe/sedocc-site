@@ -1895,34 +1895,84 @@ a.evenement-card:hover {
 .page-bubbles .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.25;
-    filter: blur(1px);
+    opacity: 0.35;
+    filter: blur(0.5px);
+    border: 1px solid rgba(245, 200, 160, 0.3);
 }
 
 .page-bubbles .b1 {
-    width: 180px; height: 180px;
-    top: 12%; right: -40px;
-    background: radial-gradient(circle at 40% 35%, #F5D5A8, #E8B090);
+    width: 200px; height: 200px;
+    top: 8%; right: -50px;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.6), rgba(245,210,170,0.4) 40%, rgba(232,176,144,0.3) 70%, transparent);
+    box-shadow: inset -8px -8px 20px rgba(232,176,144,0.15), inset 4px 4px 15px rgba(255,255,255,0.3);
 }
 .page-bubbles .b2 {
-    width: 100px; height: 100px;
-    top: 40%; left: -30px;
-    background: radial-gradient(circle at 40% 35%, #F0C8A0, #E0A088);
+    width: 110px; height: 110px;
+    top: 38%; left: -30px;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,200,160,0.4) 45%, rgba(224,160,136,0.25) 75%, transparent);
+    box-shadow: inset -6px -6px 15px rgba(224,160,136,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
 }
 .page-bubbles .b3 {
-    width: 140px; height: 140px;
-    bottom: 25%; right: 3%;
-    background: radial-gradient(circle at 40% 35%, #F5D0B0, #EDBA98);
+    width: 160px; height: 160px;
+    bottom: 22%; right: 2%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 42%, rgba(237,186,152,0.3) 72%, transparent);
+    box-shadow: inset -7px -7px 18px rgba(237,186,152,0.13), inset 4px 4px 12px rgba(255,255,255,0.28);
 }
 .page-bubbles .b4 {
-    width: 70px; height: 70px;
-    top: 55%; left: 6%;
-    background: radial-gradient(circle at 40% 35%, #F0C090, #E8A878);
+    width: 75px; height: 75px;
+    top: 58%; left: 5%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
+    box-shadow: inset -4px -4px 10px rgba(232,168,120,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);
 }
 .page-bubbles .b5 {
-    width: 120px; height: 120px;
-    bottom: 10%; left: -20px;
-    background: radial-gradient(circle at 40% 35%, #F0D0A8, #E5B898);
+    width: 130px; height: 130px;
+    bottom: 8%; left: -25px;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
+    box-shadow: inset -6px -6px 16px rgba(229,184,152,0.12), inset 3px 3px 12px rgba(255,255,255,0.25);
+}
+.page-bubbles .b6 {
+    width: 95px; height: 95px;
+    top: 20%; right: 4%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
+    box-shadow: inset -5px -5px 12px rgba(224,160,136,0.12), inset 3px 3px 9px rgba(255,255,255,0.25);
+}
+.page-bubbles .b7 {
+    width: 65px; height: 65px;
+    top: 72%; right: -15px;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
+    box-shadow: inset -3px -3px 8px rgba(232,176,144,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
+}
+.page-bubbles .b8 {
+    width: 85px; height: 85px;
+    top: 80%; left: 3%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
+    box-shadow: inset -4px -4px 10px rgba(229,184,152,0.12), inset 2px 2px 8px rgba(255,255,255,0.25);
+}
+
+/* Bulles supplémentaires autour du logo - page d'accueil uniquement */
+.page-bubbles .hero-b1 {
+    width: 90px; height: 90px;
+    top: 15%; left: 25%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(245,210,170,0.4) 42%, rgba(232,176,144,0.25) 72%, transparent);
+    box-shadow: inset -5px -5px 12px rgba(232,176,144,0.12), inset 3px 3px 9px rgba(255,255,255,0.25);
+}
+.page-bubbles .hero-b2 {
+    width: 60px; height: 60px;
+    top: 10%; left: 45%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5), rgba(240,200,160,0.35) 45%, rgba(224,160,136,0.2) 75%, transparent);
+    box-shadow: inset -3px -3px 8px rgba(224,160,136,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
+}
+.page-bubbles .hero-b3 {
+    width: 110px; height: 110px;
+    top: 22%; right: 18%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 40%, rgba(237,186,152,0.3) 70%, transparent);
+    box-shadow: inset -6px -6px 14px rgba(237,186,152,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
+}
+.page-bubbles .hero-b4 {
+    width: 45px; height: 45px;
+    top: 30%; left: 15%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
+    box-shadow: inset -2px -2px 6px rgba(232,168,120,0.1), inset 1px 1px 4px rgba(255,255,255,0.2);
 }
 
 /* ==========================================
@@ -2382,6 +2432,9 @@ p {
     .page-bubbles {
         overflow: hidden;
     }
+    .page-bubbles .bubble {
+        opacity: 0.15;
+    }
     body {
         overflow-x: hidden;
     }
@@ -2449,5 +2502,10 @@ p {
     .galerie-photos {
         grid-template-columns: repeat(2, 1fr);
         gap: 10px;
+    }
+    .reference-box .btn {
+        font-size: 0.85rem;
+        padding: 12px 20px;
+        word-break: break-word;
     }
 }
