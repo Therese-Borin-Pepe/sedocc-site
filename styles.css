@@ -2442,7 +2442,6 @@ p {
     body {
         overflow-x: hidden;
     }
-
     /* Tab buttons mobile - empilés verticalement */
     .tab-buttons {
         flex-direction: column;
@@ -2511,6 +2510,7 @@ p {
         padding: 12px 20px;
         word-break: break-word;
     }
+}
 }
 }
 }
