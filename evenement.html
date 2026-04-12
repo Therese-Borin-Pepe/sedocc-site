@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Évènements - SED'OCC</title>
-    <meta name="description" content="Évènements organisés par SED'OCC - Syndrome d'Ehlers-Danlos Occitanie.">
+    <title>Évènement - SED'OCC</title>
+    <meta name="description" content="Évènement organisé par SED'OCC - Syndrome d'Ehlers-Danlos Occitanie.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -48,14 +48,14 @@
 
     <section class="page-header">
         <div class="container">
-            <h1>Évènements</h1>
+            <h1 id="event-title">Chargement...</h1>
         </div>
     </section>
 
     <section class="page-content">
         <div class="container">
-            <div class="evenements-grid" id="evenements-grid">
-                <!-- Chargé dynamiquement depuis data/evenements.json -->
+            <div class="evenement-detail" id="event-detail">
+                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
@@ -86,22 +86,32 @@
     </footer>
     <script src="script.js"></script>
     <script>
-        fetch('data/evenements.json')
-            .then(r => r.json())
-            .then(evenements => {
-                const grid = document.getElementById('evenements-grid');
-                grid.innerHTML = evenements.map(ev => `
-                    <a href="evenement.html?id=${ev.id}" class="evenement-card">
-                        <div class="evenement-image">
-                            <img src="${ev.image}" alt="${ev.title}">
-                        </div>
-                        <div class="evenement-info">
-                            <span class="evenement-category">Évènements</span>
-                            <h3>${ev.title}</h3>
-                        </div>
-                    </a>
-                `).join('');
-            });
+        const params = new URLSearchParams(window.location.search);
+        const eventId = params.get('id');
+
+        if (eventId) {
+            fetch('data/evenements.json')
+                .then(r => r.json())
+                .then(evenements => {
+                    const ev = evenements.find(e => e.id === eventId);
+                    if (ev) {
+                        document.getElementById('event-title').textContent = ev.title;
+                        document.title = ev.title + ' - SED\'OCC';
+                        let html = `<p class="evenement-date">${ev.date}</p>`;
+                        html += `<div class="evenement-detail-image"><img src="${ev.image}" alt="${ev.title}"></div>`;
+                        if (ev.content) {
+                            html += `<div class="evenement-text">${ev.content}</div>`;
+                        }
+                        html += `<div class="evenement-back"><a href="evenements.html" class="btn btn-primary">Retour aux évènements</a></div>`;
+                        document.getElementById('event-detail').innerHTML = html;
+                    } else {
+                        document.getElementById('event-title').textContent = 'Évènement non trouvé';
+                        document.getElementById('event-detail').innerHTML = '<p>Cet évènement n\'existe pas.</p><div class="evenement-back"><a href="evenements.html" class="btn btn-primary">Retour aux évènements</a></div>';
+                    }
+                });
+        } else {
+            window.location.href = 'evenements.html';
+        }
     </script>
 </body>
 </html>

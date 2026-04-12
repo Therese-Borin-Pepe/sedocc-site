@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - SED'OCC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f5f0eb; color: #333; min-height: 100vh; }
+
+        .admin-header {
+            background: linear-gradient(135deg, #8B1A2B, #a0283d);
+            color: white; padding: 20px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .admin-header h1 { font-size: 1.4rem; font-weight: 600; }
+        .admin-header a { color: white; text-decoration: none; opacity: 0.8; }
+        .admin-header a:hover { opacity: 1; }
+
+        .admin-container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
+
+        /* Login */
+        .login-box {
+            background: white; border-radius: 12px; padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); text-align: center; max-width: 500px; margin: 80px auto;
+        }
+        .login-box h2 { color: #8B1A2B; margin-bottom: 10px; }
+        .login-box p { color: #666; margin-bottom: 25px; font-size: 0.9rem; }
+        .login-box input {
+            width: 100%; padding: 12px 16px; border: 2px solid #ddd; border-radius: 8px;
+            font-size: 1rem; font-family: 'Poppins', sans-serif; margin-bottom: 15px;
+        }
+        .login-box input:focus { outline: none; border-color: #8B1A2B; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block; padding: 10px 24px; border-radius: 8px; border: none;
+            font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 500;
+            cursor: pointer; text-decoration: none; transition: all 0.2s;
+        }
+        .btn-primary { background: #8B1A2B; color: white; }
+        .btn-primary:hover { background: #a0283d; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-danger:hover { background: #c82333; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #5a6268; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+        /* Event list */
+        .section-title {
+            font-size: 1.3rem; color: #8B1A2B; margin-bottom: 20px;
+            padding-bottom: 10px; border-bottom: 2px solid #f0e6de;
+        }
+        .event-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .event-item {
+            background: white; border-radius: 10px; padding: 15px 20px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .event-item img { width: 60px; height: 60px; object-fit: cover; border-radius: 8px; }
+        .event-item-info { flex: 1; }
+        .event-item-info h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+        .event-item-info span { font-size: 0.8rem; color: #888; }
+        .event-item .btn { font-size: 0.8rem; padding: 6px 14px; }
+
+        /* Add form */
+        .add-form {
+            background: white; border-radius: 12px; padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 500; margin-bottom: 6px; color: #555; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 10px 14px; border: 2px solid #ddd; border-radius: 8px;
+            font-size: 0.95rem; font-family: 'Poppins', sans-serif;
+        }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #8B1A2B; }
+        .form-group textarea { min-height: 150px; resize: vertical; }
+        .form-group small { color: #888; font-size: 0.8rem; }
+
+        .image-preview {
+            margin-top: 10px; max-width: 200px; border-radius: 8px;
+            display: none;
+        }
+
+        /* Status messages */
+        .status {
+            padding: 12px 20px; border-radius: 8px; margin-bottom: 20px;
+            font-size: 0.9rem; display: none;
+        }
+        .status.success { display: block; background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.error { display: block; background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .status.info { display: block; background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+
+        .actions-bar { display: flex; gap: 10px; margin-bottom: 25px; }
+        .logout-btn { font-size: 0.85rem; padding: 6px 16px; }
+
+        /* Loading */
+        .loading { text-align: center; padding: 40px; color: #888; }
+    </style>
+</head>
+<body>
+
+<div class="admin-header">
+    <h1>SED'OCC - Administration des Evenements</h1>
+    <a href="index.html">Retour au site</a>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen">
+    <div class="login-box">
+        <h2>Connexion</h2>
+        <p>Entrez le mot de passe d'administration pour gerer les evenements du site.</p>
+        <input type="password" id="token-input" placeholder="Mot de passe">
+        <br>
+        <button class="btn btn-primary" onclick="login()">Se connecter</button>
+        <div id="login-error" class="status" style="margin-top:15px;"></div>
+    </div>
+</div>
+
+<!-- ADMIN SCREEN -->
+<div id="admin-screen" style="display:none;">
+    <div class="admin-container">
+
+        <div id="status-msg" class="status"></div>
+
+        <div class="actions-bar">
+            <button class="btn btn-success" onclick="showAddForm()">+ Ajouter un evenement</button>
+            <button class="btn btn-secondary logout-btn" onclick="logout()">Deconnexion</button>
+        </div>
+
+        <!-- ADD/EDIT FORM (hidden by default) -->
+        <div id="add-form-container" style="display:none; margin-bottom:30px;">
+            <div class="add-form">
+                <h2 class="section-title" id="form-title">Ajouter un evenement</h2>
+                <div class="form-group">
+                    <label>Titre de l'evenement *</label>
+                    <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
+                </div>
+                <div class="form-group">
+                    <label>Date *</label>
+                    <input type="text" id="ev-date" placeholder="Ex: 15 mars 2026">
+                </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" id="ev-image" accept="image/*" onchange="previewImage(this)">
+                    <img id="image-preview" class="image-preview">
+                    <small>Formats acceptes : JPG, PNG. Taille recommandee : 800x600px</small>
+                </div>
+                <div class="form-group">
+                    <label>Description (optionnel)</label>
+                    <textarea id="ev-content" placeholder="Decrivez l'evenement ici... Vous pouvez utiliser du HTML simple comme <strong>gras</strong>, <em>italique</em>, <a href='...'>liens</a>"></textarea>
+                    <small>Laissez vide si l'evenement n'a pas de description detaillee.</small>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="btn btn-primary" id="save-btn" onclick="saveEvent()">Enregistrer</button>
+                    <button class="btn btn-secondary" onclick="hideAddForm()">Annuler</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVENT LIST -->
+        <h2 class="section-title">Evenements existants</h2>
+        <div id="event-list" class="event-list">
+            <div class="loading">Chargement des evenements...</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+const REPO = 'Therese-Borin-Pepe/sedocc-site';
+const JSON_PATH = 'data/evenements.json';
+let githubToken = '';
+let evenements = [];
+let jsonSha = '';
+
+// Check saved token on load
+(function() {
+    const saved = localStorage.getItem('sedocc_admin_token');
+    if (saved) {
+        githubToken = saved;
+        verifyToken();
+    }
+})();
+
+async function login() {
+    const input = document.getElementById('token-input');
+    githubToken = input.value.trim();
+    if (!githubToken) return;
+    await verifyToken();
+}
+
+async function verifyToken() {
+    try {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+            headers: { 'Authorization': `token ${githubToken}` }
+        });
+        if (res.ok) {
+            localStorage.setItem('sedocc_admin_token', githubToken);
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('admin-screen').style.display = 'block';
+            await loadEvents();
+        } else {
+            showLoginError('Mot de passe incorrect ou acces refuse.');
+        }
+    } catch (e) {
+        showLoginError('Erreur de connexion. Verifiez votre connexion internet.');
+    }
+}
+
+function showLoginError(msg) {
+    const el = document.getElementById('login-error');
+    el.className = 'status error';
+    el.textContent = msg;
+}
+
+function logout() {
+    localStorage.removeItem('sedocc_admin_token');
+    githubToken = '';
+    document.getElementById('admin-screen').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('token-input').value = '';
+    document.getElementById('login-error').className = 'status';
+}
+
+async function loadEvents() {
+    try {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+            headers: { 'Authorization': `token ${githubToken}` }
+        });
+        const data = await res.json();
+        jsonSha = data.sha;
+        const content = atob(data.content.replace(/\n/g, ''));
+        evenements = JSON.parse(new TextDecoder().decode(
+            Uint8Array.from(content, c => c.charCodeAt(0))
+        ));
+        renderEventList();
+    } catch (e) {
+        document.getElementById('event-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
+    }
+}
+
+function renderEventList() {
+    const list = document.getElementById('event-list');
+    if (evenements.length === 0) {
+        list.innerHTML = '<p style="color:#888;">Aucun evenement pour le moment.</p>';
+        return;
+    }
+    list.innerHTML = evenements.map((ev, i) => `
+        <div class="event-item">
+            <img src="https://raw.githubusercontent.com/${REPO}/main/${ev.image}" alt="${ev.title}"
+                 onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><rect fill=%22%23ddd%22 width=%2260%22 height=%2260%22/><text x=%2230%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%23999%22 font-size=%2210%22>Image</text></svg>'">
+            <div class="event-item-info">
+                <h3>${ev.title}</h3>
+                <span>${ev.date}</span>
+            </div>
+            <button class="btn btn-danger" onclick="deleteEvent(${i})">Supprimer</button>
+        </div>
+    `).join('');
+}
+
+function showAddForm() {
+    document.getElementById('add-form-container').style.display = 'block';
+    document.getElementById('ev-title').value = '';
+    document.getElementById('ev-date').value = '';
+    document.getElementById('ev-image').value = '';
+    document.getElementById('ev-content').value = '';
+    document.getElementById('image-preview').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideAddForm() {
+    document.getElementById('add-form-container').style.display = 'none';
+}
+
+function previewImage(input) {
+    const preview = document.getElementById('image-preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.style.display = 'block';
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+async function saveEvent() {
+    const title = document.getElementById('ev-title').value.trim();
+    const date = document.getElementById('ev-date').value.trim();
+    const content = document.getElementById('ev-content').value.trim();
+    const imageInput = document.getElementById('ev-image');
+
+    if (!title || !date) {
+        showStatus('Veuillez remplir le titre et la date.', 'error');
+        return;
+    }
+
+    const saveBtn = document.getElementById('save-btn');
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Enregistrement...';
+
+    try {
+        // Generate ID from title
+        const id = title.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '');
+
+        let imagePath = 'images/evenements/ateliers.png'; // default image
+
+        // Upload image if provided
+        if (imageInput.files && imageInput.files[0]) {
+            const file = imageInput.files[0];
+            const ext = file.name.split('.').pop().toLowerCase();
+            const imgFileName = `${id}.${ext}`;
+            imagePath = `images/evenements/${imgFileName}`;
+
+            const base64 = await fileToBase64(file);
+            await fetch(`https://api.github.com/repos/${REPO}/contents/${imagePath}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${githubToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: `Ajout image: ${imgFileName}`,
+                    content: base64
+                })
+            });
+        }
+
+        // Wrap plain text in paragraphs if no HTML tags
+        let finalContent = content;
+        if (content && !content.includes('<')) {
+            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
+        }
+
+        // Add event to beginning of array
+        const newEvent = { id, title, date, image: imagePath, content: finalContent };
+        evenements.unshift(newEvent);
+
+        // Save to GitHub
+        await saveToGithub(`Ajout evenement: ${title}`);
+
+        showStatus(`Evenement "${title}" ajoute avec succes ! Le site sera mis a jour dans quelques secondes.`, 'success');
+        hideAddForm();
+        renderEventList();
+    } catch (e) {
+        showStatus('Erreur: ' + e.message, 'error');
+    }
+
+    saveBtn.disabled = false;
+    saveBtn.textContent = 'Enregistrer';
+}
+
+async function deleteEvent(index) {
+    const ev = evenements[index];
+    if (!confirm(`Voulez-vous vraiment supprimer "${ev.title}" ?`)) return;
+
+    evenements.splice(index, 1);
+
+    try {
+        await saveToGithub(`Suppression evenement: ${ev.title}`);
+        showStatus(`Evenement "${ev.title}" supprime. Le site sera mis a jour dans quelques secondes.`, 'success');
+        renderEventList();
+    } catch (e) {
+        showStatus('Erreur: ' + e.message, 'error');
+        await loadEvents(); // reload in case of error
+    }
+}
+
+async function saveToGithub(commitMessage) {
+    const jsonContent = JSON.stringify(evenements, null, 2);
+    const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
+
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${JSON_PATH}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${githubToken}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            message: commitMessage,
+            content: base64,
+            sha: jsonSha
+        })
+    });
+
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || 'Erreur GitHub');
+    }
+
+    const result = await res.json();
+    jsonSha = result.content.sha;
+}
+
+function fileToBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+function showStatus(msg, type) {
+    const el = document.getElementById('status-msg');
+    el.className = `status ${type}`;
+    el.textContent = msg;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (type === 'success') {
+        setTimeout(() => { el.className = 'status'; }, 8000);
+    }
+}
+</script>
+
+</body>
+</html>
