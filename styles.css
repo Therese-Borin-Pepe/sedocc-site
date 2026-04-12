@@ -1895,8 +1895,8 @@ a.evenement-card:hover {
 .page-bubbles .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.35;
-    filter: blur(0.5px);
+    opacity: 0.6;
+    filter: blur(0px);
     border: 1px solid rgba(245, 200, 160, 0.3);
 }
 
