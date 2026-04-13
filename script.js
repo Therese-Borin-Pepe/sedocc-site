@@ -115,33 +115,72 @@ elementsToAnimate.forEach(function(element) {
 });
 
 // ==========================================
-// Active Navigation Link
+// Scroll Reveal Animations
 // ==========================================
 
-function setActiveNavLink() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    
-    sections.forEach(function(section) {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.pageYOffset >= (sectionTop - navbar.offsetHeight - 100)) {
-            current = section.getAttribute('id');
+const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            revealObserver.unobserve(entry.target);
         }
     });
-    
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+document.querySelectorAll('.card-modern, .support-banner, .tab-content, .bilan-item, .quote-modern, section.page-content > .container > *').forEach(function(el) {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
+});
+
+// ==========================================
+// Active Navigation Link (per page)
+// ==========================================
+
+(function setActiveNavByPage() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-link');
+
     navLinks.forEach(function(link) {
         link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
+        const href = link.getAttribute('href');
+        if (href === currentPage) {
             link.classList.add('active');
         }
+        // For dropdown parent: mark active if a sub-page is current
+        if (link.closest('.nav-dropdown')) {
+            const dropdownLinks = link.closest('.nav-dropdown').querySelectorAll('.dropdown-menu a');
+            dropdownLinks.forEach(function(subLink) {
+                if (subLink.getAttribute('href') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+        }
     });
-}
+})();
 
-window.addEventListener('scroll', setActiveNavLink);
+// ==========================================
+// Back to Top Button
+// ==========================================
+
+(function initBackToTop() {
+    var btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', 'Retour en haut');
+    btn.innerHTML = '&#8593;';
+    document.body.appendChild(btn);
+
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 400) {
+            btn.classList.add('visible');
+        } else {
+            btn.classList.remove('visible');
+        }
+    });
+
+    btn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+})();
 
 // ==========================================
 // External Links (open in new tab)
