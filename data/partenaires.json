@@ -1,0 +1,32 @@
+[
+  {
+    "id": "chu-toulouse",
+    "name": "CHU Toulouse",
+    "image": "images/partners/chu-toulouse.png",
+    "url": ""
+  },
+  {
+    "id": "mutaero",
+    "name": "Mutaero",
+    "image": "images/partners/mutaero.png",
+    "url": ""
+  },
+  {
+    "id": "ax-thermes",
+    "name": "Ax-les-Thermes",
+    "image": "images/partners/ax-thermes.png",
+    "url": ""
+  },
+  {
+    "id": "maladies-rares",
+    "name": "Maladies Rares Occitanie",
+    "image": "images/partners/maladies-rares.jpg",
+    "url": ""
+  },
+  {
+    "id": "clinique",
+    "name": "Clinique",
+    "image": "images/partners/clinique.png",
+    "url": ""
+  }
+]

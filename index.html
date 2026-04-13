@@ -75,10 +75,12 @@
         <div class="container">
             <h2>Notre association</h2>
             <div class="mission-with-photos">
-                <div class="mission-text">
-                    <h3>Notre mission</h3>
-                    <p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>
-                    <p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>
+                <div class="mission-text" id="mission-text">
+                    <h3 id="mission-titre">Notre mission</h3>
+                    <div id="mission-contenu">
+                        <p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>
+                        <p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>
+                    </div>
                 </div>
                 <div class="mission-photos">
                     <div class="mosaic-item"><img src="images/mosaic1.jpg" alt="SED'OCC - Conférence"></div>
@@ -89,8 +91,8 @@
             </div>
 
             <div class="actions-section">
-                <h3>Nos actions</h3>
-                <div class="actions-text">
+                <h3 id="actions-titre">Nos actions</h3>
+                <div class="actions-text" id="actions-contenu">
                     <p>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</p>
                     <p>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</p>
                     <p>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</p>
@@ -108,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="warning-box">
+            <div class="warning-box" id="avertissement-contenu">
                 <p>L'association n'a pas vocation à se substituer aux professionnels de santé, mais à compléter leurs actions par l'information, l'écoute et le soutien.</p>
             </div>
         </div>
@@ -133,22 +135,8 @@
             <div class="section-header">
                 <h3>Les partenaires</h3>
             </div>
-            <div class="partners-grid">
-                <div class="partner-logo">
-                    <img src="images/partners/chu-toulouse.png" alt="CHU Toulouse">
-                </div>
-                <div class="partner-logo">
-                    <img src="images/partners/mutaero.png" alt="Mutaero">
-                </div>
-                <div class="partner-logo">
-                    <img src="images/partners/ax-thermes.png" alt="Ax-les-Thermes">
-                </div>
-                <div class="partner-logo">
-                    <img src="images/partners/maladies-rares.jpg" alt="Maladies Rares Occitanie">
-                </div>
-                <div class="partner-logo">
-                    <img src="images/partners/clinique.png" alt="Clinique">
-                </div>
+            <div class="partners-grid" id="partners-grid">
+                <!-- Chargé dynamiquement depuis data/partenaires.json -->
             </div>
         </div>
     </section>
@@ -206,6 +194,47 @@
                     return html;
                 }).join('');
             });
+
+    // Chargement des partenaires
+    fetch('data/partenaires.json')
+        .then(r => r.json())
+        .then(partenaires => {
+            const grid = document.getElementById('partners-grid');
+            if (!grid) return;
+            grid.innerHTML = partenaires.map(p => {
+                const img = `<img src="${p.image}" alt="${p.name}">`;
+                if (p.url) {
+                    return `<div class="partner-logo"><a href="${p.url}" target="_blank">${img}</a></div>`;
+                }
+                return `<div class="partner-logo">${img}</div>`;
+            }).join('');
+        });
+
+    // Chargement des contenus éditables
+    fetch('data/contenus.json')
+        .then(r => r.json())
+        .then(c => {
+            if (c.mission) {
+                const t = document.getElementById('mission-titre');
+                const d = document.getElementById('mission-contenu');
+                if (t && c.mission.titre) t.textContent = c.mission.titre;
+                if (d && c.mission.texte) d.innerHTML = c.mission.texte;
+            }
+            if (c.actions) {
+                const t = document.getElementById('actions-titre');
+                const d = document.getElementById('actions-contenu');
+                if (t && c.actions.titre) t.textContent = c.actions.titre;
+                if (d && c.actions.texte) d.innerHTML = c.actions.texte;
+            }
+            if (c.avertissement) {
+                const d = document.getElementById('avertissement-contenu');
+                if (d && c.avertissement.texte) d.innerHTML = c.avertissement.texte;
+            }
+            if (c.benevoles) {
+                const d = document.querySelector('.team-benevoles');
+                if (d && c.benevoles.texte) d.textContent = c.benevoles.texte;
+            }
+        });
     </script>
 </body>
 </html>

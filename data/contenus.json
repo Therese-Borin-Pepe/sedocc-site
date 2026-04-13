@@ -1,0 +1,16 @@
+{
+  "mission": {
+    "titre": "Notre mission",
+    "texte": "<p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>\n<p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>"
+  },
+  "actions": {
+    "titre": "Nos actions",
+    "texte": "<p>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</p>\n<p>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</p>\n<p>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</p>"
+  },
+  "avertissement": {
+    "texte": "<p>L'association n'a pas vocation à se substituer aux professionnels de santé, mais à compléter leurs actions par l'information, l'écoute et le soutien.</p>"
+  },
+  "benevoles": {
+    "texte": "Le bureau est soutenu par une formidable équipe de nombreux·ses bénévoles, actif·ve·s et réactif·ve·s."
+  }
+}

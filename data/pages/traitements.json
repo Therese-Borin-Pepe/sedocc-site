@@ -1,0 +1,53 @@
+{
+  "pageTitle": "Traitements",
+  "tabs": [
+    {
+      "id": "douleur-fatigue",
+      "title": "Douleur et fatigue",
+      "content": "<div class=\"tab-with-image\"><div><h3>Traitements de la douleur</h3><h4>Médicamenteux :</h4><ul><li>Paracétamol</li><li>AINS (Anti-inflammatoires non stéroïdiens) – usage limité</li><li>Antalgiques opioïdes (palier 2 ou 3) – avec prudence, usage limité</li><li>Antidépresseurs tricycliques ou IRSNa – pour douleurs chroniques / neuropathiques</li><li>Antiépileptiques (gabapentine, prégabaline) – pour douleurs neuropathiques</li><li>Myorelaxants</li><li>PEA (Palmitoyléthanolamide)</li><li>MEOPA (protoxyde d'azote) – en cas de soins douloureux ou luxations</li></ul><h4>Non médicamenteux :</h4><ul><li>Hypnose</li><li>Relaxation</li><li>TENS (neurostimulation électrique transcutanée)</li><li>Acupuncture</li><li>Thérapies cognitivo-comportementales</li><li>Orthophoniste</li><li>Orthoptiste</li><li>Port d'attelles, orthèses de repos</li><li>Rééducation / kinésithérapie adaptée / Balnéothérapie</li><li>Ergothérapie</li><li>Activité Physique Adaptée (Sport sur ordonnance)</li></ul><h3>Traitements de la fatigue</h3><ul><li>Pas de traitement médicamenteux spécifique validé</li><li>Levocarnil, Vitamine C, Vitamine D</li><li>Prise en charge des causes associées (anémie, troubles du sommeil, etc.)</li><li>Réentraînement à l'effort (activité physique douce et régulière)</li><li>Sommeil : hygiène de vie, traitement des troubles associés</li></ul></div><img src=\"images/traitements-1.jpg\" alt=\"Traitement de la douleur\"></div>",
+      "image": "images/traitements-1.jpg"
+    },
+    {
+      "id": "articulations",
+      "title": "Atteintes articulaires et locomotrices",
+      "content": "<div class=\"tab-with-image\"><div><ul><li>Kinésithérapie régulière (proprioception, renforcement musculaire, gain d'amplitude douce)</li><li>Orthèses (attelles, ceintures, semelles, vêtements compressifs…)</li><li>Rééducation fonctionnelle</li><li>Chirurgie orthopédique, à étudier selon les cas : en cas d'instabilité majeure (arthrodèse possible)</li><li>Aides techniques à la mobilité (canne, déambulateur, fauteuil roulant manuel à propulsion électrique si nécessaire)</li></ul></div><img src=\"images/traitements-3.jpg\" alt=\"Articulations\"></div>",
+      "image": "images/traitements-3.jpg"
+    },
+    {
+      "id": "cutane",
+      "title": "Atteintes cutanées",
+      "content": "<div class=\"tab-with-image\"><div><ul><li>Prévention : éviter les traumatismes, protection cutanée contre les frottements, crèmes hydratantes et protectrices.</li><li>Soins chirurgicaux adaptés : suture par plans avec fil non résorbable, éviter colles / agrafes</li></ul><h4>Compléments :</h4><ul><li>Acide ascorbique (vitamine C) : favorise la cicatrisation</li><li>DDAVP (desmopressine) : en cas de tendance hémorragique documentée</li><li>Pour faciliter la cicatrisation (bave d'escargot, avoine colloïdale… à tester sur petite zone en cas d'allergie)</li></ul><ul><li>Maquillage correcteur ou chirurgie esthétique réparatrice si retentissement psychologique important</li></ul></div><img src=\"images/traitements-4.jpg\" alt=\"Soins cutanés\"></div>",
+      "image": "images/traitements-4.jpg"
+    },
+    {
+      "id": "digestif",
+      "title": "Troubles digestifs",
+      "content": "<div class=\"tab-with-image\"><div><ul><li>Probiotiques, Inhibiteur pompe à protons, antispasmodiques, laxatifs selon les symptômes et traitements de fond pour la constipation</li><li>Adaptation alimentaire (petits repas, éviter aliments irritants)</li><li>Prise en charge multidisciplinaire : gastro-entérologue, diététicien(ne), médecin nutritionniste</li><li>Nutrition entérale ou parentérale (cas rares et sévères)</li></ul></div><img src=\"images/traitements-5.jpg\" alt=\"Digestif\"></div>",
+      "image": "images/traitements-5.jpg"
+    },
+    {
+      "id": "dysautonomie-respi",
+      "title": "Dysautonomie et troubles respiratoires",
+      "content": "<div class=\"tab-with-image\"><div><h3>Dysautonomie</h3><p>Ex. : syndrome de tachycardie orthostatique posturale – POTS</p><ul><li>Hydratation abondante</li><li>Supplémentation en sel</li><li>Bas de contention</li><li>Bétabloquants à faible dose</li><li>Fludrocortisone ou midodrine (avec suivi spécialisé)</li></ul><h3>Troubles respiratoires</h3><ul><li>Kinésithérapie respiratoire</li><li>Ventilation non invasive (VNI) si apnées ou hypoventilation</li><li>Orthèse d'avancée mandibulaire pour apnée obstructive, en fonction de la dentition</li><li>VNC si apnées du sommeil (fréquentes dans le SED dues à la laxité des tissus)</li><li>Éviter les interventions ORL inutiles, sauf en dernier recours</li></ul></div><img src=\"images/traitements-6.jpg\" alt=\"Dysautonomie\"></div>",
+      "image": "images/traitements-6.jpg"
+    },
+    {
+      "id": "psychique",
+      "title": "Psychique et neurocognitif",
+      "content": "<div class=\"tab-with-image\"><div><ul><li>Psychothérapie (TCC, soutien psychologique)</li><li>Traitement de l'anxiété ou dépression si besoin</li><li>Suivi neuropsychologique (chez l'enfant en particulier)</li></ul></div><img src=\"images/traitements-8.jpg\" alt=\"Soutien psychique\"></div>",
+      "image": "images/traitements-8.jpg"
+    },
+    {
+      "id": "bucco",
+      "title": "Santé bucco-dentaire",
+      "content": "<div class=\"tab-with-image\"><div><ul><li>Suivi dentaire régulier</li><li>Brossage doux, dentifrice fluoré</li><li>Prévention des gingivites / parodontopathies</li><li>Orthodontie adaptée avec prudence</li></ul></div><img src=\"images/traitements-9.jpg\" alt=\"Soins bucco-dentaires\"></div>",
+      "image": "images/traitements-9.jpg"
+    },
+    {
+      "id": "prise-en-charge",
+      "title": "Prise en charge globale",
+      "content": "<div class=\"bilan-section\"><h3>Bilan médical initial</h3><div class=\"bilan-grid\"><div class=\"bilan-item\"><h4>Un bilan biologique</h4><ul><li>Inflammation</li><li>Immunité</li><li>Vitamines</li></ul></div><div class=\"bilan-item\"><h4>Imagerie médicale</h4><ul><li>Radiographies</li><li>Échographies</li><li>IRM/Scanner</li></ul></div><div class=\"bilan-item\"><h4>Avis spécialisés</h4><ul><li>Ophtalmo</li><li>Kinésithérapie</li><li>Ergothérapie</li></ul></div></div><h3>Rééducation et soins physiques</h3><div class=\"bilan-grid\"><div class=\"bilan-item\"><h4>Exercices</h4><p>Exercices doux pour renforcer les muscles, stabiliser les articulations et diminuer les douleurs.</p></div><div class=\"bilan-item\"><h4>Appareillages</h4><p>Appareillages (corsets, orthèses) et infiltrations si nécessaires.</p></div><div class=\"bilan-item\"><h4>Ergothérapie</h4><p>Ergothérapie pour adapter les gestes du quotidien, l'école ou le travail.</p></div></div><h3>Suivi rhumatologique</h3><div class=\"bilan-grid\"><div class=\"bilan-item bilan-item-wide\"><h4>Le rhumatologue peut proposer</h4><ul><li>Des bilans pour évaluer les douleurs, la fragilité osseuse ou une éventuelle ostéoporose.</li><li>Des traitements spécifiques selon les douleurs : antalgiques, infiltrations, supplémentation en vitamine D.</li></ul></div></div><h3>Suivi neurologique et psychologique</h3><div class=\"bilan-grid\"><div class=\"bilan-item\"><h4>Les troubles neurologiques possibles</h4><ul><li>Céphalées fréquentes (traitées comme des migraines)</li><li>Problèmes d'équilibre, instabilité cervicale, parfois malformation de Chiari ou kystes</li><li>Troubles de la mémoire ou de la concentration, souvent liés à la douleur et à la fatigue</li></ul></div><div class=\"bilan-item\"><h4>Sur le plan psychologique</h4><p>Les patients peuvent se sentir isolés ou incompris. Un suivi psychologique est souvent nécessaire, surtout pour les personnes atteintes de SED hypermobile. Une approche de type thérapie cognitive et comportementale est recommandée.</p></div></div><h3>Aspects sociaux</h3><div class=\"bilan-grid\"><div class=\"bilan-item bilan-item-wide\"><h4>Un accompagnement social est essentiel pour :</h4><ul><li>Obtenir des aides financières (ALD, Invalidité, MDPH)</li><li>Adapter les conditions de travail (ergonomie, télétravail, réduction du stress…)</li><li>Maintenir une scolarité normale avec des aménagements (PAI, vie scolaire adaptée)</li></ul></div></div></div>",
+      "image": ""
+    }
+  ]
+}

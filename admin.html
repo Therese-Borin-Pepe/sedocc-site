@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', sans-serif; background: #f5f0eb; color: #333; min-height: 100vh; }
@@ -116,6 +117,32 @@
         /* Move buttons */
         .btn-move { background: #e8ddd4; color: #555; padding: 4px 10px; font-size: 0.75rem; }
         .btn-move:hover { background: #d4c5b9; }
+
+        /* Quill editor */
+        .ql-container { min-height: 150px; font-family: 'Poppins', sans-serif; font-size: 0.95rem; }
+        .ql-editor { min-height: 150px; }
+        .quill-wrapper { background: white; border-radius: 8px; margin-bottom: 10px; }
+        .quill-wrapper .ql-toolbar { border-radius: 8px 8px 0 0; }
+        .quill-wrapper .ql-container { border-radius: 0 0 8px 8px; }
+
+        /* Partner items */
+        .partner-item {
+            background: white; border-radius: 10px; padding: 15px;
+            display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 12px;
+        }
+        .partner-item img { width: 80px; height: 60px; object-fit: contain; border-radius: 4px; background: #f5f5f5; padding: 5px; }
+        .partner-item .item-info { flex: 1; }
+        .partner-item .item-info h3 { font-size: 0.95rem; margin-bottom: 2px; }
+        .partner-item .item-info span { font-size: 0.8rem; color: #888; }
+
+        /* Content section cards */
+        .content-card {
+            background: white; border-radius: 12px; padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08); margin-bottom: 20px;
+        }
+        .content-card h3 { color: #8B1A2B; margin-bottom: 15px; font-size: 1.1rem; }
+        .content-card .content-preview { color: #666; font-size: 0.9rem; margin-bottom: 15px; max-height: 100px; overflow: hidden; }
     </style>
 </head>
 <body>
@@ -151,6 +178,9 @@
             <button class="admin-tab active" onclick="switchTab('evenements')">Evenements</button>
             <button class="admin-tab" onclick="switchTab('equipe')">Equipe</button>
             <button class="admin-tab" onclick="switchTab('actualites')">Actualites</button>
+            <button class="admin-tab" onclick="switchTab('partenaires')">Partenaires</button>
+            <button class="admin-tab" onclick="switchTab('contenus')">Contenus</button>
+            <button class="admin-tab" onclick="switchTab('onglets')">Onglets</button>
         </div>
 
         <!-- ==================== EVENEMENTS TAB ==================== -->
@@ -274,29 +304,219 @@
             </div>
         </div>
 
+        <!-- ==================== PARTENAIRES TAB ==================== -->
+        <div id="tab-partenaires" class="tab-panel">
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showPartnerForm()">+ Ajouter un partenaire</button>
+            </div>
+
+            <div id="partner-form-container" style="display:none;">
+                <div class="add-form">
+                    <h2 class="section-title">Ajouter un partenaire</h2>
+                    <div class="form-group">
+                        <label>Nom du partenaire *</label>
+                        <input type="text" id="pt-name" placeholder="Ex: CHU Toulouse">
+                    </div>
+                    <div class="form-group">
+                        <label>Site web (optionnel)</label>
+                        <input type="url" id="pt-url" placeholder="Ex: https://www.chu-toulouse.fr">
+                    </div>
+                    <div class="form-group">
+                        <label>Logo *</label>
+                        <input type="file" id="pt-image" accept="image/*" onchange="previewImg(this, 'pt-image-preview')">
+                        <img id="pt-image-preview" class="image-preview">
+                        <small>Format : PNG ou JPG. Logo sur fond transparent de preference.</small>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button class="btn btn-primary" id="pt-save-btn" onclick="savePartner()">Enregistrer</button>
+                        <button class="btn btn-secondary" onclick="hidePartnerForm()">Annuler</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Partenaires actuels</h2>
+            <div id="partner-list">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- ==================== CONTENUS TAB ==================== -->
+        <div id="tab-contenus" class="tab-panel">
+            <h2 class="section-title">Contenus de la page d'accueil</h2>
+            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Modifiez les textes qui apparaissent sur la page d'accueil du site.</p>
+
+            <div class="content-card">
+                <h3>Notre mission</h3>
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" id="ct-mission-titre" value="Notre mission">
+                </div>
+                <div class="form-group">
+                    <label>Texte</label>
+                    <div class="quill-wrapper"><div id="ct-mission-editor"></div></div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Nos actions</h3>
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" id="ct-actions-titre" value="Nos actions">
+                </div>
+                <div class="form-group">
+                    <label>Texte</label>
+                    <div class="quill-wrapper"><div id="ct-actions-editor"></div></div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Avertissement</h3>
+                <div class="form-group">
+                    <label>Texte</label>
+                    <div class="quill-wrapper"><div id="ct-avertissement-editor"></div></div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Phrase benevoles</h3>
+                <div class="form-group">
+                    <input type="text" id="ct-benevoles-texte" value="">
+                </div>
+            </div>
+
+            <button class="btn btn-primary" id="ct-save-btn" onclick="saveContenus()" style="margin-bottom:30px;">Enregistrer les contenus</button>
+        </div>
+
+        <!-- ==================== ONGLETS TAB ==================== -->
+        <div id="tab-onglets" class="tab-panel">
+            <h2 class="section-title">Gestion des onglets par page</h2>
+            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Selectionnez une page pour gerer ses onglets (ajouter, modifier, supprimer, reordonner).</p>
+
+            <div class="form-group">
+                <label>Page</label>
+                <select id="og-page-select" onchange="loadPageTabs()" style="width:100%; padding:10px 14px; border:2px solid #ddd; border-radius:8px; font-size:0.95rem; font-family:'Poppins',sans-serif;">
+                    <option value="">-- Choisir une page --</option>
+                    <option value="traitements">Traitements</option>
+                    <option value="diagnostic">Diagnostic</option>
+                    <option value="sed">Qu'est-ce que le SED ?</option>
+                    <option value="impacts">Impacts et temoignages</option>
+                    <option value="ressources">Ressources</option>
+                    <option value="droits">Vos droits : MDPH - ALD</option>
+                </select>
+            </div>
+
+            <div id="onglets-content" style="display:none;">
+                <div class="actions-bar">
+                    <button class="btn btn-success" onclick="showTabForm()">+ Ajouter un onglet</button>
+                </div>
+
+                <div id="tab-form-container" style="display:none;">
+                    <div class="add-form">
+                        <h2 class="section-title" id="tab-form-title">Ajouter un onglet</h2>
+                        <div class="form-group">
+                            <label>Titre de l'onglet *</label>
+                            <input type="text" id="og-title" placeholder="Ex: Douleur et fatigue">
+                        </div>
+                        <div class="form-group">
+                            <label>Image (optionnel)</label>
+                            <input type="file" id="og-image" accept="image/*" onchange="previewImg(this, 'og-image-preview')">
+                            <img id="og-image-preview" class="image-preview">
+                        </div>
+                        <div class="form-group">
+                            <label>Contenu *</label>
+                            <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
+                        </div>
+                        <input type="hidden" id="og-edit-index" value="-1">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-primary" id="og-save-btn" onclick="savePageTab()">Enregistrer</button>
+                            <button class="btn btn-secondary" onclick="hideTabForm()">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Onglets existants</h2>
+                <div id="onglets-list" class="item-list">
+                    <div class="loading">Selectionnez une page...</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
 <script>
 const REPO = 'Therese-Borin-Pepe/sedocc-site';
 const EVENTS_PATH = 'data/evenements.json';
 const EQUIPE_PATH = 'data/equipe.json';
 const ACTUS_PATH = 'data/actualites.json';
+const ADMIN_PASSWORD = 'SedOcc2025!';
+const PARTNERS_PATH = 'data/partenaires.json';
+const CONTENUS_PATH = 'data/contenus.json';
+
 let githubToken = '';
+let isLocalMode = false;
 let evenements = [], equipe = [], actualites = [];
 let eventsSha = '', equipeSha = '', actusSha = '';
 
-// Auto-login
-(function() {
-    const saved = localStorage.getItem('sedocc_admin_token');
-    if (saved) { githubToken = saved; verifyToken(); }
-})();
+// Detect mode: local (port 3000) or online (GitHub)
+function detectMode() {
+    isLocalMode = window.location.port === '3000' || window.location.hostname === 'localhost' && window.location.port !== '';
+}
+detectMode();
 
 // ===== AUTH =====
 async function login() {
-    githubToken = document.getElementById('token-input').value.trim();
-    if (!githubToken) return;
-    await verifyToken();
+    const input = document.getElementById('token-input').value.trim();
+    if (!input) return;
+
+    // Check simple password first
+    if (input === ADMIN_PASSWORD) {
+        if (isLocalMode) {
+            localStorage.setItem('sedocc_admin_logged', 'true');
+            enterAdmin();
+            return;
+        }
+        // Online mode: need GitHub token too
+        const savedToken = localStorage.getItem('sedocc_admin_token');
+        if (savedToken) {
+            githubToken = savedToken;
+            try {
+                const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${EVENTS_PATH}`, {
+                    headers: { 'Authorization': `token ${githubToken}` }
+                });
+                if (res.ok) {
+                    enterAdmin();
+                    return;
+                }
+            } catch(e) {}
+        }
+        // No valid token saved, ask for it
+        showLoginError('Mot de passe OK. Mais le token GitHub est requis pour le mode en ligne. Entrez le token GitHub.');
+        return;
+    }
+
+    // Maybe it's a GitHub token
+    if (input.startsWith('github_pat_') || input.startsWith('ghp_')) {
+        githubToken = input;
+        await verifyToken();
+        return;
+    }
+
+    showLoginError('Mot de passe incorrect.');
+}
+
+async function enterAdmin() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-screen').style.display = 'block';
+    // Delay loading of partners/contenus to ensure functions are defined
+    const loaders = [loadEvents(), loadEquipe(), loadActus()];
+    if (typeof loadPartners === 'function') loaders.push(loadPartners());
+    if (typeof loadContenus === 'function') loaders.push(loadContenus());
+    if (typeof initQuillEditors === 'function') initQuillEditors();
+    await Promise.all(loaders);
+    // Re-fill contenus after Quill is ready
+    if (typeof fillContenusForm === 'function') fillContenusForm();
 }
 
 async function verifyToken() {
@@ -306,11 +526,9 @@ async function verifyToken() {
         });
         if (res.ok) {
             localStorage.setItem('sedocc_admin_token', githubToken);
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('admin-screen').style.display = 'block';
-            await Promise.all([loadEvents(), loadEquipe(), loadActus()]);
+            enterAdmin();
         } else {
-            showLoginError('Mot de passe incorrect.');
+            showLoginError('Token GitHub invalide.');
         }
     } catch (e) {
         showLoginError('Erreur de connexion.');
@@ -324,6 +542,7 @@ function showLoginError(msg) {
 
 function logout() {
     localStorage.removeItem('sedocc_admin_token');
+    localStorage.removeItem('sedocc_admin_logged');
     githubToken = '';
     document.getElementById('admin-screen').style.display = 'none';
     document.getElementById('login-screen').style.display = 'block';
@@ -336,49 +555,76 @@ function switchTab(tab) {
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
+    // Find the matching button by tab name
+    const tabs = { evenements:0, equipe:1, actualites:2, partenaires:3, contenus:4, onglets:5 };
+    document.querySelectorAll('.admin-tab')[tabs[tab]].classList.add('active');
 }
 
-// ===== GITHUB HELPERS =====
-async function loadJsonFromGithub(path) {
-    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-        headers: { 'Authorization': `token ${githubToken}` }
-    });
-    const data = await res.json();
-    const content = atob(data.content.replace(/\n/g, ''));
-    const parsed = JSON.parse(new TextDecoder().decode(Uint8Array.from(content, c => c.charCodeAt(0))));
-    return { data: parsed, sha: data.sha };
-}
-
-async function saveJsonToGithub(path, data, sha, message) {
-    const jsonContent = JSON.stringify(data, null, 2);
-    const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
-    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, content: base64, sha })
-    });
-    if (!res.ok) { const err = await res.json(); throw new Error(err.message); }
-    return (await res.json()).content.sha;
-}
-
-async function uploadImage(path, file) {
-    const base64 = await fileToBase64(file);
-    // Check if file exists first
-    let sha = undefined;
-    try {
-        const check = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+// ===== DATA HELPERS (supports local + GitHub) =====
+async function loadJsonFile(filePath) {
+    if (isLocalMode) {
+        const res = await fetch('/api/read/' + filePath);
+        if (!res.ok) throw new Error('Fichier non trouve');
+        const result = await res.json();
+        return { data: result.content, sha: '' };
+    } else {
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
             headers: { 'Authorization': `token ${githubToken}` }
         });
-        if (check.ok) { sha = (await check.json()).sha; }
-    } catch(e) {}
-    const body = { message: `Upload image: ${path.split('/').pop()}`, content: base64 };
-    if (sha) body.sha = sha;
-    await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-    });
+        const data = await res.json();
+        const content = atob(data.content.replace(/\n/g, ''));
+        const parsed = JSON.parse(new TextDecoder().decode(Uint8Array.from(content, c => c.charCodeAt(0))));
+        return { data: parsed, sha: data.sha };
+    }
+}
+
+async function saveJsonFile(filePath, data, sha, message) {
+    if (isLocalMode) {
+        const res = await fetch('/api/write/' + filePath, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!res.ok) throw new Error('Erreur de sauvegarde');
+        return '';
+    } else {
+        const jsonContent = JSON.stringify(data, null, 2);
+        const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message, content: base64, sha })
+        });
+        if (!res.ok) { const err = await res.json(); throw new Error(err.message); }
+        return (await res.json()).content.sha;
+    }
+}
+
+async function uploadImage(filePath, file) {
+    const base64 = await fileToBase64(file);
+    if (isLocalMode) {
+        const res = await fetch('/api/upload/' + filePath, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ base64 })
+        });
+        if (!res.ok) throw new Error('Erreur upload image');
+    } else {
+        let sha = undefined;
+        try {
+            const check = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+            if (check.ok) { sha = (await check.json()).sha; }
+        } catch(e) {}
+        const body = { message: `Upload image: ${filePath.split('/').pop()}`, content: base64 };
+        if (sha) body.sha = sha;
+        await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+    }
 }
 
 function fileToBase64(file) {
@@ -414,7 +660,7 @@ function showStatus(msg, type) {
 // ===== EVENEMENTS =====
 async function loadEvents() {
     try {
-        const result = await loadJsonFromGithub(EVENTS_PATH);
+        const result = await loadJsonFile(EVENTS_PATH);
         evenements = result.data; eventsSha = result.sha;
         renderEventList();
     } catch (e) {
@@ -427,7 +673,7 @@ function renderEventList() {
     if (!evenements.length) { list.innerHTML = '<p style="color:#888;">Aucun evenement.</p>'; return; }
     list.innerHTML = evenements.map((ev, i) => `
         <div class="item-card">
-            <img src="https://raw.githubusercontent.com/${REPO}/main/${ev.image}" alt="${ev.title}"
+            <img src="${isLocalMode ? ev.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + ev.image}" alt="${ev.title}"
                  onerror="this.style.background='#ddd'">
             <div class="item-info">
                 <h3>${ev.title}</h3>
@@ -471,7 +717,7 @@ async function saveEvent() {
             finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
         }
         evenements.unshift({ id, title, date, image: imagePath, content: finalContent });
-        eventsSha = await saveJsonToGithub(EVENTS_PATH, evenements, eventsSha, `Ajout evenement: ${title}`);
+        eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Ajout evenement: ${title}`);
         showStatus(`Evenement "${title}" ajoute ! Mise a jour dans quelques secondes.`, 'success');
         hideEventForm(); renderEventList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
@@ -483,7 +729,7 @@ async function deleteEvent(index) {
     const title = evenements[index].title;
     evenements.splice(index, 1);
     try {
-        eventsSha = await saveJsonToGithub(EVENTS_PATH, evenements, eventsSha, `Suppression: ${title}`);
+        eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Suppression: ${title}`);
         showStatus(`"${title}" supprime.`, 'success'); renderEventList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEvents(); }
 }
@@ -491,7 +737,7 @@ async function deleteEvent(index) {
 // ===== EQUIPE =====
 async function loadEquipe() {
     try {
-        const result = await loadJsonFromGithub(EQUIPE_PATH);
+        const result = await loadJsonFile(EQUIPE_PATH);
         equipe = result.data; equipeSha = result.sha;
         renderMemberList();
     } catch (e) {
@@ -504,7 +750,7 @@ function renderMemberList() {
     if (!equipe.length) { list.innerHTML = '<p style="color:#888;">Aucun membre.</p>'; return; }
     list.innerHTML = equipe.map((m, i) => `
         <div class="item-card">
-            <img src="https://raw.githubusercontent.com/${REPO}/main/${m.photo}" alt="${m.name}"
+            <img src="${isLocalMode ? m.photo : 'https://raw.githubusercontent.com/' + REPO + '/main/' + m.photo}" alt="${m.name}"
                  style="border-radius:50%;" onerror="this.style.background='#ddd'">
             <div class="item-info">
                 <h3>${m.name}</h3>
@@ -570,11 +816,11 @@ async function saveMember() {
 
         if (editIndex >= 0) {
             equipe[editIndex] = member;
-            equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Modification membre: ${name}`);
+            equipeSha = await saveJsonFile(EQUIPE_PATH, equipe, equipeSha, `Modification membre: ${name}`);
             showStatus(`"${name}" modifie.`, 'success');
         } else {
             equipe.push(member);
-            equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Ajout membre: ${name}`);
+            equipeSha = await saveJsonFile(EQUIPE_PATH, equipe, equipeSha, `Ajout membre: ${name}`);
             showStatus(`"${name}" ajoute a l'equipe !`, 'success');
         }
         hideMemberForm(); renderMemberList();
@@ -587,7 +833,7 @@ async function deleteMember(index) {
     const name = equipe[index].name;
     equipe.splice(index, 1);
     try {
-        equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Suppression membre: ${name}`);
+        equipeSha = await saveJsonFile(EQUIPE_PATH, equipe, equipeSha, `Suppression membre: ${name}`);
         showStatus(`"${name}" supprime.`, 'success'); renderMemberList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEquipe(); }
 }
@@ -597,7 +843,7 @@ async function moveMember(index, direction) {
     if (newIndex < 0 || newIndex >= equipe.length) return;
     [equipe[index], equipe[newIndex]] = [equipe[newIndex], equipe[index]];
     try {
-        equipeSha = await saveJsonToGithub(EQUIPE_PATH, equipe, equipeSha, `Reordonnement equipe`);
+        equipeSha = await saveJsonFile(EQUIPE_PATH, equipe, equipeSha, `Reordonnement equipe`);
         renderMemberList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadEquipe(); }
 }
@@ -605,7 +851,7 @@ async function moveMember(index, direction) {
 // ===== ACTUALITES =====
 async function loadActus() {
     try {
-        const result = await loadJsonFromGithub(ACTUS_PATH);
+        const result = await loadJsonFile(ACTUS_PATH);
         actualites = result.data; actusSha = result.sha;
         renderActuList();
     } catch (e) {
@@ -670,11 +916,11 @@ async function saveActu() {
 
         if (editIndex >= 0) {
             actualites[editIndex] = actu;
-            actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Modification actualite: ${title}`);
+            actusSha = await saveJsonFile(ACTUS_PATH, actualites, actusSha, `Modification actualite: ${title}`);
             showStatus(`"${title}" modifie.`, 'success');
         } else {
             actualites.unshift(actu);
-            actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Ajout actualite: ${title}`);
+            actusSha = await saveJsonFile(ACTUS_PATH, actualites, actusSha, `Ajout actualite: ${title}`);
             showStatus(`"${title}" ajoute !`, 'success');
         }
         hideActuForm(); renderActuList();
@@ -687,7 +933,7 @@ async function deleteActu(index) {
     const title = actualites[index].title;
     actualites.splice(index, 1);
     try {
-        actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Suppression actualite: ${title}`);
+        actusSha = await saveJsonFile(ACTUS_PATH, actualites, actusSha, `Suppression actualite: ${title}`);
         showStatus(`"${title}" supprime.`, 'success'); renderActuList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActus(); }
 }
@@ -697,10 +943,349 @@ async function moveActu(index, direction) {
     if (newIndex < 0 || newIndex >= actualites.length) return;
     [actualites[index], actualites[newIndex]] = [actualites[newIndex], actualites[index]];
     try {
-        actusSha = await saveJsonToGithub(ACTUS_PATH, actualites, actusSha, `Reordonnement actualites`);
+        actusSha = await saveJsonFile(ACTUS_PATH, actualites, actusSha, `Reordonnement actualites`);
         renderActuList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActus(); }
 }
+
+// ===== PARTENAIRES =====
+let partenaires = [];
+let partnersSha = '';
+
+async function loadPartners() {
+    try {
+        const result = await loadJsonFile(PARTNERS_PATH);
+        partenaires = result.data; partnersSha = result.sha;
+        renderPartnerList();
+    } catch (e) {
+        document.getElementById('partner-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
+    }
+}
+
+function renderPartnerList() {
+    const list = document.getElementById('partner-list');
+    if (!partenaires.length) { list.innerHTML = '<p style="color:#888;">Aucun partenaire.</p>'; return; }
+    list.innerHTML = partenaires.map((p, i) => `
+        <div class="partner-item">
+            <img src="${isLocalMode ? p.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + p.image}" alt="${p.name}"
+                 onerror="this.style.background='#ddd'">
+            <div class="item-info">
+                <h3>${p.name}</h3>
+                <span>${p.url || 'Pas de lien'}</span>
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-danger" onclick="deletePartner(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showPartnerForm() { document.getElementById('partner-form-container').style.display = 'block'; }
+function hidePartnerForm() { document.getElementById('partner-form-container').style.display = 'none'; }
+
+async function savePartner() {
+    const name = document.getElementById('pt-name').value.trim();
+    const url = document.getElementById('pt-url').value.trim();
+    const imageInput = document.getElementById('pt-image');
+    if (!name) { showStatus('Entrez le nom du partenaire.', 'error'); return; }
+    if (!imageInput.files || !imageInput.files[0]) { showStatus('Ajoutez un logo.', 'error'); return; }
+
+    const btn = document.getElementById('pt-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(name);
+        const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
+        const imagePath = `images/partners/${id}.${ext}`;
+        await uploadImage(imagePath, imageInput.files[0]);
+
+        partenaires.push({ id, name, image: imagePath, url });
+        partnersSha = await saveJsonFile(PARTNERS_PATH, partenaires, partnersSha, `Ajout partenaire: ${name}`);
+        showStatus(`Partenaire "${name}" ajoute !`, 'success');
+        hidePartnerForm(); renderPartnerList();
+        document.getElementById('pt-name').value = '';
+        document.getElementById('pt-url').value = '';
+        document.getElementById('pt-image').value = '';
+        document.getElementById('pt-image-preview').style.display = 'none';
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deletePartner(index) {
+    if (!confirm(`Supprimer "${partenaires[index].name}" ?`)) return;
+    const name = partenaires[index].name;
+    partenaires.splice(index, 1);
+    try {
+        partnersSha = await saveJsonFile(PARTNERS_PATH, partenaires, partnersSha, `Suppression partenaire: ${name}`);
+        showStatus(`"${name}" supprime.`, 'success'); renderPartnerList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadPartners(); }
+}
+
+// ===== CONTENUS =====
+let contenus = {};
+let contenusSha = '';
+let quillMission, quillActions, quillAvertissement;
+
+function initQuillEditors() {
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillMission = new Quill('#ct-mission-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillActions = new Quill('#ct-actions-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillAvertissement = new Quill('#ct-avertissement-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
+
+async function loadContenus() {
+    try {
+        const result = await loadJsonFile(CONTENUS_PATH);
+        contenus = result.data; contenusSha = result.sha;
+        fillContenusForm();
+    } catch (e) {
+        console.error('Erreur chargement contenus:', e);
+    }
+}
+
+function fillContenusForm() {
+    if (contenus.mission) {
+        document.getElementById('ct-mission-titre').value = contenus.mission.titre || '';
+        if (quillMission) quillMission.root.innerHTML = contenus.mission.texte || '';
+    }
+    if (contenus.actions) {
+        document.getElementById('ct-actions-titre').value = contenus.actions.titre || '';
+        if (quillActions) quillActions.root.innerHTML = contenus.actions.texte || '';
+    }
+    if (contenus.avertissement) {
+        if (quillAvertissement) quillAvertissement.root.innerHTML = contenus.avertissement.texte || '';
+    }
+    if (contenus.benevoles) {
+        document.getElementById('ct-benevoles-texte').value = contenus.benevoles.texte || '';
+    }
+}
+
+async function saveContenus() {
+    const btn = document.getElementById('ct-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        contenus.mission = {
+            titre: document.getElementById('ct-mission-titre').value.trim(),
+            texte: quillMission.root.innerHTML
+        };
+        contenus.actions = {
+            titre: document.getElementById('ct-actions-titre').value.trim(),
+            texte: quillActions.root.innerHTML
+        };
+        contenus.avertissement = {
+            texte: quillAvertissement.root.innerHTML
+        };
+        contenus.benevoles = {
+            texte: document.getElementById('ct-benevoles-texte').value.trim()
+        };
+        contenusSha = await saveJsonFile(CONTENUS_PATH, contenus, contenusSha, 'Mise a jour contenus page accueil');
+        showStatus('Contenus mis a jour ! Le site sera actualise dans quelques secondes.', 'success');
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer les contenus';
+}
+
+
+// ===== ONGLETS (Tab management per page) =====
+let pageTabs = [];
+let pageTabsSha = '';
+let currentPage = '';
+let quillTabEditor = null;
+
+let editingOriginalContent = ''; // keep original HTML for reconstruction
+
+function initTabEditor() {
+    if (quillTabEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'header': [3, 4, false] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillTabEditor = new Quill('#og-tab-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
+
+// Extract the editable text from complex HTML wrappers
+function extractEditableContent(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    // tab-with-image: get inner div text content (not the img)
+    const innerDiv = temp.querySelector('.tab-with-image > div:first-child');
+    if (innerDiv) return innerDiv.innerHTML;
+    // bilan-section: flatten to readable text
+    const bilan = temp.querySelector('.bilan-section');
+    if (bilan) return bilan.innerHTML;
+    return html;
+}
+
+// Rebuild full HTML with proper wrapper structure
+function rebuildTabContent(editedHtml, imagePath) {
+    if (imagePath) {
+        return '<div class="tab-with-image"><div>' + editedHtml + '</div><img src="' + imagePath + '" alt=""></div>';
+    }
+    return editedHtml;
+}
+
+async function loadPageTabs() {
+    currentPage = document.getElementById('og-page-select').value;
+    if (!currentPage) {
+        document.getElementById('onglets-content').style.display = 'none';
+        return;
+    }
+    document.getElementById('onglets-content').style.display = 'block';
+    initTabEditor();
+    const list = document.getElementById('onglets-list');
+    list.innerHTML = '<div class="loading">Chargement...</div>';
+
+    try {
+        const result = await loadJsonFile('data/pages/' + currentPage + '.json');
+        pageTabs = result.data.tabs || [];
+        pageTabsSha = result.sha;
+        renderPageTabs();
+    } catch (e) {
+        // File doesn't exist yet, create empty structure
+        pageTabs = [];
+        pageTabsSha = '';
+        renderPageTabs();
+    }
+}
+
+function renderPageTabs() {
+    const list = document.getElementById('onglets-list');
+    if (!pageTabs.length) {
+        list.innerHTML = '<p style="color:#888;">Aucun onglet pour cette page.</p>';
+        return;
+    }
+    list.innerHTML = pageTabs.map((tab, i) => `
+        <div class="item-card">
+            ${tab.image ? `<img src="${isLocalMode ? tab.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + tab.image}" alt="${tab.title}" onerror="this.style.background='#ddd'">` : '<div style="width:60px;height:60px;background:#f0e6de;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📄</div>'}
+            <div class="item-info">
+                <h3>${tab.title}</h3>
+                <span>${tab.content.replace(/<[^>]*>/g, '').substring(0, 60)}...</span>
+            </div>
+            <div class="item-actions">
+                ${i > 0 ? `<button class="btn btn-move" onclick="movePageTab(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${i < pageTabs.length-1 ? `<button class="btn btn-move" onclick="movePageTab(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-warning" onclick="editPageTab(${i})">Modifier</button>
+                <button class="btn btn-danger" onclick="deletePageTab(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showTabForm(editIndex) {
+    document.getElementById('tab-form-container').style.display = 'block';
+    document.getElementById('og-edit-index').value = editIndex !== undefined ? editIndex : -1;
+    document.getElementById('tab-form-title').textContent = editIndex !== undefined ? 'Modifier un onglet' : 'Ajouter un onglet';
+    initTabEditor();
+
+    if (editIndex !== undefined) {
+        const tab = pageTabs[editIndex];
+        document.getElementById('og-title').value = tab.title;
+        editingOriginalContent = tab.content;
+        // Extract just the readable text for Quill
+        const editable = extractEditableContent(tab.content);
+        quillTabEditor.root.innerHTML = editable;
+        if (tab.image) {
+            document.getElementById('og-image-preview').src = tab.image;
+            document.getElementById('og-image-preview').style.display = 'block';
+        } else {
+            document.getElementById('og-image-preview').style.display = 'none';
+        }
+    } else {
+        document.getElementById('og-title').value = '';
+        editingOriginalContent = '';
+        quillTabEditor.root.innerHTML = '';
+        document.getElementById('og-image-preview').style.display = 'none';
+    }
+    document.getElementById('og-image').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function hideTabForm() { document.getElementById('tab-form-container').style.display = 'none'; }
+function editPageTab(i) { showTabForm(i); }
+
+async function savePageTab() {
+    const title = document.getElementById('og-title').value.trim();
+    const editedHtml = quillTabEditor.root.innerHTML;
+    const imageInput = document.getElementById('og-image');
+    const editIndex = parseInt(document.getElementById('og-edit-index').value);
+
+    if (!title) { showStatus('Entrez le titre de l\'onglet.', 'error'); return; }
+    if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); return; }
+
+    const btn = document.getElementById('og-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(title);
+        let imagePath = editIndex >= 0 ? (pageTabs[editIndex].image || '') : '';
+
+        if (imageInput.files && imageInput.files[0]) {
+            const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
+            imagePath = `images/${currentPage}/${id}.${ext}`;
+            await uploadImage(imagePath, imageInput.files[0]);
+        }
+
+        // Rebuild full HTML with wrapper structure
+        const content = rebuildTabContent(editedHtml, imagePath);
+        const tab = { id, title, content, image: imagePath };
+
+        if (editIndex >= 0) {
+            pageTabs[editIndex] = tab;
+        } else {
+            pageTabs.push(tab);
+        }
+
+        const pageData = { pageTitle: document.getElementById('og-page-select').selectedOptions[0].text, tabs: pageTabs };
+        pageTabsSha = await saveJsonFile('data/pages/' + currentPage + '.json', pageData, pageTabsSha, `Mise a jour onglets: ${currentPage}`);
+
+        showStatus(editIndex >= 0 ? `Onglet "${title}" modifie.` : `Onglet "${title}" ajoute !`, 'success');
+        hideTabForm();
+        renderPageTabs();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deletePageTab(index) {
+    if (!confirm(`Supprimer l'onglet "${pageTabs[index].title}" ?`)) return;
+    const title = pageTabs[index].title;
+    pageTabs.splice(index, 1);
+    try {
+        const pageData = { pageTitle: document.getElementById('og-page-select').selectedOptions[0].text, tabs: pageTabs };
+        pageTabsSha = await saveJsonFile('data/pages/' + currentPage + '.json', pageData, pageTabsSha, `Suppression onglet: ${title}`);
+        showStatus(`Onglet "${title}" supprime.`, 'success');
+        renderPageTabs();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadPageTabs(); }
+}
+
+async function movePageTab(index, direction) {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= pageTabs.length) return;
+    [pageTabs[index], pageTabs[newIndex]] = [pageTabs[newIndex], pageTabs[index]];
+    try {
+        const pageData = { pageTitle: document.getElementById('og-page-select').selectedOptions[0].text, tabs: pageTabs };
+        pageTabsSha = await saveJsonFile('data/pages/' + currentPage + '.json', pageData, pageTabsSha, `Reordonnement onglets: ${currentPage}`);
+        renderPageTabs();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadPageTabs(); }
+}
+
+// ===== AUTO-LOGIN (must be at end of script) =====
+(function() {
+    const saved = localStorage.getItem('sedocc_admin_token');
+    const savedPwd = localStorage.getItem('sedocc_admin_logged');
+    if (isLocalMode && savedPwd === 'true') {
+        enterAdmin();
+    } else if (saved) {
+        githubToken = saved;
+        verifyToken();
+    }
+})();
 </script>
 
 </body>
