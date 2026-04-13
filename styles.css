@@ -66,6 +66,7 @@ body {
     color: var(--text-dark);
     line-height: 1.6;
     overflow-x: hidden;
+    background: var(--bg-light);
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
@@ -331,13 +332,14 @@ a:hover {
 
 .hero {
     position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 120px;
     padding-bottom: 60px;
-    background: linear-gradient(135deg, #FFF5EC 0%, #FFEDE6 100%);
+    background: transparent;
     overflow: hidden;
     min-height: 60vh;
 }
@@ -510,8 +512,10 @@ a.btn-secondary:hover {
    ========================================== */
 
 .mission {
+    position: relative;
+    z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: var(--bg-light);
+    background: transparent;
 }
 
 .mission > .container > h2 {
@@ -687,8 +691,10 @@ a.btn-secondary:hover {
    ========================================== */
 
 .team {
+    position: relative;
+    z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: var(--bg-warm);
+    background: transparent;
 }
 
 .team-grid {
@@ -770,6 +776,8 @@ a.btn-secondary:hover {
    ========================================== */
 
 .support {
+    position: relative;
+    z-index: 1;
     padding: var(--spacing-lg) 0;
     background: linear-gradient(135deg, #8B1A2B 0%, #a83242 50%, #6b1420 100%);
     color: var(--bg-white);
@@ -807,8 +815,10 @@ a.btn-secondary:hover {
    ========================================== */
 
 .partners {
+    position: relative;
+    z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: var(--bg-white);
+    background: transparent;
 }
 
 .partners .section-header h3 {
@@ -856,6 +866,8 @@ a.btn-secondary:hover {
    ========================================== */
 
 .footer {
+    position: relative;
+    z-index: 1;
     background: var(--heading-color);
     color: var(--bg-white);
     padding: var(--spacing-lg) 0;
@@ -1021,9 +1033,11 @@ a.btn-secondary:hover {
    ========================================== */
 
 .page-header {
+    position: relative;
+    z-index: 1;
     padding-top: 130px; /* Légèrement remonté */
     padding-bottom: 5px !important; /* Presque plus d'espace en bas */
-    background: linear-gradient(135deg, #FFF5EC 0%, #FFEDE6 100%);
+    background: transparent;
     text-align: center;
 }
 }
@@ -1034,13 +1048,15 @@ a.btn-secondary:hover {
 }
 
 .page-content {
+    position: relative;
+    z-index: 1;
     padding: var(--spacing-lg) 0 var(--spacing-2xl);
-    background: var(--bg-light);
+    background: transparent;
 }
 
 .page-content {
     padding: 0px 0 var(--spacing-2xl) !important; /* Le 0px supprime le vide du haut */
-    background: var(--bg-light);
+    background: transparent;
 }
 
 .page-content h2 {
@@ -1895,84 +1911,92 @@ a.evenement-card:hover {
 .page-bubbles .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.5;
-    filter: blur(1px);
-    border: 1px solid rgba(245, 200, 160, 0.3);
+    opacity: 0.45;
+    filter: blur(1.5px);
+    border: 1px solid rgba(245, 200, 160, 0.2);
 }
 
+/* Grande bulle - haut droit */
 .page-bubbles .b1 {
     width: 200px; height: 200px;
-    top: 8%; right: -50px;
+    top: 4%; right: 5%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.6), rgba(245,210,170,0.4) 40%, rgba(232,176,144,0.3) 70%, transparent);
     box-shadow: inset -8px -8px 20px rgba(232,176,144,0.15), inset 4px 4px 15px rgba(255,255,255,0.3);
 }
+/* Moyenne bulle - gauche */
 .page-bubbles .b2 {
-    width: 110px; height: 110px;
-    top: 38%; left: -30px;
+    width: 120px; height: 120px;
+    top: 30%; left: 3%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,200,160,0.4) 45%, rgba(224,160,136,0.25) 75%, transparent);
-    box-shadow: inset -6px -6px 15px rgba(224,160,136,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
+    box-shadow: inset -6px -6px 14px rgba(224,160,136,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
 }
+/* Grande bulle - bas droit */
 .page-bubbles .b3 {
     width: 160px; height: 160px;
-    bottom: 22%; right: 2%;
+    bottom: 15%; right: 8%;
     background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 42%, rgba(237,186,152,0.3) 72%, transparent);
     box-shadow: inset -7px -7px 18px rgba(237,186,152,0.13), inset 4px 4px 12px rgba(255,255,255,0.28);
 }
+/* Petite bulle - centre gauche */
 .page-bubbles .b4 {
-    width: 75px; height: 75px;
-    top: 58%; left: 5%;
+    width: 50px; height: 50px;
+    top: 50%; left: 25%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
-    box-shadow: inset -4px -4px 10px rgba(232,168,120,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);
+    box-shadow: inset -3px -3px 8px rgba(232,168,120,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
 }
+/* Moyenne bulle - bas gauche */
 .page-bubbles .b5 {
     width: 130px; height: 130px;
-    bottom: 8%; left: -25px;
+    bottom: 8%; left: 6%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
     box-shadow: inset -6px -6px 16px rgba(229,184,152,0.12), inset 3px 3px 12px rgba(255,255,255,0.25);
 }
+/* Petite bulle - centre haut */
 .page-bubbles .b6 {
-    width: 95px; height: 95px;
-    top: 20%; right: 4%;
-    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
-    box-shadow: inset -5px -5px 12px rgba(224,160,136,0.12), inset 3px 3px 9px rgba(255,255,255,0.25);
-}
-.page-bubbles .b7 {
     width: 65px; height: 65px;
-    top: 72%; right: -15px;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
-    box-shadow: inset -3px -3px 8px rgba(232,176,144,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
+    top: 15%; left: 35%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
+    box-shadow: inset -4px -4px 10px rgba(224,160,136,0.1), inset 2px 2px 8px rgba(255,255,255,0.22);
 }
+/* Grande bulle - milieu droit */
+.page-bubbles .b7 {
+    width: 170px; height: 170px;
+    top: 60%; right: -20px;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
+    box-shadow: inset -7px -7px 16px rgba(232,176,144,0.12), inset 3px 3px 12px rgba(255,255,255,0.22);
+}
+/* Petite bulle - centre droit */
 .page-bubbles .b8 {
-    width: 85px; height: 85px;
-    top: 80%; left: 3%;
+    width: 45px; height: 45px;
+    top: 42%; right: 20%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
-    box-shadow: inset -4px -4px 10px rgba(229,184,152,0.12), inset 2px 2px 8px rgba(255,255,255,0.25);
+    box-shadow: inset -3px -3px 8px rgba(229,184,152,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
 }
 
 /* Bulles supplémentaires autour du logo - page d'accueil uniquement */
 .page-bubbles .hero-b1 {
-    width: 90px; height: 90px;
-    top: 15%; left: 25%;
+    width: 70px; height: 70px;
+    top: 12%; left: 28%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(245,210,170,0.4) 42%, rgba(232,176,144,0.25) 72%, transparent);
-    box-shadow: inset -5px -5px 12px rgba(232,176,144,0.12), inset 3px 3px 9px rgba(255,255,255,0.25);
+    box-shadow: inset -4px -4px 10px rgba(232,176,144,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);
 }
 .page-bubbles .hero-b2 {
-    width: 60px; height: 60px;
-    top: 10%; left: 45%;
+    width: 38px; height: 38px;
+    top: 8%; left: 48%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5), rgba(240,200,160,0.35) 45%, rgba(224,160,136,0.2) 75%, transparent);
-    box-shadow: inset -3px -3px 8px rgba(224,160,136,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
+    box-shadow: inset -2px -2px 6px rgba(224,160,136,0.08), inset 1px 1px 4px rgba(255,255,255,0.15);
 }
 .page-bubbles .hero-b3 {
-    width: 110px; height: 110px;
-    top: 22%; right: 18%;
+    width: 85px; height: 85px;
+    top: 20%; right: 20%;
     background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 40%, rgba(237,186,152,0.3) 70%, transparent);
-    box-shadow: inset -6px -6px 14px rgba(237,186,152,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
+    box-shadow: inset -5px -5px 12px rgba(237,186,152,0.1), inset 3px 3px 8px rgba(255,255,255,0.2);
 }
 .page-bubbles .hero-b4 {
-    width: 45px; height: 45px;
-    top: 30%; left: 15%;
+    width: 30px; height: 30px;
+    top: 28%; left: 18%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
-    box-shadow: inset -2px -2px 6px rgba(232,168,120,0.1), inset 1px 1px 4px rgba(255,255,255,0.2);
+    box-shadow: inset -2px -2px 4px rgba(232,168,120,0.08), inset 1px 1px 3px rgba(255,255,255,0.15);
 }
 
 /* ==========================================
@@ -2119,8 +2143,10 @@ p {
 
 /* 1. La section globale (fond pêche/crème) */
 .adhesion-modern {
+    position: relative;
+    z-index: 1;
     padding: 30px 0 60px;
-    background-color: var(--bg-light);
+    background: transparent;
 }
 
 /* 2. Le Header (Titre : Pourquoi nous rejoindre ?) */
@@ -2184,10 +2210,17 @@ p {
     margin-bottom: 25px;
 }
 
-/* 6. L'Icône (Désormais à gauche du titre) */
+/* 6. L'Icône (à gauche du titre, dans un cercle) */
 .card-icon {
-    font-size: 2.5rem; /* Taille de l'émoji */
-    flex-shrink: 0; /* Empêche l'icône de s'écraser */
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF5EC;
+    border-radius: 50%;
 }
 
 /* 7. Le Titre de la carte (Bordeaux) */
@@ -2428,13 +2461,25 @@ p {
         padding: 0 15px;
     }
 
-    /* Fix page-bubbles overflow */
+    /* Bulles mobile - réduites mais visibles */
     .page-bubbles {
         overflow: hidden;
     }
     .page-bubbles .bubble {
-        opacity: 0.6;
+        opacity: 0.35;
     }
+    .page-bubbles .b1 { width: 110px; height: 110px; top: 3%; right: -15px; }
+    .page-bubbles .b2 { width: 70px; height: 70px; top: 25%; left: -10px; }
+    .page-bubbles .b3 { width: 90px; height: 90px; bottom: 18%; right: -10px; }
+    .page-bubbles .b4 { width: 35px; height: 35px; top: 45%; left: 15%; }
+    .page-bubbles .b5 { width: 75px; height: 75px; bottom: 6%; left: -10px; }
+    .page-bubbles .b6 { width: 40px; height: 40px; top: 12%; left: 30%; }
+    .page-bubbles .b7 { width: 100px; height: 100px; top: 60%; right: -20px; }
+    .page-bubbles .b8 { width: 30px; height: 30px; top: 38%; right: 15%; }
+    .page-bubbles .hero-b1 { width: 50px; height: 50px; }
+    .page-bubbles .hero-b2 { width: 28px; height: 28px; }
+    .page-bubbles .hero-b3 { width: 55px; height: 55px; }
+    .page-bubbles .hero-b4 { width: 22px; height: 22px; }
     body {
         overflow-x: hidden;
     }
