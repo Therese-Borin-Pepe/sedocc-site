@@ -1051,14 +1051,14 @@ async function loadContenus() {
 function fillContenusForm() {
     if (contenus.mission) {
         document.getElementById('ct-mission-titre').value = contenus.mission.titre || '';
-        if (quillMission) quillMission.root.innerHTML = contenus.mission.texte || '';
+        if (quillMission) { quillMission.setContents([]); quillMission.clipboard.dangerouslyPasteHTML(0, contenus.mission.texte || ''); }
     }
     if (contenus.actions) {
         document.getElementById('ct-actions-titre').value = contenus.actions.titre || '';
-        if (quillActions) quillActions.root.innerHTML = contenus.actions.texte || '';
+        if (quillActions) { quillActions.setContents([]); quillActions.clipboard.dangerouslyPasteHTML(0, contenus.actions.texte || ''); }
     }
     if (contenus.avertissement) {
-        if (quillAvertissement) quillAvertissement.root.innerHTML = contenus.avertissement.texte || '';
+        if (quillAvertissement) { quillAvertissement.setContents([]); quillAvertissement.clipboard.dangerouslyPasteHTML(0, contenus.avertissement.texte || ''); }
     }
     if (contenus.benevoles) {
         document.getElementById('ct-benevoles-texte').value = contenus.benevoles.texte || '';
@@ -1072,14 +1072,14 @@ async function saveContenus() {
     try {
         contenus.mission = {
             titre: document.getElementById('ct-mission-titre').value.trim(),
-            texte: quillMission.root.innerHTML
+            texte: cleanQuillHtml(quillMission.root.innerHTML)
         };
         contenus.actions = {
             titre: document.getElementById('ct-actions-titre').value.trim(),
-            texte: quillActions.root.innerHTML
+            texte: cleanQuillHtml(quillActions.root.innerHTML)
         };
         contenus.avertissement = {
-            texte: quillAvertissement.root.innerHTML
+            texte: cleanQuillHtml(quillAvertissement.root.innerHTML)
         };
         contenus.benevoles = {
             texte: document.getElementById('ct-benevoles-texte').value.trim()
@@ -1116,8 +1116,10 @@ function extractEditableContent(html) {
     const temp = document.createElement('div');
     temp.innerHTML = html;
     // tab-with-image: get inner div text content (not the img)
-    const innerDiv = temp.querySelector('.tab-with-image > div:first-child');
-    if (innerDiv) return innerDiv.innerHTML;
+    const sections = temp.querySelectorAll('.tab-with-image > div:first-child');
+    if (sections.length > 0) {
+        return Array.from(sections).map(function(s) { return s.innerHTML; }).join('\n<hr>\n');
+    }
     // bilan-section: flatten to readable text
     const bilan = temp.querySelector('.bilan-section');
     if (bilan) return bilan.innerHTML;
@@ -1125,7 +1127,25 @@ function extractEditableContent(html) {
 }
 
 // Rebuild full HTML with proper wrapper structure
-function rebuildTabContent(editedHtml, imagePath) {
+function rebuildTabContent(editedHtml, imagePath, originalContent) {
+    // Check if original had multiple tab-with-image sections
+    if (originalContent) {
+        const temp = document.createElement('div');
+        temp.innerHTML = originalContent;
+        const origSections = temp.querySelectorAll('.tab-with-image');
+        if (origSections.length > 1) {
+            // Split edited content by <hr> separator
+            const parts = editedHtml.split(/\n?<hr>\n?/);
+            let result = '';
+            origSections.forEach(function(sec, i) {
+                const img = sec.querySelector('img');
+                const imgHtml = img ? img.outerHTML : '';
+                const content = parts[i] || '';
+                result += '<div class="tab-with-image"><div>' + content + '</div>' + imgHtml + '</div>';
+            });
+            return result;
+        }
+    }
     if (imagePath) {
         return '<div class="tab-with-image"><div>' + editedHtml + '</div><img src="' + imagePath + '" alt=""></div>';
     }
@@ -1191,7 +1211,8 @@ function showTabForm(editIndex) {
         editingOriginalContent = tab.content;
         // Extract just the readable text for Quill
         const editable = extractEditableContent(tab.content);
-        quillTabEditor.root.innerHTML = editable;
+        quillTabEditor.setContents([]);
+        quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
         if (tab.image) {
             document.getElementById('og-image-preview').src = tab.image;
             document.getElementById('og-image-preview').style.display = 'block';
@@ -1201,7 +1222,7 @@ function showTabForm(editIndex) {
     } else {
         document.getElementById('og-title').value = '';
         editingOriginalContent = '';
-        quillTabEditor.root.innerHTML = '';
+        quillTabEditor.setContents([]);
         document.getElementById('og-image-preview').style.display = 'none';
     }
     document.getElementById('og-image').value = '';
@@ -1210,9 +1231,25 @@ function showTabForm(editIndex) {
 function hideTabForm() { document.getElementById('tab-form-container').style.display = 'none'; }
 function editPageTab(i) { showTabForm(i); }
 
+function cleanQuillHtml(html) {
+    // Remove Quill UI spans
+    let clean = html.replace(/<span class="ql-ui"[^>]*><\/span>/g, '');
+    // Convert Quill bullet lists: <ol><li data-list="bullet"> → <ul><li>
+    clean = clean.replace(/<ol>([\s\S]*?)<\/ol>/g, function(match, inner) {
+        if (inner.includes('data-list="bullet"')) {
+            const items = inner.replace(/ data-list="bullet"/g, '');
+            return '<ul>' + items + '</ul>';
+        }
+        return match;
+    });
+    // Remove empty trailing paragraphs
+    clean = clean.replace(/<p><br><\/p>$/g, '');
+    return clean;
+}
+
 async function savePageTab() {
     const title = document.getElementById('og-title').value.trim();
-    const editedHtml = quillTabEditor.root.innerHTML;
+    const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
     const imageInput = document.getElementById('og-image');
     const editIndex = parseInt(document.getElementById('og-edit-index').value);
 
@@ -1233,7 +1270,7 @@ async function savePageTab() {
         }
 
         // Rebuild full HTML with wrapper structure
-        const content = rebuildTabContent(editedHtml, imagePath);
+        const content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
         const tab = { id, title, content, image: imagePath };
 
         if (editIndex >= 0) {
