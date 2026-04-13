@@ -262,7 +262,7 @@ a:hover {
     justify-content: center;
     padding-top: 120px;
     padding-bottom: 60px;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
     overflow: hidden;
     min-height: 60vh;
 }
@@ -442,7 +442,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 .mission > .container > h2 {
@@ -463,6 +463,12 @@ a.btn-secondary:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-sm);
+}
+
+.mission-text {
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
 }
 
 .mission-text h3 {
@@ -493,6 +499,9 @@ a.btn-secondary:hover {
     max-width: 900px;
     margin: 0 auto var(--spacing-lg);
     text-align: center;
+    background: var(--bg-light);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
 }
 
 .actions-text p {
@@ -621,7 +630,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 .team-grid {
@@ -745,7 +754,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 .partners .section-header h3 {
@@ -964,7 +973,7 @@ a.btn-secondary:hover {
     z-index: 1;
     padding-top: 130px;
     padding-bottom: 5px !important;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
     text-align: center;
 }
 }
@@ -978,12 +987,12 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-lg) 0 var(--spacing-2xl);
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 .page-content {
     padding: 0px 0 var(--spacing-2xl) !important;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 .page-content h2 {
@@ -1125,6 +1134,7 @@ a.btn-secondary:hover {
 .tab-buttons {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-lg);
     border-bottom: 2px solid var(--border-color);
@@ -1704,7 +1714,7 @@ a.evenement-card:hover {
 .page-header {
     padding-top: 140px;
     padding-bottom: var(--spacing-sm);
-    background: linear-gradient(135deg, rgba(255,245,236,0.55) 0%, rgba(255,237,230,0.55) 100%);
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
     text-align: center;
 }
 
@@ -1891,7 +1901,7 @@ a.evenement-card:hover {
 .page-bubbles .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.6;
+    opacity: 0.65;
     filter: blur(1.5px);
     border: 1px solid rgba(245, 200, 160, 0.2);
 }
@@ -2047,7 +2057,7 @@ p {
 /* --- ACCUEIL (Style spécial) --- */
 .hero {
     position: relative; text-align: center;
-    background: linear-gradient(135deg, rgba(255,245,236,0.55) 0%, rgba(255,237,230,0.55) 100%);
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
     padding: 180px 20px 100px; overflow: hidden;
 }
 .hero-logo {
@@ -2126,7 +2136,7 @@ p {
     position: relative;
     z-index: 1;
     padding: 30px 0 60px;
-    background: rgba(255, 245, 236, 0.55);
+    background: transparent;
 }
 
 /* 2. Le Header (Titre : Pourquoi nous rejoindre ?) */
@@ -2191,9 +2201,10 @@ p {
 /* 5. Le Header de la carte (LOGO + TITRE cotes à cotes) */
 .card-header-modern {
     display: flex;
-    align-items: center; /* Aligne verticalement l'icône et le texte */
-    gap: 15px; /* Espace entre l'icône et le titre */
+    align-items: center;
+    gap: 15px;
     margin-bottom: 25px;
+    min-height: 62px;
 }
 
 /* 6. L'Icône (à gauche du titre, dans un cercle) */
@@ -2398,9 +2409,14 @@ p {
 }
 
 /* Adhésion : badges */
+.card-modern:last-child .card-header-modern {
+    justify-content: flex-start;
+}
+
 .badges-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px;
     margin: 10px 0 15px;
 }
