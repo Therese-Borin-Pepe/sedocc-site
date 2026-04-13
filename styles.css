@@ -262,7 +262,7 @@ a:hover {
     justify-content: center;
     padding-top: 120px;
     padding-bottom: 60px;
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
     overflow: hidden;
     min-height: 60vh;
 }
@@ -438,7 +438,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 .mission > .container > h2 {
@@ -617,7 +617,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 .team-grid {
@@ -741,7 +741,7 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 .partners .section-header h3 {
@@ -958,9 +958,9 @@ a.btn-secondary:hover {
 .page-header {
     position: relative;
     z-index: 1;
-    padding-top: 130px; /* Légèrement remonté */
-    padding-bottom: 5px !important; /* Presque plus d'espace en bas */
-    background: transparent;
+    padding-top: 130px;
+    padding-bottom: 5px !important;
+    background: rgba(255, 245, 236, 0.55);
     text-align: center;
 }
 }
@@ -974,12 +974,12 @@ a.btn-secondary:hover {
     position: relative;
     z-index: 1;
     padding: var(--spacing-lg) 0 var(--spacing-2xl);
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 .page-content {
-    padding: 0px 0 var(--spacing-2xl) !important; /* Le 0px supprime le vide du haut */
-    background: transparent;
+    padding: 0px 0 var(--spacing-2xl) !important;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 .page-content h2 {
@@ -1698,9 +1698,9 @@ a.evenement-card:hover {
     margin-bottom: var(--spacing-lg);
 }
 .page-header {
-    padding-top: 140px; /* Ajusté pour laisser respirer le menu sans trop descendre */
+    padding-top: 140px;
     padding-bottom: var(--spacing-sm);
-    background: linear-gradient(135deg, #FFF5EC 0%, #FFEDE6 100%);
+    background: linear-gradient(135deg, rgba(255,245,236,0.55) 0%, rgba(255,237,230,0.55) 100%);
     text-align: center;
 }
 
@@ -1887,7 +1887,7 @@ a.evenement-card:hover {
 .page-bubbles .bubble {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.45;
+    opacity: 0.6;
     filter: blur(1.5px);
     border: 1px solid rgba(245, 200, 160, 0.2);
 }
@@ -1913,9 +1913,9 @@ a.evenement-card:hover {
     background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 42%, rgba(237,186,152,0.3) 72%, transparent);
     box-shadow: inset -7px -7px 18px rgba(237,186,152,0.13), inset 4px 4px 12px rgba(255,255,255,0.28);
 }
-/* Petite bulle - centre gauche */
+/* Bulle - centre gauche */
 .page-bubbles .b4 {
-    width: 50px; height: 50px;
+    width: 110px; height: 110px;
     top: 50%; left: 25%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
     box-shadow: inset -3px -3px 8px rgba(232,168,120,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
@@ -1927,10 +1927,10 @@ a.evenement-card:hover {
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
     box-shadow: inset -6px -6px 16px rgba(229,184,152,0.12), inset 3px 3px 12px rgba(255,255,255,0.25);
 }
-/* Petite bulle - centre haut */
+/* Bulle - centre haut */
 .page-bubbles .b6 {
-    width: 65px; height: 65px;
-    top: 15%; left: 35%;
+    width: 140px; height: 140px;
+    top: 15%; left: 40%;
     background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
     box-shadow: inset -4px -4px 10px rgba(224,160,136,0.1), inset 2px 2px 8px rgba(255,255,255,0.22);
 }
@@ -1941,10 +1941,10 @@ a.evenement-card:hover {
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
     box-shadow: inset -7px -7px 16px rgba(232,176,144,0.12), inset 3px 3px 12px rgba(255,255,255,0.22);
 }
-/* Petite bulle - centre droit */
+/* Bulle - centre droit */
 .page-bubbles .b8 {
-    width: 45px; height: 45px;
-    top: 42%; right: 20%;
+    width: 100px; height: 100px;
+    top: 42%; right: 25%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
     box-shadow: inset -3px -3px 8px rgba(229,184,152,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
 }
@@ -2043,7 +2043,7 @@ p {
 /* --- ACCUEIL (Style spécial) --- */
 .hero {
     position: relative; text-align: center;
-    background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-warm) 100%);
+    background: linear-gradient(135deg, rgba(255,245,236,0.55) 0%, rgba(255,237,230,0.55) 100%);
     padding: 180px 20px 100px; overflow: hidden;
 }
 .hero-logo {
@@ -2122,7 +2122,7 @@ p {
     position: relative;
     z-index: 1;
     padding: 30px 0 60px;
-    background: transparent;
+    background: rgba(255, 245, 236, 0.55);
 }
 
 /* 2. Le Header (Titre : Pourquoi nous rejoindre ?) */
@@ -2448,16 +2448,17 @@ p {
         overflow: hidden;
     }
     .page-bubbles .bubble {
-        opacity: 0.35;
+        opacity: 0.55;
+        filter: blur(1px);
     }
-    .page-bubbles .b1 { width: 110px; height: 110px; top: 3%; right: -15px; }
-    .page-bubbles .b2 { width: 70px; height: 70px; top: 25%; left: -10px; }
-    .page-bubbles .b3 { width: 90px; height: 90px; bottom: 18%; right: -10px; }
-    .page-bubbles .b4 { width: 35px; height: 35px; top: 45%; left: 15%; }
-    .page-bubbles .b5 { width: 75px; height: 75px; bottom: 6%; left: -10px; }
-    .page-bubbles .b6 { width: 40px; height: 40px; top: 12%; left: 30%; }
-    .page-bubbles .b7 { width: 100px; height: 100px; top: 60%; right: -20px; }
-    .page-bubbles .b8 { width: 30px; height: 30px; top: 38%; right: 15%; }
+    .page-bubbles .b1 { width: 130px; height: 130px; top: 3%; right: -15px; }
+    .page-bubbles .b2 { width: 85px; height: 85px; top: 25%; left: -10px; }
+    .page-bubbles .b3 { width: 110px; height: 110px; bottom: 18%; right: -10px; }
+    .page-bubbles .b4 { width: 75px; height: 75px; top: 45%; left: 20%; }
+    .page-bubbles .b5 { width: 90px; height: 90px; bottom: 6%; left: -10px; }
+    .page-bubbles .b6 { width: 85px; height: 85px; top: 12%; left: 35%; }
+    .page-bubbles .b7 { width: 120px; height: 120px; top: 60%; right: -20px; }
+    .page-bubbles .b8 { width: 65px; height: 65px; top: 38%; right: 20%; }
     .page-bubbles .hero-b1 { width: 50px; height: 50px; }
     .page-bubbles .hero-b2 { width: 28px; height: 28px; }
     .page-bubbles .hero-b3 { width: 55px; height: 55px; }

@@ -269,20 +269,16 @@ if ('loading' in HTMLImageElement.prototype) {
 // Tabs (Traitements page)
 // ==========================================
 
-var tabBtns = document.querySelectorAll('.tab-btn');
-tabBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-        var tabId = this.getAttribute('data-tab');
-
-        // Remove active from all buttons and contents
-        tabBtns.forEach(function(b) { b.classList.remove('active'); });
-        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
-
-        // Activate clicked tab
-        this.classList.add('active');
-        var target = document.getElementById('tab-' + tabId);
-        if (target) target.classList.add('active');
-    });
+// Event delegation for dynamically created tab buttons
+document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.tab-btn');
+    if (!btn) return;
+    var tabId = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+    btn.classList.add('active');
+    var target = document.getElementById('tab-' + tabId);
+    if (target) target.classList.add('active');
 });
 
 // ==========================================
