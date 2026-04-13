@@ -1115,10 +1115,11 @@ function initTabEditor() {
 function extractEditableContent(html) {
     const temp = document.createElement('div');
     temp.innerHTML = html;
-    // tab-with-image: get inner div text content (not the img)
+    // tab-with-image: get all inner divs text content (not the img)
     const sections = temp.querySelectorAll('.tab-with-image > div:first-child');
     if (sections.length > 0) {
-        return Array.from(sections).map(function(s) { return s.innerHTML; }).join('\n<hr>\n');
+        // Concatenate all sections — they'll be reconstructed using original <h3> titles
+        return Array.from(sections).map(function(s) { return s.innerHTML; }).join('');
     }
     // bilan-section: flatten to readable text
     const bilan = temp.querySelector('.bilan-section');
@@ -1134,8 +1135,26 @@ function rebuildTabContent(editedHtml, imagePath, originalContent) {
         temp.innerHTML = originalContent;
         const origSections = temp.querySelectorAll('.tab-with-image');
         if (origSections.length > 1) {
-            // Split edited content by <hr> separator
-            const parts = editedHtml.split(/\n?<hr>\n?/);
+            // Find the <h3> titles from each original section to split the edited content
+            const splitTitles = [];
+            origSections.forEach(function(sec, i) {
+                if (i > 0) {
+                    const h3 = sec.querySelector('h3');
+                    if (h3) splitTitles.push(h3.outerHTML);
+                }
+            });
+            // Split edited HTML at the <h3> boundaries
+            let parts = [editedHtml];
+            splitTitles.forEach(function(title) {
+                const last = parts.pop();
+                const idx = last.indexOf(title);
+                if (idx >= 0) {
+                    parts.push(last.substring(0, idx));
+                    parts.push(title + last.substring(idx + title.length));
+                } else {
+                    parts.push(last);
+                }
+            });
             let result = '';
             origSections.forEach(function(sec, i) {
                 const img = sec.querySelector('img');
