@@ -1,0 +1,35 @@
+{
+  "pageTitle": "Ressources",
+  "tabs": [
+    {
+      "id": "reseau-expertise",
+      "title": "Acc\u00e8s \u00e0 un r\u00e9seau national d\u2019expertise pour le SED-nv",
+      "content": "<div class=\"tab-with-image\"><div><p>Le Syndrome d\u2019Ehlers-Danlos non vasculaire (SED-nv) est une maladie n\u00e9cessitant une prise en charge sp\u00e9cialis\u00e9e et pluridisciplinaire. En France, un r\u00e9seau national structur\u00e9 permet aux patients d\u2019\u00eatre orient\u00e9s vers des centres experts, assurant un diagnostic pr\u00e9cis, un suivi personnalis\u00e9 et l\u2019acc\u00e8s aux avanc\u00e9es scientifiques.</p><p>Les centres de r\u00e9f\u00e9rence, comme ceux de Paris (AP-HP H\u00f4pital Necker \u2013 Enfants malades, Dr Caroline Michot) et Clermont-Ferrand (Dr B\u00e9n\u00e9dicte Pontier), coordonnent la prise en charge et guident les patients, garantissant une expertise de haut niveau.</p></div><img src=\"images/ressources-hero.jpg\" alt=\"R\u00e9seau d'expertise SED\"></div>",
+      "image": "images/ressources-hero.jpg"
+    },
+    {
+      "id": "centres-competence",
+      "title": "Pourquoi ce r\u00e9seau est essentiel",
+      "content": "<p>Les centres de comp\u00e9tence sont r\u00e9partis sur tout le territoire et comprennent des sp\u00e9cialistes d\u00e9di\u00e9s, par exemple :</p><div class=\"centres-list\"><ul><li>Angers : Dr Ana\u00efs Rousseau</li><li>Caen : Dr Alexandra Desdoits</li><li>La R\u00e9union : Dr Emmanuelle Vuillaume-Cerdan</li><li>Lille : Pr Vincent Tiffreau</li><li>Lyon : Dr Amandine Bernadou</li><li>Marseille : Dr Tiffany Busa</li><li>Montpellier : Dr Marjolaine Willems</li><li>Nancy : Pr Roland Jaussaud</li><li>Perpignan : Dr Jean-Michel Enjalbert</li><li>Poitiers : Pr Gwena\u00ebl Le Guyader</li><li>Toulouse (centre p\u00e9diatrique) : Dr Catherine Donskoff</li><li>Tours : Pr Thierry Odent</li></ul></div>",
+      "image": ""
+    },
+    {
+      "id": "proximite-soins",
+      "title": "Proximit\u00e9 de soins adapt\u00e9s",
+      "content": "<div class=\"tab-with-image\"><div><p><a href=\"https://www.filiere-oscar.fr/13575-annuaire-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Annuaire du r\u00e9seau OSCAR</a></p><p><a href=\"https://www.filiere-oscar.fr/13576-carte-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Carte interactive du r\u00e9seau OSCAR</a></p><div class=\"parcours-notice\"><p><strong>Parcours de soins en cours de construction pour le syndrome d\u2019Ehlers-Danlos en Occitanie.</strong> Pour plus de renseignements, n\u2019h\u00e9sitez pas \u00e0 nous contacter : <a href=\"mailto:sedocc31@gmail.com\">sedocc31@gmail.com</a></p></div></div><img src=\"images/ressources-soins.jpg\" alt=\"Proximit\u00e9 de soins\"></div>",
+      "image": "images/ressources-soins.jpg"
+    },
+    {
+      "id": "livrets-information",
+      "title": "Livrets d\u2019information m\u00e9dicale pour femmes et sant\u00e9 dentaire",
+      "content": "<div class=\"documents-grid\"><div class=\"document-card\"><h3>Vie de femme et grossesse</h3><p>Ce livret informe les femmes atteintes du SED NV sur la vie gyn\u00e9cologique, la grossesse et l\u2019accouchement. Il propose des conseils pratiques pour la gestion des sympt\u00f4mes et un accompagnement personnalis\u00e9 \u00e0 chaque \u00e9tape.</p><a href=\"documents/livret-femme-grossesse.pdf\" class=\"btn btn-primary\" target=\"_blank\">T\u00e9l\u00e9charger</a></div><div class=\"document-card\"><h3>Dentaire CHU Toulouse</h3><p>Ce livret d\u00e9taille les manifestations orales fr\u00e9quentes, les conseils d\u2019hygi\u00e8ne, ainsi que les adaptations n\u00e9cessaires lors des soins dentaires pour pr\u00e9venir complications et douleurs. Une ressource essentielle pour un suivi dentaire s\u00fbr et adapt\u00e9.</p><a href=\"documents/livret-sante-bucco-dentaire.pdf\" class=\"btn btn-primary\" target=\"_blank\">T\u00e9l\u00e9charger</a></div></div>",
+      "image": ""
+    },
+    {
+      "id": "protocole-chirurgical",
+      "title": "Le protocole de prise en charge en cas de chirurgie",
+      "content": "<div class=\"tab-with-image\"><div><a href=\"documents/prise-en-charge-chirurgicale.pdf\" class=\"btn btn-primary\" target=\"_blank\">T\u00e9l\u00e9charger</a></div><img src=\"images/ressources-chirurgie.jpg\" alt=\"Prise en charge chirurgicale\"></div>",
+      "image": "images/ressources-chirurgie.jpg"
+    }
+  ]
+}

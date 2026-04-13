@@ -1126,6 +1126,16 @@ a.btn-secondary:hover {
     align-self: flex-start;
 }
 
+/* Ressource sections (vertical layout) */
+.ressource-section {
+    margin-bottom: var(--spacing-xxl);
+}
+
+.ressource-section h2 {
+    color: var(--primary);
+    margin-bottom: var(--spacing-md);
+}
+
 /* Tabs (Traitements) */
 .tabs {
     margin: var(--spacing-lg) 0;
