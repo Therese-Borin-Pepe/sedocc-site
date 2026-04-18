@@ -192,7 +192,7 @@
 
             <div id="event-form-container" style="display:none;">
                 <div class="add-form">
-                    <h2 class="section-title">Ajouter un evenement</h2>
+                    <h2 class="section-title" id="event-form-title">Ajouter un evenement</h2>
                     <div class="form-group">
                         <label>Titre *</label>
                         <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
@@ -211,6 +211,7 @@
                         <label>Description (optionnel)</label>
                         <textarea id="ev-content" placeholder="Decrivez l'evenement..."></textarea>
                     </div>
+                    <input type="hidden" id="ev-edit-index" value="-1">
                     <div style="display:flex; gap:10px;">
                         <button class="btn btn-primary" id="ev-save-btn" onclick="saveEvent()">Enregistrer</button>
                         <button class="btn btn-secondary" onclick="hideEventForm()">Annuler</button>
@@ -718,25 +719,41 @@ function renderEventList() {
                 <span>${ev.date}</span>
             </div>
             <div class="item-actions">
+                ${i > 0 ? `<button class="btn btn-move" onclick="moveEvent(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${i < evenements.length-1 ? `<button class="btn btn-move" onclick="moveEvent(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-warning" onclick="editEvent(${i})">Modifier</button>
                 <button class="btn btn-danger" onclick="deleteEvent(${i})">Supprimer</button>
             </div>
         </div>
     `).join('');
 }
 
-function showEventForm() {
+function showEventForm(editIndex) {
     document.getElementById('event-form-container').style.display = 'block';
-    ['ev-title','ev-date','ev-content'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ev-edit-index').value = editIndex !== undefined ? editIndex : -1;
+    document.getElementById('event-form-title').textContent = editIndex !== undefined ? 'Modifier un evenement' : 'Ajouter un evenement';
+    if (editIndex !== undefined) {
+        const ev = evenements[editIndex];
+        document.getElementById('ev-title').value = ev.title;
+        document.getElementById('ev-date').value = ev.date;
+        document.getElementById('ev-content').value = ev.content || '';
+        document.getElementById('ev-image-preview').style.display = 'none';
+    } else {
+        ['ev-title','ev-date','ev-content'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('ev-image-preview').style.display = 'none';
+    }
     document.getElementById('ev-image').value = '';
-    document.getElementById('ev-image-preview').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function hideEventForm() { document.getElementById('event-form-container').style.display = 'none'; }
+function editEvent(i) { showEventForm(i); }
 
 async function saveEvent() {
     const title = document.getElementById('ev-title').value.trim();
     const date = document.getElementById('ev-date').value.trim();
     const content = document.getElementById('ev-content').value.trim();
     const imageInput = document.getElementById('ev-image');
+    const editIndex = parseInt(document.getElementById('ev-edit-index').value);
     if (!title || !date) { showStatus('Remplissez le titre et la date.', 'error'); return; }
 
     const btn = document.getElementById('ev-save-btn');
@@ -744,7 +761,7 @@ async function saveEvent() {
 
     try {
         const id = generateId(title);
-        let imagePath = 'images/evenements/ateliers.png';
+        let imagePath = editIndex >= 0 ? evenements[editIndex].image : 'images/evenements/ateliers.png';
         if (imageInput.files && imageInput.files[0]) {
             const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
             imagePath = `images/evenements/${id}.${ext}`;
@@ -754,12 +771,30 @@ async function saveEvent() {
         if (content && !content.includes('<')) {
             finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
         }
-        evenements.unshift({ id, title, date, image: imagePath, content: finalContent });
-        eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Ajout evenement: ${title}`);
-        showStatus(`Evenement "${title}" ajoute ! Mise a jour dans quelques secondes.`, 'success');
+        if (editIndex >= 0) {
+            evenements[editIndex] = { ...evenements[editIndex], id, title, date, image: imagePath, content: finalContent };
+            eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Modification evenement: ${title}`);
+            showStatus(`Evenement "${title}" modifie.`, 'success');
+        } else {
+            evenements.unshift({ id, title, date, image: imagePath, content: finalContent });
+            eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Ajout evenement: ${title}`);
+            showStatus(`Evenement "${title}" ajoute !`, 'success');
+        }
         hideEventForm(); renderEventList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
     btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function moveEvent(index, dir) {
+    const newIndex = index + dir;
+    if (newIndex < 0 || newIndex >= evenements.length) return;
+    const temp = evenements[index];
+    evenements[index] = evenements[newIndex];
+    evenements[newIndex] = temp;
+    try {
+        eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, 'Reordonnement evenements');
+        renderEventList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
 }
 
 async function deleteEvent(index) {
