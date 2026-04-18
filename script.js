@@ -202,6 +202,46 @@ window.addEventListener('load', function() {
 });
 
 // ==========================================
+// Lightbox
+// ==========================================
+
+(function initLightbox() {
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.innerHTML = '<div class="lightbox-inner"><img src="" class="lightbox-img" alt=""><button class="lightbox-close">&times;</button></div>';
+    document.body.appendChild(overlay);
+
+    var lightboxImg = overlay.querySelector('.lightbox-img');
+
+    function openLightbox(src, alt) {
+        lightboxImg.src = src;
+        lightboxImg.alt = alt || '';
+        overlay.classList.add('active');
+    }
+
+    function closeLightbox() {
+        overlay.classList.remove('active');
+        lightboxImg.src = '';
+    }
+
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay || e.target.classList.contains('lightbox-close')) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('lightbox-trigger')) {
+            openLightbox(e.target.src, e.target.alt);
+        }
+    });
+})();
+
+// ==========================================
 // Form Validation (if needed later)
 // ==========================================
 

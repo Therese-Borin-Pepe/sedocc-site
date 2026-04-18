@@ -16,7 +16,7 @@
     {
       "id": "proximite-soins",
       "title": "Proximit\u00e9 de soins adapt\u00e9s",
-      "content": "<div class=\"tab-with-image\"><div><p><a href=\"https://www.filiere-oscar.fr/13575-annuaire-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Annuaire du r\u00e9seau OSCAR</a></p><p><a href=\"https://www.filiere-oscar.fr/13576-carte-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Carte interactive du r\u00e9seau OSCAR</a></p></div><img src=\"images/ressources-soins.jpg\" alt=\"Proximit\u00e9 de soins\"></div><div class=\"parcours-notice\"><p><strong>Parcours de soins en cours de construction pour le syndrome d\u2019Ehlers-Danlos en Occitanie.</strong> Pour plus de renseignements, n\u2019h\u00e9sitez pas \u00e0 nous contacter : <a href=\"mailto:sedocc31@gmail.com\">sedocc31@gmail.com</a></p></div>",
+      "content": "<div class=\"tab-with-image\"><div><a href=\"https://www.filiere-oscar.fr/13575-annuaire-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Annuaire du r\u00e9seau OSCAR</a><a href=\"https://www.filiere-oscar.fr/13576-carte-du-reseau-oscar.htm\" class=\"btn btn-secondary\" target=\"_blank\">Carte interactive du r\u00e9seau OSCAR</a></div><img src=\"images/ressources-soins.jpg\" alt=\"Proximit\u00e9 de soins\"></div><div class=\"parcours-notice\"><p><strong>Parcours de soins en cours de construction pour le syndrome d\u2019Ehlers-Danlos en Occitanie.</strong> Pour plus de renseignements, n\u2019h\u00e9sitez pas \u00e0 nous contacter : <a href=\"mailto:sedocc31@gmail.com\">sedocc31@gmail.com</a></p></div>",
       "image": "images/ressources-soins.jpg"
     },
     {
@@ -28,7 +28,7 @@
     {
       "id": "protocole-chirurgical",
       "title": "Le protocole de prise en charge en cas de chirurgie",
-      "content": "<div class=\"tab-with-image\"><div><p>Ce protocole détaille les recommandations de prise en charge pour les patients atteints du SED en cas d'intervention chirurgicale. À transmettre à votre équipe médicale avant toute opération.</p><a href=\"documents/prise-en-charge-chirurgicale.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div><img src=\"images/ressources-chirurgie.jpg\" alt=\"Prise en charge chirurgicale\"></div>",
+      "content": "<div class=\"tab-with-image\"><div><p>Ce protocole d\u00e9taille les recommandations de prise en charge pour les patients atteints du SED en cas d\u2019intervention chirurgicale. \u00c0 transmettre \u00e0 votre \u00e9quipe m\u00e9dicale avant toute op\u00e9ration.</p><a href=\"documents/prise-en-charge-chirurgicale.pdf\" class=\"btn btn-primary\" target=\"_blank\">T\u00e9l\u00e9charger</a></div><img src=\"images/ressources-chirurgie.jpg\" alt=\"Prise en charge chirurgicale\"></div>",
       "image": "images/ressources-chirurgie.jpg"
     }
   ]

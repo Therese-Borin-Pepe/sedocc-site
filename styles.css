@@ -1204,11 +1204,17 @@ a.btn-secondary:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    align-self: stretch;
+    justify-content: center;
 }
 
 .tab-with-image > div .btn {
     margin-top: var(--spacing-md);
     align-self: center;
+}
+
+.tab-with-image > div .btn + .btn {
+    margin-top: var(--spacing-sm);
 }
 
 .tab-with-image.image-left {
@@ -1268,6 +1274,57 @@ a.btn-secondary:hover {
 
 .image-clickable:hover .image-overlay {
     background: rgba(120,0,30,0.82);
+}
+
+/* Lightbox */
+.lightbox-trigger {
+    cursor: zoom-in;
+}
+
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-overlay.active {
+    display: flex;
+}
+
+.lightbox-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.lightbox-img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: var(--radius-md);
+    display: block;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+    box-shadow: var(--shadow-md);
 }
 
 .tab-content ul {
