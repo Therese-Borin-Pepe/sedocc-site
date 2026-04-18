@@ -58,76 +58,22 @@
 
     <section class="page-content">
         <div class="container">
-            <p class="intro-text">Les témoignages de patients atteints du SED offrent un aperçu précieux de la réalité quotidienne de cette maladie souvent méconnue. À travers leurs récits, chacun peut découvrir des parcours uniques, des défis surmontés et la force de celles et ceux qui vivent avec le SED. Ces histoires permettent de mieux comprendre la diversité des expériences et de créer un espace d'écoute, de partage et de solidarité.</p>
-
-            <!-- Témoignage Marjorie -->
-            <div class="temoignage-section">
-                <h2>Marjorie, 23 ans, atteinte du SED classique</h2>
-                <div class="content-with-image">
-                    <div class="content-text">
-                        <blockquote>
-                            <p>« Je vis avec un syndrome d'Ehlers-Danlos de type classique et type hypermobile, diagnostiqué depuis mes 2 ans. On l'a découvert après une double luxation bilatérale des hanches. Heureusement, le pédiatre qui me suivait connaissait bien la maladie, ce qui a permis un diagnostic très précoce. J'ai eu la chance d'être prise en charge tôt mais cela n'a pas empêché la maladie d'évoluer. Malgré le diagnostic, il a été très difficile pendant longtemps de trouver des médecins réellement compétents et à l'écoute.</p>
-                            <p>Dans mon enfance, les principaux problèmes étaient une peau très fragile et une hyperlaxité articulaire, avec de nombreuses entorses. En grandissant, les choses se sont compliquées. Les douleurs digestives sont devenues plus fréquentes : constipation, douleurs abdominales, vomissements… J'ai aussi commencé à avoir des luxations de plus en plus fréquentes, au point d'avoir besoin de plusieurs interventions chirurgicales. Des troubles respiratoires sont également apparus.</p>
-                            <p>Aujourd'hui, je fais beaucoup de kinésithérapie pour maintenir ce que je peux. J'adapte mon quotidien autant que possible, même au travail. J'utilise un fauteuil roulant, des attelles, des vêtements compressifs… J'essaie de m'économiser autant que je peux. Avec le temps, et grâce à l'aide précieuse d'une association de patients, j'ai réussi à construire une équipe médicale solide autour de moi. Ce n'est pas facile tous les jours, mais je fais de mon mieux pour vivre avec la maladie, me soulager et garder un certain équilibre. »</p>
-                        </blockquote>
-                    </div>
-                    <div class="content-image">
-                        <img src="images/marjorie-temoignage.jpg" alt="Marjorie">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chansons -->
-            <div class="chansons-section">
-                <h2>Chansons de jeunes avec le SED</h2>
-                <p>Des jeunes atteints du SED partagent leurs émotions et espoirs à travers leurs chansons, offrant des messages authentiques et inspirants sur leur vécu.</p>
-                <div class="chansons-grid">
-                    <div class="chanson-card">
-                        <img src="images/chanson1.png" alt="Diamant - Ballerine, Centinelle">
-                        <h4>Diamant - Ballerine, Centinelle</h4>
-                        <a href="https://music.youtube.com/watch?v=28c9Cg6B8yU" class="btn btn-primary" target="_blank">Écouter</a>
-                    </div>
-                    <div class="chanson-card">
-                        <img src="images/chanson2.png" alt="L'échelle - Giampiero Giraldi et Katia Stella">
-                        <h4>L'échelle - Giampiero Giraldi et Katia Stella</h4>
-                        <a href="https://www.youtube.com/watch?v=XVu5NminR5o" class="btn btn-primary" target="_blank">Écouter</a>
-                    </div>
-                    <div class="chanson-card">
-                        <img src="images/chanson3.png" alt="L'hiver, Dr Minecat">
-                        <h4>L'hiver, Dr Minecat</h4>
-                        <a href="https://www.youtube.com/watch?v=AQ-VVclAAR4" class="btn btn-primary" target="_blank">Écouter</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interview FR3 -->
-            <div class="interview-section">
-                <h2>Interview FR3 – Vivre avec le SED</h2>
-                <div class="content-with-image">
-                    <div class="content-text">
-                        <p>À travers cette interview sur FR3, Thérèse atteinte du SED partage son expérience, et le militantisme pour la reconnaissance de cette maladie.</p>
-                        <a href="https://www.youtube.com/watch?v=PHFkE_JPMCE" class="btn btn-primary" target="_blank">Regarder</a>
-                    </div>
-                    <div class="content-image">
-                        <img src="images/interview-fr3.png" alt="Interview FR3">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Interview Maïlys -->
-            <div class="interview-section">
-                <h2>Interview de Maïlys Reynès</h2>
-                <div class="content-with-image">
-                    <div class="content-text">
-                        <p>Maïlys, atteinte du syndrome d'Ehlers-Danlos, partage un témoignage bouleversant de résilience où le rugby a transformé ses épreuves de santé en véritables tremplins. Le rugby ne lui a pas seulement permis de reconstruire sa confiance et son corps, mais est devenu le moteur de sa vie professionnelle et personnelle. À travers son histoire, Maïlys démontre que la persévérance et la passion peuvent ouvrir des portes insoupçonnées, même face à l'adversité la plus tenace. Actuellement, elle projette de s'envoler pour le Canada afin de vivre de nouvelles expériences.</p>
-                        <p>Découvrez l'interview intégrale pour vous laisser inspirer par son incroyable parcours !</p>
-                        <a href="documents/mailys-reynes.pdf" class="btn btn-primary" target="_blank">Lire</a>
-                    </div>
-                    <div class="content-image">
-                        <img src="images/interview-mailys.png" alt="Interview Maïlys Reynès">
-                    </div>
-                </div>
-            </div>
+            <div id="impacts-sections"></div>
+            <script>
+            (async function() {
+                try {
+                    const res = await fetch('data/pages/impacts.json');
+                    const data = await res.json();
+                    const container = document.getElementById('impacts-sections');
+                    data.tabs.forEach(function(s) {
+                        const block = document.createElement('div');
+                        block.className = 'ressource-section';
+                        block.innerHTML = '<h2>' + s.title + '</h2>' + s.content;
+                        container.appendChild(block);
+                    });
+                } catch(e) { console.error('Erreur chargement impacts:', e); }
+            })();
+            </script>
         </div>
     </section>
 

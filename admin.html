@@ -36,17 +36,36 @@
         }
         .login-box input:focus { outline: none; border-color: #8B1A2B; }
 
-        /* Tabs */
-        .admin-tabs {
-            display: flex; gap: 0; margin-bottom: 25px; border-bottom: 3px solid #8B1A2B;
+        /* Navigation principale */
+        .admin-nav-main {
+            display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap;
         }
-        .admin-tab {
-            padding: 12px 30px; background: #e8ddd4; border: none; border-radius: 10px 10px 0 0;
+        .admin-nav-btn {
+            padding: 12px 22px; background: #e8ddd4; border: none; border-radius: 10px 10px 0 0;
             font-family: 'Poppins', sans-serif; font-size: 1rem; font-weight: 600;
             cursor: pointer; color: #666; transition: all 0.2s;
         }
-        .admin-tab.active { background: #8B1A2B; color: white; }
-        .admin-tab:hover:not(.active) { background: #d4c5b9; }
+        .admin-nav-btn.active { background: #8B1A2B; color: white; }
+        .admin-nav-btn:hover:not(.active) { background: #d4c5b9; }
+
+        /* Sous-navigation */
+        .admin-nav-sub {
+            display: none; flex-wrap: wrap; gap: 3px;
+            background: #f5ede6; border-left: 3px solid #8B1A2B; border-right: 3px solid #8B1A2B;
+            padding: 8px 12px; margin-bottom: 0;
+        }
+        .admin-nav-sub.active { display: flex; }
+        .admin-sub-btn {
+            padding: 7px 18px; background: transparent; border: 1px solid #c9a99a; border-radius: 6px;
+            font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 500;
+            cursor: pointer; color: #8B1A2B; transition: all 0.2s;
+        }
+        .admin-sub-btn.active { background: #8B1A2B; color: white; border-color: #8B1A2B; }
+        .admin-sub-btn:hover:not(.active) { background: #d4c5b9; border-color: #8B1A2B; }
+
+        .admin-nav-divider {
+            border-top: 3px solid #8B1A2B; margin-bottom: 25px;
+        }
         .tab-panel { display: none; }
         .tab-panel.active { display: block; }
 
@@ -173,19 +192,36 @@
 
         <div id="status-msg" class="status"></div>
 
-        <!-- TABS -->
-        <div class="admin-tabs">
-            <button class="admin-tab active" onclick="switchTab('evenements')">Evenements</button>
-            <button class="admin-tab" onclick="switchTab('equipe')">Equipe</button>
-            <button class="admin-tab" onclick="switchTab('actualites')">Actualites</button>
-            <button class="admin-tab" onclick="switchTab('partenaires')">Partenaires</button>
-            <button class="admin-tab" onclick="switchTab('contenus')">Contenus</button>
-            <button class="admin-tab" onclick="switchTab('ressources')">Ressources</button>
-            <button class="admin-tab" onclick="switchTab('onglets')">Onglets</button>
+        <!-- NAVIGATION PRINCIPALE -->
+        <div class="admin-nav-main">
+            <button class="admin-nav-btn active" onclick="switchMainNav('association')">Notre association</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('adhesion')">Adhésion</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('sed')">SED</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('evenements')">Évènements</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('ressources')">Ressources</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('droits')">Vos droits</button>
         </div>
 
+        <!-- SOUS-NAVIGATION Notre association -->
+        <div class="admin-nav-sub active" id="subnav-association">
+            <button class="admin-sub-btn active" onclick="switchTab('contenus', 'association')">Contenus</button>
+            <button class="admin-sub-btn" onclick="switchTab('equipe', 'association')">Équipe</button>
+            <button class="admin-sub-btn" onclick="switchTab('partenaires', 'association')">Partenaires</button>
+        </div>
+
+        <!-- SOUS-NAVIGATION SED -->
+        <div class="admin-nav-sub" id="subnav-sed">
+            <button class="admin-sub-btn active" onclick="switchTab('actualites', 'sed')">Actualités médicales</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('traitements', 'sed')">Traitements</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('diagnostic', 'sed')">Diagnostic</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('sed', 'sed')">Qu'est-ce que le SED ?</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('impacts', 'sed')">Impacts</button>
+        </div>
+
+        <div class="admin-nav-divider"></div>
+
         <!-- ==================== EVENEMENTS TAB ==================== -->
-        <div id="tab-evenements" class="tab-panel active">
+        <div id="tab-evenements" class="tab-panel">
             <div class="actions-bar">
                 <button class="btn btn-success" onclick="showEventForm()">+ Ajouter un evenement</button>
             </div>
@@ -343,7 +379,7 @@
         </div>
 
         <!-- ==================== CONTENUS TAB ==================== -->
-        <div id="tab-contenus" class="tab-panel">
+        <div id="tab-contenus" class="tab-panel active">
             <h2 class="section-title">Contenus de la page d'accueil</h2>
             <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Modifiez les textes qui apparaissent sur la page d'accueil du site.</p>
 
@@ -429,20 +465,17 @@
 
         <!-- ==================== ONGLETS TAB ==================== -->
         <div id="tab-onglets" class="tab-panel">
-            <h2 class="section-title">Gestion des onglets par page</h2>
-            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Selectionnez une page pour gerer ses onglets (ajouter, modifier, supprimer, reordonner).</p>
+            <h2 class="section-title" id="onglets-page-title">Gestion des onglets</h2>
 
-            <div class="form-group">
-                <label>Page</label>
-                <select id="og-page-select" onchange="loadPageTabs()" style="width:100%; padding:10px 14px; border:2px solid #ddd; border-radius:8px; font-size:0.95rem; font-family:'Poppins',sans-serif;">
-                    <option value="">-- Choisir une page --</option>
-                    <option value="traitements">Traitements</option>
-                    <option value="diagnostic">Diagnostic</option>
-                    <option value="sed">Qu'est-ce que le SED ?</option>
-                    <option value="impacts">Impacts et temoignages</option>
-                    <option value="droits">Vos droits : MDPH - ALD</option>
-                </select>
-            </div>
+            <select id="og-page-select" onchange="loadPageTabs()" style="display:none;">
+                <option value="">-- Choisir une page --</option>
+                <option value="adhesion">Adhésion et soutien</option>
+                <option value="traitements">Traitements</option>
+                <option value="diagnostic">Diagnostic</option>
+                <option value="sed">Qu'est-ce que le SED ?</option>
+                <option value="impacts">Impacts et temoignages</option>
+                <option value="droits">Vos droits : MDPH - ALD</option>
+            </select>
 
             <div id="onglets-content" style="display:none;">
                 <div class="actions-bar">
@@ -602,14 +635,73 @@ function logout() {
     document.getElementById('login-error').className = 'status';
 }
 
-// ===== TABS =====
-function switchTab(tab) {
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+// ===== NAVIGATION =====
+let currentMainNav = 'association';
+
+function switchMainNav(section) {
+    // Boutons principaux
+    document.querySelectorAll('.admin-nav-btn').forEach(b => b.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    // Sous-navs
+    document.querySelectorAll('.admin-nav-sub').forEach(s => s.classList.remove('active'));
+    const subnav = document.getElementById('subnav-' + section);
+    if (subnav) subnav.classList.add('active');
+
+    currentMainNav = section;
+
+    // Activer le bon panneau selon la section
+    if (section === 'association') switchTab('contenus', 'association');
+    else if (section === 'sed') switchTab('actualites', 'sed');
+    else if (section === 'adhesion') switchOnglets('adhesion', 'adhesion');
+    else if (section === 'evenements') { switchTab('evenements', 'evenements'); }
+    else if (section === 'ressources') switchTab('ressources', 'ressources');
+    else if (section === 'droits') switchOnglets('droits', 'droits');
+}
+
+function switchTab(tab, parentNav) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
-    const tabs = { evenements:0, equipe:1, actualites:2, partenaires:3, contenus:4, ressources:5, onglets:6 };
-    document.querySelectorAll('.admin-tab')[tabs[tab]].classList.add('active');
+
+    // Mettre à jour les sous-boutons actifs
+    const nav = parentNav || currentMainNav;
+    const subnav = document.getElementById('subnav-' + nav);
+    if (subnav) {
+        subnav.querySelectorAll('.admin-sub-btn').forEach(b => b.classList.remove('active'));
+        const allBtns = subnav.querySelectorAll('.admin-sub-btn');
+        allBtns.forEach(b => { if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + tab + "'")) b.classList.add('active'); });
+    }
+
     if (tab === 'ressources') loadResSections();
+    if (tab === 'contenus') setTimeout(loadContenus, 100);
+}
+
+const PAGE_TITLES = {
+    adhesion: 'Adhésion et soutien',
+    traitements: 'Traitements & prises en charge',
+    diagnostic: 'Diagnostic',
+    sed: "Qu'est-ce que le SED ?",
+    impacts: 'Impacts et témoignages',
+    droits: 'Vos droits : MDPH – ALD'
+};
+
+function switchOnglets(page, parentNav) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-onglets').classList.add('active');
+    document.getElementById('og-page-select').value = page;
+    const titleEl = document.getElementById('onglets-page-title');
+    if (titleEl) titleEl.textContent = PAGE_TITLES[page] || 'Gestion des onglets';
+    loadPageTabs();
+
+    // Mettre à jour les sous-boutons actifs
+    const nav = parentNav || currentMainNav;
+    const subnav = document.getElementById('subnav-' + nav);
+    if (subnav) {
+        subnav.querySelectorAll('.admin-sub-btn').forEach(b => b.classList.remove('active'));
+        subnav.querySelectorAll('.admin-sub-btn').forEach(b => {
+            if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + page + "'")) b.classList.add('active');
+        });
+    }
 }
 
 // ===== DATA HELPERS (supports local + GitHub) =====

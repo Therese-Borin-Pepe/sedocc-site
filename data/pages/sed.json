@@ -1,0 +1,23 @@
+{
+  "pageTitle": "Qu'est-ce que le SED ?",
+  "tabs": [
+    {
+      "id": "intro-sed",
+      "title": "Qu'est-ce que le syndrome d'Ehlers-Danlos (SED) ?",
+      "content": "<div class=\"tab-with-image\"><div><p>Le syndrome d'Ehlers-Danlos (SED) regroupe un ensemble de maladies rares d'origine génétique. Ces maladies affectent le tissu conjonctif, un tissu essentiel qui soutient, protège et relie les différentes structures du corps (peau, os, vaisseaux, organes, etc.).</p><p>Chez les personnes atteintes de SED, ce tissu est anormalement fragile ou souple, ce qui entraîne une grande variété de symptômes.</p><p>Les signes du SED apparaissent généralement dès l'enfance, mais leur intensité et leur apparition peuvent varier selon le type de SED et sa sévérité. On compte actuellement 15 types différents, chacun ayant ses particularités, complications et traitements spécifiques.</p></div><img src=\"images/sed-hero.jpg\" alt=\"Syndrome d'Ehlers-Danlos\"></div>",
+      "image": "images/sed-hero.jpg"
+    },
+    {
+      "id": "symptomes",
+      "title": "Les principaux symptômes du SED",
+      "content": "<div class=\"symptoms-grid\"><div class=\"symptom-card\"><img src=\"images/entorses.jpg\" alt=\"Hyperlaxité articulaire\"><h3>Hyperlaxité articulaire</h3><p>Les articulations sont anormalement souples, ce qui peut provoquer des entorses, des luxations, subluxations fréquentes et des douleurs chroniques et invalidantes</p></div><div class=\"symptom-card\"><img src=\"images/peaufine.jpg\" alt=\"Peau fragile et élastique\"><h3>Peau fragile et élastique</h3><p>La peau est souvent très fine, douce et extensible, avec une tendance aux hématomes et une mauvaise et longue cicatrisation (cicatrices fines, larges ou atrophiques)</p></div><div class=\"symptom-card\"><img src=\"images/douleurs.jpg\" alt=\"Douleurs chroniques et fatigue\"><h3>Douleurs chroniques et fatigue</h3><p>Les douleurs peuvent toucher toutes les articulations, les tendons, les ligaments, les muscles, le dos, le thorax, l'abdomen et provoquer des céphalées (maux de tête). La fatigue est chronique, souvent intense, durable et présente dès le réveil</p></div><div class=\"symptom-card\"><img src=\"images/vertiges.jpg\" alt=\"Troubles de la proprioception\"><h3>Troubles de la proprioception</h3><p>Les personnes atteintes peuvent avoir du mal à percevoir la position de leur corps dans l'espace, ce qui entraîne : des vertiges, des troubles de l'équilibre, des troubles visuels</p></div></div>",
+      "image": ""
+    },
+    {
+      "id": "diagnostic",
+      "title": "Un diagnostic essentiel pour une meilleure prise en charge",
+      "content": "<div class=\"tab-with-image\"><div><p>Le diagnostic repose sur :</p><ul><li>Un examen clinique approfondi (se référer au PNDS sur le site de <a href=\"https://www.has-sante.fr/\" target=\"_blank\">l'HAS</a>).</li><li>Une étude des antécédents familiaux.</li><li>Parfois un test génétique (sauf pour le type hypermobile, dont la cause génétique est en cours d'identification)</li></ul></div><img src=\"images/sed-types.jpg\" alt=\"Types de SED\"></div><div class=\"diagnostic-images\"><img src=\"images/test-genetique.jpg\" alt=\"Test génétique\"><img src=\"images/examen-clinique.jpg\" alt=\"Examen clinique approfondi\"><img src=\"images/famille.jpg\" alt=\"Antécédents familiaux\"></div>",
+      "image": "images/sed-types.jpg"
+    }
+  ]
+}

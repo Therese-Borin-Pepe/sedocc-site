@@ -1,0 +1,29 @@
+{
+  "pageTitle": "Vos droits : MDPH – ALD",
+  "tabs": [
+    {
+      "id": "aides-demarches",
+      "title": "Aides et démarches",
+      "content": "<div class=\"tab-with-image\"><div><p>Le dépôt du dossier et le traitement de la demande est fait auprès de la MDPH de votre département.</p><p>Pour faciliter vos démarches, nous mettons à disposition des documents pratiques à télécharger ainsi que des liens utiles.</p><p>Les fichiers proposés sont des outils pratiques, conçus en partie en version Facile à lire et à comprendre (FALC), afin de rendre les démarches administratives plus accessibles à tous.</p></div><img src=\"images/droits-hero.jpg\" alt=\"Droits et aides\"></div>",
+      "image": "images/droits-hero.jpg"
+    },
+    {
+      "id": "documents-mdph",
+      "title": "Documents pratiques MDPH",
+      "content": "<div class=\"accordion\"><div class=\"accordion-item\"><button class=\"accordion-btn\">Aide au remplissage du dossier MDPH</button><div class=\"accordion-content\"><p><a href=\"documents/mdph-aide-remplissage-adulte.pdf\" target=\"_blank\">Aide au remplissage MDPH - Adulte (PDF)</a></p><p><a href=\"documents/mdph-aide-remplissage-enfant.pdf\" target=\"_blank\">Aide au remplissage MDPH - Enfant (PDF)</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">Dossier MDPH</button><div class=\"accordion-content\"><p><a href=\"documents/cerfa-mdph.pdf\" target=\"_blank\">Formulaire de demande MDPH - cerfa 15692-01</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">Feuille spéciale maladies rares</button><div class=\"accordion-content\"><p><a href=\"documents/cnsa-maladies-rares.pdf\" target=\"_blank\">CNSA - Formulaire Information complémentaires pour la MDPH ou la MDA - Maladies rares</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">Certificat médical à faire remplir par le médecin</button><div class=\"accordion-content\"><p><a href=\"documents/certificat-medical.pdf\" target=\"_blank\">Certificat médical - cerfa 15695-01</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">L'allocation aux adultes handicapés (AAH)</button><div class=\"accordion-content\"><p><a href=\"documents/aah.pdf\" target=\"_blank\">L'AAH - Document d'information</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">La prestation de compensation du handicap (PCH)</button><div class=\"accordion-content\"><p><a href=\"documents/pch.pdf\" target=\"_blank\">PCH</a></p><p><a href=\"documents/pch-parentalite.pdf\" target=\"_blank\">PCH parentalité</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">L'allocation d'éducation de l'enfant handicapé (AEEH)</button><div class=\"accordion-content\"><p><a href=\"documents/aeeh.pdf\" target=\"_blank\">L'AEEH - Document d'information</a></p></div></div><div class=\"accordion-item\"><button class=\"accordion-btn\">La carte mobilité inclusion, mention \"invalidité\"</button><div class=\"accordion-content\"><p><a href=\"https://www.monparcourshandicap.gouv.fr/aides/la-carte-mobilite-inclusion-mention-invalidite\" target=\"_blank\">En savoir plus sur monparcourshandicap.gouv.fr</a></p></div></div></div>",
+      "image": ""
+    },
+    {
+      "id": "reference-aide",
+      "title": "Sites de référence et aide",
+      "content": "<div class=\"reference-box\"><p>Le site d'information officiel pour les personnes en situation de handicap et leurs aidants :</p><a href=\"https://www.monparcourshandicap.gouv.fr/\" class=\"btn btn-primary\" target=\"_blank\">monparcourshandicap.gouv.fr</a></div><div class=\"help-box\"><p>Il est possible de nous contacter afin de vous aider à remplir la fiche du parcours de vie, et d'autres éléments qui sont de notre ressort.</p><p><a href=\"mailto:sedocc31@gmail.com\">sedocc31@gmail.com</a></p></div>",
+      "image": ""
+    },
+    {
+      "id": "ald",
+      "title": "Demande d'ALD hors liste ALD 31",
+      "content": "<div class=\"tab-with-image\"><div><h3>Qu'est-ce qu'une ALD 31 ?</h3><p>Le Syndrome d'Ehlers-Danlos hypermobile (SEDh) n'est pas sur la liste des 30 Affections Longues Durées (ALD 30) reconnues par l'Assurance Maladie. Cependant, il peut être reconnu comme une ALD dite \"hors liste\" (ALD 31) si le patient répond à des critères spécifiques :</p><ul><li>Il s'agit d'une maladie grave qui n'est pas répertoriée dans la liste officielle des ALD 30.</li><li>Elle doit être d'une forme grave, évolutive ou invalidante, ou entraîner un état pathologique complexe par la combinaison de plusieurs affections.</li><li>Un traitement dont la durée est prévisiblement supérieure à six mois et qui est particulièrement coûteux est nécessaire.</li></ul></div><img src=\"images/droits-ald.jpg\" alt=\"ALD et droits\"></div><h3>Comment le SEDh peut-il être reconnu comme ALD 31 ?</h3><ul><li>La reconnaissance en ALD 31 est une démarche individuelle qui se base sur l'état de santé du patient et les conditions des ALD hors liste.</li><li>Cette reconnaissance permet de bénéficier d'une prise en charge à 100% des frais de soins et de traitement liés à la maladie, mais seulement sur la base des tarifs de convention.</li><li>Les dépassements d'honoraires peuvent rester à la charge du patient, mais peuvent être couverts par une mutuelle santé.</li></ul><h3>Pour plus d'informations :</h3><p>Pour plus d'informations, rendez-vous sur le site de l'Assurance Maladie.</p><div class=\"buttons-row\"><a href=\"https://www.ameli.fr/haute-garonne/assure/droits-demarches/maladie-accident-hospitalisation/affection-longue-duree-ald/affection-longue-duree-maladie-chronique\" class=\"btn btn-primary\" target=\"_blank\">Accéder au site Ameli</a><a href=\"documents/tout-savoir-ald.pdf\" class=\"btn btn-secondary\" target=\"_blank\">Mémo \"Tout savoir sur l'ALD\"</a></div>",
+      "image": "images/droits-ald.jpg"
+    }
+  ]
+}
