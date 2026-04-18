@@ -180,6 +180,7 @@
             <button class="admin-tab" onclick="switchTab('actualites')">Actualites</button>
             <button class="admin-tab" onclick="switchTab('partenaires')">Partenaires</button>
             <button class="admin-tab" onclick="switchTab('contenus')">Contenus</button>
+            <button class="admin-tab" onclick="switchTab('ressources')">Ressources</button>
             <button class="admin-tab" onclick="switchTab('onglets')">Onglets</button>
         </div>
 
@@ -387,6 +388,44 @@
             <button class="btn btn-primary" id="ct-save-btn" onclick="saveContenus()" style="margin-bottom:30px;">Enregistrer les contenus</button>
         </div>
 
+        <!-- ==================== RESSOURCES TAB ==================== -->
+        <div id="tab-ressources" class="tab-panel">
+            <h2 class="section-title">Gestion de la page Ressources</h2>
+            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Ajoutez, modifiez, supprimez ou reordonnez les sections de la page Ressources.</p>
+
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showResForm()">+ Ajouter une section</button>
+            </div>
+
+            <div id="res-form-container" style="display:none;">
+                <div class="add-form">
+                    <h2 class="section-title" id="res-form-title">Ajouter une section</h2>
+                    <div class="form-group">
+                        <label>Titre de la section *</label>
+                        <input type="text" id="res-title" placeholder="Ex: Livrets d'information">
+                    </div>
+                    <div class="form-group">
+                        <label>Image (optionnel)</label>
+                        <input type="file" id="res-image" accept="image/*" onchange="previewImg(this, 'res-image-preview')">
+                        <img id="res-image-preview" class="image-preview">
+                    </div>
+                    <div class="form-group">
+                        <label>Contenu *</label>
+                        <div class="quill-wrapper"><div id="res-editor"></div></div>
+                    </div>
+                    <input type="hidden" id="res-edit-index" value="-1">
+                    <div class="form-actions">
+                        <button class="btn btn-primary" id="res-save-btn" onclick="saveResSection()">Enregistrer</button>
+                        <button class="btn btn-secondary" onclick="hideResForm()">Annuler</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="ressources-list" class="items-list">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
         <!-- ==================== ONGLETS TAB ==================== -->
         <div id="tab-onglets" class="tab-panel">
             <h2 class="section-title">Gestion des onglets par page</h2>
@@ -400,7 +439,6 @@
                     <option value="diagnostic">Diagnostic</option>
                     <option value="sed">Qu'est-ce que le SED ?</option>
                     <option value="impacts">Impacts et temoignages</option>
-                    <option value="ressources">Ressources</option>
                     <option value="droits">Vos droits : MDPH - ALD</option>
                 </select>
             </div>
@@ -555,9 +593,9 @@ function switchTab(tab) {
     document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-' + tab).classList.add('active');
-    // Find the matching button by tab name
-    const tabs = { evenements:0, equipe:1, actualites:2, partenaires:3, contenus:4, onglets:5 };
+    const tabs = { evenements:0, equipe:1, actualites:2, partenaires:3, contenus:4, ressources:5, onglets:6 };
     document.querySelectorAll('.admin-tab')[tabs[tab]].classList.add('active');
+    if (tab === 'ressources') loadResSections();
 }
 
 // ===== DATA HELPERS (supports local + GitHub) =====
@@ -1090,6 +1128,162 @@ async function saveContenus() {
     btn.disabled = false; btn.textContent = 'Enregistrer les contenus';
 }
 
+
+// ===== RESSOURCES (dedicated section management) =====
+let resSections = [];
+let resSha = '';
+let quillResEditor = null;
+let resEditingOriginal = '';
+
+function initResEditor() {
+    if (quillResEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'header': [3, 4, false] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillResEditor = new Quill('#res-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
+
+async function loadResSections() {
+    initResEditor();
+    const list = document.getElementById('ressources-list');
+    list.innerHTML = '<div class="loading">Chargement...</div>';
+    try {
+        const result = await loadJsonFile('data/pages/ressources.json');
+        resSections = result.data.tabs || [];
+        resSha = result.sha;
+        renderResSections();
+    } catch (e) {
+        resSections = [];
+        resSha = '';
+        renderResSections();
+    }
+}
+
+function renderResSections() {
+    const list = document.getElementById('ressources-list');
+    if (!resSections.length) {
+        list.innerHTML = '<p style="color:#888;">Aucune section.</p>';
+        return;
+    }
+    list.innerHTML = resSections.map(function(s, i) {
+        const preview = s.content.replace(/<[^>]*>/g, '').substring(0, 80) + '...';
+        const imgIcon = s.image ? '' : '📄 ';
+        return '<div class="item-card">' +
+            '<div class="item-content">' +
+                '<strong>' + imgIcon + s.title + '</strong>' +
+                '<p style="color:#888; font-size:0.85rem; margin:4px 0;">' + preview + '</p>' +
+            '</div>' +
+            '<div class="item-actions">' +
+                (i > 0 ? '<button class="btn btn-small" onclick="moveResSection(' + i + ',-1)">▲</button>' : '') +
+                (i < resSections.length - 1 ? '<button class="btn btn-small" onclick="moveResSection(' + i + ',1)">▼</button>' : '') +
+                '<button class="btn btn-small btn-primary" onclick="editResSection(' + i + ')">Modifier</button>' +
+                '<button class="btn btn-small btn-danger" onclick="deleteResSection(' + i + ')">Supprimer</button>' +
+            '</div>' +
+        '</div>';
+    }).join('');
+}
+
+function showResForm(editIndex) {
+    document.getElementById('res-form-container').style.display = 'block';
+    document.getElementById('res-edit-index').value = editIndex !== undefined ? editIndex : -1;
+    document.getElementById('res-form-title').textContent = editIndex !== undefined ? 'Modifier une section' : 'Ajouter une section';
+    initResEditor();
+
+    if (editIndex !== undefined) {
+        const sec = resSections[editIndex];
+        document.getElementById('res-title').value = sec.title;
+        resEditingOriginal = sec.content;
+        const editable = extractEditableContent(sec.content);
+        quillResEditor.setContents([]);
+        quillResEditor.clipboard.dangerouslyPasteHTML(0, editable);
+        if (sec.image) {
+            document.getElementById('res-image-preview').src = sec.image;
+            document.getElementById('res-image-preview').style.display = 'block';
+        } else {
+            document.getElementById('res-image-preview').style.display = 'none';
+        }
+    } else {
+        document.getElementById('res-title').value = '';
+        resEditingOriginal = '';
+        quillResEditor.setContents([]);
+        document.getElementById('res-image-preview').style.display = 'none';
+    }
+    document.getElementById('res-image').value = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function hideResForm() { document.getElementById('res-form-container').style.display = 'none'; }
+function editResSection(i) { showResForm(i); }
+
+async function saveResSection() {
+    const title = document.getElementById('res-title').value.trim();
+    const editedHtml = cleanQuillHtml(quillResEditor.root.innerHTML);
+    const imageInput = document.getElementById('res-image');
+    const editIndex = parseInt(document.getElementById('res-edit-index').value);
+
+    if (!title) { showStatus('Entrez le titre de la section.', 'error'); return; }
+    if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de la section.', 'error'); return; }
+
+    const btn = document.getElementById('res-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(title);
+        let imagePath = editIndex >= 0 ? (resSections[editIndex].image || '') : '';
+
+        if (imageInput.files && imageInput.files[0]) {
+            const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
+            imagePath = 'images/ressources/' + id + '.' + ext;
+            await uploadImage(imagePath, imageInput.files[0]);
+        }
+
+        const content = rebuildTabContent(editedHtml, imagePath, resEditingOriginal);
+        const sec = { id: id, title: title, content: content, image: imagePath };
+
+        if (editIndex >= 0) {
+            resSections[editIndex] = sec;
+        } else {
+            resSections.push(sec);
+        }
+
+        const pageData = { pageTitle: 'Ressources', tabs: resSections };
+        resSha = await saveJsonFile('data/pages/ressources.json', pageData, resSha, 'Mise a jour ressources: ' + title);
+
+        showStatus(editIndex >= 0 ? 'Section "' + title + '" modifiee.' : 'Section "' + title + '" ajoutee !', 'success');
+        hideResForm();
+        renderResSections();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deleteResSection(index) {
+    if (!confirm('Supprimer la section "' + resSections[index].title + '" ?')) return;
+    const title = resSections[index].title;
+    resSections.splice(index, 1);
+    try {
+        const pageData = { pageTitle: 'Ressources', tabs: resSections };
+        resSha = await saveJsonFile('data/pages/ressources.json', pageData, resSha, 'Suppression section: ' + title);
+        showStatus('Section "' + title + '" supprimee.', 'success');
+        renderResSections();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+}
+
+async function moveResSection(index, dir) {
+    const newIndex = index + dir;
+    if (newIndex < 0 || newIndex >= resSections.length) return;
+    const temp = resSections[index];
+    resSections[index] = resSections[newIndex];
+    resSections[newIndex] = temp;
+    try {
+        const pageData = { pageTitle: 'Ressources', tabs: resSections };
+        resSha = await saveJsonFile('data/pages/ressources.json', pageData, resSha, 'Reordonnement sections ressources');
+        renderResSections();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+}
 
 // ===== ONGLETS (Tab management per page) =====
 let pageTabs = [];
