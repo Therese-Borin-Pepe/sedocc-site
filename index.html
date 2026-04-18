@@ -83,11 +83,11 @@
                         <p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>
                     </div>
                 </div>
-                <div class="mission-photos">
-                    <div class="mosaic-item"><img src="images/mosaic1.jpg" alt="SED'OCC - Conférence"></div>
-                    <div class="mosaic-item"><img src="images/mosaic2.jpg" alt="SED'OCC - Exposition"></div>
-                    <div class="mosaic-item"><img src="images/mosaic3.jpg" alt="SED'OCC - Stand de sensibilisation"></div>
-                    <div class="mosaic-item"><img src="images/mosaic4.jpg" alt="SED'OCC - Intervention en école"></div>
+                <div class="mission-photos" id="mosaic-photos">
+                    <div class="mosaic-item"><img id="mosaic1-img" src="images/mosaic1.jpg" alt="SED'OCC - Conférence"></div>
+                    <div class="mosaic-item"><img id="mosaic2-img" src="images/mosaic2.jpg" alt="SED'OCC - Exposition"></div>
+                    <div class="mosaic-item"><img id="mosaic3-img" src="images/mosaic3.jpg" alt="SED'OCC - Stand de sensibilisation"></div>
+                    <div class="mosaic-item"><img id="mosaic4-img" src="images/mosaic4.jpg" alt="SED'OCC - Intervention en école"></div>
                 </div>
             </div>
 
@@ -99,15 +99,9 @@
                     <p>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</p>
                 </div>
                 <div class="actions-grid">
-                    <div class="action-photo">
-                        <img src="images/action1.jpg" alt="Action SED'OCC - Sensibilisation">
-                    </div>
-                    <div class="action-photo">
-                        <img src="images/action2.jpg" alt="Action SED'OCC - Rencontre">
-                    </div>
-                    <div class="action-photo">
-                        <img src="images/action3.jpg" alt="Action SED'OCC - Formation">
-                    </div>
+                    <div class="action-photo"><img id="action1-img" src="images/action1.jpg" alt="Action SED'OCC - Sensibilisation"></div>
+                    <div class="action-photo"><img id="action2-img" src="images/action2.jpg" alt="Action SED'OCC - Rencontre"></div>
+                    <div class="action-photo"><img id="action3-img" src="images/action3.jpg" alt="Action SED'OCC - Formation"></div>
                 </div>
             </div>
 
@@ -234,6 +228,14 @@
             if (c.benevoles) {
                 const d = document.querySelector('.team-benevoles');
                 if (d && c.benevoles.texte) d.textContent = c.benevoles.texte;
+            }
+            if (c.photos) {
+                ['mosaic1','mosaic2','mosaic3','mosaic4','action1','action2','action3'].forEach(function(key) {
+                    if (c.photos[key]) {
+                        const img = document.getElementById(key + '-img');
+                        if (img) img.src = c.photos[key];
+                    }
+                });
             }
         });
     </script>

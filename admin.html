@@ -144,6 +144,21 @@
         .quill-wrapper .ql-toolbar { border-radius: 8px 8px 0 0; }
         .quill-wrapper .ql-container { border-radius: 0 0 8px 8px; }
 
+        /* Photo slots */
+        .photo-slot {
+            background: white; border: 2px dashed #d4c5b9; border-radius: 10px;
+            padding: 12px; text-align: center; transition: border-color 0.2s;
+        }
+        .photo-slot:hover { border-color: #8B1A2B; }
+        .photo-preview-thumb {
+            width: 100%; aspect-ratio: 4/3; object-fit: cover;
+            border-radius: 6px; display: block; margin-bottom: 8px;
+            background: #f0e6de;
+        }
+        .photo-slot-label { font-size: 0.8rem; color: #888; margin-bottom: 8px; }
+        .photo-upload-btn { font-size: 0.8rem; padding: 6px 14px; cursor: pointer; width: 100%; text-align: center; }
+        .photo-slot.changed { border-color: #28a745; border-style: solid; }
+
         /* Accordion / Cards structured editor */
         .struct-item {
             background: #f9f5f2; border: 1px solid #e0d4ca; border-radius: 10px;
@@ -232,6 +247,7 @@
         <!-- SOUS-NAVIGATION Notre association -->
         <div class="admin-nav-sub active" id="subnav-association">
             <button class="admin-sub-btn active" onclick="switchTab('contenus', 'association')">Contenus</button>
+            <button class="admin-sub-btn" onclick="switchTab('photos', 'association')">Photos</button>
             <button class="admin-sub-btn" onclick="switchTab('equipe', 'association')">Équipe</button>
             <button class="admin-sub-btn" onclick="switchTab('partenaires', 'association')">Partenaires</button>
         </div>
@@ -401,6 +417,66 @@
             <h2 class="section-title">Partenaires actuels</h2>
             <div id="partner-list">
                 <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- ==================== PHOTOS TAB ==================== -->
+        <div id="tab-photos" class="tab-panel">
+            <h2 class="section-title">Photos de la page d'accueil</h2>
+            <p style="color:#888; margin-bottom:24px; font-size:0.9rem;">Remplacez les photos de la mosaïque et des actions. Cliquez sur une photo pour en choisir une nouvelle.</p>
+
+            <div class="content-card">
+                <h3>Mosaïque (4 photos)</h3>
+                <p style="color:#888; font-size:0.85rem; margin-bottom:16px;">Ces 4 photos apparaissent à côté du texte "Notre mission".</p>
+                <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px;" id="mosaic-grid">
+                    <div class="photo-slot" data-key="mosaic1">
+                        <img id="preview-mosaic1" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Photo 1</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'mosaic1')" style="display:none;"></label>
+                    </div>
+                    <div class="photo-slot" data-key="mosaic2">
+                        <img id="preview-mosaic2" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Photo 2</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'mosaic2')" style="display:none;"></label>
+                    </div>
+                    <div class="photo-slot" data-key="mosaic3">
+                        <img id="preview-mosaic3" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Photo 3</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'mosaic3')" style="display:none;"></label>
+                    </div>
+                    <div class="photo-slot" data-key="mosaic4">
+                        <img id="preview-mosaic4" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Photo 4</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'mosaic4')" style="display:none;"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Photos "Nos actions" (3 photos)</h3>
+                <p style="color:#888; font-size:0.85rem; margin-bottom:16px;">Ces 3 photos illustrent la section "Nos actions".</p>
+                <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px;">
+                    <div class="photo-slot" data-key="action1">
+                        <img id="preview-action1" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Action 1</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'action1')" style="display:none;"></label>
+                    </div>
+                    <div class="photo-slot" data-key="action2">
+                        <img id="preview-action2" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Action 2</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'action2')" style="display:none;"></label>
+                    </div>
+                    <div class="photo-slot" data-key="action3">
+                        <img id="preview-action3" class="photo-preview-thumb">
+                        <div class="photo-slot-label">Action 3</div>
+                        <label class="btn btn-secondary photo-upload-btn">Changer <input type="file" accept="image/*" onchange="onPhotoChange(this,'action3')" style="display:none;"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="photos-changed-bar" style="display:none; background:#d4edda; border:1px solid #c3e6cb; border-radius:8px; padding:14px 20px; margin-bottom:20px; display:flex; align-items:center; gap:16px;">
+                <span style="flex:1; color:#155724; font-size:0.9rem;">📸 Des photos ont été modifiées.</span>
+                <button class="btn btn-primary" id="photos-save-btn" onclick="savePhotos()">Enregistrer les photos</button>
             </div>
         </div>
 
@@ -739,6 +815,7 @@ function switchTab(tab, parentNav) {
 
     if (tab === 'ressources') loadResSections();
     if (tab === 'contenus') setTimeout(loadContenus, 100);
+    if (tab === 'photos') loadPhotos();
 }
 
 const PAGE_TITLES = {
@@ -1332,6 +1409,82 @@ async function saveContenus() {
     btn.disabled = false; btn.textContent = 'Enregistrer les contenus';
 }
 
+
+// ===== PHOTOS PAGE D'ACCUEIL =====
+const PHOTO_KEYS = {
+    mosaic1: 'images/mosaic1.jpg',
+    mosaic2: 'images/mosaic2.jpg',
+    mosaic3: 'images/mosaic3.jpg',
+    mosaic4: 'images/mosaic4.jpg',
+    action1: 'images/action1.jpg',
+    action2: 'images/action2.jpg',
+    action3: 'images/action3.jpg'
+};
+let photoPaths = {};       // chemins actuels (depuis contenus.json ou défauts)
+let pendingPhotos = {};    // fichiers en attente d'upload
+
+async function loadPhotos() {
+    // Charger les chemins depuis contenus.json
+    try {
+        const result = await loadJsonFile(CONTENUS_PATH);
+        const c = result.data;
+        photoPaths = Object.assign({}, PHOTO_KEYS, (c.photos || {}));
+    } catch(e) {
+        photoPaths = Object.assign({}, PHOTO_KEYS);
+    }
+    pendingPhotos = {};
+    // Afficher les aperçus
+    Object.keys(PHOTO_KEYS).forEach(function(key) {
+        const img = document.getElementById('preview-' + key);
+        if (!img) return;
+        const path = photoPaths[key] || PHOTO_KEYS[key];
+        img.src = isLocalMode ? path : 'https://raw.githubusercontent.com/' + REPO + '/main/' + path + '?t=' + Date.now();
+        img.onerror = function() { img.style.background = '#f0e6de'; img.removeAttribute('src'); };
+        img.closest('.photo-slot').classList.remove('changed');
+    });
+    document.getElementById('photos-changed-bar').style.display = 'none';
+}
+
+function onPhotoChange(input, key) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    pendingPhotos[key] = file;
+    // Aperçu local immédiat
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = document.getElementById('preview-' + key);
+        if (img) { img.src = e.target.result; }
+        img.closest('.photo-slot').classList.add('changed');
+    };
+    reader.readAsDataURL(file);
+    document.getElementById('photos-changed-bar').style.display = 'flex';
+}
+
+async function savePhotos() {
+    if (!Object.keys(pendingPhotos).length) return;
+    const btn = document.getElementById('photos-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+    try {
+        // Uploader chaque photo modifiée
+        for (const key of Object.keys(pendingPhotos)) {
+            const file = pendingPhotos[key];
+            const ext = file.name.split('.').pop().toLowerCase();
+            const path = 'images/' + key + '.' + ext;
+            await uploadImage(path, file);
+            photoPaths[key] = path;
+        }
+        // Sauvegarder les chemins dans contenus.json
+        const result = await loadJsonFile(CONTENUS_PATH);
+        const c = result.data;
+        c.photos = photoPaths;
+        contenusSha = await saveJsonFile(CONTENUS_PATH, c, result.sha, 'Mise a jour photos accueil');
+        pendingPhotos = {};
+        document.querySelectorAll('.photo-slot.changed').forEach(function(el) { el.classList.remove('changed'); });
+        document.getElementById('photos-changed-bar').style.display = 'none';
+        showStatus('Photos mises à jour !', 'success');
+    } catch(e) { showStatus('Erreur : ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer les photos';
+}
 
 // ===== RESSOURCES (dedicated section management) =====
 let resSections = [];
