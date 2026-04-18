@@ -1198,6 +1198,8 @@ a.btn-secondary:hover {
     width: 100%;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
+    align-self: stretch;
+    object-fit: cover;
 }
 
 .tab-with-image > div {
@@ -2614,6 +2616,8 @@ p {
     width: 100%;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
+    align-self: stretch;
+    object-fit: cover;
 }
 
 /* Vignettes blanches */
