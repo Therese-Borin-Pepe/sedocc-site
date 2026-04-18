@@ -325,8 +325,7 @@
                     </div>
                     <div class="form-group">
                         <label>Contenu *</label>
-                        <textarea id="ac-content" style="min-height:200px;" placeholder="Redigez l'actualite ici... Vous pouvez utiliser du HTML : <p>paragraphe</p>, <strong>gras</strong>, <a href='url'>lien</a>, <ul><li>liste</li></ul>"></textarea>
-                        <small>Utilisez des balises HTML pour la mise en forme. Chaque paragraphe doit etre entre &lt;p&gt; et &lt;/p&gt;.</small>
+                        <div class="quill-wrapper"><div id="ac-content-editor"></div></div>
                     </div>
                     <input type="hidden" id="ac-edit-index" value="-1">
                     <div style="display:flex; gap:10px;">
@@ -497,6 +496,10 @@
                         <div class="form-group">
                             <label>Contenu *</label>
                             <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
+                            <div id="og-html-area" style="display:none;">
+                                <textarea id="og-html-textarea" style="min-height:280px; font-family:monospace; font-size:0.8rem; width:100%; border:2px solid #ddd; border-radius:8px; padding:10px; resize:vertical;"></textarea>
+                                <small style="color:#8B1A2B;">⚠ Ce contenu contient une mise en page avancée. Éditez le code HTML directement — ne supprimez pas les balises structurelles.</small>
+                            </div>
                         </div>
                         <input type="hidden" id="og-edit-index" value="-1">
                         <div style="display:flex; gap:10px;">
@@ -530,6 +533,19 @@ let githubToken = '';
 let isLocalMode = false;
 let evenements = [], equipe = [], actualites = [];
 let quillEvEditor = null;
+let quillActuEditor = null;
+
+function initActuEditor() {
+    if (quillActuEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'header': [3, 4, false] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillActuEditor = new Quill('#ac-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
 
 function initEvEditor() {
     if (quillEvEditor) return;
@@ -1061,7 +1077,8 @@ function showActuForm() {
     document.getElementById('ac-edit-index').value = -1;
     document.getElementById('actu-form-title').textContent = 'Ajouter une actualite';
     document.getElementById('ac-title').value = '';
-    document.getElementById('ac-content').value = '';
+    initActuEditor();
+    quillActuEditor.setContents([]);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function hideActuForm() { document.getElementById('actu-form-container').style.display = 'none'; }
@@ -1071,26 +1088,24 @@ function editActu(i) {
     document.getElementById('ac-edit-index').value = i;
     document.getElementById('actu-form-title').textContent = 'Modifier une actualite';
     document.getElementById('ac-title').value = actualites[i].title;
-    document.getElementById('ac-content').value = actualites[i].content;
+    initActuEditor();
+    quillActuEditor.setContents([]);
+    quillActuEditor.clipboard.dangerouslyPasteHTML(0, actualites[i].content || '');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 async function saveActu() {
     const title = document.getElementById('ac-title').value.trim();
-    const content = document.getElementById('ac-content').value.trim();
+    const content = cleanQuillHtml(quillActuEditor.root.innerHTML);
     const editIndex = parseInt(document.getElementById('ac-edit-index').value);
-    if (!title || !content) { showStatus('Remplissez le titre et le contenu.', 'error'); return; }
+    if (!title || !content || content === '<p><br></p>') { showStatus('Remplissez le titre et le contenu.', 'error'); return; }
 
     const btn = document.getElementById('ac-save-btn');
     btn.disabled = true; btn.textContent = 'Enregistrement...';
 
     try {
         const id = generateId(title);
-        let finalContent = content;
-        if (!content.includes('<')) {
-            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
-        }
-        const actu = { id, title, content: finalContent };
+        const actu = { id, title, content };
 
         if (editIndex >= 0) {
             actualites[editIndex] = actu;
@@ -1445,6 +1460,11 @@ function initTabEditor() {
     quillTabEditor = new Quill('#og-tab-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
 }
 
+const COMPLEX_CLASSES = ['accordion','symptoms-grid','card-modern','benefits-grid','chansons-grid','reference-box','ald-section','documents-grid'];
+function isComplexContent(html) {
+    return COMPLEX_CLASSES.some(cls => html.includes(cls));
+}
+
 // Extract the editable text from complex HTML wrappers
 function extractEditableContent(html) {
     const temp = document.createElement('div');
@@ -1562,10 +1582,21 @@ function showTabForm(editIndex) {
         const tab = pageTabs[editIndex];
         document.getElementById('og-title').value = tab.title;
         editingOriginalContent = tab.content;
-        // Extract just the readable text for Quill
-        const editable = extractEditableContent(tab.content);
-        quillTabEditor.setContents([]);
-        quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
+
+        if (isComplexContent(tab.content)) {
+            // Mode HTML direct pour les structures complexes
+            document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'none';
+            document.getElementById('og-html-area').style.display = 'block';
+            document.getElementById('og-html-textarea').value = tab.content;
+        } else {
+            // Mode Quill pour le contenu simple
+            document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
+            document.getElementById('og-html-area').style.display = 'none';
+            const editable = extractEditableContent(tab.content);
+            quillTabEditor.setContents([]);
+            quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
+        }
+
         if (tab.image) {
             document.getElementById('og-image-preview').src = tab.image;
             document.getElementById('og-image-preview').style.display = 'block';
@@ -1575,13 +1606,19 @@ function showTabForm(editIndex) {
     } else {
         document.getElementById('og-title').value = '';
         editingOriginalContent = '';
+        document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
+        document.getElementById('og-html-area').style.display = 'none';
         quillTabEditor.setContents([]);
         document.getElementById('og-image-preview').style.display = 'none';
     }
     document.getElementById('og-image').value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-function hideTabForm() { document.getElementById('tab-form-container').style.display = 'none'; }
+function hideTabForm() {
+    document.getElementById('tab-form-container').style.display = 'none';
+    document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
+    document.getElementById('og-html-area').style.display = 'none';
+}
 function editPageTab(i) { showTabForm(i); }
 
 function cleanQuillHtml(html) {
@@ -1602,12 +1639,11 @@ function cleanQuillHtml(html) {
 
 async function savePageTab() {
     const title = document.getElementById('og-title').value.trim();
-    const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
     const imageInput = document.getElementById('og-image');
     const editIndex = parseInt(document.getElementById('og-edit-index').value);
+    const isHtmlMode = document.getElementById('og-html-area').style.display !== 'none';
 
     if (!title) { showStatus('Entrez le titre de l\'onglet.', 'error'); return; }
-    if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); return; }
 
     const btn = document.getElementById('og-save-btn');
     btn.disabled = true; btn.textContent = 'Enregistrement...';
@@ -1622,8 +1658,16 @@ async function savePageTab() {
             await uploadImage(imagePath, imageInput.files[0]);
         }
 
-        // Rebuild full HTML with wrapper structure
-        const content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
+        let content;
+        if (isHtmlMode) {
+            content = document.getElementById('og-html-textarea').value.trim();
+            if (!content) { showStatus('Entrez le contenu de l\'onglet.', 'error'); btn.disabled = false; btn.textContent = 'Enregistrer'; return; }
+        } else {
+            const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
+            if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); btn.disabled = false; btn.textContent = 'Enregistrer'; return; }
+            content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
+        }
+
         const tab = { id, title, content, image: imagePath };
 
         if (editIndex >= 0) {

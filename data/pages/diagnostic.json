@@ -1,0 +1,17 @@
+{
+  "pageTitle": "Diagnostic",
+  "tabs": [
+    {
+      "id": "diagnostic-intro",
+      "title": "Le diagnostic du SED",
+      "image": "images/diagnostic-hero.png",
+      "content": "<div class=\"tab-with-image\"><div><p>Le diagnostic du Syndrome d'Ehlers-Danlos Non Vasculaire représente souvent un parcours complexe pour les patients et les professionnels de santé. Cette pathologie rare nécessite une approche diagnostique spécialisée et une connaissance approfondie de ses manifestations cliniques.</p><p>Un diagnostic précoce et précis permet une prise en charge adaptée, une amélioration de la qualité de vie des patients et un accompagnement optimal des familles. Les outils diagnostiques présentés ci-dessous ont été spécialement conçus pour faciliter cette démarche.</p></div><img src=\"images/diagnostic-hero.png\" alt=\"Diagnostic du SED\"></div>"
+    },
+    {
+      "id": "documents-diagnostiques",
+      "title": "Documents diagnostiques",
+      "image": "",
+      "content": "<div class=\"documents-grid\"><div class=\"document-card\"><h2>Protocole National de Diagnostic et de Soins</h2><p>Guide complet pour la prise en charge diagnostique et thérapeutique optimale du SED NV. Ce document explicite le parcours de soins recommandé pour les patients.</p><a href=\"documents/pnds-sed-nv.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div><div class=\"document-card\"><h2>Guide Pratique pour les Professionnels</h2><p>Manuel pratique destiné aux professionnels de santé, médecins et paramédicaux, détaillant les critères diagnostiques et les signes cliniques à rechercher.</p><a href=\"documents/synthese-pnds.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div><div class=\"document-card\"><h2>Argumentaire élaboré par le centre de référence MOC</h2><p>Il a servi de base à l'élaboration du PNDS sur les syndromes d'Ehlers-Danlos non vasculaires.</p><p>Source : <a href=\"https://www.has-sante.fr/jcms/p_3187041/fr/syndrome-d-ehlers-danlos-non-vasculaire-sed-nv\" target=\"_blank\">HAS</a></p><a href=\"documents/argumentaire-moc.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div></div>"
+    }
+  ]
+}
