@@ -93,17 +93,20 @@
             .then(r => r.json())
             .then(evenements => {
                 const grid = document.getElementById('evenements-grid');
-                grid.innerHTML = evenements.map(ev => `
+                grid.innerHTML = evenements.map(ev => {
+                    const hasVideo = ev.content && ev.content.includes('<iframe');
+                    return `
                     <a href="evenement.html?id=${ev.id}" class="evenement-card">
                         <div class="evenement-image">
                             <img src="${ev.image}" alt="${ev.title}">
+                            ${hasVideo ? '<div class="video-badge"><span>▶</span> Vidéo</div>' : ''}
                         </div>
                         <div class="evenement-info">
                             <span class="evenement-category">Évènements</span>
                             <h3>${ev.title}</h3>
                         </div>
-                    </a>
-                `).join('');
+                    </a>`;
+                }).join('');
             });
     </script>
 </body>
