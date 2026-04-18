@@ -1191,7 +1191,7 @@ a.btn-secondary:hover {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: var(--spacing-xl);
-    align-items: start;
+    align-items: center;
 }
 
 .tab-with-image img {
@@ -2608,7 +2608,7 @@ p {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: var(--spacing-xl);
-    align-items: start;
+    align-items: center;
 }
 .tab-with-image img {
     width: 100%;
