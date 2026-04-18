@@ -144,6 +144,33 @@
         .quill-wrapper .ql-toolbar { border-radius: 8px 8px 0 0; }
         .quill-wrapper .ql-container { border-radius: 0 0 8px 8px; }
 
+        /* Accordion / Cards structured editor */
+        .struct-item {
+            background: #f9f5f2; border: 1px solid #e0d4ca; border-radius: 10px;
+            padding: 16px; margin-bottom: 14px;
+        }
+        .struct-item-header {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+        }
+        .struct-item-header strong { flex:1; font-size: 0.9rem; color: #8B1A2B; }
+        .struct-item-header .btn { font-size: 0.75rem; padding: 4px 10px; }
+        .struct-item .form-group { margin-bottom: 12px; }
+        .struct-item .form-group:last-child { margin-bottom: 0; }
+        .accordion-preview {
+            border-left: 3px solid #8B1A2B; padding: 10px 14px;
+            background: white; border-radius: 0 8px 8px 0; margin-bottom: 10px;
+            cursor: pointer; font-weight: 500; font-size: 0.9rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .accordion-preview:hover { background: #f5ede6; }
+        .accordion-preview::after { content: '▼'; font-size: 0.7rem; color: #888; }
+        .card-preview {
+            border: 1px solid #e0d4ca; border-radius: 10px; padding: 14px;
+            background: white; margin-bottom: 10px;
+        }
+        .card-preview h4 { color: #8B1A2B; margin-bottom: 6px; font-size: 0.9rem; }
+        .card-preview p { color: #666; font-size: 0.83rem; }
+
         /* Partner items */
         .partner-item {
             background: white; border-radius: 10px; padding: 15px;
@@ -485,7 +512,7 @@
                     <div class="add-form">
                         <h2 class="section-title" id="tab-form-title">Ajouter un onglet</h2>
                         <div class="form-group">
-                            <label>Titre de l'onglet *</label>
+                            <label>Titre de la section *</label>
                             <input type="text" id="og-title" placeholder="Ex: Douleur et fatigue">
                         </div>
                         <div class="form-group">
@@ -493,15 +520,38 @@
                             <input type="file" id="og-image" accept="image/*" onchange="previewImg(this, 'og-image-preview')">
                             <img id="og-image-preview" class="image-preview">
                         </div>
-                        <div class="form-group">
+
+                        <!-- Éditeur simple (Quill) -->
+                        <div id="og-simple-editor" class="form-group">
                             <label>Contenu *</label>
-                            <div id="og-complex-warning" style="display:none; background:#fff3cd; border:1px solid #ffc107; border-radius:8px; padding:10px 14px; margin-bottom:8px; font-size:0.85rem; color:#856404;">
-                                ⚠ Cette section contient une mise en page avancée (accordéon, grille de cartes…). Vous pouvez modifier les textes ci-dessous. La structure visuelle sera préservée à l'enregistrement.
-                            </div>
                             <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
                         </div>
+
+                        <!-- Éditeur accordéon -->
+                        <div id="og-accordion-editor" style="display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <label style="margin:0; font-weight:600;">Entrées de l'accordéon</label>
+                                <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addAccordionItem()">+ Ajouter une entrée</button>
+                            </div>
+                            <div id="og-accordion-items"></div>
+                        </div>
+
+                        <!-- Éditeur cartes -->
+                        <div id="og-cards-editor" style="display:none;">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                <label style="margin:0; font-weight:600;">Cartes</label>
+                                <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addCardItem()">+ Ajouter une carte</button>
+                            </div>
+                            <div id="og-cards-items"></div>
+                            <div class="form-group" style="margin-top:16px;">
+                                <label>Citation (optionnel)</label>
+                                <input type="text" id="og-cards-quote" placeholder="Ex: Ensemble on va plus loin">
+                            </div>
+                        </div>
+
                         <input type="hidden" id="og-edit-index" value="-1">
-                        <div style="display:flex; gap:10px;">
+                        <input type="hidden" id="og-editor-mode" value="simple">
+                        <div style="display:flex; gap:10px; margin-top:20px;">
                             <button class="btn btn-primary" id="og-save-btn" onclick="savePageTab()">Enregistrer</button>
                             <button class="btn btn-secondary" onclick="hideTabForm()">Annuler</button>
                         </div>
@@ -1685,25 +1735,44 @@ function renderPageTabs() {
     `).join('');
 }
 
+function detectEditorMode(html) {
+    if (html.includes('accordion')) return 'accordion';
+    if (html.includes('card-modern') || html.includes('benefits-grid')) return 'cards';
+    return 'simple';
+}
+
+function showEditorMode(mode) {
+    document.getElementById('og-simple-editor').style.display = mode === 'simple' ? 'block' : 'none';
+    document.getElementById('og-accordion-editor').style.display = mode === 'accordion' ? 'block' : 'none';
+    document.getElementById('og-cards-editor').style.display = mode === 'cards' ? 'block' : 'none';
+    document.getElementById('og-editor-mode').value = mode;
+}
+
 function showTabForm(editIndex) {
     document.getElementById('tab-form-container').style.display = 'block';
     document.getElementById('og-edit-index').value = editIndex !== undefined ? editIndex : -1;
-    document.getElementById('tab-form-title').textContent = editIndex !== undefined ? 'Modifier un onglet' : 'Ajouter un onglet';
+    document.getElementById('tab-form-title').textContent = editIndex !== undefined ? 'Modifier la section' : 'Ajouter une section';
     initTabEditor();
 
     if (editIndex !== undefined) {
         const tab = pageTabs[editIndex];
         document.getElementById('og-title').value = tab.title;
         editingOriginalContent = tab.content;
+        const mode = detectEditorMode(tab.content);
+        showEditorMode(mode);
 
-        const complex = isComplexContent(tab.content);
-        document.getElementById('og-complex-warning').style.display = complex ? 'block' : 'none';
-        const editable = extractEditableContent(tab.content);
-        quillTabEditor.setContents([]);
-        quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
+        if (mode === 'accordion') {
+            renderAccordionEditor(tab.content);
+        } else if (mode === 'cards') {
+            renderCardsEditor(tab.content);
+        } else {
+            const editable = extractEditableContent(tab.content);
+            quillTabEditor.setContents([]);
+            quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
+        }
 
         if (tab.image) {
-            document.getElementById('og-image-preview').src = tab.image;
+            document.getElementById('og-image-preview').src = isLocalMode ? tab.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + tab.image;
             document.getElementById('og-image-preview').style.display = 'block';
         } else {
             document.getElementById('og-image-preview').style.display = 'none';
@@ -1711,16 +1780,201 @@ function showTabForm(editIndex) {
     } else {
         document.getElementById('og-title').value = '';
         editingOriginalContent = '';
-        document.getElementById('og-complex-warning').style.display = 'none';
+        showEditorMode('simple');
         quillTabEditor.setContents([]);
         document.getElementById('og-image-preview').style.display = 'none';
     }
     document.getElementById('og-image').value = '';
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 function hideTabForm() {
     document.getElementById('tab-form-container').style.display = 'none';
-    document.getElementById('og-complex-warning').style.display = 'none';
+}
+
+// ---- Accordion editor ----
+function renderAccordionEditor(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    const items = temp.querySelectorAll('.accordion-item');
+    const container = document.getElementById('og-accordion-items');
+    container.innerHTML = '';
+    items.forEach(function(item, i) {
+        const btn = item.querySelector('.accordion-btn');
+        const body = item.querySelector('.accordion-body');
+        const title = btn ? btn.textContent.replace(/▼|▲|›|»/g, '').trim() : '';
+        const content = body ? body.innerHTML : '';
+        container.appendChild(buildAccordionItemEl(i, title, content));
+    });
+}
+
+function buildAccordionItemEl(i, title, content) {
+    const div = document.createElement('div');
+    div.className = 'struct-item';
+    div.dataset.index = i;
+    div.innerHTML = `
+        <div class="struct-item-header">
+            <strong>Entrée ${i + 1}</strong>
+            <button class="btn btn-danger" onclick="removeStructItem(this, 'accordion')">Supprimer</button>
+        </div>
+        <div class="form-group">
+            <label>Titre</label>
+            <input type="text" class="acc-title" value="${escapeAttr(title)}" placeholder="Titre de l'entrée">
+        </div>
+        <div class="form-group">
+            <label>Contenu</label>
+            <textarea class="acc-body" style="min-height:80px; width:100%; border:2px solid #ddd; border-radius:8px; padding:10px; font-family:'Poppins',sans-serif; font-size:0.9rem; resize:vertical;">${escapeText(content)}</textarea>
+        </div>`;
+    return div;
+}
+
+function addAccordionItem() {
+    const container = document.getElementById('og-accordion-items');
+    const i = container.children.length;
+    container.appendChild(buildAccordionItemEl(i, '', ''));
+}
+
+// ---- Cards editor ----
+function renderCardsEditor(html) {
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+    const cards = temp.querySelectorAll('.card-modern');
+    const container = document.getElementById('og-cards-items');
+    container.innerHTML = '';
+    cards.forEach(function(card, i) {
+        const h3 = card.querySelector('h3');
+        const icon = card.querySelector('.card-icon');
+        const desc = card.querySelector('.card-desc');
+        const list = card.querySelector('ul');
+        const footer = card.querySelector('.card-footer');
+        const badges = card.querySelector('.badges-container');
+        container.appendChild(buildCardItemEl(i, {
+            icon: icon ? icon.textContent : '',
+            title: h3 ? h3.textContent : '',
+            desc: desc ? desc.textContent : '',
+            list: list ? Array.from(list.querySelectorAll('li')).map(l => l.textContent).join('\n') : '',
+            footer: footer ? footer.textContent : '',
+            badges: badges ? Array.from(badges.querySelectorAll('.badge')).map(b => b.textContent).join(', ') : ''
+        }));
+    });
+    const quote = temp.querySelector('.quote-modern p');
+    document.getElementById('og-cards-quote').value = quote ? quote.textContent.replace(/"/g, '') : '';
+}
+
+function buildCardItemEl(i, data) {
+    const div = document.createElement('div');
+    div.className = 'struct-item';
+    div.dataset.index = i;
+    div.innerHTML = `
+        <div class="struct-item-header">
+            <strong>Carte ${i + 1}${data.title ? ' — ' + escapeHtml(data.title) : ''}</strong>
+            <button class="btn btn-danger" onclick="removeStructItem(this, 'cards')">Supprimer</button>
+        </div>
+        <div class="form-group">
+            <label>Icône (emoji)</label>
+            <input type="text" class="card-icon-input" value="${escapeAttr(data.icon)}" placeholder="Ex: 🧘‍♂️" style="max-width:100px;">
+        </div>
+        <div class="form-group">
+            <label>Titre</label>
+            <input type="text" class="card-title-input" value="${escapeAttr(data.title)}" placeholder="Ex: Santé & Soins">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="card-desc-input" value="${escapeAttr(data.desc)}" placeholder="Une courte description">
+        </div>
+        <div class="form-group">
+            <label>Liste (une entrée par ligne)</label>
+            <textarea class="card-list-input" style="min-height:80px; width:100%; border:2px solid #ddd; border-radius:8px; padding:10px; font-family:'Poppins',sans-serif; font-size:0.9rem; resize:vertical;" placeholder="Entrée 1&#10;Entrée 2">${escapeText(data.list)}</textarea>
+        </div>
+        ${data.badges ? `<div class="form-group"><label>Badges (séparés par des virgules)</label><input type="text" class="card-badges-input" value="${escapeAttr(data.badges)}" placeholder="Ex: MDPH, CPAM, ARS"></div>` : ''}
+        ${data.footer ? `<div class="form-group"><label>Note de bas de carte</label><input type="text" class="card-footer-input" value="${escapeAttr(data.footer)}"></div>` : ''}`;
+    return div;
+}
+
+function addCardItem() {
+    const container = document.getElementById('og-cards-items');
+    const i = container.children.length;
+    container.appendChild(buildCardItemEl(i, { icon: '', title: '', desc: '', list: '', footer: '', badges: '' }));
+}
+
+function removeStructItem(btn, mode) {
+    btn.closest('.struct-item').remove();
+    // Re-numéroter
+    const container = document.getElementById(mode === 'accordion' ? 'og-accordion-items' : 'og-cards-items');
+    Array.from(container.children).forEach(function(el, i) {
+        el.dataset.index = i;
+        const strong = el.querySelector('.struct-item-header strong');
+        const titleInput = el.querySelector('.card-title-input, .acc-title');
+        const label = mode === 'accordion' ? 'Entrée' : 'Carte';
+        const name = titleInput && titleInput.value ? ' — ' + titleInput.value : '';
+        if (strong) strong.textContent = label + ' ' + (i + 1) + name;
+    });
+}
+
+function escapeAttr(s) { return (s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function escapeHtml(s) { return (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function escapeText(s) { return (s || '').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+// ---- Rebuild from structured editors ----
+function rebuildAccordionFromEditor(originalHtml) {
+    const temp = document.createElement('div');
+    temp.innerHTML = originalHtml;
+    const origItems = temp.querySelectorAll('.accordion-item');
+    const editorItems = document.querySelectorAll('#og-accordion-items .struct-item');
+
+    // Remove extra original items
+    const origAccordion = temp.querySelector('.accordion');
+    origItems.forEach(function(item) { item.remove(); });
+
+    editorItems.forEach(function(el) {
+        const title = el.querySelector('.acc-title').value.trim();
+        const body = el.querySelector('.acc-body').value.trim();
+        const id = generateId(title);
+        const item = document.createElement('div');
+        item.className = 'accordion-item';
+        item.innerHTML = `<button class="accordion-btn" onclick="toggleAccordion(this)">${title} <span class="accordion-icon">▼</span></button><div class="accordion-body"><div class="accordion-content">${body}</div></div>`;
+        origAccordion.appendChild(item);
+    });
+    return temp.innerHTML;
+}
+
+function rebuildCardsFromEditor(originalHtml) {
+    const temp = document.createElement('div');
+    temp.innerHTML = originalHtml;
+    const origCards = temp.querySelectorAll('.card-modern');
+    const editorItems = document.querySelectorAll('#og-cards-items .struct-item');
+    const grid = temp.querySelector('.benefits-grid, .cards-grid');
+
+    origCards.forEach(function(c) { c.remove(); });
+
+    editorItems.forEach(function(el) {
+        const icon = el.querySelector('.card-icon-input') ? el.querySelector('.card-icon-input').value : '';
+        const title = el.querySelector('.card-title-input').value.trim();
+        const desc = el.querySelector('.card-desc-input').value.trim();
+        const listRaw = el.querySelector('.card-list-input').value.trim();
+        const footerEl = el.querySelector('.card-footer-input');
+        const badgesEl = el.querySelector('.card-badges-input');
+        const footer = footerEl ? footerEl.value.trim() : '';
+        const badges = badgesEl ? badgesEl.value.trim() : '';
+
+        const listItems = listRaw ? listRaw.split('\n').filter(l => l.trim()).map(l => `<li>${l.trim()}</li>`).join('') : '';
+        const badgeSpans = badges ? badges.split(',').map(b => `<span class="badge">${b.trim()}</span>`).join('') : '';
+
+        const card = document.createElement('div');
+        card.className = 'card-modern';
+        card.innerHTML = `<div class="card-header-modern"><div class="card-icon">${icon}</div><h3>${title}</h3></div>` +
+            (desc ? `<p class="card-desc">${desc}</p>` : '') +
+            (listItems ? `<ul class="list-custom">${listItems}</ul>` : '') +
+            (badgeSpans ? `<div class="badges-container">${badgeSpans}</div>` : '') +
+            (footer ? `<p class="card-footer">${footer}</p>` : '');
+        grid.appendChild(card);
+    });
+
+    const quoteInput = document.getElementById('og-cards-quote').value.trim();
+    const quoteEl = temp.querySelector('.quote-modern p');
+    if (quoteEl && quoteInput) quoteEl.innerHTML = `"${quoteInput}"`;
+
+    return temp.innerHTML;
 }
 function editPageTab(i) { showTabForm(i); }
 
@@ -1744,11 +1998,9 @@ async function savePageTab() {
     const title = document.getElementById('og-title').value.trim();
     const imageInput = document.getElementById('og-image');
     const editIndex = parseInt(document.getElementById('og-edit-index').value);
+    const mode = document.getElementById('og-editor-mode').value;
 
-    if (!title) { showStatus('Entrez le titre de l\'onglet.', 'error'); return; }
-
-    const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
-    if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); return; }
+    if (!title) { showStatus('Entrez le titre de la section.', 'error'); return; }
 
     const btn = document.getElementById('og-save-btn');
     btn.disabled = true; btn.textContent = 'Enregistrement...';
@@ -1763,7 +2015,21 @@ async function savePageTab() {
             await uploadImage(imagePath, imageInput.files[0]);
         }
 
-        const content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
+        let content;
+        if (mode === 'accordion') {
+            content = rebuildAccordionFromEditor(editingOriginalContent);
+        } else if (mode === 'cards') {
+            content = rebuildCardsFromEditor(editingOriginalContent);
+        } else {
+            const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
+            if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) {
+                showStatus('Entrez le contenu de la section.', 'error');
+                btn.disabled = false; btn.textContent = 'Enregistrer';
+                return;
+            }
+            content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
+        }
+
         const tab = { id, title, content, image: imagePath };
 
         if (editIndex >= 0) {
