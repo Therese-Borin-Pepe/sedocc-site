@@ -216,6 +216,19 @@
     </div>
 </div>
 
+<!-- MODAL PRÉVISUALISATION -->
+<div id="preview-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:white; border-radius:14px; width:100%; max-width:860px; max-height:90vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 22px; border-bottom:2px solid #f0e6de;">
+            <h3 style="color:#8B1A2B; font-size:1rem; margin:0;" id="preview-modal-title">Prévisualisation</h3>
+            <button onclick="closePreview()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888; line-height:1;">✕</button>
+        </div>
+        <div style="overflow-y:auto; flex:1;">
+            <iframe id="preview-iframe" style="width:100%; height:100%; min-height:500px; border:none;" srcdoc=""></iframe>
+        </div>
+    </div>
+</div>
+
 <!-- LOGIN SCREEN -->
 <div id="login-screen">
     <div class="login-box">
@@ -1537,6 +1550,7 @@ function renderResSections() {
             '<div class="item-actions">' +
                 (i > 0 ? '<button class="btn btn-small" onclick="moveResSection(' + i + ',-1)">▲</button>' : '') +
                 (i < resSections.length - 1 ? '<button class="btn btn-small" onclick="moveResSection(' + i + ',1)">▼</button>' : '') +
+                '<button class="btn btn-small btn-secondary" onclick="previewSection(\'' + s.title.replace(/'/g,"\\'" ) + '\', resSections[' + i + '].content)">Aperçu</button>' +
                 '<button class="btn btn-small btn-primary" onclick="editResSection(' + i + ')">Modifier</button>' +
                 '<button class="btn btn-small btn-danger" onclick="deleteResSection(' + i + ')">Supprimer</button>' +
             '</div>' +
@@ -1881,6 +1895,7 @@ function renderPageTabs() {
             <div class="item-actions">
                 ${i > 0 ? `<button class="btn btn-move" onclick="movePageTab(${i},-1)" title="Monter">&#9650;</button>` : ''}
                 ${i < pageTabs.length-1 ? `<button class="btn btn-move" onclick="movePageTab(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-secondary" onclick="previewSection('${escJs(tab.title)}', pageTabs[${i}].content)">Aperçu</button>
                 <button class="btn btn-warning" onclick="editPageTab(${i})">Modifier</button>
                 <button class="btn btn-danger" onclick="deletePageTab(${i})">Supprimer</button>
             </div>
@@ -2223,6 +2238,58 @@ async function movePageTab(index, direction) {
         renderPageTabs();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadPageTabs(); }
 }
+
+// ===== PRÉVISUALISATION =====
+function escJs(s) { return (s || '').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function previewSection(title, content) {
+    document.getElementById('preview-modal-title').textContent = 'Aperçu — ' + title;
+    // Construire un mini-document avec les styles du site
+    const cssUrl = window.location.origin + (window.location.pathname.replace('admin.html','')) + 'styles.css';
+    const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="${cssUrl}">
+<style>
+  body { font-family:'Poppins',sans-serif; background:#faf7f4; padding:32px 40px; }
+  .ressource-section h2 { color:#8B1A2B; margin-bottom:16px; font-size:1.4rem; }
+  .accordion-btn { cursor:pointer; }
+</style>
+<script>
+function toggleAccordion(btn){
+  const item=btn.closest('.accordion-item');
+  item.classList.toggle('active');
+}
+<\/script>
+</head>
+<body>
+<div class="ressource-section">
+  <h2>${title}</h2>
+  ${content}
+</div>
+</body>
+</html>`;
+    const modal = document.getElementById('preview-modal');
+    document.getElementById('preview-iframe').srcdoc = html;
+    modal.style.display = 'flex';
+}
+
+function closePreview() {
+    document.getElementById('preview-modal').style.display = 'none';
+    document.getElementById('preview-iframe').srcdoc = '';
+}
+
+// Fermer avec Échap
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closePreview();
+});
+// Fermer en cliquant en dehors
+document.getElementById('preview-modal').addEventListener('click', function(e) {
+    if (e.target === this) closePreview();
+});
 
 // ===== AUTO-LOGIN (must be at end of script) =====
 (function() {
