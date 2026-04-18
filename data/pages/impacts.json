@@ -22,13 +22,13 @@
     {
       "id": "interview-fr3",
       "title": "Interview FR3 – Vivre avec le SED",
-      "content": "<div class=\"tab-with-image\"><div><p>À travers cette interview sur FR3, Thérèse atteinte du SED partage son expérience, et le militantisme pour la reconnaissance de cette maladie.</p><a href=\"https://www.youtube.com/watch?v=PHFkE_JPMCE\" class=\"btn btn-primary\" target=\"_blank\">Regarder</a></div><img src=\"images/interview-fr3.png\" alt=\"Interview FR3\"></div>",
+      "content": "<div class=\"tab-with-image\"><div><p>À travers cette interview sur FR3, Thérèse atteinte du SED partage son expérience, et le militantisme pour la reconnaissance de cette maladie.</p><p class=\"image-clic-hint\">Cliquez sur l'image pour regarder la vidéo</p></div><a href=\"https://www.youtube.com/watch?v=PHFkE_JPMCE\" target=\"_blank\" class=\"image-clickable\"><img src=\"images/interview-fr3.png\" alt=\"Interview FR3\"><div class=\"image-overlay\">▶ Regarder la vidéo</div></a></div>",
       "image": "images/interview-fr3.png"
     },
     {
       "id": "interview-mailys",
       "title": "Interview de Maïlys Reynès",
-      "content": "<div class=\"tab-with-image\"><div><p>Maïlys, atteinte du syndrome d'Ehlers-Danlos, partage un témoignage bouleversant de résilience où le rugby a transformé ses épreuves de santé en véritables tremplins. Le rugby ne lui a pas seulement permis de reconstruire sa confiance et son corps, mais est devenu le moteur de sa vie professionnelle et personnelle. À travers son histoire, Maïlys démontre que la perpétuation et la passion peuvent ouvrir des portes insoupçonnées, même face à l'adversité la plus tenace. Actuellement, elle projette de s'envoler pour le Canada afin de vivre de nouvelles expériences.</p><p>Découvrez l'interview intégrale pour vous laisser inspirer par son incroyable parcours !</p><a href=\"documents/mailys-reynes.pdf\" class=\"btn btn-primary\" target=\"_blank\">Lire</a></div><img src=\"images/interview-mailys.png\" alt=\"Interview Maïlys Reynès\"></div>",
+      "content": "<div class=\"tab-with-image\"><div><p>Maïlys, atteinte du syndrome d'Ehlers-Danlos, partage un témoignage bouleversant de résilience où le rugby a transformé ses épreuves de santé en véritables tremplins. Le rugby ne lui a pas seulement permis de reconstruire sa confiance et son corps, mais est devenu le moteur de sa vie professionnelle et personnelle. À travers son histoire, Maïlys démontre que la perpétuation et la passion peuvent ouvrir des portes insoupçonnées, même face à l'adversité la plus tenace. Actuellement, elle projette de s'envoler pour le Canada afin de vivre de nouvelles expériences.</p><p>Découvrez l'interview intégrale pour vous laisser inspirer par son incroyable parcours !</p><p class=\"image-clic-hint\">Cliquez sur l'image pour lire l'interview</p></div><a href=\"documents/mailys-reynes.pdf\" target=\"_blank\" class=\"image-clickable\"><img src=\"images/interview-mailys.png\" alt=\"Interview Maïlys Reynès\"><div class=\"image-overlay\">📄 Lire l'interview</div></a></div>",
       "image": "images/interview-mailys.png"
     }
   ]
