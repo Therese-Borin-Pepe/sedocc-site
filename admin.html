@@ -1532,6 +1532,7 @@ async function loadPageTabs() {
         return;
     }
     document.getElementById('onglets-content').style.display = 'block';
+    hideTabForm();
     initTabEditor();
     const list = document.getElementById('onglets-list');
     list.innerHTML = '<div class="loading">Chargement...</div>';
