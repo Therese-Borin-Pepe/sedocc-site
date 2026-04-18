@@ -1220,6 +1220,10 @@ a.btn-secondary:hover {
     margin-top: var(--spacing-sm);
 }
 
+.tab-with-image.align-top {
+    align-items: start;
+}
+
 .tab-with-image.image-left {
     grid-template-columns: 280px 1fr;
     gap: var(--spacing-md);
