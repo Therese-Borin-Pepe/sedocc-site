@@ -28,7 +28,7 @@
     {
       "id": "protocole-chirurgical",
       "title": "Le protocole de prise en charge en cas de chirurgie",
-      "content": "<div class=\"tab-with-image image-left\"><img src=\"images/ressources-chirurgie.jpg\" alt=\"Prise en charge chirurgicale\"><div><p>Ce protocole détaille les recommandations de prise en charge pour les patients atteints du SED en cas d'intervention chirurgicale. À transmettre à votre équipe médicale avant toute opération.</p><a href=\"documents/prise-en-charge-chirurgicale.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div></div>",
+      "content": "<div class=\"tab-with-image\"><div><p>Ce protocole détaille les recommandations de prise en charge pour les patients atteints du SED en cas d'intervention chirurgicale. À transmettre à votre équipe médicale avant toute opération.</p><a href=\"documents/prise-en-charge-chirurgicale.pdf\" class=\"btn btn-primary\" target=\"_blank\">Télécharger</a></div><img src=\"images/ressources-chirurgie.jpg\" alt=\"Prise en charge chirurgicale\"></div>",
       "image": "images/ressources-chirurgie.jpg"
     }
   ]
