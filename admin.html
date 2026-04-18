@@ -209,7 +209,7 @@
                     </div>
                     <div class="form-group">
                         <label>Description (optionnel)</label>
-                        <textarea id="ev-content" placeholder="Decrivez l'evenement..."></textarea>
+                        <div class="quill-wrapper"><div id="ev-content-editor"></div></div>
                     </div>
                     <input type="hidden" id="ev-edit-index" value="-1">
                     <div style="display:flex; gap:10px;">
@@ -496,6 +496,19 @@ const CONTENUS_PATH = 'data/contenus.json';
 let githubToken = '';
 let isLocalMode = false;
 let evenements = [], equipe = [], actualites = [];
+let quillEvEditor = null;
+
+function initEvEditor() {
+    if (quillEvEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'header': [3, 4, false] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillEvEditor = new Quill('#ev-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
 let eventsSha = '', equipeSha = '', actusSha = '';
 
 // Detect mode: local (port 3000) or online (GitHub)
@@ -732,14 +745,17 @@ function showEventForm(editIndex) {
     document.getElementById('event-form-container').style.display = 'block';
     document.getElementById('ev-edit-index').value = editIndex !== undefined ? editIndex : -1;
     document.getElementById('event-form-title').textContent = editIndex !== undefined ? 'Modifier un evenement' : 'Ajouter un evenement';
+    initEvEditor();
     if (editIndex !== undefined) {
         const ev = evenements[editIndex];
         document.getElementById('ev-title').value = ev.title;
         document.getElementById('ev-date').value = ev.date;
-        document.getElementById('ev-content').value = ev.content || '';
+        quillEvEditor.setContents([]);
+        quillEvEditor.clipboard.dangerouslyPasteHTML(0, ev.content || '');
         document.getElementById('ev-image-preview').style.display = 'none';
     } else {
-        ['ev-title','ev-date','ev-content'].forEach(id => document.getElementById(id).value = '');
+        ['ev-title','ev-date'].forEach(id => document.getElementById(id).value = '');
+        quillEvEditor.setContents([]);
         document.getElementById('ev-image-preview').style.display = 'none';
     }
     document.getElementById('ev-image').value = '';
@@ -751,7 +767,7 @@ function editEvent(i) { showEventForm(i); }
 async function saveEvent() {
     const title = document.getElementById('ev-title').value.trim();
     const date = document.getElementById('ev-date').value.trim();
-    const content = document.getElementById('ev-content').value.trim();
+    const content = cleanQuillHtml(quillEvEditor.root.innerHTML);
     const imageInput = document.getElementById('ev-image');
     const editIndex = parseInt(document.getElementById('ev-edit-index').value);
     if (!title || !date) { showStatus('Remplissez le titre et la date.', 'error'); return; }
@@ -767,10 +783,7 @@ async function saveEvent() {
             imagePath = `images/evenements/${id}.${ext}`;
             await uploadImage(imagePath, imageInput.files[0]);
         }
-        let finalContent = content;
-        if (content && !content.includes('<')) {
-            finalContent = content.split('\n').filter(l => l.trim()).map(l => `<p>${l}</p>`).join('\n');
-        }
+        const finalContent = content === '<p><br></p>' ? '' : content;
         if (editIndex >= 0) {
             evenements[editIndex] = { ...evenements[editIndex], id, title, date, image: imagePath, content: finalContent };
             eventsSha = await saveJsonFile(EVENTS_PATH, evenements, eventsSha, `Modification evenement: ${title}`);
