@@ -1191,15 +1191,13 @@ a.btn-secondary:hover {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: var(--spacing-xl);
-    align-items: center;
+    align-items: start;
 }
 
 .tab-with-image img {
     width: 100%;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    align-self: stretch;
-    object-fit: cover;
 }
 
 .tab-with-image > div {
@@ -2610,14 +2608,12 @@ p {
     display: grid;
     grid-template-columns: 1fr 280px;
     gap: var(--spacing-xl);
-    align-items: center;
+    align-items: start;
 }
 .tab-with-image img {
     width: 100%;
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-sm);
-    align-self: stretch;
-    object-fit: cover;
 }
 
 /* Vignettes blanches */

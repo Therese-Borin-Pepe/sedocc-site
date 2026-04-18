@@ -28,8 +28,12 @@ if (navToggle) {
 // Close menu when clicking on a link
 navLinks.forEach(function(link) {
     link.addEventListener('click', function() {
+        // Don't close menu if it's the dropdown toggle (mobile)
+        if (window.innerWidth <= 968 && link.closest('.nav-dropdown')) {
+            return;
+        }
         navMenu.classList.remove('active');
-        
+
         // Reset hamburger icon
         if (navToggle) {
             const spans = navToggle.querySelectorAll('span');
