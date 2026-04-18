@@ -1211,6 +1211,21 @@ a.btn-secondary:hover {
     align-self: center;
 }
 
+.tab-with-image.image-left {
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-md);
+}
+
+.tab-with-image.image-left > div .btn {
+    align-self: flex-start !important;
+}
+
+@media (max-width: 968px) {
+    .tab-with-image.image-left {
+        grid-template-columns: 1fr;
+    }
+}
+
 .image-clic-hint {
     font-size: 0.85rem;
     color: var(--text-medium);
