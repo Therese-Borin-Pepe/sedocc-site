@@ -495,11 +495,10 @@
                         </div>
                         <div class="form-group">
                             <label>Contenu *</label>
-                            <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
-                            <div id="og-html-area" style="display:none;">
-                                <textarea id="og-html-textarea" style="min-height:280px; font-family:monospace; font-size:0.8rem; width:100%; border:2px solid #ddd; border-radius:8px; padding:10px; resize:vertical;"></textarea>
-                                <small style="color:#8B1A2B;">⚠ Ce contenu contient une mise en page avancée. Éditez le code HTML directement — ne supprimez pas les balises structurelles.</small>
+                            <div id="og-complex-warning" style="display:none; background:#fff3cd; border:1px solid #ffc107; border-radius:8px; padding:10px 14px; margin-bottom:8px; font-size:0.85rem; color:#856404;">
+                                ⚠ Cette section contient une mise en page avancée (accordéon, grille de cartes…). Vous pouvez modifier les textes ci-dessous. La structure visuelle sera préservée à l'enregistrement.
                             </div>
+                            <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
                         </div>
                         <input type="hidden" id="og-edit-index" value="-1">
                         <div style="display:flex; gap:10px;">
@@ -1469,52 +1468,165 @@ function isComplexContent(html) {
 function extractEditableContent(html) {
     const temp = document.createElement('div');
     temp.innerHTML = html;
+
     // tab-with-image: get all inner divs text content (not the img)
     const sections = temp.querySelectorAll('.tab-with-image > div:first-child');
     if (sections.length > 0) {
-        // Concatenate all sections — they'll be reconstructed using original <h3> titles
         return Array.from(sections).map(function(s) { return s.innerHTML; }).join('');
     }
-    // bilan-section: flatten to readable text
+
+    // bilan-section
     const bilan = temp.querySelector('.bilan-section');
     if (bilan) return bilan.innerHTML;
+
+    // accordion: extract each item as h3 (header) + content
+    const accordion = temp.querySelector('.accordion');
+    if (accordion) {
+        let out = '';
+        accordion.querySelectorAll('.accordion-item').forEach(function(item) {
+            const btn = item.querySelector('.accordion-btn');
+            const body = item.querySelector('.accordion-body');
+            if (btn) out += '<h3>' + btn.textContent.replace(/▼|▲|›|»/g, '').trim() + '</h3>';
+            if (body) out += body.innerHTML;
+        });
+        return out;
+    }
+
+    // card-modern grid: extract each card as h3 + p + ul
+    const grid = temp.querySelector('.benefits-grid, .cards-grid');
+    if (grid) {
+        let out = '';
+        grid.querySelectorAll('.card-modern').forEach(function(card) {
+            const h3 = card.querySelector('h3');
+            const desc = card.querySelector('.card-desc');
+            const list = card.querySelector('ul');
+            const footer = card.querySelector('.card-footer');
+            if (h3) out += h3.outerHTML;
+            if (desc) out += desc.outerHTML;
+            if (list) out += list.outerHTML;
+            if (footer) out += footer.outerHTML;
+            out += '<hr>';
+        });
+        // Also include quote if present
+        const quote = temp.querySelector('.quote-modern p');
+        if (quote) out += '<blockquote>' + quote.innerHTML + '</blockquote>';
+        return out;
+    }
+
+    // symptoms-grid: extract each symptom card
+    const sympGrid = temp.querySelector('.symptoms-grid');
+    if (sympGrid) {
+        let out = '';
+        sympGrid.querySelectorAll('.symptom-card, .symptom-item, [class*="symptom"]').forEach(function(card) {
+            out += '<p>' + card.textContent.trim() + '</p>';
+        });
+        return out || sympGrid.textContent;
+    }
+
+    // reference-box / help-box: extract paragraphs
+    const refBoxes = temp.querySelectorAll('.reference-box, .help-box');
+    if (refBoxes.length > 0) {
+        let out = '';
+        refBoxes.forEach(function(box) { out += box.innerHTML; });
+        return out;
+    }
+
+    // chansons-grid: extract chanson items
+    const chansons = temp.querySelector('.chansons-grid');
+    if (chansons) return chansons.innerHTML;
+
+    // ald-section
+    const ald = temp.querySelector('.ald-section');
+    if (ald) return ald.innerHTML;
+
     return html;
 }
 
 // Rebuild full HTML with proper wrapper structure
 function rebuildTabContent(editedHtml, imagePath, originalContent) {
-    // Check if original had multiple tab-with-image sections
     if (originalContent) {
-        const temp = document.createElement('div');
-        temp.innerHTML = originalContent;
-        const origSections = temp.querySelectorAll('.tab-with-image');
-        if (origSections.length > 1) {
-            // Find the <h3> titles from each original section to split the edited content
-            const splitTitles = [];
-            origSections.forEach(function(sec, i) {
-                if (i > 0) {
-                    const h3 = sec.querySelector('h3');
-                    if (h3) splitTitles.push(h3.outerHTML);
+        const origTemp = document.createElement('div');
+        origTemp.innerHTML = originalContent;
+        const editTemp = document.createElement('div');
+        editTemp.innerHTML = editedHtml;
+
+        // Accordion: reconstruct from h3 (header) + content blocks
+        const origAccordion = origTemp.querySelector('.accordion');
+        if (origAccordion) {
+            const items = origAccordion.querySelectorAll('.accordion-item');
+            const h3s = editTemp.querySelectorAll('h3');
+            items.forEach(function(item, i) {
+                const btn = item.querySelector('.accordion-btn');
+                const body = item.querySelector('.accordion-body');
+                if (h3s[i] && btn) {
+                    const firstText = btn.firstChild;
+                    if (firstText && firstText.nodeType === 3) firstText.textContent = h3s[i].textContent + ' ';
+                    else btn.innerHTML = h3s[i].textContent + ' <span class="accordion-icon">▼</span>';
+                }
+                if (body && h3s[i]) {
+                    let bodyHtml = '';
+                    let node = h3s[i].nextElementSibling;
+                    while (node && node.nodeName !== 'H3') {
+                        bodyHtml += node.outerHTML;
+                        node = node.nextElementSibling;
+                    }
+                    if (bodyHtml) body.innerHTML = bodyHtml;
                 }
             });
-            // Split edited HTML at the <h3> boundaries
+            return origTemp.innerHTML;
+        }
+
+        // Card-modern grid: reconstruct from h3 + p + ul sections separated by hr
+        const origGrid = origTemp.querySelector('.benefits-grid, .cards-grid');
+        if (origGrid) {
+            const cards = origGrid.querySelectorAll('.card-modern');
+            // Split editedHtml at <hr> into one block per card
+            const blocks = [];
+            let current = document.createElement('div');
+            Array.from(editTemp.childNodes).forEach(function(node) {
+                if (node.nodeName === 'HR') { blocks.push(current); current = document.createElement('div'); }
+                else current.appendChild(node.cloneNode(true));
+            });
+            blocks.push(current);
+            cards.forEach(function(card, i) {
+                if (!blocks[i]) return;
+                const h3 = card.querySelector('h3');
+                const desc = card.querySelector('.card-desc');
+                const list = card.querySelector('ul');
+                const footer = card.querySelector('.card-footer');
+                const bH3 = blocks[i].querySelector('h3');
+                const bDesc = blocks[i].querySelector('p');
+                const bList = blocks[i].querySelector('ul');
+                const bFooter = blocks[i].querySelectorAll('p')[1];
+                if (h3 && bH3) h3.innerHTML = bH3.innerHTML;
+                if (desc && bDesc) desc.innerHTML = bDesc.innerHTML;
+                if (list && bList) list.innerHTML = bList.innerHTML;
+                if (footer && bFooter) footer.innerHTML = bFooter.innerHTML;
+            });
+            const quote = origTemp.querySelector('.quote-modern p');
+            const editQuote = editTemp.querySelector('blockquote');
+            if (quote && editQuote) quote.innerHTML = editQuote.innerHTML;
+            return origTemp.innerHTML;
+        }
+
+        // Multiple tab-with-image sections
+        const origSections = origTemp.querySelectorAll('.tab-with-image');
+        if (origSections.length > 1) {
+            const splitTitles = [];
+            origSections.forEach(function(sec, i) {
+                if (i > 0) { const h3 = sec.querySelector('h3'); if (h3) splitTitles.push(h3.outerHTML); }
+            });
             let parts = [editedHtml];
             splitTitles.forEach(function(title) {
                 const last = parts.pop();
                 const idx = last.indexOf(title);
-                if (idx >= 0) {
-                    parts.push(last.substring(0, idx));
-                    parts.push(title + last.substring(idx + title.length));
-                } else {
-                    parts.push(last);
-                }
+                if (idx >= 0) { parts.push(last.substring(0, idx)); parts.push(title + last.substring(idx + title.length)); }
+                else parts.push(last);
             });
             let result = '';
             origSections.forEach(function(sec, i) {
                 const img = sec.querySelector('img');
-                const imgHtml = img ? img.outerHTML : '';
-                const content = parts[i] || '';
-                result += '<div class="tab-with-image"><div>' + content + '</div>' + imgHtml + '</div>';
+                result += '<div class="tab-with-image"><div>' + (parts[i] || '') + '</div>' + (img ? img.outerHTML : '') + '</div>';
             });
             return result;
         }
@@ -1584,19 +1696,11 @@ function showTabForm(editIndex) {
         document.getElementById('og-title').value = tab.title;
         editingOriginalContent = tab.content;
 
-        if (isComplexContent(tab.content)) {
-            // Mode HTML direct pour les structures complexes
-            document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'none';
-            document.getElementById('og-html-area').style.display = 'block';
-            document.getElementById('og-html-textarea').value = tab.content;
-        } else {
-            // Mode Quill pour le contenu simple
-            document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
-            document.getElementById('og-html-area').style.display = 'none';
-            const editable = extractEditableContent(tab.content);
-            quillTabEditor.setContents([]);
-            quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
-        }
+        const complex = isComplexContent(tab.content);
+        document.getElementById('og-complex-warning').style.display = complex ? 'block' : 'none';
+        const editable = extractEditableContent(tab.content);
+        quillTabEditor.setContents([]);
+        quillTabEditor.clipboard.dangerouslyPasteHTML(0, editable);
 
         if (tab.image) {
             document.getElementById('og-image-preview').src = tab.image;
@@ -1607,8 +1711,7 @@ function showTabForm(editIndex) {
     } else {
         document.getElementById('og-title').value = '';
         editingOriginalContent = '';
-        document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
-        document.getElementById('og-html-area').style.display = 'none';
+        document.getElementById('og-complex-warning').style.display = 'none';
         quillTabEditor.setContents([]);
         document.getElementById('og-image-preview').style.display = 'none';
     }
@@ -1617,8 +1720,7 @@ function showTabForm(editIndex) {
 }
 function hideTabForm() {
     document.getElementById('tab-form-container').style.display = 'none';
-    document.getElementById('og-tab-editor').closest('.quill-wrapper').style.display = 'block';
-    document.getElementById('og-html-area').style.display = 'none';
+    document.getElementById('og-complex-warning').style.display = 'none';
 }
 function editPageTab(i) { showTabForm(i); }
 
@@ -1642,9 +1744,11 @@ async function savePageTab() {
     const title = document.getElementById('og-title').value.trim();
     const imageInput = document.getElementById('og-image');
     const editIndex = parseInt(document.getElementById('og-edit-index').value);
-    const isHtmlMode = document.getElementById('og-html-area').style.display !== 'none';
 
     if (!title) { showStatus('Entrez le titre de l\'onglet.', 'error'); return; }
+
+    const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
+    if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); return; }
 
     const btn = document.getElementById('og-save-btn');
     btn.disabled = true; btn.textContent = 'Enregistrement...';
@@ -1659,16 +1763,7 @@ async function savePageTab() {
             await uploadImage(imagePath, imageInput.files[0]);
         }
 
-        let content;
-        if (isHtmlMode) {
-            content = document.getElementById('og-html-textarea').value.trim();
-            if (!content) { showStatus('Entrez le contenu de l\'onglet.', 'error'); btn.disabled = false; btn.textContent = 'Enregistrer'; return; }
-        } else {
-            const editedHtml = cleanQuillHtml(quillTabEditor.root.innerHTML);
-            if (!editedHtml || editedHtml === '<p><br></p>' || !editedHtml.trim()) { showStatus('Entrez le contenu de l\'onglet.', 'error'); btn.disabled = false; btn.textContent = 'Enregistrer'; return; }
-            content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
-        }
-
+        const content = rebuildTabContent(editedHtml, imagePath, editingOriginalContent);
         const tab = { id, title, content, image: imagePath };
 
         if (editIndex >= 0) {
