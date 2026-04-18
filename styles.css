@@ -1123,12 +1123,13 @@ a.btn-secondary:hover {
 
 .document-card .btn {
     margin-top: auto;
-    align-self: flex-start;
+    align-self: center;
 }
 
 /* Ressource sections (vertical layout) */
 .ressource-section {
-    margin-bottom: var(--spacing-xxl);
+    margin-bottom: var(--spacing-2xl);
+    padding-top: var(--spacing-lg);
 }
 
 .ressource-section h2 {
@@ -1543,7 +1544,8 @@ blockquote p {
 
 a.evenement-card,
 a.evenement-card:visited {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: var(--bg-white);
     border-radius: var(--radius-lg);
     overflow: hidden;
@@ -1552,6 +1554,7 @@ a.evenement-card:visited {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    height: 100%;
 }
 
 a.evenement-card:hover {
@@ -1591,6 +1594,9 @@ a.evenement-card:hover {
 
 .evenement-info {
     padding: var(--spacing-md);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .evenement-category {
@@ -2236,7 +2242,7 @@ p {
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 25px;
+    margin-bottom: 12px;
     min-height: 62px;
 }
 
@@ -2336,6 +2342,65 @@ p {
     transform: translateX(140px);
     font-family: serif;
 }
+/* ==========================================
+   PARTENAIRES
+   ========================================== */
+.partenaire-block {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.partenaire-logo-text {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #2d2d6b;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.partenaire-tagline {
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.partenaire-desc {
+    font-size: 1.05rem;
+    color: var(--text-dark);
+    line-height: 1.7;
+    max-width: 700px;
+    margin: 0 auto 40px;
+}
+
+.partenaire-grid {
+    grid-template-columns: repeat(2, minmax(260px, 400px)) !important;
+    justify-content: center !important;
+    margin-bottom: 40px !important;
+}
+
+.partenaire-contact {
+    background: #f8f4f0;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 20px 25px;
+    text-align: left;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+
+.partenaire-contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.partenaire-contact a:hover {
+    text-decoration: underline;
+}
+
 /* ==========================================
    HARMONISATION ONGLETS & DESIGN
    ========================================== */
