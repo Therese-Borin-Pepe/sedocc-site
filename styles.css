@@ -130,7 +130,7 @@ a:hover {
     top: 0;
     left: 0;
     right: 0;
-    background: var(--bg-white);
+    background: var(--bg-light);
     box-shadow: var(--shadow-sm);
     z-index: 1000;
     transition: all var(--transition-medium);
