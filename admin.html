@@ -251,6 +251,7 @@
         <div class="admin-nav-main">
             <button class="admin-nav-btn active" onclick="switchMainNav('association')">Notre association</button>
             <button class="admin-nav-btn" onclick="switchMainNav('adhesion')">Adhésion</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('initiatives')">Initiatives &amp; Partenariats</button>
             <button class="admin-nav-btn" onclick="switchMainNav('sed')">SED</button>
             <button class="admin-nav-btn" onclick="switchMainNav('evenements')">Évènements</button>
             <button class="admin-nav-btn" onclick="switchMainNav('ressources')">Ressources</button>
@@ -262,7 +263,6 @@
             <button class="admin-sub-btn active" onclick="switchTab('contenus', 'association')">Contenus</button>
             <button class="admin-sub-btn" onclick="switchTab('photos', 'association')">Photos</button>
             <button class="admin-sub-btn" onclick="switchTab('equipe', 'association')">Équipe</button>
-            <button class="admin-sub-btn" onclick="switchTab('partenaires', 'association')">Partenaires</button>
         </div>
 
         <!-- SOUS-NAVIGATION SED -->
@@ -585,6 +585,7 @@
             <select id="og-page-select" onchange="loadPageTabs()" style="display:none;">
                 <option value="">-- Choisir une page --</option>
                 <option value="adhesion">Adhésion et soutien</option>
+                <option value="initiatives">Initiatives &amp; Partenariats</option>
                 <option value="traitements">Traitements</option>
                 <option value="diagnostic">Diagnostic</option>
                 <option value="sed">Qu'est-ce que le SED ?</option>
@@ -808,6 +809,7 @@ function switchMainNav(section) {
     if (section === 'association') switchTab('contenus', 'association');
     else if (section === 'sed') switchTab('actualites', 'sed');
     else if (section === 'adhesion') switchOnglets('adhesion', 'adhesion');
+    else if (section === 'initiatives') switchOnglets('initiatives', 'initiatives');
     else if (section === 'evenements') { switchTab('evenements', 'evenements'); }
     else if (section === 'ressources') switchTab('ressources', 'ressources');
     else if (section === 'droits') switchOnglets('droits', 'droits');
@@ -833,6 +835,7 @@ function switchTab(tab, parentNav) {
 
 const PAGE_TITLES = {
     adhesion: 'Adhésion et soutien',
+    initiatives: 'Initiatives & Partenariats',
     traitements: 'Traitements & prises en charge',
     diagnostic: 'Diagnostic',
     sed: "Qu'est-ce que le SED ?",
