@@ -2558,6 +2558,26 @@ p {
     margin-bottom: 10px;
 }
 
+/* Bouton Adhérer dans la nav */
+.nav-btn-adherez {
+    background: var(--primary-color) !important;
+    color: white !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.4rem 1.1rem !important;
+    font-weight: 600 !important;
+}
+.nav-btn-adherez:hover {
+    background: var(--primary-dark, #6b1220) !important;
+    color: white !important;
+}
+@media (max-width: 1380px) {
+    .nav-btn-adherez {
+        display: inline-block;
+        margin: 10px auto;
+        width: auto !important;
+    }
+}
+
 /* Cure Balaruc : titres h3 réduits */
 #tab-cure-balaruc h3 {
     font-size: 1rem;

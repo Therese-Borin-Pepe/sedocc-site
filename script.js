@@ -29,7 +29,7 @@ if (navToggle) {
 navLinks.forEach(function(link) {
     link.addEventListener('click', function() {
         // Don't close menu if it's the dropdown toggle (mobile)
-        if (window.innerWidth <= 968 && link.closest('.nav-dropdown')) {
+        if (window.innerWidth <= 1380 && link.closest('.nav-dropdown')) {
             return;
         }
         navMenu.classList.remove('active');
@@ -356,7 +356,7 @@ accordionBtns.forEach(function(btn) {
 var dropdowns = document.querySelectorAll('.nav-dropdown');
 dropdowns.forEach(function(dropdown) {
     dropdown.addEventListener('click', function(e) {
-        if (window.innerWidth <= 968) {
+        if (window.innerWidth <= 1380) {
             var link = this.querySelector('.nav-link');
             if (e.target === link || link.contains(e.target)) {
                 e.preventDefault();
