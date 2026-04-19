@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ressources - SED'OCC</title>
-    <meta name="description" content="Ressources pour le SED : réseau d'expertise, centres de référence, livrets d'information, parcours de soins.">
+    <title>Initiatives & Partenariats - SED'OCC</title>
+    <meta name="description" content="Initiatives et partenariats de SED'OCC : Mutaero, cure thermale Balaruc-les-Bains.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
                 <li><a href="index.html" class="nav-link">Notre association</a></li>
                 <li><a href="adhesion.html" class="nav-link">Adhésion et soutien</a></li>
                 <li class="nav-dropdown">
-                    <a href="sed.html" class="nav-link">Qu'est-ce que le SED ? ▾</a>
+                    <a href="sed.html" class="nav-link">Qu'est-ce que le SED ? &#9662;</a>
                     <ul class="dropdown-menu">
                         <li><a href="sed.html">Qu'est-ce que le SED ?</a></li>
                         <li><a href="diagnostic.html">Diagnostic</a></li>
@@ -29,9 +29,8 @@
                     </ul>
                 </li>
                 <li><a href="evenements.html" class="nav-link">Évènements</a></li>
-                <li><a href="initiatives.html" class="nav-link">Initiatives &amp; Partenariats</a></li>
-
-                <li><a href="ressources.html" class="nav-link active">Ressources</a></li>
+                <li><a href="initiatives.html" class="nav-link active">Initiatives &amp; Partenariats</a></li>
+                <li><a href="ressources.html" class="nav-link">Ressources</a></li>
                 <li><a href="droits.html" class="nav-link">Vos droits : MDPH – ALD</a></li>
             </ul>
             <div class="nav-social">
@@ -54,31 +53,26 @@
 
     <section class="page-header">
         <div class="container">
-            <h1 id="page-title">Ressources</h1>
+            <h1>Initiatives &amp; Partenariats</h1>
         </div>
     </section>
 
     <section class="page-content">
         <div class="container">
-            <div id="ressources-sections">
-                <!-- Chargé dynamiquement depuis data/pages/ressources.json -->
-            </div>
-
+            <div id="initiatives-sections"></div>
             <script>
             (async function() {
                 try {
-                    const res = await fetch('data/pages/ressources.json');
+                    const res = await fetch('data/pages/initiatives.json');
                     const data = await res.json();
-                    const container = document.getElementById('ressources-sections');
-                    data.tabs.forEach(function(section) {
+                    const container = document.getElementById('initiatives-sections');
+                    data.tabs.forEach(function(s) {
                         const block = document.createElement('div');
                         block.className = 'ressource-section';
-                        block.innerHTML = '<h2>' + section.title + '</h2>' + section.content;
+                        block.innerHTML = '<h2>' + s.title + '</h2>' + s.content;
                         container.appendChild(block);
                     });
-                } catch(e) {
-                    console.error('Erreur chargement ressources:', e);
-                }
+                } catch(e) { console.error('Erreur chargement initiatives:', e); }
             })();
             </script>
         </div>
@@ -105,7 +99,7 @@
                     </a>
                 </div>
             </div>
-            <div class="footer-bottom"><p>Copyright © 2026 | SED'OCC. Tous droits réservés.</p></div>
+            <div class="footer-bottom"><p>Copyright &copy; 2026 | SED'OCC. Tous droits réservés.</p></div>
         </div>
     </footer>
     <script src="script.js"></script>
