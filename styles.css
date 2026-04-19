@@ -2803,6 +2803,18 @@ p {
         padding: 0 15px;
     }
 
+    /* Fix partenaire-grid mobile */
+    .partenaire-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px;
+    }
+
+    /* Adhesion-modern dans tab-content : contrer le padding du tab pour aligner avec adhesion.html */
+    .tab-content.active .adhesion-modern {
+        margin-left: -30px;
+        margin-right: -30px;
+    }
+
     /* Bulles mobile - réduites mais visibles */
     .page-bubbles {
         overflow: hidden;
