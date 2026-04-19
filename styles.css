@@ -872,7 +872,7 @@ a.btn-secondary:hover {
         top: 70px;
         left: -100%;
         flex-direction: column;
-        background: var(--bg-white);
+        background: var(--bg-light);
         width: 100%;
         height: calc(100vh - 70px);
         text-align: center;
@@ -909,7 +909,7 @@ a.btn-secondary:hover {
         top: 70px;
         left: -100%;
         flex-direction: column;
-        background: var(--bg-white);
+        background: var(--bg-light);
         width: 100%;
         height: calc(100vh - 70px);
         text-align: center;
