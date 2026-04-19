@@ -2759,8 +2759,8 @@ br.br-desktop {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Adhésion : badges */
-.card-modern:last-child .card-header-modern {
+/* Adhésion : carte badges, alignement gauche */
+.adhesion-modern .card-modern:has(.badges-container) .card-header-modern {
     justify-content: flex-start;
 }
 

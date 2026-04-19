@@ -91,6 +91,16 @@
                         block.innerHTML = '<h2>' + s.title + '</h2>' + s.content;
                         container.appendChild(block);
                     });
+                    // Réinitialiser l'accordion après chargement async
+                    container.querySelectorAll('.accordion-btn').forEach(function(btn) {
+                        btn.addEventListener('click', function() {
+                            var item = this.parentElement;
+                            container.querySelectorAll('.accordion-item').forEach(function(other) {
+                                if (other !== item) other.classList.remove('active');
+                            });
+                            item.classList.toggle('active');
+                        });
+                    });
                 } catch(e) { console.error('Erreur chargement droits:', e); }
             })();
             </script>
