@@ -209,6 +209,7 @@ a:hover {
     border-radius: var(--radius-md);
     list-style: none;
     min-width: 280px;
+    white-space: nowrap;
     padding: var(--spacing-xs) 0;
     z-index: 1001;
 }
@@ -1831,7 +1832,9 @@ a.evenement-card:hover {
 }
 
 .evenement-text h3 {
-    color: var(--heading-color);
+    color: var(--text-dark);
+    font-size: 1rem;
+    font-weight: 600;
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
 }
