@@ -648,7 +648,7 @@
                     </div>
                 </div>
 
-                <h2 class="section-title">Onglets existants</h2>
+                <h2 class="section-title" id="onglets-list-title">Onglets existants</h2>
                 <div id="onglets-list" class="item-list">
                     <div class="loading">Selectionnez une page...</div>
                 </div>
@@ -843,12 +843,25 @@ const PAGE_TITLES = {
     droits: 'Vos droits : MDPH – ALD'
 };
 
+// Pages qui affichent des onglets avec navigation (vs sections empilées)
+const PAGES_WITH_TABS = ['traitements', 'diagnostic', 'sed', 'impacts', 'initiatives'];
+
+function getContentLabel(page) {
+    return PAGES_WITH_TABS.includes(page) ? 'onglet' : 'section';
+}
+
 function switchOnglets(page, parentNav) {
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     document.getElementById('tab-onglets').classList.add('active');
     document.getElementById('og-page-select').value = page;
     const titleEl = document.getElementById('onglets-page-title');
-    if (titleEl) titleEl.textContent = PAGE_TITLES[page] || 'Gestion des onglets';
+    const label = getContentLabel(page);
+    if (titleEl) titleEl.textContent = PAGE_TITLES[page] || 'Gestion du contenu';
+    // Adapter le bouton Ajouter et le titre de la liste
+    const addBtn = document.querySelector('#tab-onglets .btn-success');
+    if (addBtn) addBtn.textContent = '+ Ajouter un' + (label === 'onglet' ? ' onglet' : 'e section');
+    const listTitle = document.getElementById('onglets-list-title');
+    if (listTitle) listTitle.textContent = (label === 'onglet' ? 'Onglets existants' : 'Sections existantes');
     loadPageTabs();
 
     // Mettre à jour les sous-boutons actifs
@@ -1925,7 +1938,10 @@ function showEditorMode(mode) {
 function showTabForm(editIndex) {
     document.getElementById('tab-form-container').style.display = 'block';
     document.getElementById('og-edit-index').value = editIndex !== undefined ? editIndex : -1;
-    document.getElementById('tab-form-title').textContent = editIndex !== undefined ? 'Modifier la section' : 'Ajouter une section';
+    const lbl = getContentLabel(currentPage);
+    document.getElementById('tab-form-title').textContent = editIndex !== undefined
+        ? ('Modifier l\'' + lbl)
+        : ('Ajouter un' + (lbl === 'onglet' ? ' onglet' : 'e section'));
     initTabEditor();
 
     if (editIndex !== undefined) {
