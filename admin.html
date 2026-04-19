@@ -265,6 +265,13 @@
             <button class="admin-sub-btn" onclick="switchTab('equipe', 'association')">Équipe</button>
         </div>
 
+        <!-- SOUS-NAVIGATION EVENEMENTS -->
+        <div class="admin-nav-sub" id="subnav-evenements">
+            <button class="admin-sub-btn active" onclick="filterEvents(null, this)">Tous les évènements</button>
+            <button class="admin-sub-btn" onclick="filterEvents('cure-balaruc-les-bains', this)">Cure thermale Balaruc-les-Bains</button>
+            <button class="admin-sub-btn" onclick="filterEvents('conference-toulouse-replay', this)">Conférence &amp; Replay</button>
+        </div>
+
         <!-- SOUS-NAVIGATION SED -->
         <div class="admin-nav-sub" id="subnav-sed">
             <button class="admin-sub-btn active" onclick="switchTab('actualites', 'sed')">Actualités médicales</button>
@@ -810,7 +817,7 @@ function switchMainNav(section) {
     else if (section === 'sed') switchTab('actualites', 'sed');
     else if (section === 'adhesion') switchOnglets('adhesion', 'adhesion');
     else if (section === 'initiatives') switchOnglets('initiatives', 'initiatives');
-    else if (section === 'evenements') { switchTab('evenements', 'evenements'); }
+    else if (section === 'evenements') { filterEvents(null); switchTab('evenements', 'evenements'); }
     else if (section === 'ressources') switchTab('ressources', 'ressources');
     else if (section === 'droits') switchOnglets('droits', 'droits');
 }
@@ -873,6 +880,21 @@ function switchOnglets(page, parentNav) {
             if (b.getAttribute('onclick') && b.getAttribute('onclick').includes("'" + page + "'")) b.classList.add('active');
         });
     }
+}
+
+let currentEventFilter = null;
+
+function filterEvents(eventId, btn) {
+    currentEventFilter = eventId;
+    // Mettre à jour les boutons actifs
+    const subnav = document.getElementById('subnav-evenements');
+    if (subnav) {
+        subnav.querySelectorAll('.admin-sub-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+        else subnav.querySelectorAll('.admin-sub-btn')[0].classList.add('active');
+    }
+    // Recharger la liste filtrée
+    switchTab('evenements', 'evenements');
 }
 
 // ===== DATA HELPERS (supports local + GitHub) =====
@@ -986,7 +1008,11 @@ async function loadEvents() {
 function renderEventList() {
     const list = document.getElementById('event-list');
     if (!evenements.length) { list.innerHTML = '<p style="color:#888;">Aucun evenement.</p>'; return; }
-    list.innerHTML = evenements.map((ev, i) => `
+    const filtered = currentEventFilter
+        ? evenements.map((ev, i) => ({ ev, i })).filter(({ ev }) => ev.id === currentEventFilter)
+        : evenements.map((ev, i) => ({ ev, i }));
+    if (!filtered.length) { list.innerHTML = '<p style="color:#888;">Aucun evenement trouvé.</p>'; return; }
+    list.innerHTML = filtered.map(({ ev, i }) => `
         <div class="item-card">
             <img src="${isLocalMode ? ev.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + ev.image}" alt="${ev.title}"
                  onerror="this.style.background='#ddd'">
@@ -995,8 +1021,8 @@ function renderEventList() {
                 <span>${ev.date}</span>
             </div>
             <div class="item-actions">
-                ${i > 0 ? `<button class="btn btn-move" onclick="moveEvent(${i},-1)" title="Monter">&#9650;</button>` : ''}
-                ${i < evenements.length-1 ? `<button class="btn btn-move" onclick="moveEvent(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                ${!currentEventFilter && i > 0 ? `<button class="btn btn-move" onclick="moveEvent(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${!currentEventFilter && i < evenements.length-1 ? `<button class="btn btn-move" onclick="moveEvent(${i},1)" title="Descendre">&#9660;</button>` : ''}
                 <button class="btn btn-secondary" onclick="previewEvent(${i})">Aperçu</button>
                 <button class="btn btn-warning" onclick="editEvent(${i})">Modifier</button>
                 <button class="btn btn-danger" onclick="deleteEvent(${i})">Supprimer</button>
