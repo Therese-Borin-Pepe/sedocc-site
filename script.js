@@ -239,8 +239,15 @@ window.addEventListener('load', function() {
     });
 
     document.addEventListener('click', function(e) {
+        // Clic sur une image directe
         if (e.target.classList.contains('lightbox-trigger')) {
             openLightbox(e.target.src, e.target.alt);
+        }
+        // Clic sur un wrapper .image-clickable.lightbox-trigger
+        var wrapper = e.target.closest('.image-clickable.lightbox-trigger');
+        if (wrapper) {
+            var img = wrapper.querySelector('img');
+            if (img) openLightbox(img.src, img.alt);
         }
     });
 })();

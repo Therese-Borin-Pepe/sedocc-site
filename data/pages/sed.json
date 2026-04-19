@@ -16,7 +16,7 @@
     {
       "id": "diagnostic",
       "title": "Un diagnostic essentiel pour une meilleure prise en charge",
-      "content": "<div class=\"tab-with-image align-top\"><div><p>Le diagnostic repose sur :</p><ul><li>Un examen clinique approfondi (se référer au PNDS sur le site de <a href=\"https://www.has-sante.fr/\" target=\"_blank\">l'HAS</a>).</li><li>Une étude des antécédents familiaux.</li><li>Parfois un test génétique (sauf pour le type hypermobile, dont la cause génétique est en cours d'identification)</li></ul></div><img src=\"images/sed-types.jpg\" alt=\"Types de SED\" class=\"lightbox-trigger\"></div><div class=\"diagnostic-images\"><img src=\"images/test-genetique.jpg\" alt=\"Test génétique\"><img src=\"images/examen-clinique.jpg\" alt=\"Examen clinique approfondi\"><img src=\"images/famille.jpg\" alt=\"Antécédents familiaux\"></div>",
+      "content": "<div class=\"tab-with-image align-top\"><div><p>Le diagnostic repose sur :</p><ul><li>Un examen clinique approfondi (se référer au PNDS sur le site de <a href=\"https://www.has-sante.fr/\" target=\"_blank\">l'HAS</a>).</li><li>Une étude des antécédents familiaux.</li><li>Parfois un test génétique (sauf pour le type hypermobile, dont la cause génétique est en cours d'identification)</li></ul></div><div class=\"image-clickable lightbox-trigger\"><img src=\"images/sed-types.jpg\" alt=\"Types de SED\"><div class=\"image-overlay\">🔍 Agrandir</div></div></div><div class=\"diagnostic-images\"><img src=\"images/test-genetique.jpg\" alt=\"Test génétique\"><img src=\"images/examen-clinique.jpg\" alt=\"Examen clinique approfondi\"><img src=\"images/famille.jpg\" alt=\"Antécédents familiaux\"></div>",
       "image": "images/sed-types.jpg"
     }
   ]
