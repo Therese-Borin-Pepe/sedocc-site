@@ -59,18 +59,29 @@
 
     <section class="page-content">
         <div class="container">
-            <div id="initiatives-sections"></div>
+            <div class="tabs">
+                <div class="tab-buttons" id="tab-buttons"></div>
+                <div id="tab-contents"></div>
+            </div>
             <script>
             (async function() {
                 try {
                     const res = await fetch('data/pages/initiatives.json');
                     const data = await res.json();
-                    const container = document.getElementById('initiatives-sections');
-                    data.tabs.forEach(function(s) {
-                        const block = document.createElement('div');
-                        block.className = 'ressource-section';
-                        block.innerHTML = '<h2>' + s.title + '</h2>' + s.content;
-                        container.appendChild(block);
+                    const btnsContainer = document.getElementById('tab-buttons');
+                    const contentsContainer = document.getElementById('tab-contents');
+                    data.tabs.forEach(function(tab, i) {
+                        const btn = document.createElement('button');
+                        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+                        btn.setAttribute('data-tab', tab.id);
+                        btn.textContent = tab.title;
+                        btnsContainer.appendChild(btn);
+
+                        const content = document.createElement('div');
+                        content.className = 'tab-content' + (i === 0 ? ' active' : '');
+                        content.id = 'tab-' + tab.id;
+                        content.innerHTML = tab.content;
+                        contentsContainer.appendChild(content);
                     });
                 } catch(e) { console.error('Erreur chargement initiatives:', e); }
             })();
