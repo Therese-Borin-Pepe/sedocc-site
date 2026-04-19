@@ -2254,6 +2254,15 @@ p {
     justify-content: flex-start;
 }
 
+/* --- PAGE DROITS MDPH : h3 plus petits que h2 --- */
+#droits-sections h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+}
+
 /* --- ACCUEIL (Style spécial) --- */
 .hero {
     position: relative; text-align: center;
