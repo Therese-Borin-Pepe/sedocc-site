@@ -2245,6 +2245,15 @@ p {
     margin-right: 0;
 }
 
+/* Traitements : tab-with-image revient au comportement d'origine (alignement haut) */
+.tab-content .tab-with-image {
+    align-items: start;
+}
+.tab-content .tab-with-image > div {
+    align-self: auto;
+    justify-content: flex-start;
+}
+
 /* --- ACCUEIL (Style spécial) --- */
 .hero {
     position: relative; text-align: center;
