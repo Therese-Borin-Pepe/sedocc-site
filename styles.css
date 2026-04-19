@@ -1712,18 +1712,19 @@ a.evenement-card:hover {
 
 .video-badge {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(0,0,0,0.7);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.62);
     color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 7px 12px;
+    border-radius: 0;
+    font-size: 0.85rem;
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 5px;
-    backdrop-filter: blur(4px);
+    justify-content: center;
+    gap: 6px;
 }
 
 .evenement-image img {
