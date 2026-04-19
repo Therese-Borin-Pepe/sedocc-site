@@ -2233,6 +2233,18 @@ p {
     margin-right: auto;
 }
 
+/* Paragraphes dans les sections de contenu : alignés à gauche */
+.ressource-section p,
+.tab-with-image p,
+.tab-content p,
+.card-modern p,
+.document-card p,
+.partenaire-desc p {
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+}
+
 /* --- ACCUEIL (Style spécial) --- */
 .hero {
     position: relative; text-align: center;
