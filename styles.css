@@ -2558,6 +2558,12 @@ p {
     margin-bottom: 10px;
 }
 
+/* Cure Balaruc : titres h3 réduits */
+#tab-cure-balaruc h3 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
 /* ==========================================
    PARTENAIRES
    ========================================== */
