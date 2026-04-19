@@ -2488,6 +2488,11 @@ p {
     margin-bottom: 15px !important;
 }
 
+/* Saut de ligne visible sur desktop, caché sur mobile */
+br.br-desktop {
+    display: block;
+}
+
 /* 9. La Liste à puces proprement alignée */
 .list-custom {
     list-style: none;
@@ -2501,6 +2506,11 @@ p {
     font-size: 0.95rem;
     display: flex;
     align-items: center;
+}
+
+.list-custom li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .list-custom li::before {
@@ -2807,6 +2817,10 @@ p {
     /* Espacement entre tab-with-image et ul suivant (ex: ALD droits) */
     .tab-with-image + ul {
         margin-top: 20px;
+    }
+
+    br.br-desktop {
+        display: none;
     }
 
     /* Fix partenaire-grid mobile */
