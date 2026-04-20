@@ -299,20 +299,44 @@
         <!-- ==================== NAV EXTRA TAB ==================== -->
         <div id="tab-nav-extra" class="tab-panel">
             <h2 class="section-title" id="nav-extra-title">Gérer les pages du menu</h2>
-            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Ajoutez des pages supplémentaires dans cette section du menu déroulant du site.</p>
 
-            <div class="add-form" style="margin-bottom:24px;">
-                <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Ajouter une nouvelle page</h3>
+            <!-- Sélecteur de mode -->
+            <div style="display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap;">
+                <button class="btn btn-primary" id="nav-extra-mode-btn-create" onclick="setNavExtraMode('create')" style="flex:1; min-width:160px;">+ Créer une nouvelle page</button>
+                <button class="btn btn-secondary" id="nav-extra-mode-btn-link" onclick="setNavExtraMode('link')" style="flex:1; min-width:160px;">Lier une page existante</button>
+            </div>
+
+            <!-- Mode : créer une page avec contenu -->
+            <div id="nav-extra-form-create" class="add-form" style="margin-bottom:24px; display:block;">
+                <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Créer une nouvelle page</h3>
                 <div class="form-group">
                     <label>Titre affiché dans le menu *</label>
                     <input type="text" id="nav-extra-new-title" placeholder="Ex: Cure Montastruc">
                 </div>
                 <div class="form-group">
+                    <label>Titre de la page (affiché en haut de la page) *</label>
+                    <input type="text" id="nav-extra-page-heading" placeholder="Ex: Cure thermale à Montastruc">
+                </div>
+                <div class="form-group">
+                    <label>Contenu *</label>
+                    <div class="quill-wrapper"><div id="nav-extra-editor"></div></div>
+                </div>
+                <button class="btn btn-success" onclick="saveNavExtraNewPage()">Créer la page</button>
+            </div>
+
+            <!-- Mode : lier une page existante -->
+            <div id="nav-extra-form-link" class="add-form" style="margin-bottom:24px; display:none;">
+                <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Lier une page existante</h3>
+                <div class="form-group">
+                    <label>Titre affiché dans le menu *</label>
+                    <input type="text" id="nav-extra-link-title" placeholder="Ex: Cure Montastruc">
+                </div>
+                <div class="form-group">
                     <label>URL relative *</label>
-                    <input type="text" id="nav-extra-new-url" placeholder="Ex: evenements/cure-montastruc.html">
+                    <input type="text" id="nav-extra-link-url" placeholder="Ex: evenements/cure-montastruc.html">
                     <small>Chemin relatif depuis la racine du site.</small>
                 </div>
-                <button class="btn btn-success" onclick="saveNavExtraEntry()">Ajouter</button>
+                <button class="btn btn-success" onclick="saveNavExtraLinkEntry()">Ajouter le lien</button>
             </div>
 
             <h3 style="color:#8B1A2B; margin-bottom:12px; font-size:1rem;">Pages existantes</h3>
@@ -962,10 +986,12 @@ async function saveJsonFile(filePath, data, sha, message) {
     } else {
         const jsonContent = JSON.stringify(data, null, 2);
         const base64 = btoa(unescape(encodeURIComponent(jsonContent)));
+        const bodyData = { message, content: base64 };
+        if (sha) bodyData.sha = sha; // Omis pour la création d'un nouveau fichier
         const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
             method: 'PUT',
             headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message, content: base64, sha })
+            body: JSON.stringify(bodyData)
         });
         if (!res.ok) { const err = await res.json(); throw new Error(err.message); }
         return (await res.json()).content.sha;
@@ -1034,6 +1060,8 @@ const NAV_EXTRA_PATH = 'data/nav-extra.json';
 let navExtra = { evenements: [], association: [], sed: [], droits: [] };
 let navExtraSha = '';
 let currentNavExtraSection = '';
+let quillNavExtraEditor = null;
+let currentNavExtraMode = 'create';
 
 const NAV_EXTRA_LABELS = {
     association: "L'association",
@@ -1041,6 +1069,38 @@ const NAV_EXTRA_LABELS = {
     droits: 'Droits & Ressources',
     evenements: 'Évènements & Activités'
 };
+
+function initNavExtraEditor() {
+    if (quillNavExtraEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillNavExtraEditor = new Quill('#nav-extra-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+}
+
+function setNavExtraMode(mode) {
+    currentNavExtraMode = mode;
+    const createForm = document.getElementById('nav-extra-form-create');
+    const linkForm = document.getElementById('nav-extra-form-link');
+    const btnCreate = document.getElementById('nav-extra-mode-btn-create');
+    const btnLink = document.getElementById('nav-extra-mode-btn-link');
+
+    if (mode === 'create') {
+        createForm.style.display = 'block';
+        linkForm.style.display = 'none';
+        btnCreate.className = 'btn btn-primary';
+        btnLink.className = 'btn btn-secondary';
+        initNavExtraEditor();
+    } else {
+        createForm.style.display = 'none';
+        linkForm.style.display = 'block';
+        btnCreate.className = 'btn btn-secondary';
+        btnLink.className = 'btn btn-primary';
+    }
+}
 
 function switchNavExtra(section, btn) {
     currentNavExtraSection = section;
@@ -1058,11 +1118,17 @@ function switchNavExtra(section, btn) {
 
     // Mettre à jour le titre
     const titleEl = document.getElementById('nav-extra-title');
-    if (titleEl) titleEl.textContent = 'Gérer les pages du menu — ' + (NAV_EXTRA_LABELS[section] || section);
+    if (titleEl) titleEl.textContent = 'Gérer les pages — ' + (NAV_EXTRA_LABELS[section] || section);
 
     // Réinitialiser le formulaire
     document.getElementById('nav-extra-new-title').value = '';
-    document.getElementById('nav-extra-new-url').value = '';
+    document.getElementById('nav-extra-page-heading').value = '';
+    document.getElementById('nav-extra-link-title').value = '';
+    document.getElementById('nav-extra-link-url').value = '';
+
+    // Mode créer par défaut
+    setNavExtraMode('create');
+    if (quillNavExtraEditor) quillNavExtraEditor.setContents([]);
 
     loadNavExtra();
 }
@@ -1094,22 +1160,130 @@ function renderNavExtraList() {
             <div class="item-info">
                 <h3>${escapeHtml(page.title)}</h3>
                 <span style="font-size:0.8rem; color:#888;">${escapeHtml(page.url)}</span>
+                ${page.created ? '<span style="font-size:0.75rem; background:#e8f5e9; color:#2e7d32; padding:2px 8px; border-radius:10px; margin-left:6px;">page créée</span>' : ''}
             </div>
             <div class="item-actions">
+                ${page.created ? `<button class="btn btn-primary" style="font-size:0.8rem; padding:6px 12px;" onclick="editNavExtraPage(${i})">Modifier</button>` : ''}
                 <button class="btn btn-danger" onclick="deleteNavExtraEntry(${i})">Supprimer</button>
             </div>
         </div>
     `).join('');
 }
 
-async function saveNavExtraEntry() {
-    const title = document.getElementById('nav-extra-new-title').value.trim();
-    const url = document.getElementById('nav-extra-new-url').value.trim();
+async function saveNavExtraNewPage() {
+    const menuTitle = document.getElementById('nav-extra-new-title').value.trim();
+    const pageHeading = document.getElementById('nav-extra-page-heading').value.trim();
+    const content = cleanQuillHtml(quillNavExtraEditor.root.innerHTML);
+
+    if (!menuTitle || !pageHeading) { showStatus('Remplissez le titre du menu et le titre de la page.', 'error'); return; }
+    if (!content || content === '<p><br></p>') { showStatus('Ajoutez du contenu à la page.', 'error'); return; }
+
+    const slug = generateId(menuTitle);
+    const url = 'page-extra.html?id=' + slug;
+
+    if (!navExtra[currentNavExtraSection]) navExtra[currentNavExtraSection] = [];
+    if (navExtra[currentNavExtraSection].some(p => p.url === url)) {
+        showStatus('Une page avec ce titre existe déjà.', 'error'); return;
+    }
+
+    // 1. Sauvegarder le contenu de la page
+    const pageData = { title: pageHeading, content };
+    const pageFilePath = 'data/pages/extra/' + slug + '.json';
+    try {
+        await saveJsonFile(pageFilePath, pageData, '', 'Création page: ' + pageHeading);
+    } catch (e) {
+        showStatus('Erreur lors de la création de la page : ' + e.message, 'error'); return;
+    }
+
+    // 2. Ajouter au menu
+    navExtra[currentNavExtraSection].push({ id: slug, title: menuTitle, url, created: true });
+    try {
+        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Ajout page menu: ' + menuTitle);
+        showStatus('Page "' + menuTitle + '" créée et ajoutée au menu !', 'success');
+        document.getElementById('nav-extra-new-title').value = '';
+        document.getElementById('nav-extra-page-heading').value = '';
+        quillNavExtraEditor.setContents([]);
+        renderNavExtraList();
+    } catch (e) {
+        navExtra[currentNavExtraSection].pop();
+        showStatus('Erreur: ' + e.message, 'error');
+    }
+}
+
+async function editNavExtraPage(index) {
+    const page = (navExtra[currentNavExtraSection] || [])[index];
+    if (!page || !page.created) return;
+
+    const slug = page.id;
+    const pageFilePath = 'data/pages/extra/' + slug + '.json';
+
+    // Passer en mode créer et charger le contenu
+    setNavExtraMode('create');
+    document.getElementById('nav-extra-new-title').value = page.title;
+
+    try {
+        const result = await loadJsonFile(pageFilePath);
+        const data = result.data;
+        document.getElementById('nav-extra-page-heading').value = data.title || '';
+        quillNavExtraEditor.setContents([]);
+        quillNavExtraEditor.clipboard.dangerouslyPasteHTML(0, data.content || '');
+    } catch(e) {
+        showStatus('Impossible de charger le contenu de la page.', 'error'); return;
+    }
+
+    // Remplacer le bouton "Créer" par "Mettre à jour"
+    const saveBtn = document.querySelector('#nav-extra-form-create .btn-success');
+    saveBtn.textContent = 'Mettre à jour';
+    saveBtn.onclick = () => updateNavExtraPage(index, slug);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function updateNavExtraPage(index, slug) {
+    const menuTitle = document.getElementById('nav-extra-new-title').value.trim();
+    const pageHeading = document.getElementById('nav-extra-page-heading').value.trim();
+    const content = cleanQuillHtml(quillNavExtraEditor.root.innerHTML);
+
+    if (!menuTitle || !pageHeading) { showStatus('Remplissez le titre du menu et le titre de la page.', 'error'); return; }
+    if (!content || content === '<p><br></p>') { showStatus('Ajoutez du contenu à la page.', 'error'); return; }
+
+    const pageFilePath = 'data/pages/extra/' + slug + '.json';
+    const pageData = { title: pageHeading, content };
+
+    try {
+        // Récupérer le sha actuel du fichier
+        let existingSha = '';
+        try { const r = await loadJsonFile(pageFilePath); existingSha = r.sha; } catch(e) {}
+        await saveJsonFile(pageFilePath, pageData, existingSha, 'Mise à jour page: ' + pageHeading);
+    } catch (e) {
+        showStatus('Erreur lors de la mise à jour : ' + e.message, 'error'); return;
+    }
+
+    // Mettre à jour le titre dans nav-extra si changé
+    if (navExtra[currentNavExtraSection][index]) {
+        navExtra[currentNavExtraSection][index].title = menuTitle;
+    }
+    try {
+        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Mise à jour page menu: ' + menuTitle);
+        showStatus('Page "' + menuTitle + '" mise à jour !', 'success');
+        // Restaurer le bouton
+        const saveBtn = document.querySelector('#nav-extra-form-create .btn-success');
+        saveBtn.textContent = 'Créer la page';
+        saveBtn.onclick = saveNavExtraNewPage;
+        document.getElementById('nav-extra-new-title').value = '';
+        document.getElementById('nav-extra-page-heading').value = '';
+        quillNavExtraEditor.setContents([]);
+        renderNavExtraList();
+    } catch (e) {
+        showStatus('Erreur: ' + e.message, 'error');
+    }
+}
+
+async function saveNavExtraLinkEntry() {
+    const title = document.getElementById('nav-extra-link-title').value.trim();
+    const url = document.getElementById('nav-extra-link-url').value.trim();
     if (!title || !url) { showStatus('Remplissez le titre et l\'URL.', 'error'); return; }
 
     if (!navExtra[currentNavExtraSection]) navExtra[currentNavExtraSection] = [];
-
-    // Vérifier les doublons
     if (navExtra[currentNavExtraSection].some(p => p.url === url)) {
         showStatus('Cette URL existe déjà dans la section.', 'error'); return;
     }
@@ -1118,10 +1292,10 @@ async function saveNavExtraEntry() {
     navExtra[currentNavExtraSection].push({ id, title, url });
 
     try {
-        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Ajout page menu: ' + title);
-        showStatus('Page "' + title + '" ajoutée au menu !', 'success');
-        document.getElementById('nav-extra-new-title').value = '';
-        document.getElementById('nav-extra-new-url').value = '';
+        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Ajout lien menu: ' + title);
+        showStatus('Lien "' + title + '" ajouté au menu !', 'success');
+        document.getElementById('nav-extra-link-title').value = '';
+        document.getElementById('nav-extra-link-url').value = '';
         renderNavExtraList();
     } catch (e) {
         navExtra[currentNavExtraSection].pop();
