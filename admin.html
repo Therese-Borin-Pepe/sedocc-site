@@ -329,29 +329,33 @@
             </div>
 
             <!-- Mode : créer une page avec contenu -->
-            <div id="nav-extra-form-create" class="add-form" style="margin-bottom:24px; display:block;">
-                <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Créer une nouvelle page</h3>
-                <div class="form-group">
-                    <label>Titre affiché dans le menu *</label>
-                    <input type="text" id="nav-extra-new-title" placeholder="Ex: Cure Montastruc">
-                </div>
-                <div class="form-group">
-                    <label>Titre de la page (affiché en haut de la page) *</label>
-                    <input type="text" id="nav-extra-page-heading" placeholder="Ex: Cure thermale à Montastruc">
-                </div>
-                <div class="form-group">
-                    <label>Contenu *</label>
-                    <div class="quill-wrapper"><div id="nav-extra-editor"></div></div>
-                </div>
-                <button class="btn btn-success" onclick="saveNavExtraNewPage()">Créer la page</button>
-
-                <!-- Aperçu temps réel -->
-                <div class="page-preview">
-                    <div class="page-preview-label">Aperçu — rendu sur le site</div>
-                    <div class="page-preview-header">
-                        <h2 id="nav-extra-preview-title"></h2>
+            <div id="nav-extra-form-create" style="margin-bottom:24px; display:block;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                    <!-- Formulaire -->
+                    <div class="add-form">
+                        <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Créer une nouvelle page</h3>
+                        <div class="form-group">
+                            <label>Titre affiché dans le menu *</label>
+                            <input type="text" id="nav-extra-new-title" placeholder="Ex: Cure Montastruc">
+                        </div>
+                        <div class="form-group">
+                            <label>Titre de la page *</label>
+                            <input type="text" id="nav-extra-page-heading" placeholder="Ex: Cure thermale à Montastruc">
+                        </div>
+                        <div class="form-group">
+                            <label>Contenu *</label>
+                            <div class="quill-wrapper"><div id="nav-extra-editor"></div></div>
+                        </div>
+                        <button class="btn btn-success" onclick="saveNavExtraNewPage()">Créer la page</button>
                     </div>
-                    <div class="page-preview-body" id="nav-extra-preview-body"></div>
+                    <!-- Aperçu temps réel -->
+                    <div class="page-preview" style="position:sticky; top:20px;">
+                        <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                        <div class="page-preview-header">
+                            <h2 id="nav-extra-preview-title"></h2>
+                        </div>
+                        <div class="page-preview-body" id="nav-extra-preview-body"></div>
+                    </div>
                 </div>
             </div>
 
