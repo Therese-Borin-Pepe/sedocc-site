@@ -775,6 +775,22 @@
             <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Modifiez les textes qui apparaissent sur la page d'accueil du site.</p>
 
             <div class="content-card">
+                <h3>Section Hero (bandeau d'accueil)</h3>
+                <div class="form-group">
+                    <label>Phrase sous le logo</label>
+                    <input type="text" id="ct-hero-subtitle" placeholder="Ex: Informer, soutenir, accompagner">
+                </div>
+                <div class="form-group">
+                    <label>Texte du bouton</label>
+                    <input type="text" id="ct-hero-cta-label" placeholder="Ex: Nous rejoindre">
+                </div>
+                <div class="form-group">
+                    <label>URL du bouton</label>
+                    <input type="text" id="ct-hero-cta-url" placeholder="https://...">
+                </div>
+            </div>
+
+            <div class="content-card">
                 <h3>Notre mission</h3>
                 <div class="form-group">
                     <label>Titre</label>
@@ -2182,6 +2198,11 @@ async function loadContenus() {
 }
 
 function fillContenusForm() {
+    if (contenus.hero) {
+        document.getElementById('ct-hero-subtitle').value = contenus.hero.subtitle || '';
+        document.getElementById('ct-hero-cta-label').value = contenus.hero.cta_label || '';
+        document.getElementById('ct-hero-cta-url').value = contenus.hero.cta_url || '';
+    }
     if (contenus.mission) {
         document.getElementById('ct-mission-titre').value = contenus.mission.titre || '';
         if (quillMission) { quillMission.setContents([]); quillMission.clipboard.dangerouslyPasteHTML(0, contenus.mission.texte || ''); }
@@ -2203,6 +2224,11 @@ async function saveContenus() {
     btn.disabled = true; btn.textContent = 'Enregistrement...';
 
     try {
+        contenus.hero = {
+            subtitle: document.getElementById('ct-hero-subtitle').value.trim(),
+            cta_label: document.getElementById('ct-hero-cta-label').value.trim(),
+            cta_url: document.getElementById('ct-hero-cta-url').value.trim()
+        };
         contenus.mission = {
             titre: document.getElementById('ct-mission-titre').value.trim(),
             texte: cleanQuillHtml(quillMission.root.innerHTML)

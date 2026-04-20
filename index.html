@@ -230,6 +230,15 @@
     fetch('data/contenus.json')
         .then(r => r.json())
         .then(c => {
+            if (c.hero) {
+                const sub = document.querySelector('.hero-subtitle');
+                const btn = document.querySelector('.hero-cta .btn-primary');
+                if (sub && c.hero.subtitle) sub.textContent = c.hero.subtitle;
+                if (btn) {
+                    if (c.hero.cta_label) btn.textContent = c.hero.cta_label;
+                    if (c.hero.cta_url) btn.href = c.hero.cta_url;
+                }
+            }
             if (c.mission) {
                 const t = document.getElementById('mission-titre');
                 const d = document.getElementById('mission-contenu');

@@ -1,4 +1,9 @@
 {
+  "hero": {
+    "subtitle": "Informer, soutenir, accompagner",
+    "cta_label": "Nous rejoindre",
+    "cta_url": "https://www.helloasso.com/associations/sed-occ-syndrome-ehlers-danslos-occitanie/adhesions/adhesion-sed-occ-2"
+  },
   "mission": {
     "titre": "Notre mission",
     "texte": "<p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>\n<p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>"
