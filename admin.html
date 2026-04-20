@@ -315,8 +315,58 @@
 
         <div class="admin-nav-divider"></div>
 
-        <!-- ==================== GALERIE TAB (placeholder) ==================== -->
-        <div id="tab-galerie" class="tab-panel"><p style="color:#888; padding:20px;">Gestion de la galerie — à venir.</p></div>
+        <!-- ==================== GALERIE TAB ==================== -->
+        <div id="tab-galerie" class="tab-panel">
+            <h2 class="section-title">Galerie &amp; Sensibilisation</h2>
+
+            <!-- Infos générales -->
+            <div class="add-form" style="margin-bottom:24px;">
+                <h3 style="color:#8B1A2B;margin-bottom:16px;font-size:1rem;">Informations générales</h3>
+                <div class="form-group">
+                    <label>Titre de la page</label>
+                    <input type="text" id="gal-title" placeholder="Titre de la galerie">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="gal-date" placeholder="Ex: 2 décembre 2025">
+                </div>
+                <div class="form-group">
+                    <label>Texte d'introduction</label>
+                    <div class="quill-wrapper"><div id="gal-intro-editor"></div></div>
+                </div>
+                <button class="btn btn-primary" onclick="saveGalerieInfos()">Enregistrer les informations</button>
+            </div>
+
+            <!-- Ajouter une photo -->
+            <div class="add-form" style="margin-bottom:24px;">
+                <h3 style="color:#8B1A2B;margin-bottom:16px;font-size:1rem;">Ajouter une photo</h3>
+                <div class="form-group">
+                    <label>Section *</label>
+                    <select id="gal-new-section">
+                        <option value="portraits">Les portraits</option>
+                        <option value="exposition">L'exposition</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Photo *</label>
+                    <input type="file" id="gal-new-photo" accept="image/*" onchange="previewImg(this, 'gal-new-preview')">
+                    <img id="gal-new-preview" class="image-preview">
+                </div>
+                <div class="form-group">
+                    <label>Légende (optionnel)</label>
+                    <input type="text" id="gal-new-caption" placeholder="Ex: INVISIBLE LE SED? NON !">
+                </div>
+                <div class="form-group">
+                    <label>Texte alternatif (description)</label>
+                    <input type="text" id="gal-new-alt" placeholder="Ex: Portrait de Delphine">
+                </div>
+                <button class="btn btn-success" onclick="addGaleriePhoto()">Ajouter la photo</button>
+            </div>
+
+            <!-- Liste des photos par section -->
+            <h3 style="color:#8B1A2B;margin-bottom:12px;font-size:1rem;">Photos existantes</h3>
+            <div id="gal-sections-list"></div>
+        </div>
 
         <!-- ==================== NAV EXTRA TAB ==================== -->
         <div id="tab-nav-extra" class="tab-panel">
@@ -1086,6 +1136,7 @@ function switchTab(tab, parentNav) {
     if (tab === 'photos') loadPhotos();
     if (tab === 'cure') loadCurePage();
     if (tab === 'conference') loadConferencePage();
+    if (tab === 'galerie') loadGalerie();
 }
 
 const PAGE_TITLES = {
@@ -3079,6 +3130,113 @@ document.addEventListener('keydown', function(e) {
 document.getElementById('preview-modal').addEventListener('click', function(e) {
     if (e.target === this) closePreview();
 });
+
+// ===== GALERIE =====
+const GALERIE_PATH = 'data/pages/galerie.json';
+let galerieData = { title: '', date: '', intro: '', sections: [] };
+let galerieSha = '';
+let quillGalIntroEditor = null;
+
+function initGalIntroEditor() {
+    if (quillGalIntroEditor) return;
+    const toolbar = [['bold','italic','underline'],[{'list':'ordered'},{'list':'bullet'}],['link'],['clean']];
+    quillGalIntroEditor = new Quill('#gal-intro-editor', { theme: 'snow', modules: { toolbar } });
+}
+
+async function loadGalerie() {
+    initGalIntroEditor();
+    try {
+        const result = await loadJsonFile(GALERIE_PATH);
+        galerieData = result.data;
+        galerieSha = result.sha;
+        document.getElementById('gal-title').value = galerieData.title || '';
+        document.getElementById('gal-date').value = galerieData.date || '';
+        quillGalIntroEditor.setContents([]);
+        quillGalIntroEditor.clipboard.dangerouslyPasteHTML(0, galerieData.intro || '');
+        renderGalerieSections();
+    } catch(e) { showStatus('Erreur chargement galerie: ' + e.message, 'error'); }
+}
+
+async function saveGalerieInfos() {
+    galerieData.title = document.getElementById('gal-title').value.trim();
+    galerieData.date = document.getElementById('gal-date').value.trim();
+    galerieData.intro = cleanQuillHtml(quillGalIntroEditor.root.innerHTML);
+    try {
+        galerieSha = await saveJsonFile(GALERIE_PATH, galerieData, galerieSha, 'Mise à jour infos galerie');
+        showStatus('Informations galerie sauvegardées !', 'success');
+    } catch(e) { showStatus('Erreur: ' + e.message, 'error'); }
+}
+
+async function addGaleriePhoto() {
+    const sectionId = document.getElementById('gal-new-section').value;
+    const caption = document.getElementById('gal-new-caption').value.trim();
+    const alt = document.getElementById('gal-new-alt').value.trim();
+    const fileInput = document.getElementById('gal-new-photo');
+    const file = fileInput.files[0];
+    if (!file) { showStatus('Sélectionnez une photo.', 'error'); return; }
+
+    const filePath = 'images/evenements/valerie-aroca/' + file.name;
+    try {
+        await uploadImage(filePath, file);
+    } catch(e) { showStatus('Erreur upload: ' + e.message, 'error'); return; }
+
+    const section = galerieData.sections.find(s => s.id === sectionId);
+    if (!section) { showStatus('Section introuvable.', 'error'); return; }
+    section.photos.push({ src: filePath, alt: alt || file.name, caption });
+
+    try {
+        galerieSha = await saveJsonFile(GALERIE_PATH, galerieData, galerieSha, 'Ajout photo galerie: ' + file.name);
+        showStatus('Photo ajoutée !', 'success');
+        fileInput.value = '';
+        document.getElementById('gal-new-preview').style.display = 'none';
+        document.getElementById('gal-new-caption').value = '';
+        document.getElementById('gal-new-alt').value = '';
+        renderGalerieSections();
+    } catch(e) {
+        section.photos.pop();
+        showStatus('Erreur sauvegarde: ' + e.message, 'error');
+    }
+}
+
+async function deleteGaleriePhoto(sectionId, photoIndex) {
+    const section = galerieData.sections.find(s => s.id === sectionId);
+    if (!section || !section.photos[photoIndex]) return;
+    if (!confirm('Supprimer cette photo de la galerie ?')) return;
+    const removed = section.photos.splice(photoIndex, 1)[0];
+    try {
+        galerieSha = await saveJsonFile(GALERIE_PATH, galerieData, galerieSha, 'Suppression photo galerie');
+        showStatus('Photo supprimée.', 'success');
+        renderGalerieSections();
+    } catch(e) {
+        section.photos.splice(photoIndex, 0, removed);
+        showStatus('Erreur: ' + e.message, 'error');
+    }
+}
+
+function renderGalerieSections() {
+    const container = document.getElementById('gal-sections-list');
+    if (!container) return;
+    if (!galerieData.sections || !galerieData.sections.length) {
+        container.innerHTML = '<p style="color:#888;">Aucune section.</p>';
+        return;
+    }
+    container.innerHTML = galerieData.sections.map(section => `
+        <div style="margin-bottom:28px;">
+            <h4 style="color:#8B1A2B;margin-bottom:12px;font-size:0.95rem;border-bottom:1px solid #e8ddd4;padding-bottom:8px;">${escapeHtml(section.title)} <span style="color:#888;font-weight:400;">(${section.photos.length} photo${section.photos.length > 1 ? 's' : ''})</span></h4>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;">
+                ${section.photos.map((photo, i) => `
+                    <div style="background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,0.08);position:relative;">
+                        <img src="${escapeHtml(photo.src)}" alt="${escapeHtml(photo.alt||'')}" style="width:100%;height:110px;object-fit:cover;display:block;">
+                        ${photo.caption ? `<div style="padding:6px 8px;font-size:0.72rem;color:#555;font-weight:600;">${escapeHtml(photo.caption)}</div>` : ''}
+                        <div style="padding:4px 8px 8px;">
+                            <button class="btn btn-danger" style="width:100%;font-size:0.75rem;padding:4px;" onclick="deleteGaleriePhoto('${escapeHtml(section.id)}', ${i})">Supprimer</button>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+}
 
 // ===== AUTO-LOGIN (must be at end of script) =====
 (function() {

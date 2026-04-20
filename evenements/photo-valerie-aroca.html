@@ -77,97 +77,7 @@
 
     <section class="page-content">
         <div class="container">
-            <div class="evenement-detail">
-                <p class="evenement-date">2 décembre 2025</p>
-                <div class="evenement-detail-image">
-                    <img src="../images/evenements/valerie-aroca.jpg" alt="Le Syndrome Ehlers Danlos, Photo de Valérie Aroca Troyano">
-                </div>
-                
-                <div class="evenement-text">
-                    <p>Exposition à Portet sur Garonne, mairie Annexe Pierre de Coubertin, jusqu'au 2 décembre 2025.</p>
-                    <p>Ensuite, le 3 décembre à la journée du handicap au CHU de Toulouse Pierre Paul Riquet, à la Clinique Monié.</p>
-                    <p>Autres dates à venir, nous vous tiendrons au courant.</p>
-                </div>
-
-                <h3 style="color: var(--heading-color); text-align: center; margin: var(--spacing-xl) 0 var(--spacing-lg);">Les portraits</h3>
-                <div class="gallery-grid gallery-portraits">
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/DELPHINE_INVSIBLE_LE_SED_NON_web-2.jpg" alt="Invisible le SED ? Non !">
-                        <figcaption>INVISIBLE LE SED? NON !</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/DELPHINE_L_INVISIBLE_VISIBLE_web-2.jpg" alt="L'invisible-visible">
-                        <figcaption>L'INVISIBLE-VISIBLE</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/EN_LOOK_SED-2.jpg" alt="En look SED">
-                        <figcaption>EN LOOK SED</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/Les-sed-occ-2.jpg" alt="Les SED'OCC">
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/LES_DEUX_NE_FONT_QUUN_web-2.jpg" alt="Les deux ne font qu'un">
-                        <figcaption>LES DEUX NE FONT QU'UN</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/MARJORIE_MON_OXYGENE_A_MOI_web-2.jpg" alt="Mon oxygène à moi">
-                        <figcaption>MON OXYGENE A MOI</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/MARJORIE_P_TAIN_DE_SED_web-2.jpg" alt="P'tain de SED">
-                        <figcaption>P'TAIN DE SED</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/SED_OCC-2.jpg" alt="SED'OCC">
-                        <figcaption>SED'OCC</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/SEULE_NON-2.jpg" alt="Seule ? Non !">
-                        <figcaption>SEULE ? NON !</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/SYBILLE_GYM_POUR_TOUS_web-2.jpg" alt="Gym pour tous !">
-                        <figcaption>GYM POUR TOUS !</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/THERESE_RESILIENCE_web-2.jpg" alt="Résilience">
-                        <figcaption>RESILIENCE</figcaption>
-                    </figure>
-                    <figure class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/UNE_AIDE_A_PORTEE_DE_MAIN-2.jpg" alt="Une aide à portée de main">
-                        <figcaption>UNE AIDE A PORTEE DE MAIN</figcaption>
-                    </figure>
-                </div>
-
-                <h3 style="color: var(--heading-color); text-align: center; margin: var(--spacing-xl) 0 var(--spacing-lg);">L'exposition</h3>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110442-2.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110534-2.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110726-1-2.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110726-3.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110756-2.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_110803-2.jpg" alt="Vue de l'exposition">
-                    </div>
-                    <div class="gallery-item">
-                        <img src="../images/evenements/valerie-aroca/20251121_111332-2.jpg" alt="Vue de l'exposition avec le chien">
-                    </div>
-                </div>
-                <div class="evenement-back">
-                    <a href="../evenements.html" class="btn btn-primary">Retour aux évènements</a>
-                </div>
-            </div>
+            <div id="galerie-content"><div class="loading">Chargement...</div></div>
         </div>
     </section>
 
@@ -196,5 +106,33 @@
         </div>
     </footer>
     <script src="../script.js"></script>
+<script>
+(async function() {
+    try {
+        const res = await fetch('../data/pages/galerie.json?v=' + Date.now());
+        const d = await res.json();
+        document.querySelector('h1').textContent = d.title || '';
+        document.title = (d.title || 'Galerie') + " - SED'OCC";
+        let html = '<div class="evenement-detail">';
+        if (d.date) html += '<p class="evenement-date">' + d.date + '</p>';
+        if (d.intro) html += '<div class="evenement-text">' + d.intro + '</div>';
+        (d.sections || []).forEach(function(section) {
+            if (!section.photos || !section.photos.length) return;
+            if (section.title) html += '<h3 style="color:var(--heading-color);text-align:center;margin:var(--spacing-xl) 0 var(--spacing-lg);">' + section.title + '</h3>';
+            const isPortraits = section.id === 'portraits';
+            html += '<div class="gallery-grid' + (isPortraits ? ' gallery-portraits' : '') + '">';
+            section.photos.forEach(function(photo) {
+                html += '<figure class="gallery-item"><img src="../' + photo.src + '" alt="' + (photo.alt || '') + '">';
+                if (photo.caption) html += '<figcaption>' + photo.caption + '</figcaption>';
+                html += '</figure>';
+            });
+            html += '</div>';
+        });
+        html += '<div class="evenement-back"><a href="../evenements.html" class="btn btn-primary">Retour aux évènements</a></div>';
+        html += '</div>';
+        document.getElementById('galerie-content').innerHTML = html;
+    } catch(e) { console.error(e); }
+})();
+</script>
 </body>
 </html>
