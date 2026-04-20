@@ -144,6 +144,28 @@
         .quill-wrapper .ql-toolbar { border-radius: 8px 8px 0 0; }
         .quill-wrapper .ql-container { border-radius: 0 0 8px 8px; }
 
+        /* Aperçu page */
+        .page-preview {
+            margin-top: 28px; border: 2px dashed #c9b8ac; border-radius: 12px; overflow: hidden;
+        }
+        .page-preview-label {
+            background: #e8ddd4; padding: 8px 16px; font-size: 0.78rem; font-weight: 600;
+            color: #888; letter-spacing: 0.05em; text-transform: uppercase;
+        }
+        .page-preview-header {
+            background: linear-gradient(135deg, #f5ede6, #faf3ee);
+            padding: 28px 24px 22px; border-bottom: 1px solid #e8ddd4;
+        }
+        .page-preview-header h2 {
+            font-size: 1.5rem; font-weight: 700; color: #8B1A2B; margin: 0;
+        }
+        .page-preview-header h2:empty::before { content: 'Titre de la page'; color: #ccc; font-style: italic; }
+        .page-preview-body {
+            background: white; padding: 24px; min-height: 80px;
+            font-family: 'Poppins', sans-serif; font-size: 0.92rem; line-height: 1.7; color: #444;
+        }
+        .page-preview-body:empty::before { content: 'Le contenu apparaîtra ici...'; color: #ccc; font-style: italic; }
+
         /* Photo slots */
         .photo-slot {
             background: white; border: 2px dashed #d4c5b9; border-radius: 10px;
@@ -322,6 +344,15 @@
                     <div class="quill-wrapper"><div id="nav-extra-editor"></div></div>
                 </div>
                 <button class="btn btn-success" onclick="saveNavExtraNewPage()">Créer la page</button>
+
+                <!-- Aperçu temps réel -->
+                <div class="page-preview">
+                    <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                    <div class="page-preview-header">
+                        <h2 id="nav-extra-preview-title"></h2>
+                    </div>
+                    <div class="page-preview-body" id="nav-extra-preview-body"></div>
+                </div>
             </div>
 
             <!-- Mode : lier une page existante -->
@@ -1070,6 +1101,14 @@ const NAV_EXTRA_LABELS = {
     evenements: 'Évènements & Activités'
 };
 
+function updateNavExtraPreview() {
+    const title = document.getElementById('nav-extra-page-heading').value;
+    const previewTitle = document.getElementById('nav-extra-preview-title');
+    const previewBody = document.getElementById('nav-extra-preview-body');
+    if (previewTitle) previewTitle.textContent = title;
+    if (previewBody && quillNavExtraEditor) previewBody.innerHTML = quillNavExtraEditor.root.innerHTML;
+}
+
 function initNavExtraEditor() {
     if (quillNavExtraEditor) return;
     const toolbarOptions = [
@@ -1079,6 +1118,8 @@ function initNavExtraEditor() {
         ['clean']
     ];
     quillNavExtraEditor = new Quill('#nav-extra-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillNavExtraEditor.on('text-change', updateNavExtraPreview);
+    document.getElementById('nav-extra-page-heading').addEventListener('input', updateNavExtraPreview);
 }
 
 function setNavExtraMode(mode) {
