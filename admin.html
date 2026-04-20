@@ -383,77 +383,97 @@
         <!-- ==================== CURE BALARUC TAB ==================== -->
         <div id="tab-cure" class="tab-panel">
             <h2 class="section-title">Cure thermale Balaruc-les-Bains</h2>
-            <div class="add-form">
-                <div class="form-group">
-                    <label>Titre de la page *</label>
-                    <input type="text" id="cure-title" placeholder="Ex: CURE BALARUC-LES-BAINS dans l'HÉRAULT">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                <div class="add-form">
+                    <div class="form-group">
+                        <label>Titre de la page *</label>
+                        <input type="text" id="cure-title" placeholder="Ex: CURE BALARUC-LES-BAINS dans l'HÉRAULT">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="text" id="cure-date" placeholder="Ex: 14 janvier 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" id="cure-image-file" accept="image/*" onchange="previewImg(this, 'cure-image-preview')">
+                        <img id="cure-image-preview" class="image-preview">
+                        <input type="hidden" id="cure-image-path">
+                    </div>
+                    <div class="form-group">
+                        <label>Contenu *</label>
+                        <div class="quill-wrapper"><div id="cure-editor"></div></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Lien du bouton retour</label>
+                        <input type="text" id="cure-backlink" placeholder="Ex: ../initiatives.html">
+                    </div>
+                    <div class="form-group">
+                        <label>Texte du bouton retour</label>
+                        <input type="text" id="cure-backlabel" placeholder="Ex: Voir nos Initiatives &amp; Partenariats">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveCurePage()">Enregistrer</button>
                 </div>
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="text" id="cure-date" placeholder="Ex: 14 janvier 2026">
+                <!-- Aperçu temps réel -->
+                <div class="page-preview" style="position:sticky; top:20px;">
+                    <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                    <div class="page-preview-header">
+                        <h2 id="cure-preview-title"></h2>
+                    </div>
+                    <div class="page-preview-body" id="cure-preview-body"></div>
                 </div>
-                <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" id="cure-image-file" accept="image/*" onchange="previewImg(this, 'cure-image-preview')">
-                    <img id="cure-image-preview" class="image-preview">
-                    <input type="hidden" id="cure-image-path">
-                </div>
-                <div class="form-group">
-                    <label>Contenu *</label>
-                    <div class="quill-wrapper"><div id="cure-editor"></div></div>
-                </div>
-                <div class="form-group">
-                    <label>Lien du bouton retour</label>
-                    <input type="text" id="cure-backlink" placeholder="Ex: ../initiatives.html">
-                </div>
-                <div class="form-group">
-                    <label>Texte du bouton retour</label>
-                    <input type="text" id="cure-backlabel" placeholder="Ex: Voir nos Initiatives &amp; Partenariats">
-                </div>
-                <button class="btn btn-primary" onclick="saveCurePage()">Enregistrer</button>
             </div>
         </div>
 
         <!-- ==================== CONFERENCE REPLAY TAB ==================== -->
         <div id="tab-conference" class="tab-panel">
             <h2 class="section-title">Conférence &amp; Replay</h2>
-            <div class="add-form">
-                <div class="form-group">
-                    <label>Titre de la page *</label>
-                    <input type="text" id="conf-title" placeholder="Ex: Revivez la conférence...">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                <div class="add-form">
+                    <div class="form-group">
+                        <label>Titre de la page *</label>
+                        <input type="text" id="conf-title" placeholder="Ex: Revivez la conférence...">
+                    </div>
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="text" id="conf-date" placeholder="Ex: 6 janvier 2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Image</label>
+                        <input type="file" id="conf-image-file" accept="image/*" onchange="previewImg(this, 'conf-image-preview')">
+                        <img id="conf-image-preview" class="image-preview">
+                        <input type="hidden" id="conf-image-path">
+                    </div>
+                    <div class="form-group">
+                        <label>Texte d'introduction (avant la vidéo)</label>
+                        <div class="quill-wrapper"><div id="conf-intro-editor"></div></div>
+                    </div>
+                    <div class="form-group">
+                        <label>URL de la vidéo (src de l'iframe)</label>
+                        <input type="text" id="conf-video" placeholder="Ex: https://drive.google.com/file/d/.../preview">
+                        <small>Coller l'URL de la source iframe (Google Drive, YouTube embed, etc.)</small>
+                    </div>
+                    <div class="form-group">
+                        <label>Texte après la vidéo</label>
+                        <div class="quill-wrapper"><div id="conf-editor"></div></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Lien du bouton retour</label>
+                        <input type="text" id="conf-backlink" placeholder="Ex: ../evenements.html">
+                    </div>
+                    <div class="form-group">
+                        <label>Texte du bouton retour</label>
+                        <input type="text" id="conf-backlabel" placeholder="Ex: Retour aux évènements">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveConferencePage()">Enregistrer</button>
                 </div>
-                <div class="form-group">
-                    <label>Date</label>
-                    <input type="text" id="conf-date" placeholder="Ex: 6 janvier 2026">
+                <!-- Aperçu temps réel -->
+                <div class="page-preview" style="position:sticky; top:20px;">
+                    <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                    <div class="page-preview-header">
+                        <h2 id="conf-preview-title"></h2>
+                    </div>
+                    <div class="page-preview-body" id="conf-preview-body"></div>
                 </div>
-                <div class="form-group">
-                    <label>Image</label>
-                    <input type="file" id="conf-image-file" accept="image/*" onchange="previewImg(this, 'conf-image-preview')">
-                    <img id="conf-image-preview" class="image-preview">
-                    <input type="hidden" id="conf-image-path">
-                </div>
-                <div class="form-group">
-                    <label>Texte d'introduction (avant la vidéo)</label>
-                    <div class="quill-wrapper"><div id="conf-intro-editor"></div></div>
-                </div>
-                <div class="form-group">
-                    <label>URL de la vidéo (src de l'iframe)</label>
-                    <input type="text" id="conf-video" placeholder="Ex: https://drive.google.com/file/d/.../preview">
-                    <small>Coller l'URL de la source iframe (Google Drive, YouTube embed, etc.)</small>
-                </div>
-                <div class="form-group">
-                    <label>Texte après la vidéo</label>
-                    <div class="quill-wrapper"><div id="conf-editor"></div></div>
-                </div>
-                <div class="form-group">
-                    <label>Lien du bouton retour</label>
-                    <input type="text" id="conf-backlink" placeholder="Ex: ../evenements.html">
-                </div>
-                <div class="form-group">
-                    <label>Texte du bouton retour</label>
-                    <input type="text" id="conf-backlabel" placeholder="Ex: Retour aux évènements">
-                </div>
-                <button class="btn btn-primary" onclick="saveConferencePage()">Enregistrer</button>
             </div>
         </div>
 
@@ -464,30 +484,45 @@
             </div>
 
             <div id="event-form-container" style="display:none;">
-                <div class="add-form">
-                    <h2 class="section-title" id="event-form-title">Ajouter un evenement</h2>
-                    <div class="form-group">
-                        <label>Titre *</label>
-                        <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                    <div class="add-form">
+                        <h2 class="section-title" id="event-form-title">Ajouter un evenement</h2>
+                        <div class="form-group">
+                            <label>Titre *</label>
+                            <input type="text" id="ev-title" placeholder="Ex: Cafe Parole Janvier 2026">
+                        </div>
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type="text" id="ev-date" placeholder="Ex: 15 mars 2026">
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" id="ev-image" accept="image/*" onchange="previewImg(this, 'ev-image-preview'); updateEvPreview();">
+                            <img id="ev-image-preview" class="image-preview">
+                            <small>Formats : JPG, PNG. Taille recommandee : 800x600px</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Description (optionnel)</label>
+                            <div class="quill-wrapper"><div id="ev-content-editor"></div></div>
+                        </div>
+                        <input type="hidden" id="ev-edit-index" value="-1">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-primary" id="ev-save-btn" onclick="saveEvent()">Enregistrer</button>
+                            <button class="btn btn-secondary" onclick="hideEventForm()">Annuler</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Date *</label>
-                        <input type="text" id="ev-date" placeholder="Ex: 15 mars 2026">
-                    </div>
-                    <div class="form-group">
-                        <label>Image</label>
-                        <input type="file" id="ev-image" accept="image/*" onchange="previewImg(this, 'ev-image-preview')">
-                        <img id="ev-image-preview" class="image-preview">
-                        <small>Formats : JPG, PNG. Taille recommandee : 800x600px</small>
-                    </div>
-                    <div class="form-group">
-                        <label>Description (optionnel)</label>
-                        <div class="quill-wrapper"><div id="ev-content-editor"></div></div>
-                    </div>
-                    <input type="hidden" id="ev-edit-index" value="-1">
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn btn-primary" id="ev-save-btn" onclick="saveEvent()">Enregistrer</button>
-                        <button class="btn btn-secondary" onclick="hideEventForm()">Annuler</button>
+                    <!-- Aperçu carte -->
+                    <div class="page-preview" style="position:sticky; top:20px;">
+                        <div class="page-preview-label">Aperçu — carte dans la liste</div>
+                        <div style="padding:16px;">
+                            <div style="border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);background:white;max-width:280px;margin:0 auto;">
+                                <div id="ev-preview-img-wrap" style="height:160px;background:#f0e8e0;display:flex;align-items:center;justify-content:center;color:#ccc;font-size:0.85rem;">Image</div>
+                                <div style="padding:14px;">
+                                    <span style="font-size:0.75rem;color:#8B1A2B;font-weight:600;text-transform:uppercase;">Évènements</span>
+                                    <div id="ev-preview-title" style="font-weight:600;margin-top:4px;font-size:0.95rem;color:#333;"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -554,20 +589,30 @@
             </div>
 
             <div id="actu-form-container" style="display:none;">
-                <div class="add-form">
-                    <h2 class="section-title" id="actu-form-title">Ajouter une actualite</h2>
-                    <div class="form-group">
-                        <label>Titre *</label>
-                        <input type="text" id="ac-title" placeholder="Ex: Nouvelle etude sur le SEDh">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                    <div class="add-form">
+                        <h2 class="section-title" id="actu-form-title">Ajouter une actualite</h2>
+                        <div class="form-group">
+                            <label>Titre *</label>
+                            <input type="text" id="ac-title" placeholder="Ex: Nouvelle etude sur le SEDh">
+                        </div>
+                        <div class="form-group">
+                            <label>Contenu *</label>
+                            <div class="quill-wrapper"><div id="ac-content-editor"></div></div>
+                        </div>
+                        <input type="hidden" id="ac-edit-index" value="-1">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-primary" id="ac-save-btn" onclick="saveActu()">Enregistrer</button>
+                            <button class="btn btn-secondary" onclick="hideActuForm()">Annuler</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Contenu *</label>
-                        <div class="quill-wrapper"><div id="ac-content-editor"></div></div>
-                    </div>
-                    <input type="hidden" id="ac-edit-index" value="-1">
-                    <div style="display:flex; gap:10px;">
-                        <button class="btn btn-primary" id="ac-save-btn" onclick="saveActu()">Enregistrer</button>
-                        <button class="btn btn-secondary" onclick="hideActuForm()">Annuler</button>
+                    <!-- Aperçu temps réel -->
+                    <div class="page-preview" style="position:sticky; top:20px;">
+                        <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                        <div class="page-preview-header">
+                            <h2 id="actu-preview-title"></h2>
+                        </div>
+                        <div class="page-preview-body" id="actu-preview-body"></div>
                     </div>
                 </div>
             </div>
@@ -731,25 +776,35 @@
             </div>
 
             <div id="res-form-container" style="display:none;">
-                <div class="add-form">
-                    <h2 class="section-title" id="res-form-title">Ajouter une section</h2>
-                    <div class="form-group">
-                        <label>Titre de la section *</label>
-                        <input type="text" id="res-title" placeholder="Ex: Livrets d'information">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                    <div class="add-form">
+                        <h2 class="section-title" id="res-form-title">Ajouter une section</h2>
+                        <div class="form-group">
+                            <label>Titre de la section *</label>
+                            <input type="text" id="res-title" placeholder="Ex: Livrets d'information">
+                        </div>
+                        <div class="form-group">
+                            <label>Image (optionnel)</label>
+                            <input type="file" id="res-image" accept="image/*" onchange="previewImg(this, 'res-image-preview')">
+                            <img id="res-image-preview" class="image-preview">
+                        </div>
+                        <div class="form-group">
+                            <label>Contenu *</label>
+                            <div class="quill-wrapper"><div id="res-editor"></div></div>
+                        </div>
+                        <input type="hidden" id="res-edit-index" value="-1">
+                        <div class="form-actions">
+                            <button class="btn btn-primary" id="res-save-btn" onclick="saveResSection()">Enregistrer</button>
+                            <button class="btn btn-secondary" onclick="hideResForm()">Annuler</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Image (optionnel)</label>
-                        <input type="file" id="res-image" accept="image/*" onchange="previewImg(this, 'res-image-preview')">
-                        <img id="res-image-preview" class="image-preview">
-                    </div>
-                    <div class="form-group">
-                        <label>Contenu *</label>
-                        <div class="quill-wrapper"><div id="res-editor"></div></div>
-                    </div>
-                    <input type="hidden" id="res-edit-index" value="-1">
-                    <div class="form-actions">
-                        <button class="btn btn-primary" id="res-save-btn" onclick="saveResSection()">Enregistrer</button>
-                        <button class="btn btn-secondary" onclick="hideResForm()">Annuler</button>
+                    <!-- Aperçu temps réel -->
+                    <div class="page-preview" style="position:sticky; top:20px;">
+                        <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                        <div class="page-preview-header">
+                            <h2 id="res-preview-title"></h2>
+                        </div>
+                        <div class="page-preview-body" id="res-preview-body"></div>
                     </div>
                 </div>
             </div>
@@ -780,51 +835,61 @@
                 </div>
 
                 <div id="tab-form-container" style="display:none;">
-                    <div class="add-form">
-                        <h2 class="section-title" id="tab-form-title">Ajouter un onglet</h2>
-                        <div class="form-group">
-                            <label>Titre de la section *</label>
-                            <input type="text" id="og-title" placeholder="Ex: Douleur et fatigue">
-                        </div>
-                        <div class="form-group">
-                            <label>Image (optionnel)</label>
-                            <input type="file" id="og-image" accept="image/*" onchange="previewImg(this, 'og-image-preview')">
-                            <img id="og-image-preview" class="image-preview">
-                        </div>
-
-                        <!-- Éditeur simple (Quill) -->
-                        <div id="og-simple-editor" class="form-group">
-                            <label>Contenu *</label>
-                            <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
-                        </div>
-
-                        <!-- Éditeur accordéon -->
-                        <div id="og-accordion-editor" style="display:none;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                                <label style="margin:0; font-weight:600;">Entrées de l'accordéon</label>
-                                <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addAccordionItem()">+ Ajouter une entrée</button>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                        <div class="add-form">
+                            <h2 class="section-title" id="tab-form-title">Ajouter un onglet</h2>
+                            <div class="form-group">
+                                <label>Titre de la section *</label>
+                                <input type="text" id="og-title" placeholder="Ex: Douleur et fatigue">
                             </div>
-                            <div id="og-accordion-items"></div>
-                        </div>
-
-                        <!-- Éditeur cartes -->
-                        <div id="og-cards-editor" style="display:none;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                                <label style="margin:0; font-weight:600;">Cartes</label>
-                                <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addCardItem()">+ Ajouter une carte</button>
+                            <div class="form-group">
+                                <label>Image (optionnel)</label>
+                                <input type="file" id="og-image" accept="image/*" onchange="previewImg(this, 'og-image-preview')">
+                                <img id="og-image-preview" class="image-preview">
                             </div>
-                            <div id="og-cards-items"></div>
-                            <div class="form-group" style="margin-top:16px;">
-                                <label>Citation (optionnel)</label>
-                                <input type="text" id="og-cards-quote" placeholder="Ex: Ensemble on va plus loin">
+
+                            <!-- Éditeur simple (Quill) -->
+                            <div id="og-simple-editor" class="form-group">
+                                <label>Contenu *</label>
+                                <div class="quill-wrapper"><div id="og-tab-editor"></div></div>
+                            </div>
+
+                            <!-- Éditeur accordéon -->
+                            <div id="og-accordion-editor" style="display:none;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                    <label style="margin:0; font-weight:600;">Entrées de l'accordéon</label>
+                                    <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addAccordionItem()">+ Ajouter une entrée</button>
+                                </div>
+                                <div id="og-accordion-items"></div>
+                            </div>
+
+                            <!-- Éditeur cartes -->
+                            <div id="og-cards-editor" style="display:none;">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                                    <label style="margin:0; font-weight:600;">Cartes</label>
+                                    <button class="btn btn-success" style="font-size:0.8rem; padding:6px 14px;" onclick="addCardItem()">+ Ajouter une carte</button>
+                                </div>
+                                <div id="og-cards-items"></div>
+                                <div class="form-group" style="margin-top:16px;">
+                                    <label>Citation (optionnel)</label>
+                                    <input type="text" id="og-cards-quote" placeholder="Ex: Ensemble on va plus loin">
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="og-edit-index" value="-1">
+                            <input type="hidden" id="og-editor-mode" value="simple">
+                            <div style="display:flex; gap:10px; margin-top:20px;">
+                                <button class="btn btn-primary" id="og-save-btn" onclick="savePageTab()">Enregistrer</button>
+                                <button class="btn btn-secondary" onclick="hideTabForm()">Annuler</button>
                             </div>
                         </div>
-
-                        <input type="hidden" id="og-edit-index" value="-1">
-                        <input type="hidden" id="og-editor-mode" value="simple">
-                        <div style="display:flex; gap:10px; margin-top:20px;">
-                            <button class="btn btn-primary" id="og-save-btn" onclick="savePageTab()">Enregistrer</button>
-                            <button class="btn btn-secondary" onclick="hideTabForm()">Annuler</button>
+                        <!-- Aperçu temps réel -->
+                        <div class="page-preview" style="position:sticky; top:20px;">
+                            <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                            <div class="page-preview-header">
+                                <h2 id="og-preview-title"></h2>
+                            </div>
+                            <div class="page-preview-body" id="og-preview-body"></div>
                         </div>
                     </div>
                 </div>
@@ -872,6 +937,8 @@ function initActuEditor() {
         ['clean']
     ];
     quillActuEditor = new Quill('#ac-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillActuEditor.on('text-change', updateActuPreview);
+    document.getElementById('ac-title').addEventListener('input', updateActuPreview);
 }
 
 function initEvEditor() {
@@ -884,6 +951,7 @@ function initEvEditor() {
         ['clean']
     ];
     quillEvEditor = new Quill('#ev-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    document.getElementById('ev-title').addEventListener('input', updateEvPreview);
 }
 let eventsSha = '', equipeSha = '', actusSha = '';
 
@@ -1176,11 +1244,84 @@ function showStatus(msg, type) {
     if (type === 'success') setTimeout(() => { el.className = 'status'; }, 8000);
 }
 
+// ===== APERÇUS TEMPS RÉEL =====
+function updateCurePreview() {
+    const title = document.getElementById('cure-title').value;
+    const dateVal = document.getElementById('cure-date').value;
+    const titleEl = document.getElementById('cure-preview-title');
+    const bodyEl = document.getElementById('cure-preview-body');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl && quillCureEditor) {
+        let html = '';
+        if (dateVal) html += '<p style="color:#8B1A2B; font-weight:600; margin-bottom:10px;">' + dateVal + '</p>';
+        html += quillCureEditor.root.innerHTML;
+        bodyEl.innerHTML = html;
+    }
+}
+
+function updateConfPreview() {
+    const title = document.getElementById('conf-title').value;
+    const videoUrl = document.getElementById('conf-video').value.trim();
+    const titleEl = document.getElementById('conf-preview-title');
+    const bodyEl = document.getElementById('conf-preview-body');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl) {
+        let html = '';
+        if (quillConfIntroEditor) html += quillConfIntroEditor.root.innerHTML;
+        if (videoUrl) html += '<div style="background:#eee;border-radius:8px;padding:20px;text-align:center;color:#888;margin:12px 0;">&#9654; Vidéo : ' + videoUrl + '</div>';
+        if (quillConfEditor) html += quillConfEditor.root.innerHTML;
+        bodyEl.innerHTML = html;
+    }
+}
+
+function updateEvPreview() {
+    const title = document.getElementById('ev-title').value;
+    const titleEl = document.getElementById('ev-preview-title');
+    const imgWrap = document.getElementById('ev-preview-img-wrap');
+    if (titleEl) titleEl.textContent = title;
+    if (imgWrap) {
+        const fileInput = document.getElementById('ev-image');
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+            const url = URL.createObjectURL(fileInput.files[0]);
+            imgWrap.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;display:block;">';
+        } else {
+            if (!imgWrap.querySelector('img')) imgWrap.innerHTML = 'Image';
+        }
+    }
+}
+
+function updateActuPreview() {
+    const title = document.getElementById('ac-title').value;
+    const titleEl = document.getElementById('actu-preview-title');
+    const bodyEl = document.getElementById('actu-preview-body');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl && quillActuEditor) bodyEl.innerHTML = quillActuEditor.root.innerHTML;
+}
+
+function updateOgPreview() {
+    const title = document.getElementById('og-title').value;
+    const titleEl = document.getElementById('og-preview-title');
+    const bodyEl = document.getElementById('og-preview-body');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl && quillTabEditor) bodyEl.innerHTML = quillTabEditor.root.innerHTML;
+}
+
+function updateResPreview() {
+    const title = document.getElementById('res-title').value;
+    const titleEl = document.getElementById('res-preview-title');
+    const bodyEl = document.getElementById('res-preview-body');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl && quillResEditor) bodyEl.innerHTML = quillResEditor.root.innerHTML;
+}
+
 // ===== CURE BALARUC =====
 function initCureEditor() {
     if (quillCureEditor) return;
     const toolbar = [['bold','italic','underline'],[{'header':[3,4,false]}],[{'list':'ordered'},{'list':'bullet'}],['link'],['clean']];
     quillCureEditor = new Quill('#cure-editor', { theme: 'snow', modules: { toolbar } });
+    quillCureEditor.on('text-change', updateCurePreview);
+    document.getElementById('cure-title').addEventListener('input', updateCurePreview);
+    document.getElementById('cure-date').addEventListener('input', updateCurePreview);
 }
 
 async function loadCurePage() {
@@ -1231,6 +1372,10 @@ function initConfEditors() {
     const toolbar = [['bold','italic','underline'],[{'list':'ordered'},{'list':'bullet'}],['link'],['clean']];
     quillConfIntroEditor = new Quill('#conf-intro-editor', { theme: 'snow', modules: { toolbar } });
     quillConfEditor = new Quill('#conf-editor', { theme: 'snow', modules: { toolbar } });
+    quillConfIntroEditor.on('text-change', updateConfPreview);
+    quillConfEditor.on('text-change', updateConfPreview);
+    document.getElementById('conf-title').addEventListener('input', updateConfPreview);
+    document.getElementById('conf-video').addEventListener('input', updateConfPreview);
 }
 
 async function loadConferencePage() {
@@ -1608,6 +1753,7 @@ function showEventForm(editIndex) {
         document.getElementById('ev-image-preview').style.display = 'none';
     }
     document.getElementById('ev-image').value = '';
+    updateEvPreview();
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 function hideEventForm() { document.getElementById('event-form-container').style.display = 'none'; }
@@ -2119,6 +2265,8 @@ function initResEditor() {
         ['clean']
     ];
     quillResEditor = new Quill('#res-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillResEditor.on('text-change', updateResPreview);
+    document.getElementById('res-title').addEventListener('input', updateResPreview);
 }
 
 async function loadResSections() {
@@ -2278,6 +2426,8 @@ function initTabEditor() {
         ['clean']
     ];
     quillTabEditor = new Quill('#og-tab-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillTabEditor.on('text-change', updateOgPreview);
+    document.getElementById('og-title').addEventListener('input', updateOgPreview);
 }
 
 const COMPLEX_CLASSES = ['accordion','symptoms-grid','card-modern','benefits-grid','chansons-grid','reference-box','ald-section','documents-grid'];
