@@ -308,8 +308,8 @@
         <!-- SOUS-NAVIGATION Évènements & Activités -->
         <div class="admin-nav-sub" id="subnav-evenements">
             <button class="admin-sub-btn active" onclick="filterEvents(null, this)">Tous les évènements</button>
-            <button class="admin-sub-btn" onclick="filterEvents('cure-balaruc-les-bains', this)">Cure Balaruc</button>
-            <button class="admin-sub-btn" onclick="filterEvents('conference-toulouse-replay', this)">Conférence &amp; Replay</button>
+            <button class="admin-sub-btn" onclick="switchTab('cure', 'evenements', this)">Cure Balaruc</button>
+            <button class="admin-sub-btn" onclick="switchTab('conference', 'evenements', this)">Conférence &amp; Replay</button>
             <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('evenements', this)">+ Nouvelle page</button>
         </div>
 
@@ -377,6 +377,83 @@
             <h3 style="color:#8B1A2B; margin-bottom:12px; font-size:1rem;">Pages existantes</h3>
             <div id="nav-extra-list" class="item-list">
                 <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- ==================== CURE BALARUC TAB ==================== -->
+        <div id="tab-cure" class="tab-panel">
+            <h2 class="section-title">Cure thermale Balaruc-les-Bains</h2>
+            <div class="add-form">
+                <div class="form-group">
+                    <label>Titre de la page *</label>
+                    <input type="text" id="cure-title" placeholder="Ex: CURE BALARUC-LES-BAINS dans l'HÉRAULT">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="cure-date" placeholder="Ex: 14 janvier 2026">
+                </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" id="cure-image-file" accept="image/*" onchange="previewImg(this, 'cure-image-preview')">
+                    <img id="cure-image-preview" class="image-preview">
+                    <input type="hidden" id="cure-image-path">
+                </div>
+                <div class="form-group">
+                    <label>Contenu *</label>
+                    <div class="quill-wrapper"><div id="cure-editor"></div></div>
+                </div>
+                <div class="form-group">
+                    <label>Lien du bouton retour</label>
+                    <input type="text" id="cure-backlink" placeholder="Ex: ../initiatives.html">
+                </div>
+                <div class="form-group">
+                    <label>Texte du bouton retour</label>
+                    <input type="text" id="cure-backlabel" placeholder="Ex: Voir nos Initiatives &amp; Partenariats">
+                </div>
+                <button class="btn btn-primary" onclick="saveCurePage()">Enregistrer</button>
+            </div>
+        </div>
+
+        <!-- ==================== CONFERENCE REPLAY TAB ==================== -->
+        <div id="tab-conference" class="tab-panel">
+            <h2 class="section-title">Conférence &amp; Replay</h2>
+            <div class="add-form">
+                <div class="form-group">
+                    <label>Titre de la page *</label>
+                    <input type="text" id="conf-title" placeholder="Ex: Revivez la conférence...">
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="text" id="conf-date" placeholder="Ex: 6 janvier 2026">
+                </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    <input type="file" id="conf-image-file" accept="image/*" onchange="previewImg(this, 'conf-image-preview')">
+                    <img id="conf-image-preview" class="image-preview">
+                    <input type="hidden" id="conf-image-path">
+                </div>
+                <div class="form-group">
+                    <label>Texte d'introduction (avant la vidéo)</label>
+                    <div class="quill-wrapper"><div id="conf-intro-editor"></div></div>
+                </div>
+                <div class="form-group">
+                    <label>URL de la vidéo (src de l'iframe)</label>
+                    <input type="text" id="conf-video" placeholder="Ex: https://drive.google.com/file/d/.../preview">
+                    <small>Coller l'URL de la source iframe (Google Drive, YouTube embed, etc.)</small>
+                </div>
+                <div class="form-group">
+                    <label>Texte après la vidéo</label>
+                    <div class="quill-wrapper"><div id="conf-editor"></div></div>
+                </div>
+                <div class="form-group">
+                    <label>Lien du bouton retour</label>
+                    <input type="text" id="conf-backlink" placeholder="Ex: ../evenements.html">
+                </div>
+                <div class="form-group">
+                    <label>Texte du bouton retour</label>
+                    <input type="text" id="conf-backlabel" placeholder="Ex: Retour aux évènements">
+                </div>
+                <button class="btn btn-primary" onclick="saveConferencePage()">Enregistrer</button>
             </div>
         </div>
 
@@ -777,6 +854,13 @@ let isLocalMode = false;
 let evenements = [], equipe = [], actualites = [];
 let quillEvEditor = null;
 let quillActuEditor = null;
+let quillCureEditor = null;
+let quillConfIntroEditor = null;
+let quillConfEditor = null;
+let cureSha = '';
+let conferenceSha = '';
+const CURE_PATH = 'data/pages/cure-balaruc.json';
+const CONFERENCE_PATH = 'data/pages/conference-replay.json';
 
 function initActuEditor() {
     if (quillActuEditor) return;
@@ -932,6 +1016,8 @@ function switchTab(tab, parentNav) {
     if (tab === 'ressources') loadResSections();
     if (tab === 'contenus') setTimeout(loadContenus, 100);
     if (tab === 'photos') loadPhotos();
+    if (tab === 'cure') loadCurePage();
+    if (tab === 'conference') loadConferencePage();
 }
 
 const PAGE_TITLES = {
@@ -1088,6 +1174,110 @@ function showStatus(msg, type) {
     el.className = `status ${type}`; el.textContent = msg;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (type === 'success') setTimeout(() => { el.className = 'status'; }, 8000);
+}
+
+// ===== CURE BALARUC =====
+function initCureEditor() {
+    if (quillCureEditor) return;
+    const toolbar = [['bold','italic','underline'],[{'header':[3,4,false]}],[{'list':'ordered'},{'list':'bullet'}],['link'],['clean']];
+    quillCureEditor = new Quill('#cure-editor', { theme: 'snow', modules: { toolbar } });
+}
+
+async function loadCurePage() {
+    initCureEditor();
+    try {
+        const result = await loadJsonFile(CURE_PATH);
+        const d = result.data;
+        cureSha = result.sha;
+        document.getElementById('cure-title').value = d.title || '';
+        document.getElementById('cure-date').value = d.date || '';
+        document.getElementById('cure-image-path').value = d.image || '';
+        if (d.image) {
+            const img = document.getElementById('cure-image-preview');
+            img.src = d.image; img.style.display = 'block';
+        }
+        document.getElementById('cure-backlink').value = d.backLink || '';
+        document.getElementById('cure-backlabel').value = d.backLabel || '';
+        quillCureEditor.setContents([]);
+        quillCureEditor.clipboard.dangerouslyPasteHTML(0, d.content || '');
+    } catch(e) { showStatus('Erreur chargement cure: ' + e.message, 'error'); }
+}
+
+async function saveCurePage() {
+    const title = document.getElementById('cure-title').value.trim();
+    const date = document.getElementById('cure-date').value.trim();
+    const content = cleanQuillHtml(quillCureEditor.root.innerHTML);
+    const backLink = document.getElementById('cure-backlink').value.trim();
+    const backLabel = document.getElementById('cure-backlabel').value.trim();
+    if (!title) { showStatus('Le titre est requis.', 'error'); return; }
+
+    let imagePath = document.getElementById('cure-image-path').value;
+    const imageFile = document.getElementById('cure-image-file').files[0];
+    if (imageFile) {
+        const newPath = 'images/evenements/' + imageFile.name;
+        try { await uploadImage(newPath, imageFile); imagePath = newPath; } catch(e) { showStatus('Erreur upload image: ' + e.message, 'error'); return; }
+    }
+
+    const data = { title, date, image: imagePath, content, backLink, backLabel };
+    try {
+        cureSha = await saveJsonFile(CURE_PATH, data, cureSha, 'Mise à jour page Cure Balaruc');
+        showStatus('Page Cure Balaruc sauvegardée !', 'success');
+    } catch(e) { showStatus('Erreur: ' + e.message, 'error'); }
+}
+
+// ===== CONFERENCE REPLAY =====
+function initConfEditors() {
+    if (quillConfEditor) return;
+    const toolbar = [['bold','italic','underline'],[{'list':'ordered'},{'list':'bullet'}],['link'],['clean']];
+    quillConfIntroEditor = new Quill('#conf-intro-editor', { theme: 'snow', modules: { toolbar } });
+    quillConfEditor = new Quill('#conf-editor', { theme: 'snow', modules: { toolbar } });
+}
+
+async function loadConferencePage() {
+    initConfEditors();
+    try {
+        const result = await loadJsonFile(CONFERENCE_PATH);
+        const d = result.data;
+        conferenceSha = result.sha;
+        document.getElementById('conf-title').value = d.title || '';
+        document.getElementById('conf-date').value = d.date || '';
+        document.getElementById('conf-image-path').value = d.image || '';
+        if (d.image) {
+            const img = document.getElementById('conf-image-preview');
+            img.src = d.image; img.style.display = 'block';
+        }
+        document.getElementById('conf-video').value = d.videoEmbed || '';
+        document.getElementById('conf-backlink').value = d.backLink || '';
+        document.getElementById('conf-backlabel').value = d.backLabel || '';
+        quillConfIntroEditor.setContents([]);
+        quillConfIntroEditor.clipboard.dangerouslyPasteHTML(0, d.intro || '');
+        quillConfEditor.setContents([]);
+        quillConfEditor.clipboard.dangerouslyPasteHTML(0, d.content || '');
+    } catch(e) { showStatus('Erreur chargement conférence: ' + e.message, 'error'); }
+}
+
+async function saveConferencePage() {
+    const title = document.getElementById('conf-title').value.trim();
+    const date = document.getElementById('conf-date').value.trim();
+    const intro = cleanQuillHtml(quillConfIntroEditor.root.innerHTML);
+    const videoEmbed = document.getElementById('conf-video').value.trim();
+    const content = cleanQuillHtml(quillConfEditor.root.innerHTML);
+    const backLink = document.getElementById('conf-backlink').value.trim();
+    const backLabel = document.getElementById('conf-backlabel').value.trim();
+    if (!title) { showStatus('Le titre est requis.', 'error'); return; }
+
+    let imagePath = document.getElementById('conf-image-path').value;
+    const imageFile = document.getElementById('conf-image-file').files[0];
+    if (imageFile) {
+        const newPath = 'images/evenements/' + imageFile.name;
+        try { await uploadImage(newPath, imageFile); imagePath = newPath; } catch(e) { showStatus('Erreur upload image: ' + e.message, 'error'); return; }
+    }
+
+    const data = { title, date, image: imagePath, intro, videoEmbed, content, backLink, backLabel };
+    try {
+        conferenceSha = await saveJsonFile(CONFERENCE_PATH, data, conferenceSha, 'Mise à jour page Conférence Replay');
+        showStatus('Page Conférence & Replay sauvegardée !', 'success');
+    } catch(e) { showStatus('Erreur: ' + e.message, 'error'); }
 }
 
 // ===== NAV EXTRA =====

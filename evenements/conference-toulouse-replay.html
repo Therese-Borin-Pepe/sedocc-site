@@ -77,25 +77,8 @@
 
     <section class="page-content">
         <div class="container">
-            <div class="evenement-detail">
-                <p class="evenement-date">6 janvier 2026</p>
-                <div class="evenement-detail-image">
-                    <img src="../images/evenements/conference-toulouse.jpg" alt="Revivez la conférence sur le Syndrome d'Ehlers-Danlos à Toulouse">
-                </div>
-                
-                <div class="evenement-text">
-                    <p>Pour ceux qui n'ont pas pu assister à la conférence du 4 décembre 2025, nous sommes heureux de partager avec vous le replay en vidéo.</p>
-                    <div style="position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; margin:20px 0;">
-                        <iframe src="https://drive.google.com/file/d/1ka3H2BVZoeI6Gqxvh15-spzzUrl718wB/preview"
-                                style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"
-                                allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p>Nous remercions une nouvelle fois nos intervenants et tous les participants pour leur présence et leur engagement. Pour toute question ou information complémentaire, n'hésitez pas à nous contacter !</p>
-                </div>
-                <div class="evenement-back">
-                    <a href="../evenements.html" class="btn btn-primary">Retour aux évènements</a>
-                </div>
+            <div class="evenement-detail" id="conf-detail">
+                <div class="loading">Chargement...</div>
             </div>
         </div>
     </section>
@@ -125,5 +108,21 @@
         </div>
     </footer>
     <script src="../script.js"></script>
+    <script>
+(async function() {
+    try {
+        const res = await fetch('../data/pages/conference-replay.json?v=' + Date.now());
+        const d = await res.json();
+        document.querySelector('h1').textContent = d.title || '';
+        document.title = (d.title || 'Conférence Replay') + " - SED'OCC";
+        const videoHtml = d.videoEmbed ? '<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:10px;margin:20px 0;"><iframe src="' + d.videoEmbed + '" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe></div>' : '';
+        document.getElementById('conf-detail').innerHTML =
+            (d.date ? '<p class="evenement-date">' + d.date + '</p>' : '') +
+            (d.image ? '<div class="evenement-detail-image"><img src="../' + d.image + '" alt="' + (d.title||'') + '"></div>' : '') +
+            '<div class="evenement-text">' + (d.intro || '') + videoHtml + (d.content || '') + '</div>' +
+            '<div class="evenement-back"><a href="' + (d.backLink||'../evenements.html') + '" class="btn btn-primary">' + (d.backLabel||'Retour') + '</a></div>';
+    } catch(e) { console.error(e); }
+})();
+</script>
 </body>
 </html>

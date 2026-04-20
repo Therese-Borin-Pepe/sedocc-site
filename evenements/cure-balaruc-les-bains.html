@@ -77,24 +77,8 @@
 
     <section class="page-content">
         <div class="container">
-            <div class="evenement-detail">
-                <p class="evenement-date">14 janvier 2026</p>
-                <div class="evenement-detail-image">
-                    <img src="../images/evenements/balaruc.jpg" alt="CURE BALARUC-LES-BAINS dans l'HÉRAULT">
-                </div>
-                
-                <div class="evenement-text">
-                    <p>Organisée en collaboration avec la Direction de la Cure et Sed'Occ France.</p>
-                    <p>Accompagnée de médecins pour les soins.</p>
-                    <h3>Où se trouve Balaruc-les-Bains ?</h3>
-                    <p>L'étang de Thau est une lagune séparée du golfe du Lion par un cordon de sable littoral reliant le volcan d'Agde au mont Saint-Clair à Sète.</p>
-                    <h3>Plus d'informations ?</h3>
-                    <p>Téléchargez la présentation suivante : <a href="https://www.sedocc.fr/wp-content/uploads/2026/01/renseignements-cure-Balaruc-Les-Bains-site-internet.docx" target="_blank">Renseignements cure Balaruc-les-Bains</a></p>
-                    <p>Votre trousseau spécial cure : <a href="https://www.sedocc.fr/wp-content/uploads/2026/01/Trousseau-cure-.docx" target="_blank">Trousseau cure</a></p>
-                </div>
-                <div class="evenement-back">
-                    <a href="../initiatives.html" class="btn btn-primary">Voir nos Initiatives &amp; Partenariats</a>
-                </div>
+            <div class="evenement-detail" id="cure-detail">
+                <div class="loading">Chargement...</div>
             </div>
         </div>
     </section>
@@ -124,5 +108,20 @@
         </div>
     </footer>
     <script src="../script.js"></script>
+    <script>
+(async function() {
+    try {
+        const res = await fetch('../data/pages/cure-balaruc.json?v=' + Date.now());
+        const d = await res.json();
+        document.querySelector('h1').textContent = d.title || '';
+        document.title = (d.title || 'Cure Balaruc') + " - SED'OCC";
+        document.getElementById('cure-detail').innerHTML =
+            (d.date ? '<p class="evenement-date">' + d.date + '</p>' : '') +
+            (d.image ? '<div class="evenement-detail-image"><img src="../' + d.image + '" alt="' + (d.title||'') + '"></div>' : '') +
+            '<div class="evenement-text">' + (d.content || '') + '</div>' +
+            '<div class="evenement-back"><a href="' + (d.backLink||'../evenements.html') + '" class="btn btn-primary">' + (d.backLabel||'Retour') + '</a></div>';
+    } catch(e) { console.error(e); }
+})();
+</script>
 </body>
 </html>
