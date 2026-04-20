@@ -830,6 +830,22 @@
                 </div>
             </div>
 
+            <div class="content-card">
+                <h3>Footer</h3>
+                <div class="form-group">
+                    <label>Texte copyright</label>
+                    <input type="text" id="ct-footer-copyright" placeholder="Ex: Copyright © 2026 | SED'OCC. Tous droits réservés.">
+                </div>
+                <div class="form-group">
+                    <label>Lien Facebook</label>
+                    <input type="text" id="ct-footer-facebook" placeholder="https://www.facebook.com/...">
+                </div>
+                <div class="form-group">
+                    <label>Lien Instagram</label>
+                    <input type="text" id="ct-footer-instagram" placeholder="https://www.instagram.com/...">
+                </div>
+            </div>
+
             <button class="btn btn-primary" id="ct-save-btn" onclick="saveContenus()" style="margin-bottom:30px;">Enregistrer les contenus</button>
         </div>
 
@@ -1816,6 +1832,26 @@ async function saveNavExtraLinkEntry() {
     }
 }
 
+async function deleteFile(filePath) {
+    if (isLocalMode) {
+        // En local, on ne peut pas supprimer — on ignore silencieusement
+        return;
+    }
+    try {
+        // Récupérer le sha du fichier
+        const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+            headers: { 'Authorization': `token ${githubToken}` }
+        });
+        if (!res.ok) return; // Fichier inexistant, rien à faire
+        const data = await res.json();
+        await fetch(`https://api.github.com/repos/${REPO}/contents/${filePath}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `token ${githubToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: 'Suppression page: ' + filePath, sha: data.sha })
+        });
+    } catch(e) { /* Silencieux — pas bloquant */ }
+}
+
 async function deleteNavExtraEntry(index) {
     const pages = navExtra[currentNavExtraSection] || [];
     if (!pages[index]) return;
@@ -1823,6 +1859,10 @@ async function deleteNavExtraEntry(index) {
     const removed = pages.splice(index, 1)[0];
     try {
         navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Suppression page menu: ' + removed.title);
+        // Supprimer aussi le fichier JSON si c'était une page créée
+        if (removed.created && removed.id) {
+            await deleteFile('data/pages/extra/' + removed.id + '.json');
+        }
         showStatus('"' + removed.title + '" supprimé du menu.', 'success');
         renderNavExtraList();
     } catch (e) {
@@ -2283,6 +2323,11 @@ function fillContenusForm() {
     if (contenus.benevoles) {
         document.getElementById('ct-benevoles-texte').value = contenus.benevoles.texte || '';
     }
+    if (contenus.footer) {
+        document.getElementById('ct-footer-copyright').value = contenus.footer.copyright || '';
+        document.getElementById('ct-footer-facebook').value = contenus.footer.facebook || '';
+        document.getElementById('ct-footer-instagram').value = contenus.footer.instagram || '';
+    }
 }
 
 async function saveContenus() {
@@ -2308,6 +2353,11 @@ async function saveContenus() {
         };
         contenus.benevoles = {
             texte: document.getElementById('ct-benevoles-texte').value.trim()
+        };
+        contenus.footer = {
+            copyright: document.getElementById('ct-footer-copyright').value.trim(),
+            facebook: document.getElementById('ct-footer-facebook').value.trim(),
+            instagram: document.getElementById('ct-footer-instagram').value.trim()
         };
         contenusSha = await saveJsonFile(CONTENUS_PATH, contenus, contenusSha, 'Mise a jour contenus page accueil');
         showStatus('Contenus mis a jour ! Le site sera actualise dans quelques secondes.', 'success');

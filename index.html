@@ -259,6 +259,14 @@
                 const d = document.querySelector('.team-benevoles');
                 if (d && c.benevoles.texte) d.textContent = c.benevoles.texte;
             }
+            if (c.footer) {
+                const copy = document.querySelector('.footer-bottom p');
+                if (copy && c.footer.copyright) copy.textContent = c.footer.copyright;
+                const fbLinks = document.querySelectorAll('a[aria-label="Facebook"]');
+                fbLinks.forEach(a => { if (c.footer.facebook) a.href = c.footer.facebook; });
+                const igLinks = document.querySelectorAll('a[aria-label="Instagram"]');
+                igLinks.forEach(a => { if (c.footer.instagram) a.href = c.footer.instagram; });
+            }
             if (c.photos) {
                 ['mosaic1','mosaic2','mosaic3','mosaic4','action1','action2','action3'].forEach(function(key) {
                     if (c.photos[key]) {
