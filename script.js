@@ -403,9 +403,46 @@ window.addEventListener('beforeprint', function() {
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     console.log('🎨 SED\'OCC Website - Development Mode');
     console.log('📱 Current viewport:', window.innerWidth + 'x' + window.innerHeight);
-    
+
     // Show viewport size on resize
     window.addEventListener('resize', function() {
         console.log('📱 Viewport resized:', window.innerWidth + 'x' + window.innerHeight);
     });
 }
+
+// ==========================================
+// Chargement des pages extra du menu déroulant
+// ==========================================
+
+(function loadNavExtra() {
+    // Détecter si on est dans un sous-dossier
+    var inSubfolder = window.location.pathname.split('/').filter(Boolean).length > 1;
+
+    fetch('data/nav-extra.json')
+        .then(function(r) { return r.json(); })
+        .then(function(extra) {
+            // Map section → sélecteur du lien principal du dropdown correspondant
+            var dropdownMap = {
+                association: 'a[href="index.html"].nav-link',
+                sed: 'a[href="sed.html"].nav-link',
+                droits: 'a[href="droits.html"].nav-link',
+                evenements: 'a[href="evenements.html"].nav-link'
+            };
+            Object.keys(extra).forEach(function(section) {
+                var pages = extra[section];
+                if (!pages || !pages.length) return;
+                var navLink = document.querySelector(dropdownMap[section]);
+                if (!navLink) return;
+                var menu = navLink.nextElementSibling;
+                if (!menu) return;
+                pages.forEach(function(page) {
+                    var url = inSubfolder ? ('../' + page.url) : page.url;
+                    if (menu.querySelector('a[href="' + url + '"]')) return;
+                    var li = document.createElement('li');
+                    li.innerHTML = '<a href="' + url + '">' + page.title + '</a>';
+                    menu.appendChild(li);
+                });
+            });
+        })
+        .catch(function() {}); // silencieux si fichier absent
+})();

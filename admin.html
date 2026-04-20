@@ -249,39 +249,77 @@
 
         <!-- NAVIGATION PRINCIPALE -->
         <div class="admin-nav-main">
-            <button class="admin-nav-btn active" onclick="switchMainNav('association')">Notre association</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('adhesion')">Adhésion</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('initiatives')">Initiatives &amp; Partenariats</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('sed')">SED</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('evenements')">Évènements</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('ressources')">Ressources</button>
-            <button class="admin-nav-btn" onclick="switchMainNav('droits')">Vos droits</button>
+            <button class="admin-nav-btn active" onclick="switchMainNav('association')">L'association</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('sed')">Le SED</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('droits')">Droits &amp; Ressources</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('evenements')">Évènements &amp; Activités</button>
         </div>
 
-        <!-- SOUS-NAVIGATION Notre association -->
+        <!-- SOUS-NAVIGATION L'association -->
         <div class="admin-nav-sub active" id="subnav-association">
             <button class="admin-sub-btn active" onclick="switchTab('contenus', 'association')">Contenus</button>
             <button class="admin-sub-btn" onclick="switchTab('photos', 'association')">Photos</button>
             <button class="admin-sub-btn" onclick="switchTab('equipe', 'association')">Équipe</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('adhesion', 'association')">Adhésion &amp; soutien</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('initiatives', 'association')">Initiatives &amp; Partenariats</button>
+            <button class="admin-sub-btn" onclick="switchTab('galerie', 'association')">Galerie</button>
+            <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('association', this)">+ Nouvelle page</button>
         </div>
 
-        <!-- SOUS-NAVIGATION EVENEMENTS -->
+        <!-- SOUS-NAVIGATION Le SED -->
+        <div class="admin-nav-sub" id="subnav-sed">
+            <button class="admin-sub-btn active" onclick="switchOnglets('sed', 'sed')">Qu'est-ce que le SED ?</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('diagnostic', 'sed')">Diagnostic</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('traitements', 'sed')">Traitements</button>
+            <button class="admin-sub-btn" onclick="switchTab('actualites', 'sed')">Actualités médicales</button>
+            <button class="admin-sub-btn" onclick="switchOnglets('impacts', 'sed')">Impacts</button>
+            <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('sed', this)">+ Nouvelle page</button>
+        </div>
+
+        <!-- SOUS-NAVIGATION Droits & Ressources -->
+        <div class="admin-nav-sub" id="subnav-droits">
+            <button class="admin-sub-btn active" onclick="switchOnglets('droits', 'droits')">MDPH – ALD</button>
+            <button class="admin-sub-btn" onclick="switchTab('ressources', 'droits')">Ressources pratiques</button>
+            <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('droits', this)">+ Nouvelle page</button>
+        </div>
+
+        <!-- SOUS-NAVIGATION Évènements & Activités -->
         <div class="admin-nav-sub" id="subnav-evenements">
             <button class="admin-sub-btn active" onclick="filterEvents(null, this)">Tous les évènements</button>
-            <button class="admin-sub-btn" onclick="filterEvents('cure-balaruc-les-bains', this)">Cure thermale Balaruc-les-Bains</button>
+            <button class="admin-sub-btn" onclick="filterEvents('cure-balaruc-les-bains', this)">Cure Balaruc</button>
             <button class="admin-sub-btn" onclick="filterEvents('conference-toulouse-replay', this)">Conférence &amp; Replay</button>
-        </div>
-
-        <!-- SOUS-NAVIGATION SED -->
-        <div class="admin-nav-sub" id="subnav-sed">
-            <button class="admin-sub-btn active" onclick="switchTab('actualites', 'sed')">Actualités médicales</button>
-            <button class="admin-sub-btn" onclick="switchOnglets('traitements', 'sed')">Traitements</button>
-            <button class="admin-sub-btn" onclick="switchOnglets('diagnostic', 'sed')">Diagnostic</button>
-            <button class="admin-sub-btn" onclick="switchOnglets('sed', 'sed')">Qu'est-ce que le SED ?</button>
-            <button class="admin-sub-btn" onclick="switchOnglets('impacts', 'sed')">Impacts</button>
+            <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('evenements', this)">+ Nouvelle page</button>
         </div>
 
         <div class="admin-nav-divider"></div>
+
+        <!-- ==================== GALERIE TAB (placeholder) ==================== -->
+        <div id="tab-galerie" class="tab-panel"><p style="color:#888; padding:20px;">Gestion de la galerie — à venir.</p></div>
+
+        <!-- ==================== NAV EXTRA TAB ==================== -->
+        <div id="tab-nav-extra" class="tab-panel">
+            <h2 class="section-title" id="nav-extra-title">Gérer les pages du menu</h2>
+            <p style="color:#888; margin-bottom:20px; font-size:0.9rem;">Ajoutez des pages supplémentaires dans cette section du menu déroulant du site.</p>
+
+            <div class="add-form" style="margin-bottom:24px;">
+                <h3 style="color:#8B1A2B; margin-bottom:16px; font-size:1rem;">Ajouter une nouvelle page</h3>
+                <div class="form-group">
+                    <label>Titre affiché dans le menu *</label>
+                    <input type="text" id="nav-extra-new-title" placeholder="Ex: Cure Montastruc">
+                </div>
+                <div class="form-group">
+                    <label>URL relative *</label>
+                    <input type="text" id="nav-extra-new-url" placeholder="Ex: evenements/cure-montastruc.html">
+                    <small>Chemin relatif depuis la racine du site.</small>
+                </div>
+                <button class="btn btn-success" onclick="saveNavExtraEntry()">Ajouter</button>
+            </div>
+
+            <h3 style="color:#8B1A2B; margin-bottom:12px; font-size:1rem;">Pages existantes</h3>
+            <div id="nav-extra-list" class="item-list">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
 
         <!-- ==================== EVENEMENTS TAB ==================== -->
         <div id="tab-evenements" class="tab-panel">
@@ -814,12 +852,9 @@ function switchMainNav(section) {
 
     // Activer le bon panneau selon la section
     if (section === 'association') switchTab('contenus', 'association');
-    else if (section === 'sed') switchTab('actualites', 'sed');
-    else if (section === 'adhesion') switchOnglets('adhesion', 'adhesion');
-    else if (section === 'initiatives') switchOnglets('initiatives', 'initiatives');
-    else if (section === 'evenements') { filterEvents(null); switchTab('evenements', 'evenements'); }
-    else if (section === 'ressources') switchTab('ressources', 'ressources');
+    else if (section === 'sed') switchOnglets('sed', 'sed');
     else if (section === 'droits') switchOnglets('droits', 'droits');
+    else if (section === 'evenements') { filterEvents(null); switchTab('evenements', 'evenements'); }
 }
 
 function switchTab(tab, parentNav) {
@@ -992,6 +1027,121 @@ function showStatus(msg, type) {
     el.className = `status ${type}`; el.textContent = msg;
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (type === 'success') setTimeout(() => { el.className = 'status'; }, 8000);
+}
+
+// ===== NAV EXTRA =====
+const NAV_EXTRA_PATH = 'data/nav-extra.json';
+let navExtra = { evenements: [], association: [], sed: [], droits: [] };
+let navExtraSha = '';
+let currentNavExtraSection = '';
+
+const NAV_EXTRA_LABELS = {
+    association: "L'association",
+    sed: 'Le SED',
+    droits: 'Droits & Ressources',
+    evenements: 'Évènements & Activités'
+};
+
+function switchNavExtra(section, btn) {
+    currentNavExtraSection = section;
+
+    // Mettre à jour les boutons actifs dans le subnav courant
+    const subnav = document.getElementById('subnav-' + section);
+    if (subnav) {
+        subnav.querySelectorAll('.admin-sub-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+    }
+
+    // Afficher le panel
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-nav-extra').classList.add('active');
+
+    // Mettre à jour le titre
+    const titleEl = document.getElementById('nav-extra-title');
+    if (titleEl) titleEl.textContent = 'Gérer les pages du menu — ' + (NAV_EXTRA_LABELS[section] || section);
+
+    // Réinitialiser le formulaire
+    document.getElementById('nav-extra-new-title').value = '';
+    document.getElementById('nav-extra-new-url').value = '';
+
+    loadNavExtra();
+}
+
+async function loadNavExtra() {
+    const list = document.getElementById('nav-extra-list');
+    list.innerHTML = '<div class="loading">Chargement...</div>';
+    try {
+        const result = await loadJsonFile(NAV_EXTRA_PATH);
+        navExtra = result.data;
+        navExtraSha = result.sha;
+        renderNavExtraList();
+    } catch (e) {
+        navExtra = { evenements: [], association: [], sed: [], droits: [] };
+        navExtraSha = '';
+        renderNavExtraList();
+    }
+}
+
+function renderNavExtraList() {
+    const list = document.getElementById('nav-extra-list');
+    const pages = (navExtra[currentNavExtraSection] || []);
+    if (!pages.length) {
+        list.innerHTML = '<p style="color:#888;">Aucune page supplémentaire pour cette section.</p>';
+        return;
+    }
+    list.innerHTML = pages.map((page, i) => `
+        <div class="item-card">
+            <div class="item-info">
+                <h3>${escapeHtml(page.title)}</h3>
+                <span style="font-size:0.8rem; color:#888;">${escapeHtml(page.url)}</span>
+            </div>
+            <div class="item-actions">
+                <button class="btn btn-danger" onclick="deleteNavExtraEntry(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+async function saveNavExtraEntry() {
+    const title = document.getElementById('nav-extra-new-title').value.trim();
+    const url = document.getElementById('nav-extra-new-url').value.trim();
+    if (!title || !url) { showStatus('Remplissez le titre et l\'URL.', 'error'); return; }
+
+    if (!navExtra[currentNavExtraSection]) navExtra[currentNavExtraSection] = [];
+
+    // Vérifier les doublons
+    if (navExtra[currentNavExtraSection].some(p => p.url === url)) {
+        showStatus('Cette URL existe déjà dans la section.', 'error'); return;
+    }
+
+    const id = generateId(title);
+    navExtra[currentNavExtraSection].push({ id, title, url });
+
+    try {
+        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Ajout page menu: ' + title);
+        showStatus('Page "' + title + '" ajoutée au menu !', 'success');
+        document.getElementById('nav-extra-new-title').value = '';
+        document.getElementById('nav-extra-new-url').value = '';
+        renderNavExtraList();
+    } catch (e) {
+        navExtra[currentNavExtraSection].pop();
+        showStatus('Erreur: ' + e.message, 'error');
+    }
+}
+
+async function deleteNavExtraEntry(index) {
+    const pages = navExtra[currentNavExtraSection] || [];
+    if (!pages[index]) return;
+    if (!confirm('Supprimer "' + pages[index].title + '" du menu ?')) return;
+    const removed = pages.splice(index, 1)[0];
+    try {
+        navExtraSha = await saveJsonFile(NAV_EXTRA_PATH, navExtra, navExtraSha, 'Suppression page menu: ' + removed.title);
+        showStatus('"' + removed.title + '" supprimé du menu.', 'success');
+        renderNavExtraList();
+    } catch (e) {
+        pages.splice(index, 0, removed);
+        showStatus('Erreur: ' + e.message, 'error');
+    }
 }
 
 // ===== EVENEMENTS =====
