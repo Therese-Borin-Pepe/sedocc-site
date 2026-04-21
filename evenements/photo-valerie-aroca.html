@@ -106,23 +106,118 @@
         </div>
     </footer>
     <script src="../script.js"></script>
+<style>
+.gallery-item img { cursor: zoom-in; transition: transform 0.2s, box-shadow 0.2s; }
+.gallery-item img:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+#lightbox {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
+    z-index: 9999; align-items: center; justify-content: center; padding: 16px;
+}
+#lightbox.open { display: flex; }
+#lightbox img {
+    max-width: 100%; max-height: 90vh; border-radius: 8px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5); object-fit: contain;
+}
+#lightbox figcaption {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.6); color: white; padding: 6px 16px;
+    border-radius: 20px; font-size: 0.85rem; white-space: nowrap;
+}
+#lb-close {
+    position: absolute; top: 16px; right: 20px; color: white; font-size: 2rem;
+    cursor: pointer; line-height: 1; background: none; border: none; padding: 4px 10px;
+    border-radius: 50%; transition: background 0.2s;
+}
+#lb-close:hover { background: rgba(255,255,255,0.15); }
+#lb-prev, #lb-next {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    color: white; font-size: 2.2rem; cursor: pointer; background: rgba(0,0,0,0.3);
+    border: none; padding: 8px 14px; border-radius: 8px; transition: background 0.2s;
+    user-select: none;
+}
+#lb-prev { left: 12px; }
+#lb-next { right: 12px; }
+#lb-prev:hover, #lb-next:hover { background: rgba(0,0,0,0.6); }
+#lb-counter {
+    position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,0.7); font-size: 0.85rem;
+}
+</style>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true">
+    <button id="lb-close" aria-label="Fermer">✕</button>
+    <button id="lb-prev" aria-label="Photo précédente">‹</button>
+    <figure style="display:flex;flex-direction:column;align-items:center;max-width:100%;">
+        <img id="lb-img" src="" alt="">
+        <figcaption id="lb-caption"></figcaption>
+    </figure>
+    <button id="lb-next" aria-label="Photo suivante">›</button>
+    <div id="lb-counter"></div>
+</div>
+
 <script>
+var lbPhotos = [];
+var lbIndex = 0;
+
+function openLightbox(index) {
+    lbIndex = index;
+    showLbPhoto();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function showLbPhoto() {
+    var p = lbPhotos[lbIndex];
+    document.getElementById('lb-img').src = p.src;
+    document.getElementById('lb-img').alt = p.alt || '';
+    document.getElementById('lb-caption').textContent = p.caption || '';
+    document.getElementById('lb-counter').textContent = (lbIndex + 1) + ' / ' + lbPhotos.length;
+}
+function lbPrev() { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; showLbPhoto(); }
+function lbNext() { lbIndex = (lbIndex + 1) % lbPhotos.length; showLbPhoto(); }
+
+document.getElementById('lb-close').onclick = closeLightbox;
+document.getElementById('lb-prev').onclick = function(e) { e.stopPropagation(); lbPrev(); };
+document.getElementById('lb-next').onclick = function(e) { e.stopPropagation(); lbNext(); };
+document.getElementById('lightbox').onclick = function(e) { if (e.target === this) closeLightbox(); };
+document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbPrev();
+    if (e.key === 'ArrowRight') lbNext();
+});
+
 (async function() {
     try {
         const res = await fetch('../data/pages/galerie.json?v=' + Date.now());
         const d = await res.json();
         document.querySelector('h1').textContent = d.title || '';
         document.title = (d.title || 'Galerie') + " - SED'OCC";
+
+        // Construire la liste globale des photos pour le lightbox
+        (d.sections || []).forEach(function(section) {
+            (section.photos || []).forEach(function(photo) {
+                lbPhotos.push({ src: '../' + photo.src, alt: photo.alt || '', caption: photo.caption || '' });
+            });
+        });
+
         let html = '<div class="evenement-detail">';
         if (d.date) html += '<p class="evenement-date">' + d.date + '</p>';
         if (d.intro) html += '<div class="evenement-text">' + d.intro + '</div>';
+        var globalIndex = 0;
         (d.sections || []).forEach(function(section) {
             if (!section.photos || !section.photos.length) return;
             if (section.title) html += '<h3 style="color:var(--heading-color);text-align:center;margin:var(--spacing-xl) 0 var(--spacing-lg);">' + section.title + '</h3>';
             const isPortraits = section.id === 'portraits';
             html += '<div class="gallery-grid' + (isPortraits ? ' gallery-portraits' : '') + '">';
             section.photos.forEach(function(photo) {
-                html += '<figure class="gallery-item"><img src="../' + photo.src + '" alt="' + (photo.alt || '') + '">';
+                var idx = globalIndex++;
+                html += '<figure class="gallery-item" onclick="openLightbox(' + idx + ')" style="cursor:zoom-in;">';
+                html += '<img src="../' + photo.src + '" alt="' + (photo.alt || '') + '" loading="lazy">';
                 if (photo.caption) html += '<figcaption>' + photo.caption + '</figcaption>';
                 html += '</figure>';
             });
