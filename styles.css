@@ -2088,48 +2088,56 @@ a.evenement-card:hover {
 
 @keyframes float-bubble-1 {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    25% { transform: translate(15px, -20px) rotate(2deg); }
-    50% { transform: translate(-10px, -30px) rotate(-1deg); }
-    75% { transform: translate(-20px, -15px) rotate(1deg); }
+    25% { transform: translate(45px, -60px) rotate(6deg); }
+    50% { transform: translate(-30px, -90px) rotate(-3deg); }
+    75% { transform: translate(-60px, -45px) rotate(4deg); }
 }
 
 @keyframes float-bubble-2 {
     0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(-15px, 20px) scale(1.05); }
-    66% { transform: translate(20px, 10px) scale(0.97); }
+    33% { transform: translate(-50px, 60px) scale(1.15); }
+    66% { transform: translate(60px, 30px) scale(0.92); }
 }
 
 @keyframes float-bubble-3 {
     0%, 100% { transform: translate(0, 0) rotate(0deg); }
-    50% { transform: translate(25px, -25px) rotate(-3deg); }
+    50% { transform: translate(75px, -75px) rotate(-8deg); }
 }
 
 @keyframes float-bubble-4 {
     0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
-    50% { transform: translate(-20px, 15px) scale(1.08) rotate(2deg); }
+    50% { transform: translate(-65px, 50px) scale(1.18) rotate(6deg); }
 }
 
-.page-bubbles .b1 { animation: float-bubble-1 18s ease-in-out infinite; }
-.page-bubbles .b2 { animation: float-bubble-2 22s ease-in-out infinite; }
-.page-bubbles .b3 { animation: float-bubble-3 16s ease-in-out infinite; }
-.page-bubbles .b4 { animation: float-bubble-4 20s ease-in-out infinite; }
-.page-bubbles .b5 { animation: float-bubble-2 24s ease-in-out infinite; }
-.page-bubbles .b6 { animation: float-bubble-1 19s ease-in-out infinite; }
-.page-bubbles .b7 { animation: float-bubble-3 21s ease-in-out infinite; }
-.page-bubbles .b8 { animation: float-bubble-4 17s ease-in-out infinite; }
-.page-bubbles .hero-b1 { animation: float-bubble-2 14s ease-in-out infinite; }
-.page-bubbles .hero-b2 { animation: float-bubble-3 12s ease-in-out infinite; }
-.page-bubbles .hero-b3 { animation: float-bubble-1 15s ease-in-out infinite; }
-.page-bubbles .hero-b4 { animation: float-bubble-4 13s ease-in-out infinite; }
+@keyframes float-bubble-5 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+    20% { transform: translate(40px, 30px) rotate(3deg) scale(1.1); }
+    40% { transform: translate(-30px, 70px) rotate(-4deg) scale(0.95); }
+    60% { transform: translate(-60px, -20px) rotate(5deg) scale(1.05); }
+    80% { transform: translate(20px, -50px) rotate(-2deg) scale(0.98); }
+}
+
+.page-bubbles .b1 { animation: float-bubble-1 12s ease-in-out infinite; }
+.page-bubbles .b2 { animation: float-bubble-2 14s ease-in-out infinite; }
+.page-bubbles .b3 { animation: float-bubble-3 10s ease-in-out infinite; }
+.page-bubbles .b4 { animation: float-bubble-4 13s ease-in-out infinite; }
+.page-bubbles .b5 { animation: float-bubble-5 16s ease-in-out infinite; }
+.page-bubbles .b6 { animation: float-bubble-1 11s ease-in-out infinite; }
+.page-bubbles .b7 { animation: float-bubble-3 13s ease-in-out infinite; }
+.page-bubbles .b8 { animation: float-bubble-4 9s ease-in-out infinite; }
+.page-bubbles .hero-b1 { animation: float-bubble-2 8s ease-in-out infinite; }
+.page-bubbles .hero-b2 { animation: float-bubble-3 7s ease-in-out infinite; }
+.page-bubbles .hero-b3 { animation: float-bubble-1 9s ease-in-out infinite; }
+.page-bubbles .hero-b4 { animation: float-bubble-4 8s ease-in-out infinite; }
 
 /* Hero d'accueil - bulles plus dynamiques */
-.hero-bubbles .bubble-1 { animation: float-bubble-1 16s ease-in-out infinite; }
-.hero-bubbles .bubble-2 { animation: float-bubble-2 18s ease-in-out infinite; }
-.hero-bubbles .bubble-3 { animation: float-bubble-3 14s ease-in-out infinite; }
-.hero-bubbles .bubble-4 { animation: float-bubble-4 20s ease-in-out infinite; }
-.hero-bubbles .bubble-5 { animation: float-bubble-1 12s ease-in-out infinite; }
-.hero-bubbles .bubble-6 { animation: float-bubble-2 17s ease-in-out infinite; }
-.hero-bubbles .bubble-7 { animation: float-bubble-3 15s ease-in-out infinite; }
+.hero-bubbles .bubble-1 { animation: float-bubble-1 10s ease-in-out infinite; }
+.hero-bubbles .bubble-2 { animation: float-bubble-2 11s ease-in-out infinite; }
+.hero-bubbles .bubble-3 { animation: float-bubble-3 9s ease-in-out infinite; }
+.hero-bubbles .bubble-4 { animation: float-bubble-4 12s ease-in-out infinite; }
+.hero-bubbles .bubble-5 { animation: float-bubble-5 8s ease-in-out infinite; }
+.hero-bubbles .bubble-6 { animation: float-bubble-2 10s ease-in-out infinite; }
+.hero-bubbles .bubble-7 { animation: float-bubble-3 9s ease-in-out infinite; }
 
 /* Animation entrée du hero (page d'accueil) */
 @keyframes hero-rise {
@@ -2161,6 +2169,137 @@ a.evenement-card:hover {
 
 .hero-logo:hover {
     animation: logo-breath 2s ease-in-out infinite;
+}
+
+/* ==========================================
+   Barre de progression au scroll
+   ========================================== */
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), #e63946, #ff8a65);
+    z-index: 9999;
+    transition: width 0.1s ease-out;
+    box-shadow: 0 0 8px rgba(230, 57, 70, 0.4);
+}
+
+/* ==========================================
+   Effet shine sur les boutons primaires
+   ========================================== */
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.6s ease;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 26, 43, 0.35);
+}
+
+/* ==========================================
+   Hover impressionnant sur les cartes événements
+   ========================================== */
+a.evenement-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease !important;
+}
+
+a.evenement-card:hover {
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 20px 40px rgba(139, 26, 43, 0.18) !important;
+}
+
+a.evenement-card .evenement-image img {
+    transition: transform 0.6s ease;
+}
+
+a.evenement-card:hover .evenement-image img {
+    transform: scale(1.08);
+}
+
+/* ==========================================
+   Effet sur les photos mosaïque (mission/actions)
+   ========================================== */
+.mosaic-item, .action-photo {
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.mosaic-item img, .action-photo img {
+    transition: transform 0.5s ease;
+}
+
+.mosaic-item:hover, .action-photo:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.mosaic-item:hover img, .action-photo:hover img {
+    transform: scale(1.06);
+}
+
+/* ==========================================
+   Titres avec soulignement animé
+   ========================================== */
+section h2 {
+    position: relative;
+    display: inline-block;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), #e63946);
+    border-radius: 3px;
+    transform: translateX(-50%);
+    transition: width 0.6s ease 0.3s;
+}
+
+section h2.scroll-reveal.revealed::after {
+    width: 60px;
+}
+
+/* ==========================================
+   Pulsation douce sur le bouton "Adhérer" du menu
+   ========================================== */
+@keyframes adherer-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(139, 26, 43, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(139, 26, 43, 0); }
+}
+
+.nav-btn-adherez {
+    animation: adherer-pulse 2.5s ease-in-out infinite;
 }
 
 /* Respect des préférences utilisateur (accessibilité) */

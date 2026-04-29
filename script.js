@@ -51,16 +51,26 @@ navLinks.forEach(function(link) {
 const navbar = document.getElementById('navbar');
 let lastScroll = 0;
 
+// Créer la barre de progression au scroll
+const scrollProgress = document.createElement('div');
+scrollProgress.className = 'scroll-progress';
+document.body.appendChild(scrollProgress);
+
 window.addEventListener('scroll', function() {
     const currentScroll = window.pageYOffset;
-    
+
     // Add shadow when scrolled
     if (currentScroll > 50) {
         navbar.classList.add('scrolled');
     } else {
         navbar.classList.remove('scrolled');
     }
-    
+
+    // Mettre à jour la barre de progression
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (currentScroll / docHeight) * 100 : 0;
+    scrollProgress.style.width = progress + '%';
+
     lastScroll = currentScroll;
 });
 
