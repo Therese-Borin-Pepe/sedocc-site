@@ -136,6 +136,33 @@ document.querySelectorAll('.card-modern, .support-banner, .tab-content, .bilan-i
     revealObserver.observe(el);
 });
 
+// Animation des sections, titres, photos, événements
+document.querySelectorAll('section h2, .mission-text, .actions-text, .warning-box, .team-member, .partner-logo').forEach(function(el) {
+    el.classList.add('scroll-reveal');
+    revealObserver.observe(el);
+});
+
+// Photos en cascade (mosaïque mission, action photos)
+document.querySelectorAll('.mosaic-item, .action-photo').forEach(function(el, index) {
+    el.classList.add('scroll-reveal-zoom');
+    el.classList.add('delay-' + ((index % 4) + 1));
+    revealObserver.observe(el);
+});
+
+// Cartes événements en cascade zoom
+document.querySelectorAll('a.evenement-card').forEach(function(el, index) {
+    el.classList.add('scroll-reveal-zoom');
+    el.classList.add('delay-' + ((index % 3) + 1));
+    revealObserver.observe(el);
+});
+
+// Galerie photos en cascade
+document.querySelectorAll('.galerie-photos img, .gallery-item').forEach(function(el, index) {
+    el.classList.add('scroll-reveal-zoom');
+    el.classList.add('delay-' + ((index % 4) + 1));
+    revealObserver.observe(el);
+});
+
 // ==========================================
 // Active Navigation Link (per page)
 // ==========================================

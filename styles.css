@@ -2032,12 +2032,153 @@ a.evenement-card:hover {
 .scroll-reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
 .scroll-reveal.revealed {
     opacity: 1;
     transform: translateY(0);
+}
+
+.scroll-reveal-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal-left.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-reveal-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal-right.revealed {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.scroll-reveal-zoom {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal-zoom.revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Délais en cascade pour les éléments en série */
+.scroll-reveal.revealed.delay-1,
+.scroll-reveal-zoom.revealed.delay-1 { transition-delay: 0.1s; }
+.scroll-reveal.revealed.delay-2,
+.scroll-reveal-zoom.revealed.delay-2 { transition-delay: 0.2s; }
+.scroll-reveal.revealed.delay-3,
+.scroll-reveal-zoom.revealed.delay-3 { transition-delay: 0.3s; }
+.scroll-reveal.revealed.delay-4,
+.scroll-reveal-zoom.revealed.delay-4 { transition-delay: 0.4s; }
+.scroll-reveal.revealed.delay-5,
+.scroll-reveal-zoom.revealed.delay-5 { transition-delay: 0.5s; }
+
+/* ==========================================
+   Bulles flottantes - animation fun
+   ========================================== */
+
+@keyframes float-bubble-1 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(15px, -20px) rotate(2deg); }
+    50% { transform: translate(-10px, -30px) rotate(-1deg); }
+    75% { transform: translate(-20px, -15px) rotate(1deg); }
+}
+
+@keyframes float-bubble-2 {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-15px, 20px) scale(1.05); }
+    66% { transform: translate(20px, 10px) scale(0.97); }
+}
+
+@keyframes float-bubble-3 {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50% { transform: translate(25px, -25px) rotate(-3deg); }
+}
+
+@keyframes float-bubble-4 {
+    0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    50% { transform: translate(-20px, 15px) scale(1.08) rotate(2deg); }
+}
+
+.page-bubbles .b1 { animation: float-bubble-1 18s ease-in-out infinite; }
+.page-bubbles .b2 { animation: float-bubble-2 22s ease-in-out infinite; }
+.page-bubbles .b3 { animation: float-bubble-3 16s ease-in-out infinite; }
+.page-bubbles .b4 { animation: float-bubble-4 20s ease-in-out infinite; }
+.page-bubbles .b5 { animation: float-bubble-2 24s ease-in-out infinite; }
+.page-bubbles .b6 { animation: float-bubble-1 19s ease-in-out infinite; }
+.page-bubbles .b7 { animation: float-bubble-3 21s ease-in-out infinite; }
+.page-bubbles .b8 { animation: float-bubble-4 17s ease-in-out infinite; }
+.page-bubbles .hero-b1 { animation: float-bubble-2 14s ease-in-out infinite; }
+.page-bubbles .hero-b2 { animation: float-bubble-3 12s ease-in-out infinite; }
+.page-bubbles .hero-b3 { animation: float-bubble-1 15s ease-in-out infinite; }
+.page-bubbles .hero-b4 { animation: float-bubble-4 13s ease-in-out infinite; }
+
+/* Hero d'accueil - bulles plus dynamiques */
+.hero-bubbles .bubble-1 { animation: float-bubble-1 16s ease-in-out infinite; }
+.hero-bubbles .bubble-2 { animation: float-bubble-2 18s ease-in-out infinite; }
+.hero-bubbles .bubble-3 { animation: float-bubble-3 14s ease-in-out infinite; }
+.hero-bubbles .bubble-4 { animation: float-bubble-4 20s ease-in-out infinite; }
+.hero-bubbles .bubble-5 { animation: float-bubble-1 12s ease-in-out infinite; }
+.hero-bubbles .bubble-6 { animation: float-bubble-2 17s ease-in-out infinite; }
+.hero-bubbles .bubble-7 { animation: float-bubble-3 15s ease-in-out infinite; }
+
+/* Animation entrée du hero (page d'accueil) */
+@keyframes hero-rise {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-logo {
+    animation: hero-rise 1s ease-out 0.2s both;
+}
+.hero-subtitle {
+    animation: hero-rise 1s ease-out 0.5s both;
+}
+.hero-cta {
+    animation: hero-rise 1s ease-out 0.8s both;
+}
+
+/* Effet pulsation douce du logo (subtil) */
+@keyframes logo-breath {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+.hero-logo:hover {
+    animation: logo-breath 2s ease-in-out infinite;
+}
+
+/* Respect des préférences utilisateur (accessibilité) */
+@media (prefers-reduced-motion: reduce) {
+    .page-bubbles .bubble,
+    .hero-bubbles .bubble,
+    .hero-logo,
+    .hero-subtitle,
+    .hero-cta {
+        animation: none !important;
+    }
+    .scroll-reveal,
+    .scroll-reveal-left,
+    .scroll-reveal-right,
+    .scroll-reveal-zoom {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 
 /* ==========================================
