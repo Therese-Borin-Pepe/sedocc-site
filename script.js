@@ -69,6 +69,8 @@ document.body.appendChild(scrollProgress);
 
     const dot = document.createElement('div');
     dot.className = 'cursor-dot';
+    dot.textContent = '🦓';
+    dot.setAttribute('aria-hidden', 'true');
     document.body.appendChild(dot);
 
     let mouseX = 0, mouseY = 0;
@@ -97,16 +99,18 @@ document.body.appendChild(scrollProgress);
     }
     animateFollower();
 
-    // Effet "hover" sur les éléments cliquables
+    // Effet "hover" sur les éléments cliquables — agrandit le zèbre + le halo
     const interactiveSelector = 'a, button, .btn, input, textarea, select, [role="button"], .nav-link, .evenement-card';
     document.addEventListener('mouseover', function(e) {
         if (e.target.closest(interactiveSelector)) {
             follower.classList.add('hover');
+            dot.classList.add('hover');
         }
     });
     document.addEventListener('mouseout', function(e) {
         if (e.target.closest(interactiveSelector)) {
             follower.classList.remove('hover');
+            dot.classList.remove('hover');
         }
     });
 })();

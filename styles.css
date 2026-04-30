@@ -2383,11 +2383,11 @@ section h2.scroll-reveal.revealed::after {
    ========================================== */
 .cursor-follower {
     position: fixed;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.55) 0%, rgba(255, 138, 101, 0.35) 50%, rgba(139, 26, 43, 0.1) 80%, transparent 100%);
-    box-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
+    background: radial-gradient(circle, rgba(255, 220, 180, 0.55) 0%, rgba(230, 57, 70, 0.18) 60%, transparent 100%);
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.25);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 9998;
@@ -2402,18 +2402,38 @@ section h2.scroll-reveal.revealed::after {
 
 /* Effet "agrandi" quand on survole un élément cliquable */
 .cursor-follower.hover {
-    width: 64px;
-    height: 64px;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.65) 0%, rgba(255, 138, 101, 0.4) 50%, rgba(139, 26, 43, 0.12) 80%, transparent 100%);
-    box-shadow: 0 0 30px rgba(230, 57, 70, 0.55);
+    width: 70px;
+    height: 70px;
+    background: radial-gradient(circle, rgba(255, 220, 180, 0.7) 0%, rgba(230, 57, 70, 0.25) 60%, transparent 100%);
+    box-shadow: 0 0 30px rgba(230, 57, 70, 0.4);
 }
 
-/* Petit point central rouge plus vif et visible */
+/* Le zèbre - symbole du SED - qui suit la souris */
 .cursor-dot {
-    width: 8px;
-    height: 8px;
-    background: #e63946;
-    box-shadow: 0 0 6px rgba(230, 57, 70, 0.6);
+    width: auto;
+    height: auto;
+    background: transparent;
+    box-shadow: none;
+    font-size: 22px;
+    line-height: 1;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    transition: transform 0.15s ease, font-size 0.25s ease;
+    user-select: none;
+}
+
+.cursor-dot.hover {
+    font-size: 28px;
+}
+
+/* Cacher le curseur natif quand on a notre zèbre */
+@media (hover: hover) and (pointer: fine) {
+    body, body * {
+        cursor: none !important;
+    }
+    /* Mais garder un curseur normal sur les inputs/textareas */
+    input, textarea, [contenteditable="true"] {
+        cursor: text !important;
+    }
 }
 
 /* Petit point central qui suit la souris exactement */
