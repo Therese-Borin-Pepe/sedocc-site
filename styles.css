@@ -2270,7 +2270,6 @@ a.evenement-card:hover .evenement-image img {
    ========================================== */
 section h2 {
     position: relative;
-    display: inline-block;
 }
 
 section h2::after {
@@ -2384,15 +2383,14 @@ section h2.scroll-reveal.revealed::after {
    ========================================== */
 .cursor-follower {
     position: fixed;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.35) 0%, rgba(139, 26, 43, 0.15) 60%, transparent 100%);
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.22) 0%, rgba(139, 26, 43, 0.08) 60%, transparent 100%);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 9998;
     transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, background 0.25s ease;
-    mix-blend-mode: multiply;
     will-change: transform;
     opacity: 0;
 }
@@ -2403,9 +2401,9 @@ section h2.scroll-reveal.revealed::after {
 
 /* Effet "agrandi" quand on survole un élément cliquable */
 .cursor-follower.hover {
-    width: 56px;
-    height: 56px;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.5) 0%, rgba(139, 26, 43, 0.2) 60%, transparent 100%);
+    width: 48px;
+    height: 48px;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.28) 0%, rgba(139, 26, 43, 0.1) 60%, transparent 100%);
 }
 
 /* Petit point central qui suit la souris exactement */
