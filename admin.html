@@ -3688,36 +3688,22 @@ function drawVisuel(ctx, fmt, style) {
         logoBottomY += 40 * scale;
     }
 
-    // ----- Bulles éparpillées sur toute la surface, discrètes et simples -----
+    // ----- Bulles "vitreuses" identiques au site (page-bubbles) -----
     if (style !== 'photo') {
-        // Positions réparties harmonieusement sur tout le visuel (en évitant le centre où il y a le texte)
-        const scatteredBubbles = [
-            { x: 0.08, y: 0.05, r: 0.035 },
-            { x: 0.93, y: 0.04, r: 0.028 },
-            { x: 0.04, y: 0.22, r: 0.022 },
-            { x: 0.96, y: 0.20, r: 0.030 },
-            { x: 0.12, y: 0.42, r: 0.025 },
-            { x: 0.91, y: 0.40, r: 0.020 },
-            { x: 0.05, y: 0.58, r: 0.030 },
-            { x: 0.94, y: 0.62, r: 0.025 },
-            { x: 0.10, y: 0.78, r: 0.022 },
-            { x: 0.92, y: 0.80, r: 0.032 },
-            { x: 0.30, y: 0.93, r: 0.020 },
-            { x: 0.70, y: 0.95, r: 0.026 },
-            { x: 0.50, y: 0.98, r: 0.018 },
-            { x: 0.02, y: 0.95, r: 0.024 },
-            { x: 0.97, y: 0.92, r: 0.028 }
+        // Positions et tailles reprises de styles.css (.page-bubbles)
+        // Tailles converties en ratio de la largeur (basées sur viewport ~1440px du site)
+        const siteBubbles = [
+            { x: 0.95, y: 0.04,  r: 0.14 }, // b1 - grande bulle haut droit
+            { x: 0.03, y: 0.30,  r: 0.085}, // b2 - moyenne gauche
+            { x: 0.92, y: 0.85,  r: 0.11 }, // b3 - grande bas droit
+            { x: 0.25, y: 0.50,  r: 0.078}, // b4 - centre gauche
+            { x: 0.06, y: 0.92,  r: 0.092}, // b5 - moyenne bas gauche
+            { x: 0.40, y: 0.15,  r: 0.10 }, // b6 - centre haut
+            { x: 0.98, y: 0.60,  r: 0.12 }, // b7 - grande milieu droit
+            { x: 0.75, y: 0.42,  r: 0.07 }  // b8 - centre droit
         ];
-        scatteredBubbles.forEach(function(b) {
-            const bx = W * b.x, by = H * b.y, br = W * b.r;
-            const bg = ctx.createRadialGradient(bx - br * 0.3, by - br * 0.3, 0, bx, by, br);
-            bg.addColorStop(0, 'rgba(255,255,255,0.55)');
-            bg.addColorStop(0.6, 'rgba(245,210,170,0.25)');
-            bg.addColorStop(1, 'rgba(232,176,144,0)');
-            ctx.fillStyle = bg;
-            ctx.beginPath();
-            ctx.arc(bx, by, br, 0, Math.PI * 2);
-            ctx.fill();
+        siteBubbles.forEach(function(b) {
+            drawSiteBubble(ctx, W * b.x, H * b.y, W * b.r);
         });
     }
 
@@ -3888,6 +3874,58 @@ function drawInstagramIcon(ctx, x, y, size, color) {
     ctx.arc(x + size * 0.78, y + size * 0.22, size * 0.06, 0, Math.PI * 2);
     ctx.fill();
     ctx.restore();
+}
+
+// Bulle "vitreuse" identique aux .page-bubbles du site
+// Reproduit le radial-gradient + inset shadow du CSS
+function drawSiteBubble(ctx, x, y, r) {
+    // 1. Radial gradient principal avec reflet en haut à gauche (30% 25%)
+    const grad = ctx.createRadialGradient(
+        x - r * 0.4,   // décalage horizontal du reflet (-20% du centre)
+        y - r * 0.5,   // décalage vertical du reflet (-25% du centre)
+        0,
+        x, y, r
+    );
+    grad.addColorStop(0,    'rgba(255, 255, 255, 0.60)');
+    grad.addColorStop(0.40, 'rgba(245, 210, 170, 0.40)');
+    grad.addColorStop(0.70, 'rgba(232, 176, 144, 0.30)');
+    grad.addColorStop(1,    'rgba(232, 176, 144, 0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 2. Ombre interne en bas à droite (simule le inset box-shadow du CSS)
+    const insetDark = ctx.createRadialGradient(
+        x + r * 0.35, y + r * 0.4, 0,
+        x, y, r
+    );
+    insetDark.addColorStop(0,    'rgba(232, 176, 144, 0)');
+    insetDark.addColorStop(0.7,  'rgba(232, 176, 144, 0)');
+    insetDark.addColorStop(1,    'rgba(232, 176, 144, 0.18)');
+    ctx.fillStyle = insetDark;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 3. Petit reflet brillant en haut à gauche (highlight blanc)
+    const highlight = ctx.createRadialGradient(
+        x - r * 0.4, y - r * 0.5, 0,
+        x - r * 0.4, y - r * 0.5, r * 0.5
+    );
+    highlight.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
+    highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = highlight;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 4. Bordure très subtile
+    ctx.strokeStyle = 'rgba(245, 200, 160, 0.20)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.stroke();
 }
 
 function drawBulles(ctx, W, H, opacityFactor) {
