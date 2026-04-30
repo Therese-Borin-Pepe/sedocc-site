@@ -276,6 +276,7 @@
             <button class="admin-nav-btn" onclick="switchMainNav('sed')">Le SED</button>
             <button class="admin-nav-btn" onclick="switchMainNav('droits')">Droits &amp; Ressources</button>
             <button class="admin-nav-btn" onclick="switchMainNav('evenements')">Évènements &amp; Activités</button>
+            <button class="admin-nav-btn" onclick="switchMainNav('visuels')">📱 Visuels Réseaux</button>
         </div>
 
         <!-- SOUS-NAVIGATION L'association -->
@@ -306,6 +307,11 @@
             <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('droits', this)">+ Nouvelle page</button>
         </div>
 
+        <!-- SOUS-NAVIGATION Visuels Réseaux -->
+        <div class="admin-nav-sub" id="subnav-visuels">
+            <button class="admin-sub-btn active">Générateur de visuels</button>
+        </div>
+
         <!-- SOUS-NAVIGATION Évènements & Activités -->
         <div class="admin-nav-sub" id="subnav-evenements">
             <button class="admin-sub-btn active" onclick="filterEvents(null, this)">Tous les évènements</button>
@@ -315,6 +321,84 @@
         </div>
 
         <div class="admin-nav-divider"></div>
+
+        <!-- ==================== VISUELS RÉSEAUX TAB ==================== -->
+        <div id="tab-visuels" class="tab-panel">
+            <h2 class="section-title">Générateur de visuels pour les réseaux sociaux</h2>
+            <p style="color:#666;margin-bottom:24px;">Crée tes visuels d'événements pour Facebook, Instagram, etc. Remplis les champs, choisis le format, télécharge l'image et poste-la !</p>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:24px;align-items:start;">
+                <!-- Formulaire -->
+                <div class="add-form">
+                    <h3 style="color:#8B1A2B;margin-bottom:16px;font-size:1rem;">Informations</h3>
+
+                    <div class="form-group">
+                        <label>Format *</label>
+                        <select id="vis-format" onchange="updateVisuel()">
+                            <option value="ig-square">📷 Instagram carré (1080×1080)</option>
+                            <option value="ig-story">📱 Story Instagram/Facebook (1080×1920)</option>
+                            <option value="fb-post">📘 Facebook post (1200×630)</option>
+                            <option value="a4">🎫 Affiche A4 (à imprimer)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Style *</label>
+                        <select id="vis-style" onchange="updateVisuel()">
+                            <option value="moderne">Moderne (dégradé + bulles)</option>
+                            <option value="photo">Photo + voile sombre</option>
+                            <option value="minimaliste">Minimaliste (fond crème)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Type d'événement</label>
+                        <input type="text" id="vis-type" placeholder="Ex: Café Parole, Conférence, Atelier..." oninput="updateVisuel()" value="Café Parole">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Titre principal *</label>
+                        <input type="text" id="vis-titre" placeholder="Ex: Échangeons autour du SED" oninput="updateVisuel()" value="Échangeons autour du SED">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="text" id="vis-date" placeholder="Ex: Jeudi 15 mai 2026" oninput="updateVisuel()" value="Jeudi 15 mai 2026">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Heure</label>
+                        <input type="text" id="vis-heure" placeholder="Ex: 17h00" oninput="updateVisuel()" value="17h00">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Lieu</label>
+                        <input type="text" id="vis-lieu" placeholder="Ex: CHU Pierre Paul Riquet, Toulouse" oninput="updateVisuel()" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Texte d'appel à l'action (optionnel)</label>
+                        <input type="text" id="vis-cta" placeholder="Ex: Inscription : sedocc31@gmail.com" oninput="updateVisuel()" value="">
+                    </div>
+
+                    <div class="form-group" id="vis-photo-group" style="display:none;">
+                        <label>Photo de fond (pour le style "Photo")</label>
+                        <input type="file" id="vis-photo" accept="image/*" onchange="loadVisuelPhoto(this)">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="downloadVisuel()" style="width:100%;font-size:1.1rem;padding:14px;">⬇ Télécharger en PNG haute qualité</button>
+                </div>
+
+                <!-- Aperçu -->
+                <div>
+                    <h3 style="color:#8B1A2B;margin-bottom:16px;font-size:1rem;">Aperçu en temps réel</h3>
+                    <div style="background:#f5f5f5;padding:16px;border-radius:8px;display:flex;justify-content:center;align-items:center;min-height:400px;">
+                        <canvas id="vis-canvas" style="max-width:100%;max-height:600px;background:white;box-shadow:0 4px 12px rgba(0,0,0,0.15);border-radius:4px;"></canvas>
+                    </div>
+                    <p style="color:#666;font-size:0.85rem;margin-top:8px;text-align:center;">Le téléchargement génère l'image en pleine résolution.</p>
+                </div>
+            </div>
+        </div>
 
         <!-- ==================== GALERIE TAB ==================== -->
         <div id="tab-galerie" class="tab-panel">
@@ -1214,6 +1298,7 @@ function switchMainNav(section) {
     else if (section === 'sed') switchOnglets('sed', 'sed');
     else if (section === 'droits') switchOnglets('droits', 'droits');
     else if (section === 'evenements') { filterEvents(null); switchTab('evenements', 'evenements'); }
+    else if (section === 'visuels') switchTab('visuels', 'visuels');
 }
 
 function switchTab(tab, parentNav) {
@@ -3391,6 +3476,302 @@ function renderGalerieSections() {
         verifyToken();
     }
 })();
+
+// ==========================================
+// GÉNÉRATEUR DE VISUELS RÉSEAUX SOCIAUX
+// ==========================================
+
+const VISUEL_FORMATS = {
+    'ig-square':  { w: 1080, h: 1080, label: 'Instagram carré' },
+    'ig-story':   { w: 1080, h: 1920, label: 'Story' },
+    'fb-post':    { w: 1200, h: 630,  label: 'Facebook post' },
+    'a4':         { w: 2480, h: 3508, label: 'Affiche A4' }
+};
+
+let visuelLogo = null;
+let visuelPhoto = null;
+
+// Préchargement du logo SED'OCC
+(function preloadLogo() {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() { visuelLogo = img; if (typeof updateVisuel === 'function') updateVisuel(); };
+    img.src = 'images/logo.jpg';
+})();
+
+function loadVisuelPhoto(input) {
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() { visuelPhoto = img; updateVisuel(); };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+
+function updateVisuel() {
+    const canvas = document.getElementById('vis-canvas');
+    if (!canvas) return;
+
+    const formatKey = document.getElementById('vis-format').value;
+    const style = document.getElementById('vis-style').value;
+    const fmt = VISUEL_FORMATS[formatKey];
+
+    canvas.width = fmt.w;
+    canvas.height = fmt.h;
+
+    // Affiche/cache le champ photo selon le style
+    document.getElementById('vis-photo-group').style.display = (style === 'photo') ? 'block' : 'none';
+
+    const ctx = canvas.getContext('2d');
+    drawVisuel(ctx, fmt, style);
+}
+
+function drawVisuel(ctx, fmt, style) {
+    const W = fmt.w, H = fmt.h;
+    ctx.clearRect(0, 0, W, H);
+
+    // ----- Fond selon le style -----
+    if (style === 'moderne') {
+        // Dégradé crème → pêche
+        const grad = ctx.createLinearGradient(0, 0, W, H);
+        grad.addColorStop(0, '#FFF5EC');
+        grad.addColorStop(0.5, '#FFEDE0');
+        grad.addColorStop(1, '#FFD8C2');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, W, H);
+        drawBulles(ctx, W, H);
+    } else if (style === 'photo') {
+        if (visuelPhoto) {
+            // Cover de la photo
+            const r = Math.max(W / visuelPhoto.width, H / visuelPhoto.height);
+            const pw = visuelPhoto.width * r, ph = visuelPhoto.height * r;
+            ctx.drawImage(visuelPhoto, (W - pw) / 2, (H - ph) / 2, pw, ph);
+            // Voile sombre dégradé
+            const overlay = ctx.createLinearGradient(0, 0, 0, H);
+            overlay.addColorStop(0, 'rgba(40, 10, 20, 0.5)');
+            overlay.addColorStop(0.5, 'rgba(40, 10, 20, 0.7)');
+            overlay.addColorStop(1, 'rgba(139, 26, 43, 0.85)');
+            ctx.fillStyle = overlay;
+            ctx.fillRect(0, 0, W, H);
+        } else {
+            // Pas de photo : dégradé bordeaux par défaut
+            const grad = ctx.createLinearGradient(0, 0, W, H);
+            grad.addColorStop(0, '#8B1A2B');
+            grad.addColorStop(1, '#3a0d14');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, W, H);
+        }
+    } else { // minimaliste
+        ctx.fillStyle = '#FFF5EC';
+        ctx.fillRect(0, 0, W, H);
+        drawBulles(ctx, W, H, 0.3);
+    }
+
+    // ----- Couleurs selon le style -----
+    const isDark = (style === 'photo');
+    const colorPrimary = isDark ? '#FFFFFF' : '#8B1A2B';
+    const colorAccent = isDark ? '#FFD8C2' : '#e63946';
+    const colorText = isDark ? 'rgba(255,255,255,0.92)' : '#3A3A3A';
+
+    // ----- Récupération des champs -----
+    const type = document.getElementById('vis-type').value.trim();
+    const titre = document.getElementById('vis-titre').value.trim();
+    const date = document.getElementById('vis-date').value.trim();
+    const heure = document.getElementById('vis-heure').value.trim();
+    const lieu = document.getElementById('vis-lieu').value.trim();
+    const cta = document.getElementById('vis-cta').value.trim();
+
+    // ----- Layout selon format -----
+    const isStory = (fmt.h / fmt.w > 1.5);
+    const isWide = (fmt.w / fmt.h > 1.5); // FB post
+    const isA4 = (fmt.w === 2480);
+    const padX = isWide ? W * 0.07 : W * 0.08;
+    const padY = isWide ? H * 0.10 : H * 0.08;
+    let scale = 1;
+    if (isA4) scale = 2.0;
+    else if (isStory) scale = 1.0;
+    else if (isWide) scale = 0.55;
+    else scale = 0.95;
+
+    // ----- Logo en haut -----
+    if (visuelLogo) {
+        const logoSize = (isWide ? 90 : 130) * scale;
+        ctx.save();
+        // Fond rond blanc derrière le logo (sauf style minimaliste)
+        if (style !== 'minimaliste') {
+            ctx.beginPath();
+            ctx.arc(padX + logoSize / 2, padY + logoSize / 2, logoSize / 2 + 6 * scale, 0, Math.PI * 2);
+            ctx.fillStyle = isDark ? 'rgba(255,255,255,0.95)' : '#FFFFFF';
+            ctx.fill();
+        }
+        // Logo en cercle
+        ctx.beginPath();
+        ctx.arc(padX + logoSize / 2, padY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(visuelLogo, padX, padY, logoSize, logoSize);
+        ctx.restore();
+
+        // Texte SED'OCC à droite du logo
+        ctx.fillStyle = colorPrimary;
+        ctx.font = 'bold ' + (32 * scale) + 'px Poppins, sans-serif';
+        ctx.textBaseline = 'middle';
+        ctx.fillText("SED'OCC", padX + logoSize + 18 * scale, padY + logoSize / 2 - 8 * scale);
+        ctx.fillStyle = colorText;
+        ctx.font = (18 * scale) + 'px Poppins, sans-serif';
+        ctx.fillText('Syndrome d\'Ehlers-Danlos Occitanie', padX + logoSize + 18 * scale, padY + logoSize / 2 + 16 * scale);
+    }
+
+    // ----- Bloc texte centré -----
+    const centerY = H / 2;
+    let cursorY = centerY - (isStory ? H * 0.15 : H * 0.05);
+
+    // Type d'événement (badge)
+    if (type) {
+        ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
+        const typeUpper = type.toUpperCase();
+        const tw = ctx.measureText(typeUpper).width;
+        const bx = (W - tw) / 2 - 24 * scale;
+        const bw = tw + 48 * scale;
+        const bh = 56 * scale;
+        // Badge arrondi
+        roundRect(ctx, bx, cursorY - bh / 2, bw, bh, bh / 2);
+        ctx.fillStyle = colorAccent;
+        ctx.fill();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(typeUpper, W / 2, cursorY + 2 * scale);
+        cursorY += bh / 2 + 50 * scale;
+    }
+
+    // Titre principal
+    if (titre) {
+        ctx.fillStyle = colorPrimary;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        const titreFontSize = isStory ? 96 * scale : (isWide ? 70 * scale : 80 * scale);
+        ctx.font = 'bold ' + titreFontSize + 'px Poppins, sans-serif';
+        const lineH = titreFontSize * 1.15;
+        const titreLines = wrapText(ctx, titre, W - padX * 2);
+        titreLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
+        cursorY += titreLines.length * lineH + 40 * scale;
+    }
+
+    // Date + heure
+    if (date) {
+        ctx.fillStyle = colorAccent;
+        ctx.font = 'bold ' + (44 * scale) + 'px Poppins, sans-serif';
+        let dateText = date;
+        if (heure) dateText += ' • ' + heure;
+        ctx.fillText(dateText, W / 2, cursorY);
+        cursorY += 60 * scale;
+    }
+
+    // Lieu
+    if (lieu) {
+        ctx.fillStyle = colorText;
+        ctx.font = (32 * scale) + 'px Poppins, sans-serif';
+        const lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
+        const lineH = 38 * scale;
+        lieuLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
+        cursorY += lieuLines.length * lineH + 30 * scale;
+    }
+
+    // CTA en bas
+    if (cta) {
+        ctx.fillStyle = colorText;
+        ctx.font = (26 * scale) + 'px Poppins, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        const ctaLines = wrapText(ctx, cta, W - padX * 2);
+        const lineH = 32 * scale;
+        const ctaY = H - padY - 50 * scale;
+        ctaLines.forEach((l, i) => ctx.fillText(l, W / 2, ctaY - (ctaLines.length - 1 - i) * lineH));
+    }
+
+    // Site web en bas
+    ctx.fillStyle = colorAccent;
+    ctx.font = 'bold ' + (22 * scale) + 'px Poppins, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('sedocc.fr', W / 2, H - padY * 0.4);
+}
+
+function drawBulles(ctx, W, H, opacityFactor) {
+    const opa = opacityFactor || 1;
+    const bulles = [
+        { x: 0.85, y: 0.10, r: 0.18, c: '#F5C8A0' },
+        { x: 0.10, y: 0.30, r: 0.12, c: '#F0C090' },
+        { x: 0.92, y: 0.65, r: 0.14, c: '#F5D0B0' },
+        { x: 0.05, y: 0.85, r: 0.10, c: '#E8B090' },
+        { x: 0.55, y: 0.92, r: 0.08, c: '#F0D0A8' }
+    ];
+    bulles.forEach(function(b) {
+        const grad = ctx.createRadialGradient(W * b.x - W * b.r * 0.2, H * b.y - H * b.r * 0.2, 0, W * b.x, H * b.y, W * b.r);
+        grad.addColorStop(0, 'rgba(255,255,255,' + (0.7 * opa) + ')');
+        grad.addColorStop(0.5, b.c + Math.round(180 * opa).toString(16).padStart(2, '0'));
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(W * b.x, H * b.y, W * b.r, 0, Math.PI * 2);
+        ctx.fill();
+    });
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+}
+
+function wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    for (let i = 0; i < words.length; i++) {
+        const test = line ? line + ' ' + words[i] : words[i];
+        if (ctx.measureText(test).width > maxWidth && line) {
+            lines.push(line);
+            line = words[i];
+        } else {
+            line = test;
+        }
+    }
+    if (line) lines.push(line);
+    return lines;
+}
+
+function downloadVisuel() {
+    const canvas = document.getElementById('vis-canvas');
+    const formatKey = document.getElementById('vis-format').value;
+    const titre = document.getElementById('vis-titre').value.trim() || 'visuel';
+    const slug = titre.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .substring(0, 40);
+    const link = document.createElement('a');
+    link.download = 'sedocc-' + slug + '-' + formatKey + '.png';
+    link.href = canvas.toDataURL('image/png', 1.0);
+    link.click();
+}
+
+// Initialise l'aperçu quand on arrive sur l'onglet
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        if (document.getElementById('vis-canvas')) updateVisuel();
+    }, 200);
+});
 </script>
 
 </body>
