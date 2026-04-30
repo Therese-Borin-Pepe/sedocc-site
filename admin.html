@@ -3658,24 +3658,38 @@ function drawVisuel(ctx, fmt, style) {
             ctx.fill();
         }
 
-        // 3. Cercle blanc + ombre derrière le logo
-        ctx.save();
-        ctx.shadowColor = 'rgba(139, 26, 43, 0.18)';
-        ctx.shadowBlur = 30 * scale;
-        ctx.shadowOffsetY = 8 * scale;
-        ctx.beginPath();
-        ctx.arc(logoCx, logoCy, logoSize / 2 + 10 * scale, 0, Math.PI * 2);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.restore();
+        // 3. Logo dessiné avec un dégradé doux (sans cercle blanc dur)
+        // — Comme sur la page d'accueil : le logo se fond dans l'arrière-plan
+        // Sur fond clair : pas de cercle. Le JPG du logo a déjà un fond crème qui se fond.
+        // Sur fond sombre : on met un halo lumineux doux pour la lisibilité.
+        if (isDark) {
+            // Halo lumineux qui se fond dans le fond sombre
+            const dgrad = ctx.createRadialGradient(logoCx, logoCy, logoSize * 0.35, logoCx, logoCy, logoSize * 0.85);
+            dgrad.addColorStop(0,    'rgba(255, 245, 230, 0.95)');
+            dgrad.addColorStop(0.50, 'rgba(255, 235, 215, 0.70)');
+            dgrad.addColorStop(0.80, 'rgba(255, 220, 190, 0.30)');
+            dgrad.addColorStop(1,    'rgba(255, 220, 190, 0)');
+            ctx.fillStyle = dgrad;
+            ctx.beginPath();
+            ctx.arc(logoCx, logoCy, logoSize * 0.85, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
-        // 4. Logo en cercle
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(logoCx, logoCy, logoSize / 2, 0, Math.PI * 2);
-        ctx.clip();
+        // 4. Logo (sans clipping circulaire, pour qu'il se fonde naturellement)
         ctx.drawImage(visuelLogo, logoCx - logoSize / 2, logoCy - logoSize / 2, logoSize, logoSize);
-        ctx.restore();
+
+        // 5. Dégradé de fondu sur les bords du logo : fond → transparent au centre
+        // Ça simule l'effet "le logo s'estompe doucement sur la page"
+        if (!isDark) {
+            const fadeBorder = ctx.createRadialGradient(logoCx, logoCy, logoSize * 0.40, logoCx, logoCy, logoSize * 0.55);
+            fadeBorder.addColorStop(0,    'rgba(255, 245, 230, 0)');
+            fadeBorder.addColorStop(0.60, 'rgba(255, 240, 220, 0.20)');
+            fadeBorder.addColorStop(1,    'rgba(255, 232, 205, 0.60)');
+            ctx.fillStyle = fadeBorder;
+            ctx.beginPath();
+            ctx.arc(logoCx, logoCy, logoSize * 0.55, 0, Math.PI * 2);
+            ctx.fill();
+        }
 
         logoBottomY = logoCy + logoSize / 2 + 35 * scale;
 
@@ -3693,14 +3707,14 @@ function drawVisuel(ctx, fmt, style) {
         // Positions et tailles reprises de styles.css (.page-bubbles)
         // Tailles converties en ratio de la largeur (basées sur viewport ~1440px du site)
         const siteBubbles = [
-            { x: 0.95, y: 0.04,  r: 0.14 }, // b1 - grande bulle haut droit
-            { x: 0.03, y: 0.30,  r: 0.085}, // b2 - moyenne gauche
-            { x: 0.92, y: 0.85,  r: 0.11 }, // b3 - grande bas droit
-            { x: 0.25, y: 0.50,  r: 0.078}, // b4 - centre gauche
-            { x: 0.06, y: 0.92,  r: 0.092}, // b5 - moyenne bas gauche
-            { x: 0.40, y: 0.15,  r: 0.10 }, // b6 - centre haut
-            { x: 0.98, y: 0.60,  r: 0.12 }, // b7 - grande milieu droit
-            { x: 0.75, y: 0.42,  r: 0.07 }  // b8 - centre droit
+            { x: 0.94, y: 0.05,  r: 0.085}, // b1 - haut droit
+            { x: 0.04, y: 0.28,  r: 0.055}, // b2 - gauche
+            { x: 0.93, y: 0.86,  r: 0.070}, // b3 - bas droit
+            { x: 0.22, y: 0.50,  r: 0.050}, // b4 - centre gauche
+            { x: 0.07, y: 0.92,  r: 0.060}, // b5 - bas gauche
+            { x: 0.48, y: 0.10,  r: 0.062}, // b6 - centre haut
+            { x: 0.97, y: 0.58,  r: 0.075}, // b7 - milieu droit
+            { x: 0.78, y: 0.42,  r: 0.045}  // b8 - centre droit
         ];
         siteBubbles.forEach(function(b) {
             drawSiteBubble(ctx, W * b.x, H * b.y, W * b.r);
@@ -3806,35 +3820,34 @@ function drawVisuel(ctx, fmt, style) {
     ctx.textBaseline = 'bottom';
     ctx.fillText('sedocc.fr', W / 2, H - padY * 0.45);
 
-    // Icônes réseaux sociaux
+    // Icônes réseaux sociaux — plus grandes et plus visibles
     if (showReseaux) {
-        const iconY = H - padY * 0.45 + 50 * scale;
-        const iconSize = 36 * scale;
+        const iconY = H - padY * 0.45 + 70 * scale;
+        const iconSize = 56 * scale; // 56 au lieu de 36 — beaucoup plus grand
         const fbHandle = 'SedOcc';
         const igHandle = '@sed_occ31';
 
-        ctx.fillStyle = colorText;
-        ctx.font = (22 * scale) + 'px Poppins, sans-serif';
+        ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
         ctx.textAlign = 'left';
         ctx.textBaseline = 'middle';
 
         // Calcul largeur totale pour centrer
-        const fbW = iconSize + 10 * scale + ctx.measureText(fbHandle).width;
-        const igW = iconSize + 10 * scale + ctx.measureText(igHandle).width;
-        const gap = 50 * scale;
+        const fbW = iconSize + 14 * scale + ctx.measureText(fbHandle).width;
+        const igW = iconSize + 14 * scale + ctx.measureText(igHandle).width;
+        const gap = 60 * scale;
         const totalW = fbW + gap + igW;
         let xPos = (W - totalW) / 2;
 
         // Facebook
         drawFacebookIcon(ctx, xPos, iconY - iconSize / 2, iconSize, colorPrimary);
-        ctx.fillStyle = colorText;
-        ctx.fillText(fbHandle, xPos + iconSize + 10 * scale, iconY);
+        ctx.fillStyle = colorPrimary;
+        ctx.fillText(fbHandle, xPos + iconSize + 14 * scale, iconY);
         xPos += fbW + gap;
 
         // Instagram
         drawInstagramIcon(ctx, xPos, iconY - iconSize / 2, iconSize, colorPrimary);
-        ctx.fillStyle = colorText;
-        ctx.fillText(igHandle, xPos + iconSize + 10 * scale, iconY);
+        ctx.fillStyle = colorPrimary;
+        ctx.fillText(igHandle, xPos + iconSize + 14 * scale, iconY);
     }
 }
 
