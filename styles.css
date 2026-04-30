@@ -2410,15 +2410,20 @@ section h2.scroll-reveal.revealed::after {
 
 /* Le zèbre - symbole du SED - qui suit la souris */
 .cursor-dot {
+    position: fixed;
     width: auto;
     height: auto;
     background: transparent;
     box-shadow: none;
-    font-size: 22px;
+    font-size: 24px;
     line-height: 1;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-    transition: transform 0.15s ease, font-size 0.25s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
     user-select: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, font-size 0.25s ease;
 }
 
 .cursor-dot.hover {
@@ -2439,23 +2444,8 @@ section h2.scroll-reveal.revealed::after {
     }
 }
 
-/* Petit point central qui suit la souris exactement */
-.cursor-dot {
-    position: fixed;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    will-change: transform;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
 .cursor-dot.visible {
-    opacity: 1;
+    opacity: 1 !important;
 }
 
 /* Désactiver le curseur custom sur les écrans tactiles */
