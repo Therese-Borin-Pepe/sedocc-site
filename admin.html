@@ -3658,31 +3658,6 @@ function drawVisuel(ctx, fmt, style) {
             ctx.fill();
         }
 
-        // 2. Petites bulles décoratives AUTOUR du logo (comme sur la home)
-        const smallBubbles = [
-            { angle: -Math.PI * 0.85, dist: 1.05, size: 0.15 },
-            { angle: -Math.PI * 0.45, dist: 1.15, size: 0.18 },
-            { angle: -Math.PI * 0.15, dist: 1.10, size: 0.13 },
-            { angle:  Math.PI * 0.10, dist: 1.20, size: 0.10 },
-            { angle:  Math.PI * 0.40, dist: 1.05, size: 0.16 },
-            { angle:  Math.PI * 0.70, dist: 1.18, size: 0.12 },
-            { angle: -Math.PI * 0.65, dist: 1.30, size: 0.08 },
-            { angle:  Math.PI * 0.25, dist: 1.32, size: 0.09 }
-        ];
-        smallBubbles.forEach(function(b) {
-            const bx = logoCx + Math.cos(b.angle) * (logoSize / 2) * b.dist;
-            const by = logoCy + Math.sin(b.angle) * (logoSize / 2) * b.dist;
-            const br = logoSize * b.size;
-            const bg = ctx.createRadialGradient(bx - br * 0.3, by - br * 0.3, 0, bx, by, br);
-            bg.addColorStop(0, isDark ? 'rgba(255,245,230,0.55)' : 'rgba(255,255,255,0.7)');
-            bg.addColorStop(0.5, isDark ? 'rgba(255,200,165,0.35)' : 'rgba(245,210,170,0.5)');
-            bg.addColorStop(1, isDark ? 'rgba(255,200,165,0)' : 'rgba(232,176,144,0)');
-            ctx.fillStyle = bg;
-            ctx.beginPath();
-            ctx.arc(bx, by, br, 0, Math.PI * 2);
-            ctx.fill();
-        });
-
         // 3. Cercle blanc + ombre derrière le logo
         ctx.save();
         ctx.shadowColor = 'rgba(139, 26, 43, 0.18)';
@@ -3713,20 +3688,31 @@ function drawVisuel(ctx, fmt, style) {
         logoBottomY += 40 * scale;
     }
 
-    // ----- Bulles décoratives complémentaires aux 4 coins -----
+    // ----- Bulles éparpillées sur toute la surface, discrètes et simples -----
     if (style !== 'photo') {
-        const cornerBubbles = [
-            { x: 0.92, y: 0.08, r: 0.06 },
-            { x: 0.05, y: 0.15, r: 0.04 },
-            { x: 0.95, y: 0.85, r: 0.07 },
-            { x: 0.08, y: 0.92, r: 0.05 },
-            { x: 0.50, y: 0.95, r: 0.03 }
+        // Positions réparties harmonieusement sur tout le visuel (en évitant le centre où il y a le texte)
+        const scatteredBubbles = [
+            { x: 0.08, y: 0.05, r: 0.035 },
+            { x: 0.93, y: 0.04, r: 0.028 },
+            { x: 0.04, y: 0.22, r: 0.022 },
+            { x: 0.96, y: 0.20, r: 0.030 },
+            { x: 0.12, y: 0.42, r: 0.025 },
+            { x: 0.91, y: 0.40, r: 0.020 },
+            { x: 0.05, y: 0.58, r: 0.030 },
+            { x: 0.94, y: 0.62, r: 0.025 },
+            { x: 0.10, y: 0.78, r: 0.022 },
+            { x: 0.92, y: 0.80, r: 0.032 },
+            { x: 0.30, y: 0.93, r: 0.020 },
+            { x: 0.70, y: 0.95, r: 0.026 },
+            { x: 0.50, y: 0.98, r: 0.018 },
+            { x: 0.02, y: 0.95, r: 0.024 },
+            { x: 0.97, y: 0.92, r: 0.028 }
         ];
-        cornerBubbles.forEach(function(b) {
+        scatteredBubbles.forEach(function(b) {
             const bx = W * b.x, by = H * b.y, br = W * b.r;
             const bg = ctx.createRadialGradient(bx - br * 0.3, by - br * 0.3, 0, bx, by, br);
-            bg.addColorStop(0, 'rgba(255,255,255,0.85)');
-            bg.addColorStop(0.5, 'rgba(245,210,170,0.55)');
+            bg.addColorStop(0, 'rgba(255,255,255,0.55)');
+            bg.addColorStop(0.6, 'rgba(245,210,170,0.25)');
             bg.addColorStop(1, 'rgba(232,176,144,0)');
             ctx.fillStyle = bg;
             ctx.beginPath();
