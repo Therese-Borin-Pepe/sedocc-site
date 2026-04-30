@@ -1,4 +1,36 @@
 // ==========================================
+// Typographie française - espaces insécables avant ? ! : ;
+// (évite que la ponctuation se retrouve seule en début de ligne sur mobile)
+// ==========================================
+function fixFrenchTypography(root) {
+    const elements = (root || document).querySelectorAll('h1, h2, h3, h4, h5, h6, .hero-subtitle, .scroll-text, p, li, button, a, figcaption, label');
+    elements.forEach(function(el) {
+        // Parcourt uniquement les nœuds texte pour ne pas casser le HTML interne
+        for (const node of el.childNodes) {
+            if (node.nodeType === Node.TEXT_NODE && node.nodeValue) {
+                node.nodeValue = node.nodeValue
+                    .replace(/ ([?!:;»])/g, ' $1')
+                    .replace(/(« ) /g, '« ');
+            }
+        }
+    });
+}
+
+// Appliquer dès le chargement
+document.addEventListener('DOMContentLoaded', function() { fixFrenchTypography(); });
+// Et après le chargement complet (au cas où du contenu serait injecté plus tard)
+window.addEventListener('load', function() { fixFrenchTypography(); });
+// Réobserver les contenus injectés dynamiquement (sed.html, evenement.html, etc.)
+const typographyObserver = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+        m.addedNodes.forEach(function(node) {
+            if (node.nodeType === Node.ELEMENT_NODE) fixFrenchTypography(node);
+        });
+    });
+});
+typographyObserver.observe(document.body, { childList: true, subtree: true });
+
+// ==========================================
 // Navigation Mobile Toggle
 // ==========================================
 
