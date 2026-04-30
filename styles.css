@@ -2425,13 +2425,16 @@ section h2.scroll-reveal.revealed::after {
     font-size: 28px;
 }
 
-/* Cacher le curseur natif quand on a notre zèbre */
+/* Cacher le curseur natif uniquement quand notre zèbre est actif */
 @media (hover: hover) and (pointer: fine) {
-    body, body * {
+    body.zebra-cursor-active,
+    body.zebra-cursor-active * {
         cursor: none !important;
     }
     /* Mais garder un curseur normal sur les inputs/textareas */
-    input, textarea, [contenteditable="true"] {
+    body.zebra-cursor-active input,
+    body.zebra-cursor-active textarea,
+    body.zebra-cursor-active [contenteditable="true"] {
         cursor: text !important;
     }
 }

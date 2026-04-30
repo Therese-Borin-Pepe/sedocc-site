@@ -83,11 +83,14 @@ document.body.appendChild(scrollProgress);
         dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px) translate(-50%, -50%)';
         follower.classList.add('visible');
         dot.classList.add('visible');
+        // Active le mode "zèbre" sur le body (cache le curseur natif)
+        document.body.classList.add('zebra-cursor-active');
     });
 
     document.addEventListener('mouseleave', function() {
         follower.classList.remove('visible');
         dot.classList.remove('visible');
+        document.body.classList.remove('zebra-cursor-active');
     });
 
     // Le halo suit avec un léger retard (effet de traîne)
