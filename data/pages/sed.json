@@ -3,7 +3,7 @@
   "tabs": [
     {
       "id": "intro-sed",
-      "title": "Qu'est-ce que le syndrome d'Ehlers-Danlos (SED) ?",
+      "title": "Définition",
       "content": "<div class=\"tab-with-image\"><div><p>Le syndrome d'Ehlers-Danlos (SED) regroupe un ensemble de maladies rares d'origine génétique. Ces maladies affectent le tissu conjonctif, un tissu essentiel qui soutient, protège et relie les différentes structures du corps (peau, os, vaisseaux, organes, etc.).</p><p>Chez les personnes atteintes de SED, ce tissu est anormalement fragile ou souple, ce qui entraîne une grande variété de symptômes.</p><p>Les signes du SED apparaissent généralement dès l'enfance, mais leur intensité et leur apparition peuvent varier selon le type de SED et sa sévérité. On compte actuellement 15 types différents, chacun ayant ses particularités, complications et traitements spécifiques.</p></div><img src=\"images/sed-hero.jpg\" alt=\"Syndrome d'Ehlers-Danlos\"></div>",
       "image": "images/sed-hero.jpg"
     },
