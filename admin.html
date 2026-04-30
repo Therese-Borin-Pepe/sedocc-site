@@ -381,6 +381,20 @@
                         <input type="text" id="vis-cta" placeholder="Ex: Inscription : sedocc31@gmail.com" oninput="updateVisuel()" value="">
                     </div>
 
+                    <div class="form-group">
+                        <label>Lien à afficher (optionnel)</label>
+                        <input type="text" id="vis-lien" placeholder="Ex: sedocc.fr/evenements" oninput="updateVisuel()" value="">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Afficher les réseaux sociaux ?</label>
+                        <select id="vis-reseaux" onchange="updateVisuel()">
+                            <option value="auto">Auto (selon le format)</option>
+                            <option value="oui">Oui — afficher Facebook + Instagram</option>
+                            <option value="non">Non — masquer</option>
+                        </select>
+                    </div>
+
                     <div class="form-group" id="vis-photo-group" style="display:none;">
                         <label>Photo de fond (pour le style "Photo")</label>
                         <input type="file" id="vis-photo" accept="image/*" onchange="loadVisuelPhoto(this)">
@@ -3593,6 +3607,8 @@ function drawVisuel(ctx, fmt, style) {
     const heure = document.getElementById('vis-heure').value.trim();
     const lieu = document.getElementById('vis-lieu').value.trim();
     const cta = document.getElementById('vis-cta').value.trim();
+    const lien = document.getElementById('vis-lien').value.trim();
+    const reseauxMode = document.getElementById('vis-reseaux').value;
 
     // ----- Layout selon format -----
     const isStory = (fmt.h / fmt.w > 1.5);
@@ -3606,61 +3622,117 @@ function drawVisuel(ctx, fmt, style) {
     else if (isWide) scale = 0.55;
     else scale = 0.95;
 
-    // ----- Logo en haut, GRAND et CENTRÉ -----
+    // ----- Logo avec NUAGE COSY autour (façon page d'accueil) + bulles décoratives -----
     let logoBottomY = padY;
     if (visuelLogo) {
-        // Logo bien plus grand pour le mettre en valeur
         let logoSize;
-        if (isWide) logoSize = 200 * scale;       // FB post
-        else if (isStory) logoSize = 280 * scale; // Story
-        else if (isA4) logoSize = 320 * scale;    // A4
-        else logoSize = 280 * scale;              // Insta carré
+        if (isWide) logoSize = 200 * scale;
+        else if (isStory) logoSize = 280 * scale;
+        else if (isA4) logoSize = 320 * scale;
+        else logoSize = 260 * scale;
 
-        const logoX = (W - logoSize) / 2;
-        const logoY = padY;
+        const logoCx = W / 2;
+        const logoCy = padY + logoSize / 2;
+        const cloudRadius = logoSize * 1.4;
 
+        // 1. Le NUAGE COSY autour du logo (halo doux comme sur la home)
+        if (!isDark) {
+            const cloud = ctx.createRadialGradient(logoCx, logoCy, logoSize / 3, logoCx, logoCy, cloudRadius);
+            cloud.addColorStop(0, 'rgba(255, 245, 230, 0.95)');
+            cloud.addColorStop(0.4, 'rgba(255, 220, 190, 0.55)');
+            cloud.addColorStop(0.7, 'rgba(255, 200, 165, 0.25)');
+            cloud.addColorStop(1, 'rgba(255, 200, 165, 0)');
+            ctx.fillStyle = cloud;
+            ctx.beginPath();
+            ctx.arc(logoCx, logoCy, cloudRadius, 0, Math.PI * 2);
+            ctx.fill();
+        } else {
+            // Sur fond sombre : halo blanc/crème lumineux
+            const cloud = ctx.createRadialGradient(logoCx, logoCy, logoSize / 3, logoCx, logoCy, cloudRadius);
+            cloud.addColorStop(0, 'rgba(255, 245, 230, 0.7)');
+            cloud.addColorStop(0.5, 'rgba(255, 220, 190, 0.3)');
+            cloud.addColorStop(1, 'rgba(255, 200, 165, 0)');
+            ctx.fillStyle = cloud;
+            ctx.beginPath();
+            ctx.arc(logoCx, logoCy, cloudRadius, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 2. Petites bulles décoratives AUTOUR du logo (comme sur la home)
+        const smallBubbles = [
+            { angle: -Math.PI * 0.85, dist: 1.05, size: 0.15 },
+            { angle: -Math.PI * 0.45, dist: 1.15, size: 0.18 },
+            { angle: -Math.PI * 0.15, dist: 1.10, size: 0.13 },
+            { angle:  Math.PI * 0.10, dist: 1.20, size: 0.10 },
+            { angle:  Math.PI * 0.40, dist: 1.05, size: 0.16 },
+            { angle:  Math.PI * 0.70, dist: 1.18, size: 0.12 },
+            { angle: -Math.PI * 0.65, dist: 1.30, size: 0.08 },
+            { angle:  Math.PI * 0.25, dist: 1.32, size: 0.09 }
+        ];
+        smallBubbles.forEach(function(b) {
+            const bx = logoCx + Math.cos(b.angle) * (logoSize / 2) * b.dist;
+            const by = logoCy + Math.sin(b.angle) * (logoSize / 2) * b.dist;
+            const br = logoSize * b.size;
+            const bg = ctx.createRadialGradient(bx - br * 0.3, by - br * 0.3, 0, bx, by, br);
+            bg.addColorStop(0, isDark ? 'rgba(255,245,230,0.55)' : 'rgba(255,255,255,0.7)');
+            bg.addColorStop(0.5, isDark ? 'rgba(255,200,165,0.35)' : 'rgba(245,210,170,0.5)');
+            bg.addColorStop(1, isDark ? 'rgba(255,200,165,0)' : 'rgba(232,176,144,0)');
+            ctx.fillStyle = bg;
+            ctx.beginPath();
+            ctx.arc(bx, by, br, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // 3. Cercle blanc + ombre derrière le logo
         ctx.save();
-        // Cercle blanc avec ombre derrière le logo
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.18)';
+        ctx.shadowColor = 'rgba(139, 26, 43, 0.18)';
         ctx.shadowBlur = 30 * scale;
-        ctx.shadowOffsetY = 6 * scale;
+        ctx.shadowOffsetY = 8 * scale;
         ctx.beginPath();
-        ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2 + 14 * scale, 0, Math.PI * 2);
+        ctx.arc(logoCx, logoCy, logoSize / 2 + 10 * scale, 0, Math.PI * 2);
         ctx.fillStyle = '#FFFFFF';
         ctx.fill();
         ctx.restore();
 
-        // Anneau coloré décoratif autour du logo
+        // 4. Logo en cercle
         ctx.save();
         ctx.beginPath();
-        ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2 + 14 * scale, 0, Math.PI * 2);
-        ctx.lineWidth = 4 * scale;
-        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.6)' : 'rgba(139, 26, 43, 0.3)';
-        ctx.stroke();
-        ctx.restore();
-
-        // Logo en cercle
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(logoX + logoSize / 2, logoY + logoSize / 2, logoSize / 2, 0, Math.PI * 2);
+        ctx.arc(logoCx, logoCy, logoSize / 2, 0, Math.PI * 2);
         ctx.clip();
-        ctx.drawImage(visuelLogo, logoX, logoY, logoSize, logoSize);
+        ctx.drawImage(visuelLogo, logoCx - logoSize / 2, logoCy - logoSize / 2, logoSize, logoSize);
         ctx.restore();
 
-        logoBottomY = logoY + logoSize + 30 * scale;
+        logoBottomY = logoCy + logoSize / 2 + 35 * scale;
 
-        // Nom de l'asso sous le logo
+        // 5. Nom de l'asso (déjà sur le logo, on ne le redouble plus — on met juste le sous-titre)
         ctx.fillStyle = colorPrimary;
-        ctx.font = 'bold ' + (40 * scale) + 'px Poppins, sans-serif';
+        ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        ctx.fillText("SED'OCC", W / 2, logoBottomY);
-        logoBottomY += 50 * scale;
-
-        ctx.fillStyle = colorText;
-        ctx.font = (22 * scale) + 'px Poppins, sans-serif';
         ctx.fillText('Syndrome d\'Ehlers-Danlos Occitanie', W / 2, logoBottomY);
-        logoBottomY += 36 * scale;
+        logoBottomY += 40 * scale;
+    }
+
+    // ----- Bulles décoratives complémentaires aux 4 coins -----
+    if (style !== 'photo') {
+        const cornerBubbles = [
+            { x: 0.92, y: 0.08, r: 0.06 },
+            { x: 0.05, y: 0.15, r: 0.04 },
+            { x: 0.95, y: 0.85, r: 0.07 },
+            { x: 0.08, y: 0.92, r: 0.05 },
+            { x: 0.50, y: 0.95, r: 0.03 }
+        ];
+        cornerBubbles.forEach(function(b) {
+            const bx = W * b.x, by = H * b.y, br = W * b.r;
+            const bg = ctx.createRadialGradient(bx - br * 0.3, by - br * 0.3, 0, bx, by, br);
+            bg.addColorStop(0, 'rgba(255,255,255,0.85)');
+            bg.addColorStop(0.5, 'rgba(245,210,170,0.55)');
+            bg.addColorStop(1, 'rgba(232,176,144,0)');
+            ctx.fillStyle = bg;
+            ctx.beginPath();
+            ctx.arc(bx, by, br, 0, Math.PI * 2);
+            ctx.fill();
+        });
     }
 
     // ----- Bloc texte sous le logo, dans la moitié inférieure -----
@@ -3719,24 +3791,117 @@ function drawVisuel(ctx, fmt, style) {
         cursorY += lieuLines.length * lineH + 30 * scale;
     }
 
-    // CTA en bas
+    // CTA
     if (cta) {
         ctx.fillStyle = colorText;
         ctx.font = (26 * scale) + 'px Poppins, sans-serif';
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
+        ctx.textBaseline = 'top';
         const ctaLines = wrapText(ctx, cta, W - padX * 2);
         const lineH = 32 * scale;
-        const ctaY = H - padY - 50 * scale;
-        ctaLines.forEach((l, i) => ctx.fillText(l, W / 2, ctaY - (ctaLines.length - 1 - i) * lineH));
+        ctaLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
+        cursorY += ctaLines.length * lineH + 20 * scale;
     }
 
-    // Site web en bas
+    // Lien (en évidence avec un cadre)
+    if (lien) {
+        ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
+        const lw = ctx.measureText(lien).width;
+        const lh = 56 * scale;
+        const lx = (W - lw) / 2 - 28 * scale;
+        const lbw = lw + 56 * scale;
+        ctx.save();
+        ctx.shadowColor = isDark ? 'rgba(0,0,0,0.2)' : 'rgba(139,26,43,0.18)';
+        ctx.shadowBlur = 14 * scale;
+        ctx.shadowOffsetY = 4 * scale;
+        roundRect(ctx, lx, cursorY, lbw, lh, lh / 2);
+        ctx.fillStyle = isDark ? '#FFFFFF' : '#8B1A2B';
+        ctx.fill();
+        ctx.restore();
+        ctx.fillStyle = isDark ? '#8B1A2B' : '#FFFFFF';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('🔗 ' + lien, W / 2, cursorY + lh / 2);
+    }
+
+    // ----- Pied : URL + icônes réseaux sociaux -----
+    const showReseaux = reseauxMode === 'oui' || (reseauxMode === 'auto' && !isWide);
+
+    // Site web sedocc.fr
     ctx.fillStyle = colorAccent;
-    ctx.font = 'bold ' + (22 * scale) + 'px Poppins, sans-serif';
+    ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
-    ctx.fillText('sedocc.fr', W / 2, H - padY * 0.4);
+    ctx.fillText('sedocc.fr', W / 2, H - padY * 0.45);
+
+    // Icônes réseaux sociaux
+    if (showReseaux) {
+        const iconY = H - padY * 0.45 + 50 * scale;
+        const iconSize = 36 * scale;
+        const fbHandle = 'SedOcc';
+        const igHandle = '@sed_occ31';
+
+        ctx.fillStyle = colorText;
+        ctx.font = (22 * scale) + 'px Poppins, sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+
+        // Calcul largeur totale pour centrer
+        const fbW = iconSize + 10 * scale + ctx.measureText(fbHandle).width;
+        const igW = iconSize + 10 * scale + ctx.measureText(igHandle).width;
+        const gap = 50 * scale;
+        const totalW = fbW + gap + igW;
+        let xPos = (W - totalW) / 2;
+
+        // Facebook
+        drawFacebookIcon(ctx, xPos, iconY - iconSize / 2, iconSize, colorPrimary);
+        ctx.fillStyle = colorText;
+        ctx.fillText(fbHandle, xPos + iconSize + 10 * scale, iconY);
+        xPos += fbW + gap;
+
+        // Instagram
+        drawInstagramIcon(ctx, xPos, iconY - iconSize / 2, iconSize, colorPrimary);
+        ctx.fillStyle = colorText;
+        ctx.fillText(igHandle, xPos + iconSize + 10 * scale, iconY);
+    }
+}
+
+// Icône Facebook (cercle avec f)
+function drawFacebookIcon(ctx, x, y, size, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x + size / 2, y + size / 2, size / 2, 0, Math.PI * 2);
+    ctx.fill();
+    // f blanc
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = 'bold ' + (size * 0.7) + 'px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('f', x + size / 2, y + size / 2 + size * 0.05);
+    ctx.restore();
+}
+
+// Icône Instagram (carré arrondi avec petit cercle)
+function drawInstagramIcon(ctx, x, y, size, color) {
+    ctx.save();
+    const r = size * 0.22;
+    // Carré arrondi
+    roundRect(ctx, x, y, size, size, r);
+    ctx.fillStyle = color;
+    ctx.fill();
+    // Cercle interne (objectif)
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = size * 0.08;
+    ctx.beginPath();
+    ctx.arc(x + size / 2, y + size / 2, size * 0.27, 0, Math.PI * 2);
+    ctx.stroke();
+    // Petit point en haut à droite (flash)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.beginPath();
+    ctx.arc(x + size * 0.78, y + size * 0.22, size * 0.06, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
 }
 
 function drawBulles(ctx, W, H, opacityFactor) {
