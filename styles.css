@@ -2383,14 +2383,15 @@ section h2.scroll-reveal.revealed::after {
    ========================================== */
 .cursor-follower {
     position: fixed;
-    width: 28px;
-    height: 28px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.22) 0%, rgba(139, 26, 43, 0.08) 60%, transparent 100%);
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.55) 0%, rgba(255, 138, 101, 0.35) 50%, rgba(139, 26, 43, 0.1) 80%, transparent 100%);
+    box-shadow: 0 0 20px rgba(230, 57, 70, 0.4);
     pointer-events: none;
     transform: translate(-50%, -50%);
     z-index: 9998;
-    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
     will-change: transform;
     opacity: 0;
 }
@@ -2401,9 +2402,18 @@ section h2.scroll-reveal.revealed::after {
 
 /* Effet "agrandi" quand on survole un élément cliquable */
 .cursor-follower.hover {
-    width: 48px;
-    height: 48px;
-    background: radial-gradient(circle, rgba(230, 57, 70, 0.28) 0%, rgba(139, 26, 43, 0.1) 60%, transparent 100%);
+    width: 64px;
+    height: 64px;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.65) 0%, rgba(255, 138, 101, 0.4) 50%, rgba(139, 26, 43, 0.12) 80%, transparent 100%);
+    box-shadow: 0 0 30px rgba(230, 57, 70, 0.55);
+}
+
+/* Petit point central rouge plus vif et visible */
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: #e63946;
+    box-shadow: 0 0 6px rgba(230, 57, 70, 0.6);
 }
 
 /* Petit point central qui suit la souris exactement */
