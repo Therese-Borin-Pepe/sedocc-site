@@ -2302,6 +2302,138 @@ section h2.scroll-reveal.revealed::after {
     animation: adherer-pulse 2.5s ease-in-out infinite;
 }
 
+/* ==========================================
+   Indicateur de scroll (souris animée bas du hero)
+   ========================================== */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--primary-color);
+    opacity: 0;
+    animation: scroll-fade-in 1s ease-out 1.5s forwards,
+               scroll-bounce 2.5s ease-in-out 2.5s infinite;
+    transition: transform 0.3s ease;
+    z-index: 5;
+}
+
+.scroll-indicator:hover {
+    transform: translateX(-50%) translateY(-3px);
+    color: var(--primary-dark);
+}
+
+.scroll-mouse {
+    width: 26px;
+    height: 42px;
+    border: 2px solid var(--primary-color);
+    border-radius: 14px;
+    position: relative;
+    display: block;
+}
+
+.scroll-wheel {
+    position: absolute;
+    top: 7px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 2px;
+    animation: scroll-wheel-down 1.8s ease-in-out infinite;
+}
+
+.scroll-text {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+@keyframes scroll-wheel-down {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    50% { opacity: 1; transform: translateX(-50%) translateY(14px); }
+    51%, 100% { opacity: 0; transform: translateX(-50%) translateY(14px); }
+}
+
+@keyframes scroll-fade-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+    to { opacity: 0.85; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes scroll-bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-8px); }
+}
+
+/* Cacher l'indicateur sur mobile (pas pertinent) */
+@media (max-width: 768px) {
+    .scroll-indicator {
+        display: none;
+    }
+}
+
+/* ==========================================
+   Curseur lumineux qui suit la souris
+   ========================================== */
+.cursor-follower {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.35) 0%, rgba(139, 26, 43, 0.15) 60%, transparent 100%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9998;
+    transition: width 0.25s ease, height 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    mix-blend-mode: multiply;
+    will-change: transform;
+    opacity: 0;
+}
+
+.cursor-follower.visible {
+    opacity: 1;
+}
+
+/* Effet "agrandi" quand on survole un élément cliquable */
+.cursor-follower.hover {
+    width: 56px;
+    height: 56px;
+    background: radial-gradient(circle, rgba(230, 57, 70, 0.5) 0%, rgba(139, 26, 43, 0.2) 60%, transparent 100%);
+}
+
+/* Petit point central qui suit la souris exactement */
+.cursor-dot {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    will-change: transform;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.cursor-dot.visible {
+    opacity: 1;
+}
+
+/* Désactiver le curseur custom sur les écrans tactiles */
+@media (hover: none), (pointer: coarse) {
+    .cursor-follower, .cursor-dot {
+        display: none;
+    }
+}
+
 /* Respect des préférences utilisateur (accessibilité) */
 @media (prefers-reduced-motion: reduce) {
     .page-bubbles .bubble,

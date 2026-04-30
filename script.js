@@ -56,6 +56,61 @@ const scrollProgress = document.createElement('div');
 scrollProgress.className = 'scroll-progress';
 document.body.appendChild(scrollProgress);
 
+// ==========================================
+// Curseur lumineux qui suit la souris
+// ==========================================
+(function initCursorFollower() {
+    // Ne pas activer sur écrans tactiles
+    if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
+
+    const follower = document.createElement('div');
+    follower.className = 'cursor-follower';
+    document.body.appendChild(follower);
+
+    const dot = document.createElement('div');
+    dot.className = 'cursor-dot';
+    document.body.appendChild(dot);
+
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        // Le point central suit instantanément
+        dot.style.transform = 'translate(' + mouseX + 'px, ' + mouseY + 'px) translate(-50%, -50%)';
+        follower.classList.add('visible');
+        dot.classList.add('visible');
+    });
+
+    document.addEventListener('mouseleave', function() {
+        follower.classList.remove('visible');
+        dot.classList.remove('visible');
+    });
+
+    // Le halo suit avec un léger retard (effet de traîne)
+    function animateFollower() {
+        followerX += (mouseX - followerX) * 0.18;
+        followerY += (mouseY - followerY) * 0.18;
+        follower.style.transform = 'translate(' + followerX + 'px, ' + followerY + 'px) translate(-50%, -50%)';
+        requestAnimationFrame(animateFollower);
+    }
+    animateFollower();
+
+    // Effet "hover" sur les éléments cliquables
+    const interactiveSelector = 'a, button, .btn, input, textarea, select, [role="button"], .nav-link, .evenement-card';
+    document.addEventListener('mouseover', function(e) {
+        if (e.target.closest(interactiveSelector)) {
+            follower.classList.add('hover');
+        }
+    });
+    document.addEventListener('mouseout', function(e) {
+        if (e.target.closest(interactiveSelector)) {
+            follower.classList.remove('hover');
+        }
+    });
+})();
+
 window.addEventListener('scroll', function() {
     const currentScroll = window.pageYOffset;
 
