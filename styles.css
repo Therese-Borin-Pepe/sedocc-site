@@ -260,7 +260,7 @@ a:hover {
 .banner-video {
     position: relative;
     width: 100%;
-    margin-top: 70px; /* Espace pour la navbar fixe */
+    margin-top: 90px; /* Espace pour la navbar fixe (avec marge de sécurité) */
     background: var(--bg-light);
     z-index: 1;
 }
@@ -268,10 +268,10 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 1100px;
-    margin: 20px auto 0;
-    /* Format ultra-panoramique : cache les bandeaux noirs en haut et en bas */
-    aspect-ratio: 2.8 / 1;
+    max-width: 850px; /* Réduit pour laisser voir le logo sans scroller */
+    margin: 0 auto;
+    /* Format ultra-panoramique : cache les bandeaux noirs et reste compact */
+    aspect-ratio: 3 / 1;
     overflow: hidden;
     border-radius: 14px;
     background: var(--bg-light);
@@ -307,6 +307,61 @@ a:hover {
     }
 }
 
+/* ==========================================
+   Indicateur de scroll sous le hero (texte + chevron animé)
+   ========================================== */
+.scroll-down-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--primary-color);
+    margin-top: 30px;
+    opacity: 0;
+    animation: scroll-arrow-fade-in 1s ease-out 1.5s forwards,
+               scroll-arrow-bounce 2.2s ease-in-out 2.5s infinite;
+    transition: transform 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.scroll-down-arrow:hover {
+    transform: translateY(-2px);
+    color: var(--primary-dark);
+}
+
+.scroll-down-text {
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.scroll-down-chevron {
+    font-size: 1.6rem;
+    line-height: 1;
+    font-weight: 700;
+    display: inline-block;
+}
+
+@keyframes scroll-arrow-fade-in {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 0.85; transform: translateY(0); }
+}
+
+@keyframes scroll-arrow-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .scroll-down-arrow {
+        animation: none;
+        opacity: 1;
+    }
+}
+
 .hero {
     position: relative;
     z-index: 1;
@@ -314,8 +369,8 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 30px;
+    padding-bottom: 40px;
     background: transparent;
     overflow: hidden;
     min-height: 60vh;
