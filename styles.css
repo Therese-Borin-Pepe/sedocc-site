@@ -270,8 +270,8 @@ a:hover {
     width: 100%;
     max-width: 850px; /* Réduit pour laisser voir le logo sans scroller */
     margin: 0 auto;
-    /* Format ultra-panoramique : cache les bandeaux noirs et reste compact */
-    aspect-ratio: 3 / 1;
+    /* Format panoramique : cache les bandeaux noirs sans trop couper la vidéo */
+    aspect-ratio: 2.5 / 1;
     overflow: hidden;
     border-radius: 14px;
     background: var(--bg-light);
@@ -369,11 +369,11 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 30px;
+    padding-top: 20px;
     padding-bottom: 40px;
     background: transparent;
     overflow: hidden;
-    min-height: 60vh;
+    /* min-height: 60vh; — retiré : provoquait un grand espace vide entre la bannière et le logo */
 }
 
 .hero::after {
