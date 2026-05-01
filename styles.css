@@ -270,9 +270,8 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px; /* Option D : pleine largeur jusqu'à 1200px puis stable */
     margin: 0 auto;
-    /* Le ratio s'adaptera à la vidéo recadrée */
     overflow: hidden;
     border-radius: 14px;
     background: transparent;
