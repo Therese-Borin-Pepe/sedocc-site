@@ -271,7 +271,7 @@ a:hover {
     max-width: 850px; /* Réduit pour laisser voir le logo sans scroller */
     margin: 0 auto;
     /* Format panoramique : cache les bandeaux noirs sans trop couper la vidéo */
-    aspect-ratio: 2.5 / 1;
+    aspect-ratio: 2.6 / 1;
     overflow: hidden;
     border-radius: 14px;
     background: var(--bg-light);
@@ -287,7 +287,7 @@ a:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 50% 50%;
+    object-position: 50% 42%;
     display: block;
 }
 
@@ -2838,7 +2838,7 @@ p {
 .hero {
     position: relative; text-align: center;
     background: linear-gradient(135deg, transparent 0%, transparent 100%);
-    padding: 180px 20px 100px; overflow: hidden;
+    padding: 30px 20px 60px; overflow: hidden;
 }
 .hero-logo {
     height: 340px;
