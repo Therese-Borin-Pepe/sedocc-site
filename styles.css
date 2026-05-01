@@ -261,7 +261,9 @@ a:hover {
     position: relative;
     width: 100%;
     margin-top: 90px; /* Espace pour la navbar fixe (avec marge de sécurité) */
-    background: var(--bg-light);
+    /* Pas de fond solide → les bulles animées de la page sont visibles
+       dans l'espace sur les côtés de la bannière */
+    background: transparent;
     z-index: 1;
 }
 
@@ -291,21 +293,20 @@ a:hover {
     border-radius: 14px 14px 0 0;
 }
 
-/* Voile crème en bas — fondu doux comme le haut + pas de coins sombres */
+/* Voile crème en bas — partie solide plus épaisse pour cacher la ligne noire */
 .banner-video-wrap::after {
     content: '';
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
-    /* Dégradé doux : solide au tout bas, transparent en remontant */
+    height: 55px;
     background:
-        /* Halos crème dans les coins gauche/droit (pour cacher les angles sombres) */
-        radial-gradient(ellipse 30% 100% at 0% 100%, var(--bg-light) 0%, rgba(255,245,230,0) 80%),
-        radial-gradient(ellipse 30% 100% at 100% 100%, var(--bg-light) 0%, rgba(255,245,230,0) 80%),
-        /* Voile principal centré en bas, fondu doux */
-        linear-gradient(to top, var(--bg-light) 0%, var(--bg-light) 40%, rgba(255, 245, 230, 0) 100%);
+        /* Halos crème plus larges et plus opaques dans les coins gauche/droit */
+        radial-gradient(ellipse 35% 100% at 0% 100%, var(--bg-light) 30%, rgba(255,245,230,0) 85%),
+        radial-gradient(ellipse 35% 100% at 100% 100%, var(--bg-light) 30%, rgba(255,245,230,0) 85%),
+        /* Voile principal : solide sur 60% (33px) puis fondu */
+        linear-gradient(to top, var(--bg-light) 0%, var(--bg-light) 60%, rgba(255, 245, 230, 0) 100%);
     z-index: 2;
     pointer-events: none;
     border-radius: 0 0 14px 14px;
