@@ -279,37 +279,20 @@ a:hover {
     box-shadow: 0 10px 40px rgba(139, 26, 43, 0.12);
 }
 
-/* Voile crème en haut pour masquer le bandeau noir et fondre dans le fond */
-.banner-video-wrap::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--bg-light) 0%, var(--bg-light) 70%, rgba(255, 245, 230, 0) 100%);
-    z-index: 2;
-    pointer-events: none;
-    border-radius: 14px 14px 0 0;
-}
-
-/* Voile crème en bas — partie solide plus épaisse pour cacher la ligne noire */
-.banner-video-wrap::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 55px;
-    background:
-        /* Halos crème plus larges et plus opaques dans les coins gauche/droit */
-        radial-gradient(ellipse 35% 100% at 0% 100%, var(--bg-light) 30%, rgba(255,245,230,0) 85%),
-        radial-gradient(ellipse 35% 100% at 100% 100%, var(--bg-light) 30%, rgba(255,245,230,0) 85%),
-        /* Voile principal : solide sur 60% (33px) puis fondu */
-        linear-gradient(to top, var(--bg-light) 0%, var(--bg-light) 60%, rgba(255, 245, 230, 0) 100%);
-    z-index: 2;
-    pointer-events: none;
-    border-radius: 0 0 14px 14px;
+/* PAS DE VOILE COLORÉ — on masque directement les bords de la vidéo
+   pour qu'ils fondent dans n'importe quelle couleur de fond (gradient, bulles, etc.) */
+.banner-video-wrap video {
+    /* Feathering des bords : fondu transparent en haut, en bas et sur les côtés.
+       Le mask se compose : la vidéo est visible où le mask est noir,
+       transparente où il est transparent. */
+    -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    mask-composite: intersect;
 }
 
 .banner-video-wrap video {
