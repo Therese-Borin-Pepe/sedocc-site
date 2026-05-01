@@ -268,26 +268,27 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 900px; /* Réduit de 1400 à 900 pour ne pas envahir la page */
+    max-width: 1100px;
     margin: 20px auto 0;
-    aspect-ratio: 1280 / 720;
+    /* Format panoramique : plus large que haut → cache les bandeaux noirs
+       en haut et en bas de la vidéo automatiquement avec object-fit: cover */
+    aspect-ratio: 2.4 / 1;
     overflow: hidden;
-    border-radius: 14px; /* Coins arrondis pour un côté plus doux */
+    border-radius: 14px;
     background: var(--bg-light);
     box-shadow: 0 10px 40px rgba(139, 26, 43, 0.12);
 }
 
 .banner-video-wrap video {
-    /* Recadrage : zoom ~25% pour masquer
-       - les bandeaux noirs sur les côtés (gauche + droite)
-       - le filigrane Veo en bas à droite
-       Centré horizontalement, biaisé vers le haut pour mieux couper le watermark */
+    /* Le conteneur est plus "panoramique" que la vidéo (16:9),
+       donc object-fit: cover crop naturellement le haut et le bas
+       (= les bandeaux noirs). Le filigrane Veo en bas est aussi caché.
+       Léger zoom + décalage vers le haut pour assurer le crop du watermark. */
     position: absolute;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: scale(1.25);
-    transform-origin: 50% 30%;
+    object-position: 50% 30%;
     display: block;
 }
 
