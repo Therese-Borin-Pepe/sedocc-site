@@ -268,14 +268,13 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
+    max-width: 900px; /* Réduit de 1400 à 900 pour ne pas envahir la page */
+    margin: 20px auto 0;
     aspect-ratio: 1280 / 720;
     overflow: hidden;
-    border-radius: 0;
+    border-radius: 14px; /* Coins arrondis pour un côté plus doux */
     background: var(--bg-light);
-    /* Légère ombre douce en bas pour transition vers le hero */
-    box-shadow: 0 8px 30px rgba(139, 26, 43, 0.08);
+    box-shadow: 0 10px 40px rgba(139, 26, 43, 0.12);
 }
 
 .banner-video-wrap video {
