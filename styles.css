@@ -279,15 +279,15 @@ a:hover {
     /* Pas d'ombre — elle créait un halo sombre visible quand les bords sont fondus */
 }
 
-/* Mask CSS sur la vidéo : fondu doux des bords seulement
-   (pas trop, sinon on cache le texte de la vidéo) */
+/* Mask CSS sur la vidéo : fondu doux en haut (bandeau noir) + plus marqué en bas
+   pour cacher la bande noire qui reste sous le texte orange */
 .banner-video-wrap video {
     -webkit-mask-image:
-        linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 3%, black 88%, transparent 100%),
         linear-gradient(to right, transparent 0%, black 1.5%, black 98.5%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image:
-        linear-gradient(to bottom, transparent 0%, black 3%, black 97%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 3%, black 88%, transparent 100%),
         linear-gradient(to right, transparent 0%, black 1.5%, black 98.5%, transparent 100%);
     mask-composite: intersect;
 }
