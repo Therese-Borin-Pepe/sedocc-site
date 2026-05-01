@@ -278,15 +278,16 @@ a:hover {
 }
 
 .banner-video-wrap video {
-    /* Astuce pour masquer le filigrane Veo en bas à droite :
-       on zoome légèrement et on décale vers le haut-gauche.
-       La vidéo dépasse de 8% : la zone watermark est poussée hors cadre. */
+    /* Recadrage : zoom ~25% pour masquer
+       - les bandeaux noirs sur les côtés (gauche + droite)
+       - le filigrane Veo en bas à droite
+       Centré horizontalement, biaisé vers le haut pour mieux couper le watermark */
     position: absolute;
-    width: 108%;
-    height: 108%;
-    top: -2%;
-    left: -2%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transform: scale(1.25);
+    transform-origin: 50% 30%;
     display: block;
 }
 
