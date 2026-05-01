@@ -268,14 +268,28 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 850px; /* Réduit pour laisser voir le logo sans scroller */
+    max-width: 850px;
     margin: 0 auto;
-    /* Format panoramique : cache les bandeaux noirs sans trop couper la vidéo */
     aspect-ratio: 2.6 / 1;
     overflow: hidden;
     border-radius: 14px;
     background: var(--bg-light);
     box-shadow: 0 10px 40px rgba(139, 26, 43, 0.12);
+}
+
+/* Voile crème en haut pour masquer le résiduel de bandeau noir
+   et fondre la vidéo dans le fond de la page */
+.banner-video-wrap::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: linear-gradient(to bottom, var(--bg-light) 50%, rgba(255, 245, 230, 0) 100%);
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 14px 14px 0 0;
 }
 
 .banner-video-wrap video {
