@@ -3675,21 +3675,25 @@ function drawVisuel(ctx, fmt, style) {
             ctx.fill();
         }
 
-        // 4. Logo (sans clipping circulaire, pour qu'il se fonde naturellement)
-        ctx.drawImage(visuelLogo, logoCx - logoSize / 2, logoCy - logoSize / 2, logoSize, logoSize);
-
-        // 5. Dégradé de fondu sur les bords du logo : fond → transparent au centre
-        // Ça simule l'effet "le logo s'estompe doucement sur la page"
-        if (!isDark) {
-            const fadeBorder = ctx.createRadialGradient(logoCx, logoCy, logoSize * 0.40, logoCx, logoCy, logoSize * 0.55);
-            fadeBorder.addColorStop(0,    'rgba(255, 245, 230, 0)');
-            fadeBorder.addColorStop(0.60, 'rgba(255, 240, 220, 0.20)');
-            fadeBorder.addColorStop(1,    'rgba(255, 232, 205, 0.60)');
-            ctx.fillStyle = fadeBorder;
-            ctx.beginPath();
-            ctx.arc(logoCx, logoCy, logoSize * 0.55, 0, Math.PI * 2);
-            ctx.fill();
-        }
+        // 4. Logo avec masque circulaire FEUTRÉ (bords flous → se fond dans le fond)
+        // On dessine d'abord dans un canvas temporaire, on applique un gradient mask, puis on le pose
+        const tmp = document.createElement('canvas');
+        tmp.width = logoSize;
+        tmp.height = logoSize;
+        const tmpCtx = tmp.getContext('2d');
+        // Dessine le logo
+        tmpCtx.drawImage(visuelLogo, 0, 0, logoSize, logoSize);
+        // Applique un masque radial (cercle flouté sur les bords)
+        tmpCtx.globalCompositeOperation = 'destination-in';
+        const maskGrad = tmpCtx.createRadialGradient(logoSize / 2, logoSize / 2, 0, logoSize / 2, logoSize / 2, logoSize / 2);
+        maskGrad.addColorStop(0,    'rgba(0,0,0,1)');
+        maskGrad.addColorStop(0.65, 'rgba(0,0,0,1)');
+        maskGrad.addColorStop(0.85, 'rgba(0,0,0,0.6)');
+        maskGrad.addColorStop(1,    'rgba(0,0,0,0)');
+        tmpCtx.fillStyle = maskGrad;
+        tmpCtx.fillRect(0, 0, logoSize, logoSize);
+        // Pose le logo masqué sur le canvas principal
+        ctx.drawImage(tmp, logoCx - logoSize / 2, logoCy - logoSize / 2);
 
         logoBottomY = logoCy + logoSize / 2 + 35 * scale;
 
