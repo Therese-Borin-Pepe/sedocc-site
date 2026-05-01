@@ -277,8 +277,7 @@ a:hover {
     box-shadow: 0 10px 40px rgba(139, 26, 43, 0.12);
 }
 
-/* Voile crème en haut pour masquer le résiduel de bandeau noir
-   et fondre la vidéo dans le fond de la page */
+/* Voile crème en haut pour masquer le bandeau noir et fondre dans le fond */
 .banner-video-wrap::before {
     content: '';
     position: absolute;
@@ -290,6 +289,21 @@ a:hover {
     z-index: 2;
     pointer-events: none;
     border-radius: 14px 14px 0 0;
+}
+
+/* Voile crème en bas pour masquer le résiduel de bandeau noir
+   Plus petit que le top pour ne pas cacher le texte orange de la vidéo */
+.banner-video-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 25px;
+    background: linear-gradient(to top, var(--bg-light) 0%, var(--bg-light) 60%, rgba(255, 245, 230, 0) 100%);
+    z-index: 2;
+    pointer-events: none;
+    border-radius: 0 0 14px 14px;
 }
 
 .banner-video-wrap video {
