@@ -270,40 +270,31 @@ a:hover {
 .banner-video-wrap {
     position: relative;
     width: 100%;
-    max-width: 850px;
+    max-width: 900px;
     margin: 0 auto;
-    aspect-ratio: 2.6 / 1;
+    /* Le ratio s'adaptera à la vidéo recadrée */
     overflow: hidden;
     border-radius: 14px;
     background: transparent;
-    /* Pas d'ombre — elle créait un halo sombre visible quand les bords sont fondus */
 }
 
 /* Mask CSS sur la vidéo : fondu doux en haut (bandeau noir) + plus marqué en bas
    pour cacher la bande noire qui reste sous le texte orange */
+/* Vidéo recadrée — affichage simple sans crop forcé */
 .banner-video-wrap video {
-    -webkit-mask-image:
-        linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%),
-        linear-gradient(to right, transparent 0%, black 1.5%, black 98.5%, transparent 100%);
-    -webkit-mask-composite: source-in;
-    mask-image:
-        linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%),
-        linear-gradient(to right, transparent 0%, black 1.5%, black 98.5%, transparent 100%);
-    mask-composite: intersect;
-}
-
-.banner-video-wrap video {
-    /* Le conteneur est plus "panoramique" que la vidéo (16:9),
-       donc object-fit: cover crop naturellement le haut et le bas
-       (= les bandeaux noirs). Le filigrane Veo en bas est aussi caché.
-       Léger zoom + décalage vers le haut pour assurer le crop du watermark. */
-    position: absolute;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 50%;
+    height: auto;
     display: block;
     background: transparent;
+    /* Léger fondu décoratif sur les bords pour adoucir l'intégration au fond */
+    -webkit-mask-image:
+        linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+        linear-gradient(to bottom, transparent 0%, black 4%, black 96%, transparent 100%),
+        linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%);
+    mask-composite: intersect;
 }
 
 @media (max-width: 768px) {
