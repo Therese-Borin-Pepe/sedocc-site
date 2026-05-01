@@ -96,15 +96,19 @@
     </div>
 
     <style>
-        /* Override : version pleine largeur + ratio plus aplati */
+        /* Override : version pleine largeur + ratio 3:1 (montre plus le texte du bas) */
         .banner-video--fullwidth .banner-video-wrap {
             max-width: none;
-            aspect-ratio: 4 / 1;
+            aspect-ratio: 3 / 1;
             border-radius: 0;
             margin: 0;
         }
         .banner-video--fullwidth .banner-video-wrap::before {
             border-radius: 0;
+        }
+        /* Décale la zone visible vers le bas pour ne pas couper le texte orange */
+        .banner-video--fullwidth .banner-video-wrap video {
+            object-position: 50% 65%;
         }
     </style>
 
