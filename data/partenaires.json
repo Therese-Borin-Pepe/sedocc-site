@@ -28,5 +28,23 @@
     "name": "Clinique",
     "image": "images/partners/clinique.png",
     "url": ""
+  },
+  {
+    "id": "schwa-medico",
+    "name": "Schwa Medico France",
+    "image": "images/partners/schwa-medico.jpg",
+    "url": ""
+  },
+  {
+    "id": "perier",
+    "name": "Perier",
+    "image": "images/partners/perier.png",
+    "url": ""
+  },
+  {
+    "id": "sos-oxygene",
+    "name": "SOS Oxygène",
+    "image": "images/partners/sos-oxygene.png",
+    "url": ""
   }
 ]
