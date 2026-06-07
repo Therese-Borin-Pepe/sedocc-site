@@ -1,5 +1,27 @@
 [
   {
+    "id": "cure-balaruc-2027",
+    "title": "Cure Balaruc-les-Bains 2027 — Réservez dès maintenant !",
+    "date": "7 juin 2026",
+    "image": "images/evenements/cure-balaruc/cure 1.jpg",
+    "link": "evenements/cure-balaruc-2027.html",
+    "content": ""
+  },
+  {
+    "id": "forum-mutaero-tarn",
+    "title": "Forum Santé Mutaero — Le Bout du Pont de l'Arn",
+    "date": "7 juin 2026",
+    "image": "images/evenements/forum-mutaero-tarn.jpg",
+    "content": "<p><strong>Mardi 16 juin 2026</strong> — Salle des Fêtes du Bout du Pont de l'Arn (Tarn)</p><p>Sed'Occ France a été invitée par la mutuelle Mutaero à cette journée Forum Santé afin d'animer une <strong>mini-conférence sur le Syndrome Ehlers Danlos</strong> à 11h.</p><p>Entrée gratuite, ouvert à tous.</p><p>Nous attendons les tarnaises et les tarnais avec impatience !</p><h3>Programme de la journée</h3><ul><li><strong>10h</strong> — Préserver son cœur après 60 ans : les bons réflexes au quotidien</li><li><strong>11h</strong> — Le Syndrome Ehlers Danlos : mieux comprendre cette maladie</li><li><strong>12h</strong> — Maladie, invalidité : quels impacts sur la retraite ?</li><li><strong>14h</strong> — Préserver sa vision après 50 ans : conseils et prévention</li><li><strong>15h</strong> — Anticiper sa succession tout en protégeant ses proches</li><li><strong>16h</strong> — Comprendre sa couverture santé et le dispositif 100% santé</li></ul><p>Venez assister aux conférences qui vous intéressent et rencontrer des professionnels de santé.</p>"
+  },
+  {
+    "id": "fete-associations-toulouse",
+    "title": "Fête des Associations à Toulouse",
+    "date": "7 juin 2026",
+    "image": "images/evenements/fete-associations-toulouse.jpg",
+    "content": "<p><strong>Vendredi 13 juin 2026</strong> — Fête des Associations et des Centres Sociaux à Toulouse.</p><p>Toute la journée pour vous rencontrer, discuter et découvrir nos initiatives.</p><p>Un grand merci à la mairie de Toulouse pour son soutien !</p><p><strong>Nous serons au stand 71</strong> — Venez nombreux !</p>"
+  },
+  {
     "id": "cafe-parole",
     "title": "Café Parole",
     "date": "11 mars 2026",
