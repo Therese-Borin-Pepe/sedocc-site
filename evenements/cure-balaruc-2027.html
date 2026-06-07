@@ -97,14 +97,170 @@
                     <p>Contact : <a href="mailto:sedocc31@gmail.com">sedocc31@gmail.com</a></p>
 
                     <h3>Photos de la cure 2026</h3>
-                    <div class="galerie-photos">
-                        <img src="../images/evenements/cure-balaruc/cure 3.jpg" alt="Cure Balaruc 2026 - Vue sur l'étang de Thau">
-                        <img src="../images/evenements/cure-balaruc/cure 1.jpg" alt="Cure Balaruc 2026 - Partie de loto">
-                        <img src="../images/evenements/cure-balaruc/cure 2.jpg" alt="Cure Balaruc 2026 - Étang de Thau">
-                        <img src="../images/evenements/cure-balaruc/cure 4.jpg" alt="Cure Balaruc 2026 - Repas convivial">
-                        <img src="../images/evenements/cure-balaruc/cure 5.jpg" alt="Cure Balaruc 2026 - Glace en terrasse">
-                        <img src="../images/evenements/cure-balaruc/cure 6.jpg" alt="Cure Balaruc 2026 - Bord de mer">
+                    <div class="diaporama" id="diaporama">
+                        <div class="diaporama-container">
+                            <div class="diaporama-slide active">
+                                <img src="../images/evenements/cure-balaruc/cure 3.jpg" alt="Vue sur l'étang de Thau et les palmiers">
+                                <div class="diaporama-caption">Vue sur l'étang de Thau</div>
+                            </div>
+                            <div class="diaporama-slide">
+                                <img src="../images/evenements/cure-balaruc/cure 4.jpg" alt="Repas convivial entre curistes">
+                                <div class="diaporama-caption">Repas convivial entre curistes</div>
+                            </div>
+                            <div class="diaporama-slide">
+                                <img src="../images/evenements/cure-balaruc/cure 5.jpg" alt="Glace en terrasse au bord de l'eau">
+                                <div class="diaporama-caption">Pause gourmande en terrasse</div>
+                            </div>
+                            <div class="diaporama-slide">
+                                <img src="../images/evenements/cure-balaruc/cure 2.jpg" alt="Parc à huîtres sur l'étang de Thau">
+                                <div class="diaporama-caption">Les parcs à huîtres de l'étang de Thau</div>
+                            </div>
+                            <div class="diaporama-slide">
+                                <img src="../images/evenements/cure-balaruc/cure 1.jpg" alt="Partie de loto entre curistes">
+                                <div class="diaporama-caption">Partie de loto acharnée !</div>
+                            </div>
+                            <div class="diaporama-slide">
+                                <img src="../images/evenements/cure-balaruc/cure 6.jpg" alt="Mouette au bord de l'eau">
+                                <div class="diaporama-caption">Un visiteur au bord de l'étang</div>
+                            </div>
+                        </div>
+                        <button class="diaporama-btn diaporama-prev" aria-label="Photo précédente">&#10094;</button>
+                        <button class="diaporama-btn diaporama-next" aria-label="Photo suivante">&#10095;</button>
+                        <div class="diaporama-dots" id="diaporama-dots"></div>
                     </div>
+                    <style>
+                        .diaporama {
+                            position: relative;
+                            max-width: 700px;
+                            margin: 30px auto;
+                            border-radius: 16px;
+                            overflow: hidden;
+                            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+                            background: #000;
+                        }
+                        .diaporama-container {
+                            position: relative;
+                            width: 100%;
+                        }
+                        .diaporama-slide {
+                            display: none;
+                            position: relative;
+                        }
+                        .diaporama-slide.active {
+                            display: block;
+                        }
+                        .diaporama-slide img {
+                            width: 100%;
+                            height: 450px;
+                            object-fit: cover;
+                            display: block;
+                        }
+                        .diaporama-caption {
+                            position: absolute;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+                            color: white;
+                            padding: 30px 20px 15px;
+                            font-size: 0.95rem;
+                            text-align: center;
+                        }
+                        .diaporama-btn {
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            background: rgba(255,255,255,0.85);
+                            border: none;
+                            color: #333;
+                            font-size: 1.4rem;
+                            width: 44px;
+                            height: 44px;
+                            border-radius: 50%;
+                            cursor: pointer;
+                            transition: all 0.3s;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            z-index: 2;
+                        }
+                        .diaporama-btn:hover {
+                            background: white;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+                        }
+                        .diaporama-prev { left: 12px; }
+                        .diaporama-next { right: 12px; }
+                        .diaporama-dots {
+                            position: absolute;
+                            bottom: 50px;
+                            left: 50%;
+                            transform: translateX(-50%);
+                            display: flex;
+                            gap: 8px;
+                            z-index: 2;
+                        }
+                        .diaporama-dot {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50%;
+                            background: rgba(255,255,255,0.5);
+                            border: none;
+                            cursor: pointer;
+                            transition: all 0.3s;
+                            padding: 0;
+                        }
+                        .diaporama-dot.active {
+                            background: white;
+                            transform: scale(1.2);
+                        }
+                        @media (max-width: 768px) {
+                            .diaporama-slide img {
+                                height: 300px;
+                            }
+                            .diaporama-btn {
+                                width: 36px;
+                                height: 36px;
+                                font-size: 1.1rem;
+                            }
+                        }
+                    </style>
+                    <script>
+                    (function() {
+                        const slides = document.querySelectorAll('.diaporama-slide');
+                        const dotsContainer = document.getElementById('diaporama-dots');
+                        let current = 0;
+                        let timer;
+
+                        // Create dots
+                        slides.forEach((_, i) => {
+                            const dot = document.createElement('button');
+                            dot.className = 'diaporama-dot' + (i === 0 ? ' active' : '');
+                            dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+                            dot.addEventListener('click', () => goTo(i));
+                            dotsContainer.appendChild(dot);
+                        });
+
+                        function goTo(n) {
+                            slides[current].classList.remove('active');
+                            dotsContainer.children[current].classList.remove('active');
+                            current = (n + slides.length) % slides.length;
+                            slides[current].classList.add('active');
+                            dotsContainer.children[current].classList.add('active');
+                            resetTimer();
+                        }
+
+                        function resetTimer() {
+                            clearInterval(timer);
+                            timer = setInterval(() => goTo(current + 1), 5000);
+                        }
+
+                        document.querySelector('.diaporama-prev').addEventListener('click', () => goTo(current - 1));
+                        document.querySelector('.diaporama-next').addEventListener('click', () => goTo(current + 1));
+
+                        // Auto-play
+                        resetTimer();
+                    })();
+                    </script>
                 </div>
                 <div class="evenement-back">
                     <a href="../evenements.html" class="btn btn-primary">Retour aux évènements</a>
