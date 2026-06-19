@@ -2937,6 +2937,16 @@ p {
     height: 420px;
     position: relative;
     z-index: 2;
+    animation: heroFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 25px rgba(139, 26, 43, 0.15));
+    transition: transform 0.3s ease;
+}
+.hero-logo:hover {
+    transform: scale(1.05);
+}
+@keyframes heroFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
 }
 .mission h2 { font-size: 2.5rem !important; text-transform: none !important; margin-bottom: 30px !important; }
 
