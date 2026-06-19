@@ -2773,7 +2773,7 @@ body {
     backdrop-filter: blur(10px); padding: 15px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;
 }
 .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0 auto; padding: 0 20px; }
-.logo img { height: 130px; }
+.logo img { height: 55px; }
 .nav-menu { display: flex; list-style: none; gap: 0.2rem; }
 .nav-link { text-decoration: none; color: var(--text-dark); font-weight: 500; }
 
@@ -2846,11 +2846,9 @@ p {
     padding: 30px 20px 60px; overflow: hidden;
 }
 .hero-logo {
-    height: 300px;
+    height: 420px;
     position: relative;
     z-index: 2;
-    mask-image: radial-gradient(ellipse 75% 75% at center, black 50%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 75% 75% at center, black 50%, transparent 75%);
 }
 .mission h2 { font-size: 2.5rem !important; text-transform: none !important; margin-bottom: 30px !important; }
 
