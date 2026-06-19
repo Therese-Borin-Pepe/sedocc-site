@@ -277,7 +277,48 @@ a:hover {
     background: transparent;
 }
 
-/* Bannière animée */
+/* Bannière image avec logo superposé */
+.banner-image {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 14px;
+}
+.banner-bg-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.banner-logo-overlay {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    animation: bannerLogoFloat 4s ease-in-out infinite;
+}
+.banner-logo-overlay img {
+    height: 180px;
+    width: auto;
+    filter: drop-shadow(0 4px 15px rgba(0,0,0,0.3));
+}
+@keyframes bannerLogoFloat {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(calc(-50% - 8px)); }
+}
+
+@media (max-width: 768px) {
+    .banner-logo-overlay {
+        left: 10px;
+    }
+    .banner-logo-overlay img {
+        height: 100px;
+    }
+    .banner-image {
+        border-radius: 0;
+    }
+}
+
+/* Bannière animée (ancien) */
 .banner-animated {
     position: relative;
     width: 100%;
