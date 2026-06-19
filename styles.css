@@ -2773,7 +2773,7 @@ body {
     backdrop-filter: blur(10px); padding: 15px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;
 }
 .nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0 auto; padding: 0 20px; }
-.logo img { height: 55px; }
+.logo img { height: 130px; }
 .nav-menu { display: flex; list-style: none; gap: 0.2rem; }
 .nav-link { text-decoration: none; color: var(--text-dark); font-weight: 500; }
 
