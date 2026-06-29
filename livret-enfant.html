@@ -98,6 +98,17 @@
             font-size: 1.5rem;
             margin: 0;
         }
+        .livret-h2-sub {
+            font-size: 0.85em;
+            font-weight: 400;
+            display: block;
+        }
+        .livret-download a small {
+            display: block;
+            font-size: 0.85em;
+            font-weight: 400;
+            margin-top: 0.2rem;
+        }
 
         .livret-text {
             color: var(--text-medium);
@@ -300,7 +311,7 @@
     </section>
 
     <div class="livret-download">
-        <a href="documents/Livret-SED-enfant-SedOcc.pptx" download>T&eacute;l&eacute;charger le livret (version imprimable)</a>
+        <a href="documents/Livret-SED-enfant-SedOcc.pptx" download>T&eacute;l&eacute;charger le livret<br><small>(version imprimable)</small></a>
     </div>
 
     <!-- Section 1 : Notre corps -->
@@ -340,10 +351,8 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>La grande batterie &agrave; plat</h2>
         </div>
-        <div class="livret-img-row">
-            <img src="images/livret/batteries.png" alt="Batteries &agrave; plat">
-            <img src="images/livret/enfant-fatigue.png" alt="Enfant fatigu&eacute;">
-        </div>
+        <img src="images/livret/batteries.png" alt="Batteries &agrave; plat" class="livret-img">
+        <img src="images/livret/enfant-fatigue.png" alt="Enfant fatigu&eacute;" class="livret-img livret-img-small">
         <p class="livret-text">Le corps doit faire beaucoup plus d'efforts pour compenser la colle l&acirc;che, comme un muscle qui travaille trop.</p>
         <p class="livret-text">C'est pour cela qu'on est souvent fatigu&eacute;, m&ecirc;me en ayant bien dormi.</p>
     </section>
@@ -354,7 +363,7 @@
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
-            <h2>La douleur (les alarmes du corps)</h2>
+            <h2>La douleur<br><span class="livret-h2-sub">(les alarmes du corps)</span></h2>
         </div>
         <img src="images/livret/enfant-douleur.jpg" alt="Enfant qui a mal" class="livret-img">
         <p class="livret-text">Avoir mal, c'est le corps qui envoie des signaux d'alarme.</p>
@@ -368,7 +377,7 @@
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
-            <h2>Les aides et astuces (les supers outils)</h2>
+            <h2>Les aides et astuces<br><span class="livret-h2-sub">(les supers outils)</span></h2>
         </div>
         <p class="livret-text">Les b&eacute;quilles, les attelles, les v&ecirc;tements de compression.</p>
         <p class="livret-text"><strong>Ce sont nos outils de super-h&eacute;ros pour aider notre colle sp&eacute;ciale !</strong></p>
