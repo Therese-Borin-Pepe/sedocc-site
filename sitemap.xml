@@ -56,6 +56,11 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://www.sedocc.fr/comite-scientifique.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://www.sedocc.fr/mentions-legales.html</loc>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>

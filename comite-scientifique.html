@@ -3,15 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Impacts sur la vie quotidienne &amp; témoignages - SED'OCC</title>
-    <meta name="description" content="Témoignages de patients atteints du SED, interviews et chansons.">
+    <title>Comité Scientifique - SED'OCC France</title>
+    <meta name="description" content="Le comité scientifique de SED'OCC France : des professionnels de santé engagés autour du Syndrome d'Ehlers-Danlos non vasculaire.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .comite-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .comite-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .comite-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .comite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .comite-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B1A2B, #c0354a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .comite-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+        .comite-card h3 {
+            color: #8B1A2B;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        .comite-card .comite-role {
+            color: #888;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+        .comite-card .comite-specialite {
+            color: #555;
+            font-size: 0.95rem;
+        }
+        .comite-filiere {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: rgba(139, 26, 43, 0.05);
+            border-radius: 16px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .comite-filiere p {
+            color: #555;
+            line-height: 1.8;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo"><a href="index.html"><img src="images/logo.jpg" alt="SED'OCC Logo"></a></div>
@@ -74,28 +148,48 @@
 
     <section class="page-header">
         <div class="container">
-            <h1>Témoignages</h1>
+            <h1>Comité Scientifique</h1>
         </div>
     </section>
 
     <section class="page-content">
         <div class="container">
-            <div id="impacts-sections"></div>
-            <script>
-            (async function() {
-                try {
-                    const res = await fetch('data/pages/impacts.json');
-                    const data = await res.json();
-                    const container = document.getElementById('impacts-sections');
-                    data.tabs.forEach(function(s) {
-                        const block = document.createElement('div');
-                        block.className = 'ressource-section';
-                        block.innerHTML = '<h2>' + s.title + '</h2>' + s.content;
-                        container.appendChild(block);
-                    });
-                } catch(e) { console.error('Erreur chargement impacts:', e); }
-            })();
-            </script>
+            <div class="comite-intro">
+                <p>Sed'Occ France s'entoure de professionnels de santé reconnus pour structurer son action autour du <strong>Syndrome d'Ehlers-Danlos non vasculaire</strong>. Notre comité scientifique accompagne l'association dans sa démarche de rigueur et de crédibilité, notamment dans le cadre de la <strong>filière Oscar</strong>.</p>
+            </div>
+
+            <div class="comite-grid">
+                <div class="comite-card">
+                    <div class="comite-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <h3>Dr Michel Enjalbert</h3>
+                    <p class="comite-role">Membre du comité scientifique</p>
+                    <p class="comite-specialite">Médecin MPR — Centre de Compétences Perpignan</p>
+                </div>
+
+                <div class="comite-card">
+                    <div class="comite-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <h3>Dr Romain Dupont</h3>
+                    <p class="comite-role">Membre du comité scientifique</p>
+                    <p class="comite-specialite">Médecine Interne</p>
+                </div>
+
+                <div class="comite-card">
+                    <div class="comite-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </div>
+                    <h3>Elodie Niemiec</h3>
+                    <p class="comite-role">Correspondante scientifique</p>
+                    <p class="comite-specialite">Ingénieur docteur</p>
+                </div>
+            </div>
+
+            <div class="comite-filiere">
+                <p>Ce comité scientifique s'inscrit dans la volonté de Sed'Occ France de se structurer et de s'inscrire dans le cadre des associations de la <strong>filière Oscar</strong>, filière de santé dédiée aux maladies rares de l'os, du calcium et du cartilage.</p>
+            </div>
         </div>
     </section>
 
@@ -120,7 +214,7 @@
                     </a>
                 </div>
             </div>
-            <div class="footer-bottom"><p>Copyright © 2026 | SED'OCC. Tous droits réservés.</p></div>
+            <div class="footer-bottom"><p>Copyright &copy; 2026 | SED'OCC. Tous droits réservés.</p></div>
         </div>
     </footer>
     <script src="script.js"></script>

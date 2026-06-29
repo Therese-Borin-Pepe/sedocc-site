@@ -13,6 +13,7 @@
     { "source": "/politique-confidentialite", "destination": "/politique-confidentialite.html" },
     { "source": "/politique-cookies", "destination": "/politique-cookies.html" },
     { "source": "/initiatives", "destination": "/initiatives.html" },
+    { "source": "/comite-scientifique", "destination": "/comite-scientifique.html" },
     { "source": "/evenement", "destination": "/evenement.html" }
   ],
   "redirects": [
