@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livret pour les enfants - SED'OCC</title>
+    <meta name="description" content="Livret pour les enfants : comprendre le syndrome d'Ehlers-Danlos avec des mots simples. Le mystère de la colle du corps.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .livret-hero-section {
+            background: var(--bg-light);
+            text-align: center;
+            padding: 3rem 1.5rem 2rem;
+        }
+        .livret-hero-section h1 {
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            font-size: 2.2rem;
+            margin-bottom: 0.3rem;
+        }
+        .livret-hero-section .livret-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        .livret-hero-section .livret-big-title {
+            font-size: 1.6rem;
+            color: var(--heading-color);
+            margin-bottom: 0.4rem;
+        }
+        .livret-hero-section .livret-small-subtitle {
+            color: var(--text-medium);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .livret-hero-img {
+            max-width: 220px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+        .livret-hero-section .livret-intro {
+            color: var(--heading-color);
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .livret-download {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-warm);
+        }
+        .livret-download a {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background var(--transition-fast);
+        }
+        .livret-download a:hover {
+            background: var(--primary-dark);
+        }
+
+        .livret-section-wrap {
+            padding: 2.5rem 1.5rem;
+            background: var(--bg-white);
+        }
+        .livret-section-wrap.bg-warm {
+            background: var(--bg-light);
+        }
+        .livret-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .livret-section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .livret-section-header img {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+        }
+        .livret-section-header h2 {
+            font-family: var(--font-heading);
+            color: var(--heading-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .livret-text {
+            color: var(--text-medium);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        .livret-text strong {
+            color: var(--text-dark);
+        }
+        .livret-text.livret-accent {
+            color: var(--heading-color);
+            font-weight: 600;
+        }
+
+        .livret-img {
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            margin: 1.5rem auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        .livret-img-small {
+            max-width: 350px;
+        }
+
+        .livret-img-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        .livret-img-row img {
+            width: calc(50% - 0.5rem);
+            max-width: 350px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .livret-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+        .livret-grid img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .livret-parents-box {
+            background: var(--bg-warm);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+        .livret-parents-box h3 {
+            color: var(--heading-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        .livret-parents-box p {
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+        }
+        .livret-parents-box a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .livret-parents-box a:hover {
+            text-decoration: underline;
+        }
+
+        .livret-bottom-download {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--bg-light);
+        }
+        .livret-bottom-download p {
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+        .livret-bottom-download a {
+            display: inline-block;
+            background: var(--primary-color);
+            color: #fff;
+            padding: 0.8rem 2rem;
+            border-radius: var(--radius-lg);
+            text-decoration: none;
+            font-weight: 600;
+            transition: background var(--transition-fast);
+        }
+        .livret-bottom-download a:hover {
+            background: var(--primary-dark);
+        }
+
+        @media (max-width: 600px) {
+            .livret-hero-section h1 { font-size: 1.7rem; }
+            .livret-hero-section .livret-big-title { font-size: 1.3rem; }
+            .livret-hero-img { max-width: 160px; }
+            .livret-section-header h2 { font-size: 1.25rem; }
+            .livret-text { font-size: 1rem; }
+            .livret-grid { grid-template-columns: repeat(2, 1fr); }
+            .livret-img-row img { width: 100%; max-width: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html"><img src="images/logo.jpg" alt="SED'OCC Logo"></a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-dropdown">
+                    <a href="index.html" class="nav-link">L'association &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Qui sommes-nous ?</a></li>
+                        <li><a href="adhesion.html">Adh&eacute;sion &amp; soutien</a></li>
+                        <li><a href="initiatives.html">Initiatives &amp; Partenariats</a></li>
+                        <li><a href="comite-scientifique.html">Comit&eacute; Scientifique</a></li>
+                        <li><a href="evenements/photo-valerie-aroca.html">Galerie &amp; Sensibilisation</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="sed.html" class="nav-link">Le SED &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sed.html">Qu'est-ce que le SED ?</a></li>
+                        <li><a href="diagnostic.html">Diagnostic</a></li>
+                        <li><a href="traitements.html">Traitements &amp; prises en charge</a></li>
+                        <li><a href="actualites-medicales.html">Actualit&eacute;s m&eacute;dicales</a></li>
+                        <li><a href="impacts.html">Impacts sur la vie quotidienne &amp; t&eacute;moignages</a></li>
+                        <li><a href="livret-enfant.html">Livret pour les enfants</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="droits.html" class="nav-link">Droits &amp; Ressources &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="droits.html">MDPH – ALD</a></li>
+                        <li><a href="ressources.html">Ressources pratiques</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="evenements.html" class="nav-link">&Eacute;v&egrave;nements &amp; Activit&eacute;s &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="evenements.html">Tous les &eacute;v&egrave;nements</a></li>
+                        <li><a href="evenements/cure-balaruc-les-bains.html">Cure thermale Balaruc-les-Bains</a></li>
+                        <li><a href="evenements/conference-toulouse-replay.html">Conf&eacute;rence &amp; Replay</a></li>
+                    </ul>
+                </li>
+                <li><a href="https://www.helloasso.com/associations/sed-occ-syndrome-ehlers-danslos-occitanie/adhesions/adhesion-sed-occ-2" class="nav-link nav-btn-adherez" target="_blank">Adh&eacute;rer</a></li>
+            </ul>
+            <div class="nav-social">
+                <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.instagram.com/sed_occ31/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-bubbles">
+        <span class="bubble b1"></span>
+        <span class="bubble b2"></span>
+        <span class="bubble b3"></span>
+        <span class="bubble b4"></span>
+        <span class="bubble b5"></span>
+        <span class="bubble b6"></span>
+        <span class="bubble b7"></span>
+        <span class="bubble b8"></span>
+    </div>
+
+    <!-- Couverture -->
+    <section class="livret-hero-section">
+        <h1>Le Livret SED'OCC</h1>
+        <p class="livret-subtitle">Pour les enfants</p>
+        <p class="livret-big-title">Le myst&egrave;re de la colle du corps</p>
+        <p class="livret-small-subtitle">Comprendre le syndrome d'Ehlers-Danlos</p>
+        <img src="images/livret/super-heros.png" alt="Super-h&eacute;ros SED" class="livret-hero-img">
+        <p class="livret-intro">Viens d&eacute;couvrir avec moi le secret de la colle magique !</p>
+    </section>
+
+    <div class="livret-download">
+        <a href="documents/Livret_SedOcc_enfant_corrige.pptx" download>T&eacute;l&eacute;charger le livret (version imprimable)</a>
+    </div>
+
+    <!-- Section 1 : Notre corps -->
+    <div class="livret-section-wrap">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Notre corps, une merveilleuse maison !</h2>
+        </div>
+        <img src="images/livret/anatomie.jpg" alt="Le corps humain" class="livret-img">
+        <p class="livret-text">Dans notre corps, il y a une super colle magique qui s'appelle le <strong>collag&egrave;ne</strong>.</p>
+        <img src="images/livret/collagene-schema.jpg" alt="Le collag&egrave;ne" class="livret-img livret-img-small">
+        <p class="livret-text">Elle aide &agrave; tenir nos os, notre peau et tout le reste.</p>
+    </section>
+    </div>
+
+    <!-- Section 2 : Qu'est-ce que le SED ? -->
+    <div class="livret-section-wrap bg-warm">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Qu'est-ce que le SED ?</h2>
+        </div>
+        <div class="livret-img-row">
+            <img src="images/livret/collagene-bouteille.jpg" alt="La colle du corps">
+        </div>
+        <p class="livret-text">Pour les personnes avec le SED, la recette de cette colle est un peu diff&eacute;rente. Elle est moins solide ou trop &eacute;lastique.</p>
+        <p class="livret-text"><strong>Ce n'est pas une maladie contagieuse, c'est une diff&eacute;rence.</strong></p>
+        <p class="livret-text">La peau, les articulations, les muscles... plein de parties du corps ont besoin de cette colle !</p>
+    </section>
+    </div>
+
+    <!-- Section 3 : La fatigue -->
+    <div class="livret-section-wrap">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>La grande batterie &agrave; plat</h2>
+        </div>
+        <div class="livret-img-row">
+            <img src="images/livret/batteries.png" alt="Batteries &agrave; plat">
+            <img src="images/livret/enfant-fatigue.png" alt="Enfant fatigu&eacute;">
+        </div>
+        <p class="livret-text">Le corps doit faire beaucoup plus d'efforts pour compenser la colle l&acirc;che, comme un muscle qui travaille trop.</p>
+        <p class="livret-text">C'est pour cela qu'on est souvent fatigu&eacute;, m&ecirc;me en ayant bien dormi.</p>
+    </section>
+    </div>
+
+    <!-- Section 4 : La douleur -->
+    <div class="livret-section-wrap bg-warm">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>La douleur (les alarmes du corps)</h2>
+        </div>
+        <img src="images/livret/enfant-douleur.jpg" alt="Enfant qui a mal" class="livret-img">
+        <p class="livret-text">Avoir mal, c'est le corps qui envoie des signaux d'alarme.</p>
+        <p class="livret-text">On apprend &agrave; &eacute;couter ces alarmes et &agrave; se reposer quand elles sonnent.</p>
+        <p class="livret-text livret-accent">Mais on peut apprendre &agrave; apprivoiser la douleur, avec l'aide des docteurs et de sa famille !</p>
+    </section>
+    </div>
+
+    <!-- Section 5 : Les aides -->
+    <div class="livret-section-wrap">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Les aides et astuces (les supers outils)</h2>
+        </div>
+        <p class="livret-text">Les b&eacute;quilles, les attelles, les v&ecirc;tements de compression.</p>
+        <p class="livret-text"><strong>Ce sont nos outils de super-h&eacute;ros pour aider notre colle sp&eacute;ciale !</strong></p>
+        <div class="livret-grid">
+            <img src="images/livret/mannequins.jpg" alt="Mannequins articulaires">
+            <img src="images/livret/genouillere.jpg" alt="Genouill&egrave;re">
+            <img src="images/livret/bequilles.jpg" alt="B&eacute;quilles">
+            <img src="images/livret/basket-fauteuil.png" alt="Basket en fauteuil">
+            <img src="images/livret/attelle.jpg" alt="Attelle">
+            <img src="images/livret/compression.jpg" alt="V&ecirc;tements de compression">
+        </div>
+    </section>
+    </div>
+
+    <!-- Section 6 : Jouer ensemble -->
+    <div class="livret-section-wrap bg-warm">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Jouons ensemble avec bienveillance !</h2>
+        </div>
+        <p class="livret-text livret-accent">Sois un super copain !</p>
+        <p class="livret-text">Ton copain avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse !</p>
+        <p class="livret-text"><strong>Dans la cour, on peut s'amuser ensemble &agrave; des jeux sans bousculade : la marelle, la corde &agrave; sauter, les jeux de soci&eacute;t&eacute;, le dessin...</strong></p>
+        <p class="livret-text"><strong>Pas besoin de se pousser pour bien rigoler !</strong></p>
+        <img src="images/livret/marelle.jpg" alt="Enfants jouant &agrave; la marelle" class="livret-img">
+    </section>
+    </div>
+
+    <!-- Section 7 : Ensemble -->
+    <div class="livret-section-wrap">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Ensemble, on est plus forts !</h2>
+        </div>
+        <img src="images/livret/enfants-calin.jpg" alt="Enfants qui se font un c&acirc;lin" class="livret-img">
+        <p class="livret-text">On peut parler, se comprendre et trouver des solutions ensemble.</p>
+        <p class="livret-text"><strong>C'est important de se sentir entour&eacute;.</strong></p>
+        <p class="livret-text livret-accent">Tu es un super-h&eacute;ros, n'oublie jamais !</p>
+
+        <div class="livret-parents-box">
+            <h3>Pour tes parents</h3>
+            <p>Site internet : <a href="https://www.sedocc.fr">www.sedocc.fr</a></p>
+            <p>Email : <a href="mailto:Sedocc31@gmail.com">Sedocc31@gmail.com</a></p>
+            <p>Facebook : <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener">SedOcc</a></p>
+        </div>
+    </section>
+    </div>
+
+    <!-- Bouton téléchargement bas de page -->
+    <div class="livret-bottom-download">
+        <p>Tu veux garder ce livret ou l'imprimer ?</p>
+        <a href="documents/Livret_SedOcc_enfant_corrige.pptx" download>T&eacute;l&eacute;charger le livret</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <ul class="footer-links">
+                    <li><a href="sed.html">Qu'est-ce que le SED ?</a></li>
+                    <li><a href="adhesion.html">Adh&eacute;sion et soutien</a></li>
+                    <li><a href="actualites-medicales.html">Actualit&eacute;s m&eacute;dicales</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="mentions-legales.html">Mentions l&eacute;gales</a></li>
+                    <li><a href="politique-cookies.html">Politique de cookies</a></li>
+                    <li><a href="politique-confidentialite.html">Politique de confidentialit&eacute;</a></li>
+                </ul>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/sed_occ31/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Copyright &copy; 2026 | SED'OCC. Tous droits r&eacute;serv&eacute;s.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
