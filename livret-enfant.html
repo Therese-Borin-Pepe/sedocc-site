@@ -110,6 +110,29 @@
             margin-top: 0.2rem;
         }
 
+        .livret-row {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .livret-row.reverse {
+            flex-direction: row-reverse;
+        }
+        .livret-row .livret-row-img {
+            flex: 0 0 45%;
+            max-width: 45%;
+        }
+        .livret-row .livret-row-img img {
+            width: 100%;
+            height: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+        }
+        .livret-row .livret-row-text {
+            flex: 1;
+        }
+
         .livret-text {
             color: var(--text-medium);
             font-size: 1.05rem;
@@ -228,6 +251,9 @@
             .livret-text { font-size: 1rem; }
             .livret-grid { grid-template-columns: repeat(2, 1fr); }
             .livret-img-row img { width: 100%; max-width: none; }
+            .livret-row { flex-direction: column; gap: 1rem; }
+            .livret-row.reverse { flex-direction: column; }
+            .livret-row .livret-row-img { flex: none; max-width: 70%; margin: 0 auto; }
         }
     </style>
 </head>
@@ -321,10 +347,22 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>Notre corps, une merveilleuse maison !</h2>
         </div>
-        <img src="images/livret/anatomie.jpg" alt="Le corps humain" class="livret-img">
-        <p class="livret-text">Dans notre corps, il y a une super colle magique qui s'appelle le <strong>collag&egrave;ne</strong>.</p>
-        <img src="images/livret/collagene-schema.jpg" alt="Le collag&egrave;ne" class="livret-img livret-img-small">
-        <p class="livret-text">Elle aide &agrave; tenir nos os, notre peau et tout le reste.</p>
+        <div class="livret-row">
+            <div class="livret-row-img">
+                <img src="images/livret/anatomie.jpg" alt="Le corps humain">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">Dans notre corps, il y a une super colle magique qui s'appelle le <strong>collag&egrave;ne</strong>.</p>
+            </div>
+        </div>
+        <div class="livret-row reverse">
+            <div class="livret-row-img">
+                <img src="images/livret/collagene-schema.jpg" alt="Le collag&egrave;ne">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">Elle aide &agrave; tenir nos os, notre peau et tout le reste.</p>
+            </div>
+        </div>
     </section>
     </div>
 
@@ -335,12 +373,16 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>Qu'est-ce que le SED ?</h2>
         </div>
-        <div class="livret-img-row">
-            <img src="images/livret/collagene-bouteille.jpg" alt="La colle du corps">
+        <div class="livret-row">
+            <div class="livret-row-img">
+                <img src="images/livret/collagene-bouteille.jpg" alt="La colle du corps">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">Pour les personnes avec le SED, la recette de cette colle est un peu diff&eacute;rente. Elle est moins solide ou trop &eacute;lastique.</p>
+                <p class="livret-text"><strong>Ce n'est pas une maladie contagieuse, c'est une diff&eacute;rence.</strong></p>
+                <p class="livret-text">La peau, les articulations, les muscles... plein de parties du corps ont besoin de cette colle !</p>
+            </div>
         </div>
-        <p class="livret-text">Pour les personnes avec le SED, la recette de cette colle est un peu diff&eacute;rente. Elle est moins solide ou trop &eacute;lastique.</p>
-        <p class="livret-text"><strong>Ce n'est pas une maladie contagieuse, c'est une diff&eacute;rence.</strong></p>
-        <p class="livret-text">La peau, les articulations, les muscles... plein de parties du corps ont besoin de cette colle !</p>
     </section>
     </div>
 
@@ -351,10 +393,21 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>La grande batterie &agrave; plat</h2>
         </div>
-        <img src="images/livret/batteries.png" alt="Batteries &agrave; plat" class="livret-img">
-        <img src="images/livret/enfant-fatigue.png" alt="Enfant fatigu&eacute;" class="livret-img livret-img-small">
-        <p class="livret-text">Le corps doit faire beaucoup plus d'efforts pour compenser la colle l&acirc;che, comme un muscle qui travaille trop.</p>
-        <p class="livret-text">C'est pour cela qu'on est souvent fatigu&eacute;, m&ecirc;me en ayant bien dormi.</p>
+        <div class="livret-row">
+            <div class="livret-row-img">
+                <img src="images/livret/batteries.png" alt="Batteries &agrave; plat">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">Le corps doit faire beaucoup plus d'efforts pour compenser la colle l&acirc;che, comme un muscle qui travaille trop.</p>
+                <p class="livret-text">C'est pour cela qu'on est souvent fatigu&eacute;, m&ecirc;me en ayant bien dormi.</p>
+            </div>
+        </div>
+        <div class="livret-row reverse">
+            <div class="livret-row-img">
+                <img src="images/livret/enfant-fatigue.png" alt="Enfant fatigu&eacute;">
+            </div>
+            <div class="livret-row-text"></div>
+        </div>
     </section>
     </div>
 
@@ -365,10 +418,16 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>La douleur<br><span class="livret-h2-sub">(les alarmes du corps)</span></h2>
         </div>
-        <img src="images/livret/enfant-douleur.jpg" alt="Enfant qui a mal" class="livret-img">
-        <p class="livret-text">Avoir mal, c'est le corps qui envoie des signaux d'alarme.</p>
-        <p class="livret-text">On apprend &agrave; &eacute;couter ces alarmes et &agrave; se reposer quand elles sonnent.</p>
-        <p class="livret-text livret-accent">Mais on peut apprendre &agrave; apprivoiser la douleur, avec l'aide des docteurs et de sa famille !</p>
+        <div class="livret-row reverse">
+            <div class="livret-row-img">
+                <img src="images/livret/enfant-douleur.jpg" alt="Enfant qui a mal">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">Avoir mal, c'est le corps qui envoie des signaux d'alarme.</p>
+                <p class="livret-text">On apprend &agrave; &eacute;couter ces alarmes et &agrave; se reposer quand elles sonnent.</p>
+                <p class="livret-text livret-accent">Mais on peut apprendre &agrave; apprivoiser la douleur, avec l'aide des docteurs et de sa famille !</p>
+            </div>
+        </div>
     </section>
     </div>
 
@@ -399,11 +458,17 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>Jouons ensemble avec bienveillance !</h2>
         </div>
-        <p class="livret-text livret-accent">Sois un super copain !</p>
-        <p class="livret-text">Ton copain avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse !</p>
-        <p class="livret-text"><strong>Dans la cour, on peut s'amuser ensemble &agrave; des jeux sans bousculade : la marelle, la corde &agrave; sauter, les jeux de soci&eacute;t&eacute;, le dessin...</strong></p>
-        <p class="livret-text"><strong>Pas besoin de se pousser pour bien rigoler !</strong></p>
-        <img src="images/livret/marelle.jpg" alt="Enfants jouant &agrave; la marelle" class="livret-img">
+        <div class="livret-row">
+            <div class="livret-row-img">
+                <img src="images/livret/marelle.jpg" alt="Enfants jouant &agrave; la marelle">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text livret-accent">Sois un super copain !</p>
+                <p class="livret-text">Ton copain avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse !</p>
+                <p class="livret-text"><strong>Dans la cour, on peut s'amuser ensemble &agrave; des jeux sans bousculade : la marelle, la corde &agrave; sauter, les jeux de soci&eacute;t&eacute;, le dessin...</strong></p>
+                <p class="livret-text"><strong>Pas besoin de se pousser pour bien rigoler !</strong></p>
+            </div>
+        </div>
     </section>
     </div>
 
@@ -414,10 +479,16 @@
             <img src="images/livret/super-heros.png" alt="">
             <h2>Ensemble, on est plus forts !</h2>
         </div>
-        <img src="images/livret/enfants-calin.jpg" alt="Enfants qui se font un c&acirc;lin" class="livret-img">
-        <p class="livret-text">On peut parler, se comprendre et trouver des solutions ensemble.</p>
-        <p class="livret-text"><strong>C'est important de se sentir entour&eacute;.</strong></p>
-        <p class="livret-text livret-accent">Tu es un super-h&eacute;ros, n'oublie jamais !</p>
+        <div class="livret-row reverse">
+            <div class="livret-row-img">
+                <img src="images/livret/enfants-calin.jpg" alt="Enfants qui se font un c&acirc;lin">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">On peut parler, se comprendre et trouver des solutions ensemble.</p>
+                <p class="livret-text"><strong>C'est important de se sentir entour&eacute;.</strong></p>
+                <p class="livret-text livret-accent">Tu es un super-h&eacute;ros, n'oublie jamais !</p>
+            </div>
+        </div>
 
         <div class="livret-parents-box">
             <h3>Pour tes parents</h3>
