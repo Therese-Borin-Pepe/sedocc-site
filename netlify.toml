@@ -148,7 +148,7 @@
 [[headers]]
   for = "/documents/*"
   [headers.values]
-    Cache-Control = "public, max-age=2592000"
+    Cache-Control = "public, max-age=3600"
 
 # Page 404
 [[redirects]]
