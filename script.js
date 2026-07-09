@@ -344,6 +344,7 @@ window.addEventListener('load', function() {
     document.body.appendChild(overlay);
 
     var lightboxImg = overlay.querySelector('.lightbox-img');
+    var excludeSelectors = '.logo, .navbar, .nav-container, .footer, .hero-logo, .lightbox-overlay, .cookie-banner';
 
     function openLightbox(src, alt) {
         lightboxImg.src = src;
@@ -357,7 +358,7 @@ window.addEventListener('load', function() {
     }
 
     overlay.addEventListener('click', function(e) {
-        if (e.target === overlay || e.target.classList.contains('lightbox-close')) {
+        if (e.target === overlay || e.target.classList.contains('lightbox-close') || e.target.closest('.lightbox-close')) {
             closeLightbox();
         }
     });
@@ -366,18 +367,36 @@ window.addEventListener('load', function() {
         if (e.key === 'Escape') closeLightbox();
     });
 
-    document.addEventListener('click', function(e) {
-        // Clic sur une image directe
-        if (e.target.classList.contains('lightbox-trigger')) {
-            openLightbox(e.target.src, e.target.alt);
-        }
-        // Clic sur un wrapper .image-clickable.lightbox-trigger
-        var wrapper = e.target.closest('.image-clickable.lightbox-trigger');
-        if (wrapper) {
-            var img = wrapper.querySelector('img');
-            if (img) openLightbox(img.src, img.alt);
-        }
+    function bindImage(img) {
+        if (img.dataset.lbBound) return;
+        if (img.closest(excludeSelectors)) return;
+        if (img.closest('a[href]')) return;
+        img.dataset.lbBound = '1';
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function(e) {
+            var w = img.naturalWidth || img.width;
+            var h = img.naturalHeight || img.height;
+            if (w < 60 && h < 60) return;
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(img.src, img.alt);
+        });
+    }
+
+    function bindAllImages() {
+        document.querySelectorAll('img').forEach(bindImage);
+    }
+    bindAllImages();
+    window.addEventListener('load', bindAllImages);
+    var lbObserver = new MutationObserver(function(mutations) {
+        var hasNewImages = mutations.some(function(m) {
+            return Array.from(m.addedNodes).some(function(n) {
+                return n.nodeName === 'IMG' || (n.querySelectorAll && n.querySelectorAll('img').length > 0);
+            });
+        });
+        if (hasNewImages) bindAllImages();
     });
+    lbObserver.observe(document.body, { childList: true, subtree: true });
 })();
 
 // ==========================================
