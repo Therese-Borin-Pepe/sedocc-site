@@ -175,23 +175,55 @@
             box-shadow: var(--shadow-md);
         }
 
-        .livret-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.8rem;
-            margin: 1.5rem 0;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+        .livret-scroll-hint {
+            text-align: center;
+            font-size: 0.9rem;
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
         }
-        .livret-grid img {
+        .livret-scroll-strip {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x proximity;
+            padding: 0.5rem 0.5rem 1rem;
+            margin: 0.5rem 0 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+        .livret-scroll-strip::-webkit-scrollbar {
+            height: 8px;
+        }
+        .livret-scroll-strip::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 999px;
+        }
+        .livret-scroll-strip::-webkit-scrollbar-track {
+            background: var(--bg-light);
+            border-radius: 999px;
+        }
+        .livret-scroll-item {
+            flex: 0 0 auto;
+            width: 200px;
+            scroll-snap-align: center;
+            text-align: center;
+        }
+        .livret-scroll-item img {
             width: 100%;
             aspect-ratio: 1;
             object-fit: contain;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
             background: var(--bg-white);
-            padding: 0.3rem;
+            padding: 0.6rem;
+            display: block;
+        }
+        .livret-scroll-item span {
+            display: block;
+            margin-top: 0.6rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--heading-color);
         }
 
         .livret-parents-box {
@@ -249,7 +281,7 @@
             .livret-hero-img { max-width: 160px; }
             .livret-section-header h2 { font-size: 1.25rem; }
             .livret-text { font-size: 1rem; }
-            .livret-grid { grid-template-columns: repeat(2, 1fr); }
+            .livret-scroll-item { width: 150px; }
             .livret-img-row img { width: 100%; max-width: none; }
             .livret-row { flex-direction: column; gap: 1rem; }
             .livret-row.reverse { flex-direction: column; }
@@ -431,12 +463,28 @@
         </div>
         <p class="livret-text">Les b&eacute;quilles, les attelles, les v&ecirc;tements de compression.</p>
         <p class="livret-text"><strong>Ce sont nos outils de super-h&eacute;ros pour aider notre colle sp&eacute;ciale !</strong></p>
-        <div class="livret-grid">
-            <img src="images/livret/genouillere.jpg" alt="Genouill&egrave;re">
-            <img src="images/livret/bequilles.jpg" alt="B&eacute;quilles">
-            <img src="images/livret/basket-fauteuil.png" alt="Basket en fauteuil">
-            <img src="images/livret/attelle.jpg" alt="Attelle">
-            <img src="images/livret/compression.jpg" alt="V&ecirc;tements de compression">
+        <p class="livret-scroll-hint">Fais glisser pour d&eacute;couvrir tous les outils &#8594;</p>
+        <div class="livret-scroll-strip">
+            <div class="livret-scroll-item">
+                <img src="images/livret/genouillere.jpg" alt="Genouill&egrave;re">
+                <span>Genouill&egrave;re</span>
+            </div>
+            <div class="livret-scroll-item">
+                <img src="images/livret/bequilles.jpg" alt="B&eacute;quilles">
+                <span>B&eacute;quilles</span>
+            </div>
+            <div class="livret-scroll-item">
+                <img src="images/livret/basket-fauteuil.png" alt="Basket en fauteuil">
+                <span>Basket fauteuil</span>
+            </div>
+            <div class="livret-scroll-item">
+                <img src="images/livret/attelle.jpg" alt="Attelle">
+                <span>Attelle</span>
+            </div>
+            <div class="livret-scroll-item">
+                <img src="images/livret/compression.jpg" alt="V&ecirc;tements de compression">
+                <span>V&ecirc;tements de compression</span>
+            </div>
         </div>
     </section>
     </div>
