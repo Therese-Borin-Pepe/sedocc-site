@@ -3548,25 +3548,31 @@ function drawVisuel(ctx, fmt, style) {
 
     // ----- Fond selon le style -----
     if (style === 'moderne') {
-        // Dégradé crème → pêche, sans bulles
+        // Dégradé crème → pêche, doux, fidèle au fond du hero du site
         const grad = ctx.createLinearGradient(0, 0, W, H);
         grad.addColorStop(0, '#FFF5EC');
-        grad.addColorStop(0.5, '#FFEDE0');
-        grad.addColorStop(1, '#FFD8C2');
+        grad.addColorStop(0.55, '#FFEDE0');
+        grad.addColorStop(1, '#FFE4D2');
         ctx.fillStyle = grad;
         ctx.fillRect(0, 0, W, H);
-        // Halo bordeaux discret en haut à droite
-        const haloRD = ctx.createRadialGradient(W, 0, 0, W, 0, W * 0.65);
-        haloRD.addColorStop(0, 'rgba(139, 26, 43, 0.18)');
+        // Halo bordeaux très discret en haut à droite (accent de marque, pas dominant)
+        const haloRD = ctx.createRadialGradient(W, 0, 0, W, 0, W * 0.6);
+        haloRD.addColorStop(0, 'rgba(139, 26, 43, 0.10)');
         haloRD.addColorStop(1, 'rgba(139, 26, 43, 0)');
         ctx.fillStyle = haloRD;
         ctx.fillRect(0, 0, W, H);
-        // Halo pêche discret en bas à gauche
-        const haloLB = ctx.createRadialGradient(0, H, 0, 0, H, W * 0.55);
-        haloLB.addColorStop(0, 'rgba(232, 120, 80, 0.18)');
-        haloLB.addColorStop(1, 'rgba(232, 120, 80, 0)');
-        ctx.fillStyle = haloLB;
-        ctx.fillRect(0, 0, W, H);
+        // Bulles douces et floutées façon hero du site (peu nombreuses, dans les coins,
+        // hors de la zone de texte) plutôt que les bulles "vitreuses" du reste du site
+        const heroBubbles = [
+            { x: 0.10, y: 0.10, r: 0.20, c1: '#F5D5A8', c2: '#E8B090' },
+            { x: 0.92, y: 0.07, r: 0.13, c1: '#F5D0B0', c2: '#EDBA98' },
+            { x: 0.05, y: 0.93, r: 0.16, c1: '#F0D0A8', c2: '#E5B898' },
+            { x: 0.95, y: 0.92, r: 0.19, c1: '#F0C8A0', c2: '#E0A088' },
+            { x: 0.02, y: 0.48, r: 0.09, c1: '#F5D8B8', c2: '#E8C0A0' }
+        ];
+        heroBubbles.forEach(function(b) {
+            drawHeroBubble(ctx, W * b.x, H * b.y, W * b.r, b.c1, b.c2);
+        });
     } else if (style === 'photo') {
         if (visuelPhoto) {
             const r = Math.max(W / visuelPhoto.width, H / visuelPhoto.height);
@@ -3704,25 +3710,6 @@ function drawVisuel(ctx, fmt, style) {
         ctx.textBaseline = 'top';
         ctx.fillText('Syndrome d\'Ehlers-Danlos Occitanie', W / 2, logoBottomY);
         logoBottomY += 40 * scale;
-    }
-
-    // ----- Bulles "vitreuses" identiques au site (page-bubbles) -----
-    if (style !== 'photo') {
-        // Positions et tailles reprises de styles.css (.page-bubbles)
-        // Tailles converties en ratio de la largeur (basées sur viewport ~1440px du site)
-        const siteBubbles = [
-            { x: 0.94, y: 0.05,  r: 0.085}, // b1 - haut droit
-            { x: 0.04, y: 0.28,  r: 0.055}, // b2 - gauche
-            { x: 0.93, y: 0.86,  r: 0.070}, // b3 - bas droit
-            { x: 0.22, y: 0.50,  r: 0.050}, // b4 - centre gauche
-            { x: 0.07, y: 0.92,  r: 0.060}, // b5 - bas gauche
-            { x: 0.48, y: 0.10,  r: 0.062}, // b6 - centre haut
-            { x: 0.97, y: 0.58,  r: 0.075}, // b7 - milieu droit
-            { x: 0.78, y: 0.42,  r: 0.045}  // b8 - centre droit
-        ];
-        siteBubbles.forEach(function(b) {
-            drawSiteBubble(ctx, W * b.x, H * b.y, W * b.r);
-        });
     }
 
     // ----- Bloc texte sous le logo, dans la moitié inférieure -----
@@ -3893,56 +3880,23 @@ function drawInstagramIcon(ctx, x, y, size, color) {
     ctx.restore();
 }
 
-// Bulle "vitreuse" identique aux .page-bubbles du site
-// Reproduit le radial-gradient + inset shadow du CSS
-function drawSiteBubble(ctx, x, y, r) {
-    // 1. Radial gradient principal avec reflet en haut à gauche (30% 25%)
+// Bulle douce et floutée, identique aux .bubble du hero du site
+// (radial-gradient à deux tons + flou, contrairement aux bulles "vitreuses" du reste de la page)
+function drawHeroBubble(ctx, x, y, r, colorA, colorB) {
+    ctx.save();
+    ctx.filter = 'blur(' + Math.round(r * 0.12) + 'px)';
+    ctx.globalAlpha = 0.28;
     const grad = ctx.createRadialGradient(
-        x - r * 0.4,   // décalage horizontal du reflet (-20% du centre)
-        y - r * 0.5,   // décalage vertical du reflet (-25% du centre)
-        0,
+        x - r * 0.25, y - r * 0.3, 0,
         x, y, r
     );
-    grad.addColorStop(0,    'rgba(255, 255, 255, 0.60)');
-    grad.addColorStop(0.40, 'rgba(245, 210, 170, 0.40)');
-    grad.addColorStop(0.70, 'rgba(232, 176, 144, 0.30)');
-    grad.addColorStop(1,    'rgba(232, 176, 144, 0)');
+    grad.addColorStop(0, colorA);
+    grad.addColorStop(1, colorB);
     ctx.fillStyle = grad;
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
-
-    // 2. Ombre interne en bas à droite (simule le inset box-shadow du CSS)
-    const insetDark = ctx.createRadialGradient(
-        x + r * 0.35, y + r * 0.4, 0,
-        x, y, r
-    );
-    insetDark.addColorStop(0,    'rgba(232, 176, 144, 0)');
-    insetDark.addColorStop(0.7,  'rgba(232, 176, 144, 0)');
-    insetDark.addColorStop(1,    'rgba(232, 176, 144, 0.18)');
-    ctx.fillStyle = insetDark;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-
-    // 3. Petit reflet brillant en haut à gauche (highlight blanc)
-    const highlight = ctx.createRadialGradient(
-        x - r * 0.4, y - r * 0.5, 0,
-        x - r * 0.4, y - r * 0.5, r * 0.5
-    );
-    highlight.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
-    highlight.addColorStop(1, 'rgba(255, 255, 255, 0)');
-    ctx.fillStyle = highlight;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fill();
-
-    // 4. Bordure très subtile
-    ctx.strokeStyle = 'rgba(245, 200, 160, 0.20)';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.stroke();
+    ctx.restore();
 }
 
 function drawBulles(ctx, W, H, opacityFactor) {
