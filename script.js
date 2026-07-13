@@ -243,6 +243,133 @@ document.querySelectorAll('section h2, .mission-text, .actions-text, .warning-bo
     revealObserver.observe(el);
 });
 
+// Livret enfant : animation du contenu de chaque rubrique
+document.querySelectorAll('.livret-row, .livret-energy-grid, .livret-equip-row, .livret-pact-box, .livret-draw-box, .livret-scroll-strip, .livret-parents-box').forEach(function(el, index) {
+    el.classList.add('scroll-reveal');
+    if (el.classList.contains('livret-equip-row')) {
+        el.classList.add('delay-' + ((index % 3) + 1));
+    }
+    revealObserver.observe(el);
+});
+
+// Livret enfant : sélection de la carte "niveau de super-énergie"
+document.querySelectorAll('.livret-energy-card').forEach(function(card) {
+    card.addEventListener('click', function() {
+        document.querySelectorAll('.livret-energy-card').forEach(function(c) {
+            c.classList.remove('selected');
+        });
+        card.classList.add('selected');
+    });
+});
+
+// Livret enfant : signature interactive du "Pacte des Supers Copains"
+const pactInput = document.getElementById('pact-signature-input');
+if (pactInput) {
+    const pactBox = pactInput.closest('.livret-pact-box');
+    const pactConfirm = document.getElementById('pact-signature-confirm');
+    pactInput.addEventListener('input', function() {
+        const name = pactInput.value.trim();
+        if (name) {
+            pactConfirm.textContent = '🎉 Merci ' + name + ', tu es un super copain !';
+            pactBox.classList.add('signed');
+        } else {
+            pactConfirm.textContent = '';
+            pactBox.classList.remove('signed');
+        }
+    });
+}
+
+// Livret enfant : coloriage interactif de la silhouette super-héros
+const coloringCanvas = document.getElementById('coloring-canvas');
+if (coloringCanvas) {
+    const ctx = coloringCanvas.getContext('2d');
+    ctx.lineWidth = 14;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    let currentColor = '#E63946';
+    let brushSize = 14;
+    let isErasing = false;
+    let drawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    const palette = document.getElementById('coloring-palette');
+    if (palette) {
+        palette.querySelectorAll('.livret-color-swatch').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                palette.querySelectorAll('.livret-color-swatch').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                isErasing = btn.dataset.color === 'eraser';
+                if (!isErasing) currentColor = btn.dataset.color;
+            });
+        });
+    }
+
+    const brushSizes = document.getElementById('coloring-brush-sizes');
+    if (brushSizes) {
+        brushSizes.querySelectorAll('.livret-brush-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                brushSizes.querySelectorAll('.livret-brush-btn').forEach(function(b) {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                brushSize = parseInt(btn.dataset.size, 10);
+            });
+        });
+    }
+
+    const clearBtn = document.getElementById('coloring-clear');
+    if (clearBtn) {
+        clearBtn.addEventListener('click', function() {
+            ctx.clearRect(0, 0, coloringCanvas.width, coloringCanvas.height);
+        });
+    }
+
+    function getPos(e) {
+        const rect = coloringCanvas.getBoundingClientRect();
+        const scaleX = coloringCanvas.width / rect.width;
+        const scaleY = coloringCanvas.height / rect.height;
+        return {
+            x: (e.clientX - rect.left) * scaleX,
+            y: (e.clientY - rect.top) * scaleY
+        };
+    }
+
+    function startDraw(e) {
+        drawing = true;
+        const pos = getPos(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        try { coloringCanvas.setPointerCapture(e.pointerId); } catch (err) {}
+    }
+
+    function moveDraw(e) {
+        if (!drawing) return;
+        const pos = getPos(e);
+        ctx.globalCompositeOperation = isErasing ? 'destination-out' : 'source-over';
+        ctx.strokeStyle = currentColor;
+        ctx.lineWidth = isErasing ? brushSize * 1.8 : brushSize;
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        lastX = pos.x;
+        lastY = pos.y;
+    }
+
+    function endDraw() {
+        drawing = false;
+    }
+
+    coloringCanvas.addEventListener('pointerdown', startDraw);
+    coloringCanvas.addEventListener('pointermove', moveDraw);
+    coloringCanvas.addEventListener('pointerup', endDraw);
+    coloringCanvas.addEventListener('pointerleave', endDraw);
+}
+
 // Photos en cascade (mosaïque mission, action photos)
 document.querySelectorAll('.mosaic-item, .action-photo').forEach(function(el, index) {
     el.classList.add('scroll-reveal-zoom');

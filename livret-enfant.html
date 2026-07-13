@@ -239,6 +239,32 @@
             box-shadow: var(--shadow-md);
             padding: 1.2rem 0.8rem;
             text-align: center;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.25s ease, transform 0.15s ease;
+            position: relative;
+        }
+        .livret-energy-card:hover {
+            transform: translateY(-3px);
+        }
+        .livret-energy-card.selected {
+            border-color: #5CA86B;
+        }
+        .livret-energy-card.selected::after {
+            content: '\2713';
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #5CA86B;
+            color: #FFFFFF;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .livret-battery-icon {
             width: 52px;
@@ -288,11 +314,11 @@
             display: flex;
             align-items: flex-start;
             gap: 1.2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.8rem;
         }
         .livret-equip-row img {
-            width: 72px;
-            height: 72px;
+            width: 110px;
+            height: 110px;
             object-fit: cover;
             border-radius: 50%;
             box-shadow: var(--shadow-md);
@@ -337,11 +363,34 @@
             font-weight: 600;
             white-space: nowrap;
         }
-        .livret-pact-line {
-            display: inline-block;
-            width: 200px;
-            border-bottom: 2px solid var(--text-light);
-            height: 1px;
+        .livret-pact-input {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            font-weight: 600;
+            color: var(--heading-color);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid var(--heading-color);
+            padding: 0.2rem 0.4rem;
+            width: 220px;
+            text-align: center;
+            outline: none;
+        }
+        .livret-pact-input::placeholder {
+            color: var(--text-light);
+            font-style: italic;
+            font-weight: 400;
+        }
+        .livret-pact-confirm {
+            text-align: center;
+            color: #5CA86B;
+            font-weight: 700;
+            margin-top: 0.8rem;
+            min-height: 1.4rem;
+        }
+        .livret-pact-box.signed {
+            border-color: #5CA86B;
         }
 
         /* ---- Page : Dessine ton super-héros ---- */
@@ -350,14 +399,110 @@
             border-radius: var(--radius-lg);
             background: var(--bg-white);
             padding: 1.5rem;
-            max-width: 300px;
+            max-width: 340px;
             margin: 1.5rem auto 0.8rem;
             text-align: center;
         }
-        .livret-draw-box svg {
+        .livret-coloring-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 260px;
+            margin: 0 auto;
+        }
+        .livret-coloring-bg {
+            display: block;
             width: 100%;
             height: auto;
-            max-width: 210px;
+            pointer-events: none;
+            user-select: none;
+        }
+        .livret-coloring-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+            cursor: crosshair;
+        }
+        .livret-color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1.1rem 0 0.8rem;
+        }
+        .livret-color-swatch {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-white);
+            box-shadow: 0 0 0 1.5px rgba(139, 26, 43, 0.25);
+            cursor: pointer;
+            padding: 0;
+            transition: transform 0.15s ease;
+        }
+        .livret-color-swatch:hover {
+            transform: scale(1.12);
+        }
+        .livret-color-swatch.active {
+            box-shadow: 0 0 0 2.5px var(--heading-color);
+            transform: scale(1.15);
+        }
+        .livret-eraser-swatch {
+            background: var(--bg-white);
+            color: var(--heading-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .livret-brush-sizes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 0.9rem;
+        }
+        .livret-brush-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            background: var(--bg-white);
+            box-shadow: 0 0 0 1.5px rgba(139, 26, 43, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+        .livret-brush-btn span {
+            display: block;
+            border-radius: 50%;
+            background: var(--heading-color);
+        }
+        .livret-brush-btn:hover {
+            transform: scale(1.1);
+        }
+        .livret-brush-btn.active {
+            box-shadow: 0 0 0 2.5px var(--heading-color);
+        }
+        .livret-coloring-clear {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: var(--radius-md);
+            padding: 0.35rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .livret-coloring-clear:hover {
+            background: var(--primary-color);
+            color: var(--bg-white);
         }
         .livret-draw-caption {
             text-align: center;
@@ -502,7 +647,7 @@
 
     <!-- Couverture -->
     <section class="livret-hero-section">
-        <h1>Le Livret SED'OCC</h1>
+        <h1>Le Livret Sed'Occ France</h1>
         <p class="livret-subtitle">Pour les enfants</p>
         <p class="livret-big-title">Le myst&egrave;re de la colle du corps</p>
         <p class="livret-small-subtitle">Comprendre le syndrome d'Ehlers-Danlos</p>
@@ -575,8 +720,39 @@
     </section>
     </div>
 
-    <!-- Section 4 : La douleur -->
+    <!-- Section 8 : Mon niveau de super-énergie -->
     <div class="livret-section-wrap bg-warm">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Mon niveau de super-&eacute;nergie !</h2>
+        </div>
+        <p class="livret-text">Tout le monde a une grande batterie d'&eacute;nergie &agrave; l'int&eacute;rieur de soi, et elle ne reste pas toujours pleine ! &Ccedil;a, c'est normal.</p>
+        <p class="livret-text">Parfois, quand la batterie est &agrave; plat, tu as le droit de te sentir triste ou en col&egrave;re. L'important, c'est d'apprendre &agrave; &eacute;couter ton corps.</p>
+        <p class="livret-text livret-accent">Montre &agrave; tes parents ou &agrave; tes copains o&ugrave; en est ta batterie aujourd'hui :</p>
+        <div class="livret-energy-grid">
+            <div class="livret-energy-card level-full">
+                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
+                <p class="livret-energy-label">Pile Verte<br>(Pleine)</p>
+                <p class="livret-energy-desc">Je suis en pleine forme ! Je peux jouer et faire plein de choses.</p>
+            </div>
+            <div class="livret-energy-card level-medium">
+                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
+                <p class="livret-energy-label">Pile Orange<br>(Moyenne)</p>
+                <p class="livret-energy-desc">Ma batterie baisse un peu... J'ai besoin de faire une pause ou de choisir un jeu calme, comme le dessin.</p>
+            </div>
+            <div class="livret-energy-card level-low">
+                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
+                <p class="livret-energy-label">Pile Rouge<br>(Vide)</p>
+                <p class="livret-energy-desc">Batterie &agrave; plat ! J'ai besoin de me reposer pour recharger mon &eacute;nergie.</p>
+            </div>
+        </div>
+    </section>
+    </div>
+
+
+    <!-- Section 4 : La douleur -->
+    <div class="livret-section-wrap">
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
@@ -595,125 +771,19 @@
     </section>
     </div>
 
-    <!-- Section 5 : Les aides -->
-    <div class="livret-section-wrap">
-    <section class="livret-section">
-        <div class="livret-section-header">
-            <img src="images/livret/super-heros.png" alt="">
-            <h2>Les aides et astuces<br><span class="livret-h2-sub">(les supers outils)</span></h2>
-        </div>
-        <p class="livret-text">Les b&eacute;quilles, les attelles, les v&ecirc;tements de compression.</p>
-        <p class="livret-text"><strong>Ce sont nos outils de super-h&eacute;ros pour aider notre colle sp&eacute;ciale !</strong></p>
-        <p class="livret-scroll-hint">Fais glisser pour d&eacute;couvrir tous les outils &#8594;</p>
-        <div class="livret-scroll-strip">
-            <div class="livret-scroll-item">
-                <img src="images/livret/genouillere.jpg" alt="Genouill&egrave;re">
-                <span>Genouill&egrave;re</span>
-            </div>
-            <div class="livret-scroll-item">
-                <img src="images/livret/bequilles.jpg" alt="B&eacute;quilles">
-                <span>B&eacute;quilles</span>
-            </div>
-            <div class="livret-scroll-item">
-                <img src="images/livret/basket-fauteuil.png" alt="Fauteuil roulant">
-                <span>Fauteuil roulant</span>
-            </div>
-            <div class="livret-scroll-item">
-                <img src="images/livret/attelle.jpg" alt="Attelle">
-                <span>Attelle</span>
-            </div>
-            <div class="livret-scroll-item">
-                <img src="images/livret/compression.jpg" alt="V&ecirc;tements de compression">
-                <span>V&ecirc;tements de compression</span>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <!-- Section 6 : Jouer ensemble -->
+    <!-- Section 5 : Les aides et astuces / Mes équipements de Super-Héros -->
     <div class="livret-section-wrap bg-warm">
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
-            <h2>Jouons ensemble avec bienveillance !</h2>
+            <h2>Les aides et astuces<br><span class="livret-h2-sub">(mes &eacute;quipements de super-h&eacute;ros)</span></h2>
         </div>
-        <div class="livret-row">
-            <div class="livret-row-img">
-                <img src="images/livret/marelle.jpg" alt="Enfants jouant &agrave; la marelle">
-            </div>
-            <div class="livret-row-text">
-                <p class="livret-text livret-accent">Sois un super copain !</p>
-                <p class="livret-text">Ton copain avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse !</p>
-                <p class="livret-text"><strong>Dans la cour, on peut s'amuser ensemble &agrave; des jeux sans bousculade : la marelle, la corde &agrave; sauter, les jeux de soci&eacute;t&eacute;, le dessin...</strong></p>
-                <p class="livret-text"><strong>Pas besoin de se pousser pour bien rigoler&nbsp;!</strong></p>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <!-- Section 7 : Ensemble -->
-    <div class="livret-section-wrap">
-    <section class="livret-section">
-        <div class="livret-section-header">
-            <img src="images/livret/super-heros.png" alt="">
-            <h2>Ensemble, on est plus forts !</h2>
-        </div>
-        <div class="livret-row reverse">
-            <div class="livret-row-img">
-                <img src="images/livret/enfants-calin.jpg" alt="Enfants qui se font un c&acirc;lin">
-            </div>
-            <div class="livret-row-text">
-                <p class="livret-text">On peut parler, se comprendre et trouver des solutions ensemble.</p>
-                <p class="livret-text"><strong>C'est important de se sentir entour&eacute;.</strong></p>
-                <p class="livret-text livret-accent">Tu es un super-h&eacute;ros, n'oublie jamais !</p>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <!-- Section 8 : Mon niveau de super-énergie -->
-    <div class="livret-section-wrap bg-warm">
-    <section class="livret-section">
-        <div class="livret-section-header">
-            <img src="images/livret/super-heros.png" alt="">
-            <h2>Mon niveau de super-&eacute;nergie !</h2>
-        </div>
-        <p class="livret-text">Comme on l'a vu, &agrave; cause de la colle l&acirc;che, le corps fait plus d'efforts et la grande batterie peut se vider plus vite. C'est normal !</p>
-        <p class="livret-text">Parfois, quand la batterie est &agrave; plat ou que les alarmes sonnent, tu as le droit de te sentir triste ou en col&egrave;re. L'important, c'est d'apprendre &agrave; &eacute;couter ton corps.</p>
-        <p class="livret-text livret-accent">Montre &agrave; tes parents ou &agrave; tes copains o&ugrave; en est ta batterie aujourd'hui :</p>
-        <div class="livret-energy-grid">
-            <div class="livret-energy-card level-full">
-                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
-                <p class="livret-energy-label">Pile Verte<br>(Pleine)</p>
-                <p class="livret-energy-desc">Je suis en pleine forme ! Je peux jouer, mais je fais attention &agrave; ma colle magique.</p>
-            </div>
-            <div class="livret-energy-card level-medium">
-                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
-                <p class="livret-energy-label">Pile Orange<br>(Moyenne)</p>
-                <p class="livret-energy-desc">Ma batterie baisse un peu... J'ai besoin de faire une pause ou de choisir un jeu calme, comme le dessin.</p>
-            </div>
-            <div class="livret-energy-card level-low">
-                <div class="livret-battery-icon"><span class="livret-battery-fill"></span></div>
-                <p class="livret-energy-label">Pile Rouge<br>(Vide)</p>
-                <p class="livret-energy-desc">Batterie &agrave; plat ! Mes alarmes sonnent, j'ai besoin de me reposer pour recharger mon &eacute;nergie.</p>
-            </div>
-        </div>
-    </section>
-    </div>
-
-    <!-- Section 9 : Mes équipements de Super-Héros -->
-    <div class="livret-section-wrap">
-    <section class="livret-section">
-        <div class="livret-section-header">
-            <img src="images/livret/super-heros.png" alt="">
-            <h2>Mes &eacute;quipements de Super-H&eacute;ros !</h2>
-        </div>
-        <p class="livret-text">Pour aider notre colle sp&eacute;ciale, nous avons des supers outils. Ce sont des aides pr&eacute;cieuses pour notre corps !</p>
+        <p class="livret-text">Il existe plein de supers outils pour nous aider au quotidien. Ce sont des aides pr&eacute;cieuses pour notre corps !</p>
         <div class="livret-equip-row">
-            <img src="images/livret/attelle.jpg" alt="Attelle">
+            <img src="images/livret/genouillere.jpg" alt="Genouill&egrave;re">
             <div>
                 <p class="livret-text" style="margin-bottom:0.3rem;"><strong>Les Boucliers Magiques</strong> (les attelles)</p>
-                <p class="livret-text">Ils prot&egrave;gent les articulations pour qu'elles restent bien en place et ne fassent pas de b&ecirc;tises.</p>
+                <p class="livret-text">Ils prot&egrave;gent les articulations (genoux, poignets...) pour qu'elles restent bien en place et ne fassent pas de b&ecirc;tises.</p>
             </div>
         </div>
         <div class="livret-equip-row">
@@ -733,32 +803,74 @@
     </section>
     </div>
 
-    <!-- Section 10 : Le Pacte des Supers Copains -->
-    <div class="livret-section-wrap bg-warm">
+    <!-- Section 6 : Jouer ensemble -->
+    <div class="livret-section-wrap">
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
-            <h2>Le Pacte des Supers Copains !</h2>
+            <h2>Jouons ensemble avec bienveillance !</h2>
         </div>
-        <p class="livret-text">Ton copain avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse ! Pas besoin de se pousser pour bien rigoler !</p>
-        <div class="livret-pact-box">
-            <img src="images/livret/super-heros.png" alt="" class="livret-pact-badge">
-            <p class="livret-text"><strong>En signant ce dipl&ocirc;me de Super Copain, je m'engage &agrave; :</strong></p>
-            <ul class="livret-pact-list">
-                <li>&Eacute;couter mon copain s'il me dit que sa batterie est &agrave; plat.</li>
-                <li>Choisir des jeux sans bousculade ensemble avec lui (comme la marelle, les jeux de soci&eacute;t&eacute;, inventer des histoires...).</li>
-                <li>Me rappeler que m&ecirc;me si sa colle est diff&eacute;rente, ensemble, on est plus forts !</li>
-            </ul>
-            <div class="livret-pact-signature">
-                <span>Signature du super copain :</span>
-                <span class="livret-pact-line"></span>
+        <div class="livret-row">
+            <div class="livret-row-img">
+                <img src="images/livret/marelle.jpg" alt="Enfants jouant &agrave; la marelle">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text livret-accent">Sois un super copain !</p>
+                <p class="livret-text">Un copain ou une copine avec le SED a une colle sp&eacute;ciale qui le rend plus fragile. Ce n'est pas de sa faute, et il a besoin de ta gentillesse !</p>
+                <p class="livret-text"><strong>Dans la cour, on peut s'amuser ensemble &agrave; des jeux sans bousculade : la marelle, la corde &agrave; sauter, les jeux de soci&eacute;t&eacute;, le dessin...</strong></p>
+                <p class="livret-text"><strong>Pas besoin de se pousser pour bien rigoler&nbsp;!</strong></p>
             </div>
         </div>
     </section>
     </div>
 
-    <!-- Section 11 : Dessine ton super-héros -->
+    <!-- Section 7 : Ensemble -->
+    <div class="livret-section-wrap bg-warm">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Ensemble, on est plus forts !</h2>
+        </div>
+        <div class="livret-row reverse">
+            <div class="livret-row-img">
+                <img src="images/livret/enfants-calin.jpg" alt="Enfants qui se font un c&acirc;lin">
+            </div>
+            <div class="livret-row-text">
+                <p class="livret-text">On peut parler, se comprendre et trouver des solutions ensemble.</p>
+                <p class="livret-text"><strong>C'est important de se sentir entour&eacute;.</strong></p>
+                <p class="livret-text livret-accent">Tu es un super-h&eacute;ros, n'oublie jamais !</p>
+            </div>
+        </div>
+    </section>
+    </div>
+
+    <!-- Section 10 : Le Pacte des Supers Copains -->
     <div class="livret-section-wrap">
+    <section class="livret-section">
+        <div class="livret-section-header">
+            <img src="images/livret/super-heros.png" alt="">
+            <h2>Le Pacte des Supers Copains !</h2>
+        </div>
+        <p class="livret-text">Peut-&ecirc;tre que tu connais d&eacute;j&agrave;, ou que tu rencontreras un jour, un copain ou une copine avec le SED. Sa colle sp&eacute;ciale le rend plus fragile, mais ce n'est pas de sa faute ! Pas besoin de se pousser pour bien rigoler ensemble.</p>
+        <div class="livret-pact-box">
+            <img src="images/livret/super-heros.png" alt="" class="livret-pact-badge">
+            <p class="livret-text"><strong>En signant ce dipl&ocirc;me de Super Copain, je m'engage &agrave; :</strong></p>
+            <ul class="livret-pact-list">
+                <li>&Eacute;couter un copain ou une copine qui me dit que sa batterie est &agrave; plat.</li>
+                <li>Proposer des jeux sans bousculade (comme la marelle, les jeux de soci&eacute;t&eacute;, inventer des histoires...).</li>
+                <li>Me rappeler que m&ecirc;me quand la colle de quelqu'un est diff&eacute;rente, ensemble, on est plus forts !</li>
+            </ul>
+            <div class="livret-pact-signature">
+                <span>Signature du super copain :</span>
+                <input type="text" id="pact-signature-input" class="livret-pact-input" placeholder="Ton pr&eacute;nom ici" maxlength="30" autocomplete="off">
+            </div>
+            <p class="livret-pact-confirm" id="pact-signature-confirm"></p>
+        </div>
+    </section>
+    </div>
+
+    <!-- Section 11 : Dessine ton super-héros -->
+    <div class="livret-section-wrap bg-warm">
     <section class="livret-section">
         <div class="livret-section-header">
             <img src="images/livret/super-heros.png" alt="">
@@ -767,31 +879,35 @@
         <p class="livret-text">Tu as d&eacute;couvert le secret de la colle magique et tu as appris &agrave; &eacute;couter ta grande batterie. Tu sais quoi ? G&eacute;rer tout &ccedil;a tous les jours fait de toi un vrai super-h&eacute;ros !</p>
         <p class="livret-text"><strong>&Agrave; quoi ressemble ton costume ?</strong> Dessine-toi en super-h&eacute;ros ou colorie la silhouette ci-dessous. N'oublie pas de choisir tes couleurs pr&eacute;f&eacute;r&eacute;es et de rajouter tes supers outils pour t'aider (tes boucliers, ton armure ou tes propulseurs) !</p>
         <div class="livret-draw-box">
-            <svg viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg">
-                <g fill="none" stroke="#8B1A2B" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
-                    <polygon points="90,90 150,90 178,232 120,204 62,232" />
-                    <circle cx="120" cy="55" r="36" />
-                    <rect x="90" y="48" width="60" height="13" rx="6.5" />
-                    <rect x="88" y="92" width="64" height="85" rx="22" />
-                    <polygon points="120,110 125,121 137,122 127,130 131,142 120,135 109,142 113,130 103,122 115,121" />
-                    <circle cx="120" cy="165" r="7" />
-                    <rect x="58" y="100" width="20" height="60" rx="10" />
-                    <rect x="162" y="100" width="20" height="60" rx="10" />
-                    <circle cx="68" cy="163" r="11" />
-                    <circle cx="172" cy="163" r="11" />
-                    <rect x="95" y="177" width="22" height="70" rx="10" />
-                    <rect x="123" y="177" width="22" height="70" rx="10" />
-                    <rect x="90" y="245" width="32" height="18" rx="6" />
-                    <rect x="118" y="245" width="32" height="18" rx="6" />
-                </g>
-            </svg>
-            <p class="livret-draw-caption">Dessine-toi ici !</p>
+            <div class="livret-coloring-wrap">
+                <canvas id="coloring-canvas" class="livret-coloring-canvas" width="676" height="702"></canvas>
+                <img src="images/livret/super-heros-silhouette.png" alt="Silhouette de super-h&eacute;ros &agrave; colorier" class="livret-coloring-bg">
+            </div>
+            <div class="livret-color-palette" id="coloring-palette">
+                <button type="button" class="livret-color-swatch active" style="background:#E63946" data-color="#E63946" aria-label="Rouge"></button>
+                <button type="button" class="livret-color-swatch" style="background:#E8963D" data-color="#E8963D" aria-label="Orange"></button>
+                <button type="button" class="livret-color-swatch" style="background:#F2C94C" data-color="#F2C94C" aria-label="Jaune"></button>
+                <button type="button" class="livret-color-swatch" style="background:#5CA86B" data-color="#5CA86B" aria-label="Vert"></button>
+                <button type="button" class="livret-color-swatch" style="background:#4FA8C9" data-color="#4FA8C9" aria-label="Bleu"></button>
+                <button type="button" class="livret-color-swatch" style="background:#9B6FC9" data-color="#9B6FC9" aria-label="Violet"></button>
+                <button type="button" class="livret-color-swatch" style="background:#F2A6C9" data-color="#F2A6C9" aria-label="Rose"></button>
+                <button type="button" class="livret-color-swatch" style="background:#6B4630" data-color="#6B4630" aria-label="Marron"></button>
+                <button type="button" class="livret-color-swatch" style="background:#2B2B2B" data-color="#2B2B2B" aria-label="Noir"></button>
+                <button type="button" class="livret-color-swatch livret-eraser-swatch" data-color="eraser" aria-label="Gomme">&#9099;</button>
+            </div>
+            <div class="livret-brush-sizes" id="coloring-brush-sizes">
+                <button type="button" class="livret-brush-btn" data-size="6" aria-label="Stylo fin"><span style="width:6px;height:6px;"></span></button>
+                <button type="button" class="livret-brush-btn active" data-size="14" aria-label="Stylo moyen"><span style="width:14px;height:14px;"></span></button>
+                <button type="button" class="livret-brush-btn" data-size="26" aria-label="Stylo &eacute;pais"><span style="width:26px;height:26px;"></span></button>
+            </div>
+            <button type="button" class="livret-coloring-clear" id="coloring-clear">Tout effacer</button>
+            <p class="livret-draw-caption">Choisis une couleur et dessine directement sur le dessin !</p>
         </div>
     </section>
     </div>
 
     <!-- Section 12 : Pour tes parents -->
-    <div class="livret-section-wrap bg-warm">
+    <div class="livret-section-wrap">
     <section class="livret-section">
         <div class="livret-parents-box">
             <h3>Pour tes parents</h3>
@@ -836,6 +952,6 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=3"></script>
 </body>
 </html>
