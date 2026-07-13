@@ -400,6 +400,13 @@
                         <input type="file" id="vis-photo" accept="image/*" onchange="loadVisuelPhoto(this)">
                     </div>
 
+                    <div class="form-group">
+                        <label>Logos partenaires à afficher (optionnel)</label>
+                        <div id="vis-logos-partenaires" style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
+                            <!-- Généré par JS depuis PARTNER_LOGO_OPTIONS -->
+                        </div>
+                    </div>
+
                     <button class="btn btn-primary" onclick="downloadVisuel()" style="width:100%;font-size:1.1rem;padding:14px;">⬇ Télécharger en PNG haute qualité</button>
                 </div>
 
@@ -3505,6 +3512,13 @@ const VISUEL_FORMATS = {
 let visuelLogo = null;
 let visuelPhoto = null;
 
+// Logos partenaires/organismes pouvant être ajoutés en option sur le visuel.
+// Pour ajouter un logo : mettre le fichier dans images/partners/ puis ajouter une ligne ici.
+const PARTNER_LOGO_OPTIONS = [
+    { key: 'maladies-rares', label: 'Maladies Rares Occitanie', src: 'images/partners/maladies-rares.jpg' }
+];
+const partnerLogoImages = {};
+
 // Préchargement du logo SED'OCC
 (function preloadLogo() {
     const img = new Image();
@@ -3512,6 +3526,26 @@ let visuelPhoto = null;
     img.onload = function() { visuelLogo = img; if (typeof updateVisuel === 'function') updateVisuel(); };
     img.src = 'images/logo.jpg';
 })();
+
+// Préchargement des logos partenaires disponibles en option
+PARTNER_LOGO_OPTIONS.forEach(function(p) {
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function() { partnerLogoImages[p.key] = img; if (typeof updateVisuel === 'function') updateVisuel(); };
+    img.src = p.src;
+});
+
+// Génère les cases à cocher "logos partenaires" depuis PARTNER_LOGO_OPTIONS
+function renderPartnerLogoCheckboxes() {
+    const container = document.getElementById('vis-logos-partenaires');
+    if (!container) return;
+    container.innerHTML = PARTNER_LOGO_OPTIONS.map(function(p) {
+        return '<label style="font-weight:400;display:flex;align-items:center;gap:6px;cursor:pointer;">' +
+            '<input type="checkbox" value="' + p.key + '" onchange="updateVisuel()"> ' + p.label +
+            '</label>';
+    }).join('');
+}
+renderPartnerLogoCheckboxes();
 
 function loadVisuelPhoto(input) {
     if (!input.files || !input.files[0]) return;
@@ -3632,10 +3666,10 @@ function drawVisuel(ctx, fmt, style) {
     let logoBottomY = padY;
     if (visuelLogo) {
         let logoSize;
-        if (isWide) logoSize = 200 * scale;
-        else if (isStory) logoSize = 280 * scale;
-        else if (isA4) logoSize = 320 * scale;
-        else logoSize = 260 * scale;
+        if (isWide) logoSize = 240 * scale;
+        else if (isStory) logoSize = 335 * scale;
+        else if (isA4) logoSize = 385 * scale;
+        else logoSize = 310 * scale;
 
         const logoCx = W / 2;
         const logoCy = padY + logoSize / 2;
@@ -3702,14 +3736,6 @@ function drawVisuel(ctx, fmt, style) {
         ctx.drawImage(tmp, logoCx - logoSize / 2, logoCy - logoSize / 2);
 
         logoBottomY = logoCy + logoSize / 2 + 35 * scale;
-
-        // 5. Nom de l'asso (déjà sur le logo, on ne le redouble plus — on met juste le sous-titre)
-        ctx.fillStyle = colorPrimary;
-        ctx.font = 'bold ' + (28 * scale) + 'px Poppins, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'top';
-        ctx.fillText('Syndrome d\'Ehlers-Danlos Occitanie', W / 2, logoBottomY);
-        logoBottomY += 40 * scale;
     }
 
     // ----- Bloc texte sous le logo, dans la moitié inférieure -----
@@ -3801,8 +3827,31 @@ function drawVisuel(ctx, fmt, style) {
         ctx.fillText('🔗 ' + lien, W / 2, cursorY + lh / 2);
     }
 
-    // ----- Pied : URL + icônes réseaux sociaux -----
+    // ----- Logos partenaires optionnels, au-dessus du pied de page -----
     const showReseaux = reseauxMode === 'oui' || (reseauxMode === 'auto' && !isWide);
+    const activePartnerLogos = PARTNER_LOGO_OPTIONS.filter(function(p) {
+        const cb = document.querySelector('#vis-logos-partenaires input[value="' + p.key + '"]');
+        return cb && cb.checked && partnerLogoImages[p.key];
+    });
+    const footerReserve = (showReseaux ? 155 : 55) * scale;
+    if (activePartnerLogos.length) {
+        const logoH = 55 * scale;
+        const gap2 = 36 * scale;
+        const widths = activePartnerLogos.map(function(p) {
+            const img = partnerLogoImages[p.key];
+            return logoH * (img.width / img.height);
+        });
+        const totalW2 = widths.reduce(function(a, b) { return a + b; }, 0) + gap2 * (activePartnerLogos.length - 1);
+        let lx2 = (W - totalW2) / 2;
+        const logoRowY = H - padY * 0.45 - footerReserve - logoH;
+        activePartnerLogos.forEach(function(p, i) {
+            const img = partnerLogoImages[p.key];
+            ctx.drawImage(img, lx2, logoRowY, widths[i], logoH);
+            lx2 += widths[i] + gap2;
+        });
+    }
+
+    // ----- Pied : URL + icônes réseaux sociaux -----
 
     // Site web sedocc.fr
     ctx.fillStyle = colorAccent;
