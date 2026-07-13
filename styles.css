@@ -1235,6 +1235,10 @@ a.btn-secondary:hover {
         width: 100%;
     }
 
+    .hero-cta .btn {
+        width: auto;
+    }
+
     .mission-grid {
         grid-template-columns: 1fr;
     }
