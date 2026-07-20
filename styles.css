@@ -581,7 +581,7 @@ a:hover {
 .hero-logo {
     height: 160px;
     width: auto;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
 }
 
 .hero-title {
@@ -596,6 +596,7 @@ a:hover {
     font-size: clamp(1.1rem, 2.5vw, 1.4rem);
     font-weight: 300;
     font-style: italic;
+    margin-top: 0 !important;
     margin-bottom: var(--spacing-lg);
     letter-spacing: 1px;
 }
