@@ -721,6 +721,14 @@ a.btn-secondary:hover {
 
 .highlight-actu-info {
     padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.highlight-actu-info .btn {
+    margin-top: auto;
+    align-self: flex-start;
 }
 
 .highlight-actu-label {

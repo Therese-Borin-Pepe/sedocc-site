@@ -218,8 +218,6 @@
                 grid.innerHTML = actus.slice(0, 2).map(a => {
                     const excerptRaw = a.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                     const excerpt = excerptRaw.length > 160 ? excerptRaw.substring(0, 160) + '…' : excerptRaw;
-                    const href = a.link || 'actualites.html';
-                    const external = /^https?:\/\//.test(href);
                     return `
                     <div class="highlight-actu-card">
                         ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
@@ -227,7 +225,7 @@
                             <span class="highlight-actu-label">À la une</span>
                             <h2>${a.title}</h2>
                             <p>${excerpt}</p>
-                            <a href="${href}" class="btn btn-primary"${external ? ' target="_blank" rel="noopener"' : ''}>Découvrir</a>
+                            <a href="actualites.html#${a.id}" class="btn btn-primary">Découvrir</a>
                         </div>
                     </div>`;
                 }).join('');

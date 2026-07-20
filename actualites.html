@@ -124,7 +124,7 @@
                     return;
                 }
                 grid.innerHTML = actus.map(a => `
-                    <article class="actualite-asso-card">
+                    <article class="actualite-asso-card" id="${a.id}">
                         ${a.image ? (a.link ? `<a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-image"><img src="${a.image}" alt="${a.title}"></a>` : `<div class="actualite-asso-image"><img src="${a.image}" alt="${a.title}"></div>`) : ''}
                         <div class="actualite-asso-info">
                             ${a.date ? `<span class="actualite-asso-date">${a.date}</span>` : ''}
