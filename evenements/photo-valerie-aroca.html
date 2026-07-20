@@ -154,7 +154,7 @@
     <button id="lb-close" aria-label="Fermer">✕</button>
     <button id="lb-prev" aria-label="Photo précédente">‹</button>
     <figure style="display:flex;flex-direction:column;align-items:center;max-width:100%;">
-        <img id="lb-img" src="" alt="">
+        <img id="lb-img" src="" alt="" draggable="false" style="cursor:pointer;">
         <figcaption id="lb-caption"></figcaption>
     </figure>
     <button id="lb-next" aria-label="Photo suivante">›</button>
@@ -188,6 +188,12 @@ function lbNext() { lbIndex = (lbIndex + 1) % lbPhotos.length; showLbPhoto(); }
 document.getElementById('lb-close').onclick = closeLightbox;
 document.getElementById('lb-prev').onclick = function(e) { e.stopPropagation(); lbPrev(); };
 document.getElementById('lb-next').onclick = function(e) { e.stopPropagation(); lbNext(); };
+document.getElementById('lb-img').onclick = function(e) {
+    e.stopPropagation();
+    var r = this.getBoundingClientRect();
+    var clickedLeftHalf = (e.clientX - r.left) < r.width / 2;
+    if (clickedLeftHalf) { lbPrev(); } else { lbNext(); }
+};
 document.getElementById('lightbox').onclick = function(e) { if (e.target === this) closeLightbox(); };
 document.addEventListener('keydown', function(e) {
     if (!document.getElementById('lightbox').classList.contains('open')) return;
