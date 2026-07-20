@@ -75,6 +75,7 @@
 
     <section class="page-header">
         <div class="container">
+            <span class="page-eyebrow">Galerie &amp; Sensibilisation</span>
             <h1>Le Syndrome Ehlers Danlos, Photo de Valérie Aroca Troyano</h1>
         </div>
     </section>
@@ -112,8 +113,7 @@
     </footer>
     <script src="../script.js"></script>
 <style>
-.gallery-item img { cursor: zoom-in; transition: transform 0.2s, box-shadow 0.2s; }
-.gallery-item img:hover { transform: scale(1.03); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+.gallery-item img { cursor: zoom-in; }
 #lightbox {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
     z-index: 9999; align-items: center; justify-content: center; padding: 16px;
@@ -212,11 +212,11 @@ document.addEventListener('keydown', function(e) {
 
         let html = '<div class="evenement-detail">';
         if (d.date) html += '<p class="evenement-date">' + d.date + '</p>';
-        if (d.intro) html += '<div class="evenement-text">' + d.intro + '</div>';
+        if (d.intro) html += '<div class="evenement-text galerie-intro">' + d.intro + '</div>';
         var globalIndex = 0;
         (d.sections || []).forEach(function(section) {
             if (!section.photos || !section.photos.length) return;
-            if (section.title) html += '<h3 style="color:var(--heading-color);text-align:center;margin:var(--spacing-xl) 0 var(--spacing-lg);">' + section.title + '</h3>';
+            if (section.title) html += '<h3 class="galerie-section-title">' + section.title + '</h3>';
             const isPortraits = section.id === 'portraits';
             html += '<div class="gallery-grid' + (isPortraits ? ' gallery-portraits' : '') + '">';
             section.photos.forEach(function(photo) {
