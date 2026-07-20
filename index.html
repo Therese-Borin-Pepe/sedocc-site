@@ -120,8 +120,13 @@
                 <div class="mission-text" id="mission-text">
                     <h3 id="mission-titre">Notre mission</h3>
                     <div id="mission-contenu">
-                        <p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>
-                        <p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>
+                        <p>L'association a pour vocation de sensibiliser et d'agir pour mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare, auprès de :</p>
+                        <ul>
+                            <li>Le grand public</li>
+                            <li>Les professionnels de santé, médicaux et paramédicaux</li>
+                            <li>Les établissements de formation en santé</li>
+                            <li>Les écoles, collèges et lycées</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="mission-photos" id="mosaic-photos">
@@ -135,9 +140,11 @@
             <div class="actions-section">
                 <h3 id="actions-titre">Nos actions</h3>
                 <div class="actions-text" id="actions-contenu">
-                    <p>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</p>
-                    <p>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</p>
-                    <p>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</p>
+                    <ul>
+                        <li>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</li>
+                        <li>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</li>
+                        <li>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</li>
+                    </ul>
                 </div>
                 <div class="actions-grid">
                     <div class="action-photo"><img id="action1-img" src="images/action1.jpg" alt="Action SED'OCC - Sensibilisation"></div>
@@ -217,7 +224,9 @@
                 if (!grid || !actus.length) { if (section) section.style.display = 'none'; return; }
                 grid.innerHTML = actus.slice(0, 2).map(a => {
                     const excerptRaw = a.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                    const excerpt = excerptRaw.length > 160 ? excerptRaw.substring(0, 160) + '…' : excerptRaw;
+                    const excerpt = excerptRaw.length > 160
+                        ? excerptRaw.substring(0, 160).replace(/\s+\S*$/, '') + '…'
+                        : excerptRaw;
                     return `
                     <div class="highlight-actu-card">
                         ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}

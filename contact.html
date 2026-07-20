@@ -97,6 +97,19 @@
             color: var(--primary-color);
             margin-bottom: 1rem;
         }
+        .contact-intro {
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+        .contact-intro p {
+            color: var(--text-medium);
+            margin-bottom: 0.6rem;
+        }
+        .contact-intro a {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
         @media (max-width: 600px) {
             .form-row {
                 flex-direction: column;
@@ -177,6 +190,10 @@
 
     <section class="page-content">
         <div class="container">
+            <div class="contact-intro">
+                <p>Une question, une demande de partenariat ou envie de nous rejoindre ? Remplissez le formulaire ci-dessous, nous vous répondrons dans les meilleurs délais.</p>
+                <p>Vous pouvez aussi nous écrire directement à <a href="mailto:sedocc31@gmail.com">sedocc31@gmail.com</a>.</p>
+            </div>
             <div class="contact-form" id="contactFormWrap">
                 <form action="https://formspree.io/f/xeebroqw" method="POST" id="contactForm">
                     <div class="form-row">

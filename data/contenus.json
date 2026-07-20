@@ -6,11 +6,11 @@
   },
   "mission": {
     "titre": "Notre mission",
-    "texte": "<p>L'association a pour vocation de sensibiliser et d'agir auprès du grand public ainsi que des professionnels de santé, médicaux et paramédicaux, afin de mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare.</p>\n<p>Nous intervenons également auprès des établissements de formation en santé, mais aussi dans les écoles, collèges et lycées, pour informer et éduquer sur cette pathologie encore trop méconnue.</p>"
+    "texte": "<p>L'association a pour vocation de sensibiliser et d'agir pour mieux faire connaître le Syndrome d'Ehlers-Danlos, une maladie génétique rare, auprès de :</p>\n<ul>\n<li>Le grand public</li>\n<li>Les professionnels de santé, médicaux et paramédicaux</li>\n<li>Les établissements de formation en santé</li>\n<li>Les écoles, collèges et lycées</li>\n</ul>"
   },
   "actions": {
     "titre": "Nos actions",
-    "texte": "<p>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</p>\n<p>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</p>\n<p>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</p>"
+    "texte": "<ul>\n<li>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</li>\n<li>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</li>\n<li>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</li>\n</ul>"
   },
   "avertissement": {
     "texte": "<p>L'association n'a pas vocation à se substituer aux professionnels de santé, mais à compléter leurs actions par l'information, l'écoute et le soutien.</p>"
