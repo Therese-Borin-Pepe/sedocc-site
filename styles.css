@@ -1288,7 +1288,7 @@ a.btn-secondary:hover {
 
 @media (max-width: 640px) {
     .hero-logo {
-        height: 120px;
+        height: 100px;
     }
 
     .hero-buttons {
@@ -3112,15 +3112,19 @@ p {
 .hero {
     position: relative; text-align: center;
     background: linear-gradient(135deg, transparent 0%, transparent 100%);
-    padding: 30px 20px 60px; overflow: hidden;
+    padding: 100px 20px 60px; overflow: hidden;
 }
 .hero-logo {
-    height: 420px;
     position: relative;
     z-index: 2;
     animation: heroFloat 4s ease-in-out infinite;
     filter: drop-shadow(0 10px 25px rgba(139, 26, 43, 0.15));
     transition: transform 0.3s ease;
+}
+@media (min-width: 641px) {
+    .hero-logo {
+        height: 260px;
+    }
 }
 .hero-logo:hover {
     transform: scale(1.05);
