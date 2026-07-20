@@ -137,13 +137,19 @@
 #lb-close:hover { background: rgba(255,255,255,0.15); }
 #lb-prev, #lb-next {
     position: absolute; top: 50%; transform: translateY(-50%);
-    color: white; font-size: 2.2rem; cursor: pointer; background: rgba(0,0,0,0.3);
-    border: none; padding: 8px 14px; border-radius: 8px; transition: background 0.2s;
-    user-select: none;
+    color: white; cursor: pointer; background: rgba(0,0,0,0.55);
+    border: none; width: 52px; height: 52px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s; user-select: none;
 }
-#lb-prev { left: 12px; }
-#lb-next { right: 12px; }
-#lb-prev:hover, #lb-next:hover { background: rgba(0,0,0,0.6); }
+#lb-prev { left: 16px; }
+#lb-next { right: 16px; }
+#lb-prev:hover, #lb-next:hover { background: rgba(0,0,0,0.85); }
+@media (max-width: 640px) {
+    #lb-prev, #lb-next { width: 44px; height: 44px; }
+    #lb-prev { left: 8px; }
+    #lb-next { right: 8px; }
+}
 #lb-counter {
     position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
     color: rgba(255,255,255,0.7); font-size: 0.85rem;
@@ -153,12 +159,12 @@
 <!-- Lightbox -->
 <div id="lightbox" role="dialog" aria-modal="true">
     <button id="lb-close" aria-label="Fermer">✕</button>
-    <button id="lb-prev" aria-label="Photo précédente">‹</button>
+    <button id="lb-prev" aria-label="Photo précédente"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
     <figure style="display:flex;flex-direction:column;align-items:center;max-width:100%;">
         <img id="lb-img" src="" alt="" draggable="false" style="cursor:pointer;">
         <figcaption id="lb-caption"></figcaption>
     </figure>
-    <button id="lb-next" aria-label="Photo suivante">›</button>
+    <button id="lb-next" aria-label="Photo suivante"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/></svg></button>
     <div id="lb-counter"></div>
 </div>
 
