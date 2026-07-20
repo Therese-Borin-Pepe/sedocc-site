@@ -117,6 +117,7 @@
 #lightbox {
     display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88);
     z-index: 9999; align-items: center; justify-content: center; padding: 16px;
+    cursor: pointer;
 }
 #lightbox.open { display: flex; }
 #lightbox img {
@@ -185,16 +186,13 @@ function showLbPhoto() {
 function lbPrev() { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; showLbPhoto(); }
 function lbNext() { lbIndex = (lbIndex + 1) % lbPhotos.length; showLbPhoto(); }
 
-document.getElementById('lb-close').onclick = closeLightbox;
+document.getElementById('lb-close').onclick = function(e) { e.stopPropagation(); closeLightbox(); };
 document.getElementById('lb-prev').onclick = function(e) { e.stopPropagation(); lbPrev(); };
 document.getElementById('lb-next').onclick = function(e) { e.stopPropagation(); lbNext(); };
-document.getElementById('lb-img').onclick = function(e) {
-    e.stopPropagation();
-    var r = this.getBoundingClientRect();
-    var clickedLeftHalf = (e.clientX - r.left) < r.width / 2;
+document.getElementById('lightbox').onclick = function(e) {
+    var clickedLeftHalf = e.clientX < window.innerWidth / 2;
     if (clickedLeftHalf) { lbPrev(); } else { lbNext(); }
 };
-document.getElementById('lightbox').onclick = function(e) { if (e.target === this) closeLightbox(); };
 document.addEventListener('keydown', function(e) {
     if (!document.getElementById('lightbox').classList.contains('open')) return;
     if (e.key === 'Escape') closeLightbox();
