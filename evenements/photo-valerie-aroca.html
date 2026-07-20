@@ -222,7 +222,7 @@ document.addEventListener('keydown', function(e) {
             section.photos.forEach(function(photo) {
                 var idx = globalIndex++;
                 html += '<figure class="gallery-item" onclick="openLightbox(' + idx + ')" style="cursor:zoom-in;">';
-                html += '<img src="../' + photo.src + '" alt="' + (photo.alt || '') + '" loading="lazy">';
+                html += '<img src="../' + photo.src + '" alt="' + (photo.alt || '') + '" loading="lazy" draggable="false">';
                 if (photo.caption) html += '<figcaption>' + photo.caption + '</figcaption>';
                 html += '</figure>';
             });

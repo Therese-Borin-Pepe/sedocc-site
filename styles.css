@@ -2388,6 +2388,8 @@ a.evenement-card:hover {
     object-fit: cover;
     display: block;
     transition: transform var(--transition-medium);
+    -webkit-user-drag: none;
+    user-select: none;
 }
 
 .gallery-item:hover img,
