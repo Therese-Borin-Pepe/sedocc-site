@@ -220,7 +220,6 @@
                     const excerpt = excerptRaw.length > 160 ? excerptRaw.substring(0, 160) + '…' : excerptRaw;
                     const href = a.link || 'actualites.html';
                     const external = /^https?:\/\//.test(href);
-                    const shareUrl = window.location.origin + '/actualites.html#' + a.id;
                     return `
                     <div class="highlight-actu-card">
                         ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
@@ -229,7 +228,6 @@
                             <h2>${a.title}</h2>
                             <p>${excerpt}</p>
                             <a href="${href}" class="btn btn-primary"${external ? ' target="_blank" rel="noopener"' : ''}>Découvrir</a>
-                            ${shareRowHTML(shareUrl, a.title)}
                         </div>
                     </div>`;
                 }).join('');

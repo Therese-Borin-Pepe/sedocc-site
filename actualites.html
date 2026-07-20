@@ -123,20 +123,16 @@
                     grid.innerHTML = '<p style="text-align:center;color:#888;">Aucune actualité pour le moment.</p>';
                     return;
                 }
-                grid.innerHTML = actus.map(a => {
-                    const shareUrl = window.location.origin + window.location.pathname + '#' + a.id;
-                    return `
-                    <article class="actualite-asso-card" id="${a.id}">
+                grid.innerHTML = actus.map(a => `
+                    <article class="actualite-asso-card">
                         ${a.image ? (a.link ? `<a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-image"><img src="${a.image}" alt="${a.title}"></a>` : `<div class="actualite-asso-image"><img src="${a.image}" alt="${a.title}"></div>`) : ''}
                         <div class="actualite-asso-info">
                             ${a.date ? `<span class="actualite-asso-date">${a.date}</span>` : ''}
                             <h3>${a.title}</h3>
                             <div class="actualite-asso-body">${a.content}</div>
                             ${a.link ? `<a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-link">En savoir plus &rarr;</a>` : ''}
-                            ${shareRowHTML(shareUrl, a.title)}
                         </div>
-                    </article>`;
-                }).join('');
+                    </article>`).join('');
             });
     </script>
 </body>

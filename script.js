@@ -18,46 +18,6 @@ function fixFrenchTypography(root) {
 
 // Appliquer dès le chargement
 document.addEventListener('DOMContentLoaded', function() { fixFrenchTypography(); });
-
-// ==========================================
-// Partage sur les réseaux sociaux (actualités de l'association)
-// ==========================================
-function shareRowHTML(shareUrl, title) {
-    const u = encodeURIComponent(shareUrl);
-    const t = encodeURIComponent(title);
-    return `
-        <div class="actu-share">
-            <span class="actu-share-label">Partager :</span>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${u}" target="_blank" rel="noopener" class="actu-share-btn" aria-label="Partager sur Facebook">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            </a>
-            <a href="https://api.whatsapp.com/send?text=${t}%20${u}" target="_blank" rel="noopener" class="actu-share-btn" aria-label="Partager sur WhatsApp">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.83 14.19c-.24.68-1.4 1.31-1.94 1.36-.5.05-1.11.07-1.79-.11-.41-.11-.94-.29-1.62-.57-2.85-1.23-4.71-4.1-4.85-4.29-.14-.19-1.16-1.54-1.16-2.94s.72-2.09.98-2.38c.24-.26.53-.32.71-.32h.51c.16 0 .38-.06.6.46.24.57.81 1.97.88 2.11.07.14.11.31.02.5-.08.19-.13.31-.26.48-.13.16-.28.36-.4.48-.13.13-.27.28-.12.55.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.2 1.37.28.14.44.12.6-.07.16-.19.7-.81.89-1.09.19-.28.38-.23.63-.14.26.09 1.62.76 1.9.9.28.14.46.21.53.33.07.12.07.68-.17 1.36z"/></svg>
-            </a>
-            <button type="button" class="actu-share-btn actu-share-copy" onclick="copyShareLink('${shareUrl.replace(/'/g, "\\'")}', this)" aria-label="Copier le lien">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.07 0l2.83-2.83a5 5 0 00-7.07-7.07l-1.42 1.42"/><path d="M14 11a5 5 0 00-7.07 0L4.1 13.83a5 5 0 007.07 7.07l1.41-1.41"/></svg>
-            </button>
-            ${typeof navigator !== 'undefined' && navigator.share ? `
-            <button type="button" class="actu-share-btn" onclick="nativeShare('${shareUrl.replace(/'/g, "\\'")}', '${title.replace(/'/g, "\\'")}')" aria-label="Plus d'options de partage (Instagram, Messages...)">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            </button>` : ''}
-        </div>`;
-}
-
-function nativeShare(url, title) {
-    if (navigator.share) {
-        navigator.share({ title: title, url: url }).catch(function() {});
-    }
-}
-
-function copyShareLink(url, btn) {
-    navigator.clipboard.writeText(url).then(function() {
-        btn.classList.add('copied');
-        const original = btn.innerHTML;
-        btn.innerHTML = 'Lien copié !';
-        setTimeout(function() { btn.innerHTML = original; btn.classList.remove('copied'); }, 2000);
-    });
-}
 // Et après le chargement complet (au cas où du contenu serait injecté plus tard)
 window.addEventListener('load', function() { fixFrenchTypography(); });
 // Réobserver les contenus injectés dynamiquement (sed.html, evenement.html, etc.)

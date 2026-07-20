@@ -1846,51 +1846,6 @@ a.actualite-asso-image {
     text-decoration: underline;
 }
 
-/* Partage des actualités */
-.actu-share {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    margin-top: var(--spacing-md);
-    padding-top: var(--spacing-sm);
-    border-top: 1px solid var(--bg-light);
-}
-
-.actu-share-label {
-    font-size: 0.85rem;
-    color: var(--text-medium);
-    margin-right: 2px;
-}
-
-.actu-share-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--bg-light);
-    color: var(--primary-color);
-    border: none;
-    cursor: pointer;
-    transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-.actu-share-btn:hover {
-    background: var(--primary-color);
-    color: #FFFFFF;
-}
-
-.actu-share-copy.copied {
-    width: auto;
-    padding: 0 var(--spacing-sm);
-    border-radius: 16px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    background: var(--primary-color);
-    color: #FFFFFF;
-}
-
 /* Témoignages */
 .temoignage-section {
     margin-bottom: var(--spacing-2xl);
