@@ -1288,7 +1288,7 @@ a.btn-secondary:hover {
 
 @media (max-width: 640px) {
     .hero-logo {
-        height: 100px;
+        height: 150px;
     }
 
     .hero-buttons {
