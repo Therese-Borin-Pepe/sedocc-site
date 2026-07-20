@@ -106,7 +106,7 @@
     <!-- À la une -->
     <section class="highlight-actu" id="a-la-une">
         <div class="container">
-            <div class="highlight-actu-card" id="highlight-actu-card">
+            <div class="highlight-actu-grid" id="highlight-actu-grid">
                 <!-- Chargé dynamiquement depuis data/actualites-asso.json -->
             </div>
         </div>
@@ -208,24 +208,29 @@
 
     <script src="script.js"></script>
     <script>
-        // À la une : dernière actualité de l'association
+        // À la une : dernières actualités de l'association
         fetch('data/actualites-asso.json')
             .then(r => r.json())
             .then(actus => {
                 const section = document.getElementById('a-la-une');
-                const card = document.getElementById('highlight-actu-card');
-                if (!card || !actus.length) { if (section) section.style.display = 'none'; return; }
-                const a = actus[0];
-                const excerptRaw = a.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-                const excerpt = excerptRaw.length > 160 ? excerptRaw.substring(0, 160) + '…' : excerptRaw;
-                card.innerHTML = `
-                    ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
-                    <div class="highlight-actu-info">
-                        <span class="highlight-actu-label">À la une</span>
-                        <h2>${a.title}</h2>
-                        <p>${excerpt}</p>
-                        <a href="actualites.html" class="btn btn-primary">Découvrir</a>
+                const grid = document.getElementById('highlight-actu-grid');
+                if (!grid || !actus.length) { if (section) section.style.display = 'none'; return; }
+                grid.innerHTML = actus.slice(0, 2).map(a => {
+                    const excerptRaw = a.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+                    const excerpt = excerptRaw.length > 160 ? excerptRaw.substring(0, 160) + '…' : excerptRaw;
+                    const href = a.link || 'actualites.html';
+                    const external = /^https?:\/\//.test(href);
+                    return `
+                    <div class="highlight-actu-card">
+                        ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
+                        <div class="highlight-actu-info">
+                            <span class="highlight-actu-label">À la une</span>
+                            <h2>${a.title}</h2>
+                            <p>${excerpt}</p>
+                            <a href="${href}" class="btn btn-primary"${external ? ' target="_blank" rel="noopener"' : ''}>Découvrir</a>
+                        </div>
                     </div>`;
+                }).join('');
             });
 
         fetch('data/equipe.json')

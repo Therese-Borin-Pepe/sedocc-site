@@ -687,24 +687,26 @@ a.btn-secondary:hover {
     padding: 0 0 var(--spacing-xl);
 }
 
-.highlight-actu-card {
+.highlight-actu-grid {
     display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: var(--spacing-xl);
-    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: var(--spacing-lg);
     max-width: 1000px;
     margin: 0 auto;
+}
+
+.highlight-actu-card {
+    display: flex;
+    flex-direction: column;
     background: var(--bg-white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
-    padding: var(--spacing-lg);
 }
 
 .highlight-actu-image {
     width: 100%;
-    height: 220px;
-    border-radius: var(--radius-md);
+    height: 200px;
     overflow: hidden;
     background: var(--bg-light);
 }
@@ -714,6 +716,10 @@ a.btn-secondary:hover {
     height: 100%;
     object-fit: contain;
     display: block;
+}
+
+.highlight-actu-info {
+    padding: var(--spacing-lg);
 }
 
 .highlight-actu-label {
@@ -728,21 +734,13 @@ a.btn-secondary:hover {
 
 .highlight-actu-info h2 {
     margin-bottom: var(--spacing-sm);
+    font-size: 1.3rem;
 }
 
 .highlight-actu-info p {
     color: var(--text-medium);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-    .highlight-actu-card {
-        grid-template-columns: 1fr;
-    }
-    .highlight-actu-image {
-        height: 200px;
-    }
 }
 
 .mission {
