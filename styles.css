@@ -796,21 +796,6 @@ a.btn-secondary:hover {
     margin-bottom: var(--spacing-sm);
 }
 
-.mission-text ul {
-    margin: 0;
-    padding-left: 1.4rem;
-}
-
-.mission-text li {
-    font-size: 1.05rem;
-    line-height: 1.8;
-    margin-bottom: 0.5rem;
-}
-
-.mission-text li:last-child {
-    margin-bottom: 0;
-}
-
 .actions-section {
     margin-top: var(--spacing-xl);
     max-width: 1100px;
