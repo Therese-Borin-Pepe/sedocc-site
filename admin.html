@@ -287,6 +287,7 @@
             <button class="admin-sub-btn" onclick="switchOnglets('adhesion', 'association')">Adhésion &amp; soutien</button>
             <button class="admin-sub-btn" onclick="switchOnglets('initiatives', 'association')">Initiatives &amp; Partenariats</button>
             <button class="admin-sub-btn" onclick="switchTab('galerie', 'association')">Galerie</button>
+            <button class="admin-sub-btn" onclick="switchTab('actualites-asso', 'association')">Actualités de l'association</button>
             <button class="admin-sub-btn" style="border-style:dashed;" onclick="switchNavExtra('association', this)">+ Nouvelle page</button>
         </div>
 
@@ -685,6 +686,62 @@
 
             <h2 class="section-title">Evenements existants</h2>
             <div id="event-list" class="item-list">
+                <div class="loading">Chargement...</div>
+            </div>
+        </div>
+
+        <!-- ==================== ACTUALITES ASSOCIATION TAB ==================== -->
+        <div id="tab-actualites-asso" class="tab-panel">
+            <div class="actions-bar">
+                <button class="btn btn-success" onclick="showActuAssoForm()">+ Ajouter une actualité</button>
+            </div>
+
+            <div id="actu-asso-form-container" style="display:none;">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; align-items:start;">
+                    <div class="add-form">
+                        <h2 class="section-title" id="actu-asso-form-title">Ajouter une actualité</h2>
+                        <div class="form-group">
+                            <label>Titre *</label>
+                            <input type="text" id="aa-title" placeholder="Ex: Partenariat avec Les Zèbres SEd" oninput="updateActuAssoPreview()">
+                        </div>
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type="text" id="aa-date" placeholder="Ex: 20 juillet 2026">
+                        </div>
+                        <div class="form-group">
+                            <label>Image (optionnel)</label>
+                            <input type="file" id="aa-image" accept="image/*" onchange="previewImg(this, 'aa-image-preview'); updateActuAssoPreview();">
+                            <img id="aa-image-preview" class="image-preview">
+                            <small>Formats : JPG, PNG.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Contenu *</label>
+                            <div class="quill-wrapper"><div id="aa-content-editor"></div></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Lien externe (optionnel)</label>
+                            <input type="text" id="aa-link" placeholder="Ex: https://www.facebook.com/...">
+                        </div>
+                        <input type="hidden" id="aa-edit-index" value="-1">
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-primary" id="aa-save-btn" onclick="saveActuAsso()">Enregistrer</button>
+                            <button class="btn btn-secondary" onclick="hideActuAssoForm()">Annuler</button>
+                        </div>
+                    </div>
+                    <!-- Aperçu temps réel -->
+                    <div class="page-preview" style="position:sticky; top:20px;">
+                        <div class="page-preview-label">Aperçu — rendu sur le site</div>
+                        <div id="actu-asso-preview-img-wrap" style="display:none;"><img id="actu-asso-preview-img" style="width:100%;display:block;"></div>
+                        <div class="page-preview-header">
+                            <h2 id="actu-asso-preview-title"></h2>
+                        </div>
+                        <div class="page-preview-body" id="actu-asso-preview-body"></div>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Actualités de l'association existantes</h2>
+            <div id="actu-asso-list" class="item-list">
                 <div class="loading">Chargement...</div>
             </div>
         </div>
@@ -1122,15 +1179,17 @@ const REPO = 'Therese-Borin-Pepe/sedocc-site';
 const EVENTS_PATH = 'data/evenements.json';
 const EQUIPE_PATH = 'data/equipe.json';
 const ACTUS_PATH = 'data/actualites.json';
+const ACTUS_ASSO_PATH = 'data/actualites-asso.json';
 const ADMIN_PASSWORD = 'SedOcc2025!';
 const PARTNERS_PATH = 'data/partenaires.json';
 const CONTENUS_PATH = 'data/contenus.json';
 
 let githubToken = '';
 let isLocalMode = false;
-let evenements = [], equipe = [], actualites = [];
+let evenements = [], equipe = [], actualites = [], actualitesAsso = [];
 let quillEvEditor = null;
 let quillActuEditor = null;
+let quillActuAssoEditor = null;
 let quillCureEditor = null;
 let quillConfIntroEditor = null;
 let quillConfEditor = null;
@@ -1151,6 +1210,19 @@ function initActuEditor() {
     quillActuEditor = new Quill('#ac-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
     quillActuEditor.on('text-change', updateActuPreview);
     document.getElementById('ac-title').addEventListener('input', updateActuPreview);
+}
+
+function initActuAssoEditor() {
+    if (quillActuAssoEditor) return;
+    const toolbarOptions = [
+        ['bold', 'italic', 'underline'],
+        [{ 'header': [3, 4, false] }],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['link'],
+        ['clean']
+    ];
+    quillActuAssoEditor = new Quill('#aa-content-editor', { theme: 'snow', modules: { toolbar: toolbarOptions } });
+    quillActuAssoEditor.on('text-change', updateActuAssoPreview);
 }
 
 function initEvEditor() {
@@ -1259,7 +1331,7 @@ async function enterAdmin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('admin-screen').style.display = 'block';
     // Delay loading of partners/contenus to ensure functions are defined
-    const loaders = [loadEvents(), loadEquipe(), loadActus()];
+    const loaders = [loadEvents(), loadEquipe(), loadActus(), loadActusAsso()];
     if (typeof loadPartners === 'function') loaders.push(loadPartners());
     if (typeof loadContenus === 'function') loaders.push(loadContenus());
     if (typeof initQuillEditors === 'function') initQuillEditors();
@@ -1551,6 +1623,23 @@ function updateActuPreview() {
     const bodyEl = document.getElementById('actu-preview-body');
     if (titleEl) titleEl.textContent = title;
     if (bodyEl && quillActuEditor) bodyEl.innerHTML = quillActuEditor.root.innerHTML;
+}
+
+function updateActuAssoPreview() {
+    const title = document.getElementById('aa-title').value;
+    const titleEl = document.getElementById('actu-asso-preview-title');
+    const bodyEl = document.getElementById('actu-asso-preview-body');
+    const imgWrap = document.getElementById('actu-asso-preview-img-wrap');
+    const imgEl = document.getElementById('actu-asso-preview-img');
+    if (titleEl) titleEl.textContent = title;
+    if (bodyEl && quillActuAssoEditor) bodyEl.innerHTML = quillActuAssoEditor.root.innerHTML;
+    const fileInput = document.getElementById('aa-image');
+    if (fileInput && fileInput.files && fileInput.files[0]) {
+        imgEl.src = URL.createObjectURL(fileInput.files[0]);
+        imgWrap.style.display = 'block';
+    } else if (!imgEl.src || imgEl.src === window.location.href) {
+        imgWrap.style.display = 'none';
+    }
 }
 
 function updateOgPreview() {
@@ -2307,6 +2396,129 @@ async function moveActu(index, direction) {
         actusSha = await saveJsonFile(ACTUS_PATH, actualites, actusSha, `Reordonnement actualites`);
         renderActuList();
     } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActus(); }
+}
+
+// ===== ACTUALITES ASSOCIATION =====
+let actuAssoSha = '';
+
+async function loadActusAsso() {
+    try {
+        const result = await loadJsonFile(ACTUS_ASSO_PATH);
+        actualitesAsso = result.data; actuAssoSha = result.sha;
+        renderActuAssoList();
+    } catch (e) {
+        document.getElementById('actu-asso-list').innerHTML = '<p style="color:red;">Erreur de chargement.</p>';
+    }
+}
+
+function renderActuAssoList() {
+    const list = document.getElementById('actu-asso-list');
+    if (!actualitesAsso.length) { list.innerHTML = '<p style="color:#888;">Aucune actualité.</p>'; return; }
+    list.innerHTML = actualitesAsso.map((a, i) => `
+        <div class="item-card">
+            ${a.image ? `<img src="${isLocalMode ? a.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + a.image}" alt="${a.title}" onerror="this.style.background='#ddd'">` : ''}
+            <div class="item-info" style="flex:1;">
+                <h3>${a.title}</h3>
+                <span>${a.date || ''}</span>
+            </div>
+            <div class="item-actions">
+                ${i > 0 ? `<button class="btn btn-move" onclick="moveActuAsso(${i},-1)" title="Monter">&#9650;</button>` : ''}
+                ${i < actualitesAsso.length-1 ? `<button class="btn btn-move" onclick="moveActuAsso(${i},1)" title="Descendre">&#9660;</button>` : ''}
+                <button class="btn btn-secondary" onclick="previewSection(actualitesAsso[${i}].title, actualitesAsso[${i}].content)">Aperçu</button>
+                <button class="btn btn-warning" onclick="editActuAsso(${i})">Modifier</button>
+                <button class="btn btn-danger" onclick="deleteActuAsso(${i})">Supprimer</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function showActuAssoForm() {
+    document.getElementById('actu-asso-form-container').style.display = 'block';
+    document.getElementById('aa-edit-index').value = -1;
+    document.getElementById('actu-asso-form-title').textContent = 'Ajouter une actualité';
+    initActuAssoEditor();
+    ['aa-title','aa-date','aa-link'].forEach(id => document.getElementById(id).value = '');
+    quillActuAssoEditor.setContents([]);
+    document.getElementById('aa-image-preview').style.display = 'none';
+    document.getElementById('aa-image').value = '';
+    document.getElementById('actu-asso-preview-img').src = '';
+    updateActuAssoPreview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function hideActuAssoForm() { document.getElementById('actu-asso-form-container').style.display = 'none'; }
+
+function editActuAsso(i) {
+    document.getElementById('actu-asso-form-container').style.display = 'block';
+    document.getElementById('aa-edit-index').value = i;
+    document.getElementById('actu-asso-form-title').textContent = 'Modifier une actualité';
+    const a = actualitesAsso[i];
+    initActuAssoEditor();
+    document.getElementById('aa-title').value = a.title;
+    document.getElementById('aa-date').value = a.date || '';
+    document.getElementById('aa-link').value = a.link || '';
+    quillActuAssoEditor.setContents([]);
+    quillActuAssoEditor.clipboard.dangerouslyPasteHTML(0, a.content || '');
+    document.getElementById('aa-image-preview').style.display = 'none';
+    document.getElementById('aa-image').value = '';
+    document.getElementById('actu-asso-preview-img').src = a.image ? (isLocalMode ? a.image : 'https://raw.githubusercontent.com/' + REPO + '/main/' + a.image) : '';
+    updateActuAssoPreview();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function saveActuAsso() {
+    const title = document.getElementById('aa-title').value.trim();
+    const date = document.getElementById('aa-date').value.trim();
+    const link = document.getElementById('aa-link').value.trim();
+    const content = cleanQuillHtml(quillActuAssoEditor.root.innerHTML);
+    const imageInput = document.getElementById('aa-image');
+    const editIndex = parseInt(document.getElementById('aa-edit-index').value);
+    if (!title || !date || !content || content === '<p><br></p>') { showStatus('Remplissez le titre, la date et le contenu.', 'error'); return; }
+
+    const btn = document.getElementById('aa-save-btn');
+    btn.disabled = true; btn.textContent = 'Enregistrement...';
+
+    try {
+        const id = generateId(title);
+        let imagePath = editIndex >= 0 ? actualitesAsso[editIndex].image : '';
+        if (imageInput.files && imageInput.files[0]) {
+            const ext = imageInput.files[0].name.split('.').pop().toLowerCase();
+            imagePath = `images/actualites/${id}.${ext}`;
+            await uploadImage(imagePath, imageInput.files[0]);
+        }
+        const actu = { id, title, date, image: imagePath, content, link };
+
+        if (editIndex >= 0) {
+            actualitesAsso[editIndex] = actu;
+            actuAssoSha = await saveJsonFile(ACTUS_ASSO_PATH, actualitesAsso, actuAssoSha, `Modification actualite association: ${title}`);
+            showStatus(`"${title}" modifie.`, 'success');
+        } else {
+            actualitesAsso.unshift(actu);
+            actuAssoSha = await saveJsonFile(ACTUS_ASSO_PATH, actualitesAsso, actuAssoSha, `Ajout actualite association: ${title}`);
+            showStatus(`"${title}" ajoute !`, 'success');
+        }
+        hideActuAssoForm(); renderActuAssoList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); }
+    btn.disabled = false; btn.textContent = 'Enregistrer';
+}
+
+async function deleteActuAsso(index) {
+    if (!confirm(`Supprimer "${actualitesAsso[index].title}" ?`)) return;
+    const title = actualitesAsso[index].title;
+    actualitesAsso.splice(index, 1);
+    try {
+        actuAssoSha = await saveJsonFile(ACTUS_ASSO_PATH, actualitesAsso, actuAssoSha, `Suppression actualite association: ${title}`);
+        showStatus(`"${title}" supprime.`, 'success'); renderActuAssoList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActusAsso(); }
+}
+
+async function moveActuAsso(index, direction) {
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= actualitesAsso.length) return;
+    [actualitesAsso[index], actualitesAsso[newIndex]] = [actualitesAsso[newIndex], actualitesAsso[index]];
+    try {
+        actuAssoSha = await saveJsonFile(ACTUS_ASSO_PATH, actualitesAsso, actuAssoSha, `Reordonnement actualites association`);
+        renderActuAssoList();
+    } catch (e) { showStatus('Erreur: ' + e.message, 'error'); await loadActusAsso(); }
 }
 
 // ===== PARTENAIRES =====
@@ -3515,7 +3727,8 @@ let visuelPhoto = null;
 // Logos partenaires/organismes pouvant être ajoutés en option sur le visuel.
 // Pour ajouter un logo : mettre le fichier dans images/partners/ puis ajouter une ligne ici.
 const PARTNER_LOGO_OPTIONS = [
-    { key: 'maladies-rares', label: 'Maladies Rares Occitanie', src: 'images/partners/maladies-rares.jpg' }
+    { key: 'maladies-rares', label: 'Maladies Rares Occitanie', src: 'images/partners/maladies-rares.jpg' },
+    { key: 'zebres-sed', label: 'Les Zèbres SEd', src: 'images/partners/zebres-sed.png' }
 ];
 const partnerLogoImages = {};
 

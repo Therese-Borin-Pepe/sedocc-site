@@ -680,6 +680,71 @@ a.btn-secondary:hover {
    Mission Section
    ========================================== */
 
+/* À la une (accueil) */
+.highlight-actu {
+    position: relative;
+    z-index: 1;
+    padding: 0 0 var(--spacing-xl);
+}
+
+.highlight-actu-card {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--spacing-xl);
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    padding: var(--spacing-lg);
+}
+
+.highlight-actu-image {
+    width: 100%;
+    height: 220px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-light);
+}
+
+.highlight-actu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.highlight-actu-label {
+    display: inline-block;
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
+}
+
+.highlight-actu-info h2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.highlight-actu-info p {
+    color: var(--text-medium);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .highlight-actu-card {
+        grid-template-columns: 1fr;
+    }
+    .highlight-actu-image {
+        height: 200px;
+    }
+}
+
 .mission {
     position: relative;
     z-index: 1;
@@ -1707,6 +1772,79 @@ a.btn-secondary:hover {
 .actu-card li {
     margin-bottom: var(--spacing-xs);
     color: var(--text-medium);
+}
+
+/* Actualités de l'association */
+.actualites-asso-grid {
+    display: grid;
+    gap: var(--spacing-xl);
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.actualite-asso-card {
+    background: var(--bg-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+}
+
+.actualite-asso-image {
+    display: block;
+    width: 100%;
+    max-height: 380px;
+    overflow: hidden;
+    background: var(--bg-light);
+}
+
+a.actualite-asso-image {
+    cursor: pointer;
+}
+
+.actualite-asso-image img {
+    width: 100%;
+    height: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    display: block;
+}
+
+.actualite-asso-info {
+    padding: var(--spacing-lg);
+}
+
+.actualite-asso-date {
+    color: var(--primary-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.actualite-asso-info h3 {
+    margin-top: var(--spacing-xs);
+    color: var(--text-dark);
+}
+
+.actualite-asso-body {
+    color: var(--text-medium);
+    line-height: 1.6;
+}
+
+.actualite-asso-body p {
+    margin: 0 0 var(--spacing-sm);
+}
+
+.actualite-asso-link {
+    display: inline-block;
+    margin-top: var(--spacing-sm);
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.actualite-asso-link:hover {
+    text-decoration: underline;
 }
 
 /* Témoignages */
