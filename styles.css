@@ -778,6 +778,47 @@ a.btn-secondary:hover {
     margin: 14px auto 0;
 }
 
+.distinction-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    max-width: fit-content;
+    margin: 0 auto var(--spacing-xl);
+    padding: 0.7rem 1.4rem;
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    box-shadow: var(--shadow-sm);
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    text-align: center;
+    transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.distinction-badge:hover {
+    color: var(--text-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.distinction-badge strong {
+    color: var(--primary-color);
+}
+
+.distinction-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+@media (max-width: 640px) {
+    .distinction-badge {
+        max-width: 90%;
+        flex-wrap: wrap;
+        font-size: 0.9rem;
+    }
+}
+
 .mission-with-photos {
     display: grid;
     grid-template-columns: 1fr 1fr;
