@@ -1149,6 +1149,10 @@ a.btn-secondary:hover {
     margin-bottom: var(--spacing-lg);
 }
 
+.associations-partenaires-header {
+    margin-top: var(--spacing-2xl);
+}
+
 .partners-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
