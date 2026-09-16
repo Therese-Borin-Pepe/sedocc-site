@@ -278,10 +278,11 @@
             if (!grid) return;
             grid.innerHTML = partenaires.map(p => {
                 const img = `<img src="${p.image}" alt="${p.name}">`;
+                const name = `<span class="partner-logo-name">${p.name}</span>`;
                 if (p.url) {
-                    return `<div class="partner-logo"><a href="${p.url}" target="_blank">${img}</a></div>`;
+                    return `<div class="partner-logo"><a href="${p.url}" target="_blank">${img}${name}</a></div>`;
                 }
-                return `<div class="partner-logo">${img}</div>`;
+                return `<div class="partner-logo">${img}${name}</div>`;
             }).join('');
         });
 
@@ -293,10 +294,11 @@
             if (!grid) return;
             grid.innerHTML = associations.map(p => {
                 const img = `<img src="${p.image}" alt="${p.name}">`;
+                const name = `<span class="partner-logo-name">${p.name}</span>`;
                 if (p.url) {
-                    return `<div class="partner-logo"><a href="${p.url}" target="_blank">${img}</a></div>`;
+                    return `<div class="partner-logo"><a href="${p.url}" target="_blank">${img}${name}</a></div>`;
                 }
-                return `<div class="partner-logo">${img}</div>`;
+                return `<div class="partner-logo">${img}${name}</div>`;
             }).join('');
         });
 
