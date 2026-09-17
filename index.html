@@ -228,7 +228,7 @@
                 const section = document.getElementById('a-la-une');
                 const grid = document.getElementById('highlight-actu-grid');
                 if (!grid || !actus.length) { if (section) section.style.display = 'none'; return; }
-                grid.innerHTML = actus.slice(0, 2).map(a => {
+                grid.innerHTML = actus.slice(0, 3).map(a => {
                     const excerptRaw = a.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
                     const excerpt = excerptRaw.length > 160
                         ? excerptRaw.substring(0, 160).replace(/\s+\S*$/, '') + '…'
