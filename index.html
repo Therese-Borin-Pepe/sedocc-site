@@ -106,6 +106,9 @@
     <!-- À la une -->
     <section class="highlight-actu" id="a-la-une">
         <div class="container">
+            <div class="section-header">
+                <h2>À la une</h2>
+            </div>
             <div class="highlight-actu-grid" id="highlight-actu-grid">
                 <!-- Chargé dynamiquement depuis data/actualites-asso.json -->
             </div>
@@ -233,9 +236,8 @@
                     <div class="highlight-actu-card">
                         ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
                         <div class="highlight-actu-info">
-                            <span class="highlight-actu-label">À la une</span>
-                            <h2>${a.title}</h2>
-                            <a href="actualites.html#${a.id}" class="btn btn-primary">Découvrir</a>
+                            <h3>${a.title}</h3>
+                            <a href="${a.link || 'actualites.html#' + a.id}" class="btn btn-primary">Découvrir</a>
                         </div>
                     </div>`;
                 }).join('');

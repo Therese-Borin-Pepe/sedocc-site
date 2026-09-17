@@ -705,11 +705,17 @@ a.btn-secondary:hover {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     overflow: hidden;
+    transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.highlight-actu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg, var(--shadow-md));
 }
 
 .highlight-actu-image {
     width: 100%;
-    height: 150px;
+    height: 170px;
     overflow: hidden;
     background: var(--bg-light);
 }
@@ -717,35 +723,32 @@ a.btn-secondary:hover {
 .highlight-actu-image img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     display: block;
+    transition: transform var(--transition-medium);
+}
+
+.highlight-actu-card:hover .highlight-actu-image img {
+    transform: scale(1.05);
 }
 
 .highlight-actu-info {
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     flex: 1;
 }
 
 .highlight-actu-info .btn {
     margin-top: auto;
-    align-self: flex-start;
 }
 
-.highlight-actu-label {
-    display: inline-block;
-    color: var(--primary-color);
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: var(--spacing-xs);
-}
-
-.highlight-actu-info h2 {
-    margin-bottom: var(--spacing-sm);
+.highlight-actu-info h3 {
+    margin-bottom: var(--spacing-md);
     font-size: 1.3rem;
+    color: var(--heading-color);
 }
 
 .highlight-actu-info p {
