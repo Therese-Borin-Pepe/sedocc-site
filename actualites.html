@@ -133,6 +133,11 @@
                             ${a.link ? `<a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-link">En savoir plus &rarr;</a>` : ''}
                         </div>
                     </article>`).join('');
+
+                if (location.hash) {
+                    const target = document.getElementById(location.hash.slice(1));
+                    if (target) target.scrollIntoView({ block: 'start' });
+                }
             });
     </script>
 </body>
