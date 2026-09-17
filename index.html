@@ -245,7 +245,7 @@
             }));
             const actualites = actus.map(a => ({
                 id: a.id, title: a.title, date: a.date, image: a.image,
-                link: a.link || 'actualites.html#' + a.id,
+                link: 'actualites.html#' + a.id,
                 type: 'Actualité'
             }));
             const items = highlightedEvents.concat(actualites).slice(0, 3);
