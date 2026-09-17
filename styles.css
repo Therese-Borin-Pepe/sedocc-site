@@ -741,6 +741,40 @@ a.btn-secondary:hover {
     flex: 1;
 }
 
+.highlight-actu-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-sm);
+}
+
+.highlight-actu-type {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+.highlight-actu-type-event {
+    background: #C05A1F;
+}
+
+.highlight-actu-type-news {
+    background: var(--heading-color);
+}
+
+.highlight-actu-date {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
 .highlight-actu-info .btn {
     margin-top: auto;
 }

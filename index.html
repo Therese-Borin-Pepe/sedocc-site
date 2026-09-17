@@ -105,6 +105,12 @@
 
     <!-- À la une -->
     <section class="highlight-actu" id="a-la-une">
+        <div class="hero-bubbles">
+            <span class="bubble bubble-1"></span>
+            <span class="bubble bubble-3"></span>
+            <span class="bubble bubble-5"></span>
+            <span class="bubble bubble-6"></span>
+        </div>
         <div class="container">
             <div class="section-header">
                 <h2>À la une</h2>
@@ -224,24 +230,43 @@
 
     <script src="script.js"></script>
     <script>
-        // À la une : dernières actualités de l'association
-        fetch('data/actualites-asso.json')
-            .then(r => r.json())
-            .then(actus => {
-                const section = document.getElementById('a-la-une');
-                const grid = document.getElementById('highlight-actu-grid');
-                if (!grid || !actus.length) { if (section) section.style.display = 'none'; return; }
-                grid.innerHTML = actus.slice(0, 3).map(a => {
-                    return `
+        // À la une : événements mis en avant + actualités de l'association
+        Promise.all([
+            fetch('data/evenements.json').then(r => r.json()),
+            fetch('data/actualites-asso.json').then(r => r.json())
+        ]).then(([evenements, actus]) => {
+            const section = document.getElementById('a-la-une');
+            const grid = document.getElementById('highlight-actu-grid');
+
+            const highlightedEvents = evenements.filter(e => e.highlight).map(e => ({
+                id: e.id, title: e.title, date: e.date, image: e.image,
+                link: e.link || 'evenement.html?id=' + e.id,
+                type: 'Évènement'
+            }));
+            const actualites = actus.map(a => ({
+                id: a.id, title: a.title, date: a.date, image: a.image,
+                link: a.link || 'actualites.html#' + a.id,
+                type: 'Actualité'
+            }));
+            const items = highlightedEvents.concat(actualites).slice(0, 3);
+
+            if (!grid || !items.length) { if (section) section.style.display = 'none'; return; }
+            grid.innerHTML = items.map(a => {
+                const typeClass = a.type === 'Évènement' ? 'highlight-actu-type-event' : 'highlight-actu-type-news';
+                return `
                     <div class="highlight-actu-card">
                         ${a.image ? `<div class="highlight-actu-image"><img src="${a.image}" alt="${a.title}"></div>` : ''}
                         <div class="highlight-actu-info">
+                            <div class="highlight-actu-meta">
+                                <span class="highlight-actu-type ${typeClass}">${a.type}</span>
+                                ${a.date ? `<span class="highlight-actu-date">${a.date}</span>` : ''}
+                            </div>
                             <h3>${a.title}</h3>
-                            <a href="${a.link || 'actualites.html#' + a.id}" class="btn btn-primary">Découvrir</a>
+                            <a href="${a.link}" class="btn btn-primary">Découvrir</a>
                         </div>
                     </div>`;
-                }).join('');
-            });
+            }).join('');
+        });
 
         fetch('data/equipe.json')
             .then(r => r.json())
