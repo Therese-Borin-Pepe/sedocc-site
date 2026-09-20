@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualités de l'association - SED'OCC</title>
-    <meta name="description" content="Actualités, partenariats et vie de l'association SED'OCC - Syndrome d'Ehlers-Danlos Occitanie.">
+    <title>Actualité - SED'OCC</title>
+    <meta name="description" content="Actualité de l'association SED'OCC - Syndrome d'Ehlers-Danlos Occitanie.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -76,14 +76,14 @@
 
     <section class="page-header">
         <div class="container">
-            <h1>Actualités de l'association</h1>
+            <h1 id="actu-title">Chargement...</h1>
         </div>
     </section>
 
     <section class="page-content">
         <div class="container">
-            <div class="evenements-grid" id="actualites-grid">
-                <!-- Chargé dynamiquement depuis data/actualites-asso.json -->
+            <div class="evenement-detail" id="actu-detail">
+                <!-- Chargé dynamiquement -->
             </div>
         </div>
     </section>
@@ -115,30 +115,37 @@
     </footer>
     <script src="script.js"></script>
     <script>
-        // Compatibilité avec les anciens liens #id : redirige vers la page dédiée
-        if (location.hash) {
-            window.location.replace('actualite.html?id=' + location.hash.slice(1));
-        }
+        const params = new URLSearchParams(window.location.search);
+        const actuId = params.get('id');
 
-        fetch('data/actualites-asso.json')
-            .then(r => r.json())
-            .then(actus => {
-                const grid = document.getElementById('actualites-grid');
-                if (!actus.length) {
-                    grid.innerHTML = '<p style="text-align:center;color:#888;">Aucune actualité pour le moment.</p>';
-                    return;
-                }
-                grid.innerHTML = actus.map(a => `
-                    <a href="actualite.html?id=${a.id}" class="evenement-card">
-                        <div class="evenement-image">
-                            ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
-                        </div>
-                        <div class="evenement-info">
-                            <span class="evenement-category">${a.date || 'Actualité'}</span>
-                            <h3>${a.title}</h3>
-                        </div>
-                    </a>`).join('');
-            });
+        if (actuId) {
+            fetch('data/actualites-asso.json')
+                .then(r => r.json())
+                .then(actus => {
+                    const a = actus.find(x => x.id === actuId);
+                    if (a) {
+                        document.getElementById('actu-title').textContent = a.title;
+                        document.title = a.title + ' - SED\'OCC';
+                        let html = `<p class="evenement-date">${a.date || ''}</p>`;
+                        if (a.image) {
+                            html += `<div class="evenement-detail-image"><img src="${a.image}" alt="${a.title}"></div>`;
+                        }
+                        if (a.content) {
+                            html += `<div class="evenement-text">${a.content}</div>`;
+                        }
+                        if (a.link) {
+                            html += `<p><a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-link">En savoir plus &rarr;</a></p>`;
+                        }
+                        html += `<div class="evenement-back"><a href="actualites.html" class="btn btn-primary">Retour aux actualités</a></div>`;
+                        document.getElementById('actu-detail').innerHTML = html;
+                    } else {
+                        document.getElementById('actu-title').textContent = 'Actualité non trouvée';
+                        document.getElementById('actu-detail').innerHTML = '<p>Cette actualité n\'existe pas.</p><div class="evenement-back"><a href="actualites.html" class="btn btn-primary">Retour aux actualités</a></div>';
+                    }
+                });
+        } else {
+            window.location.href = 'actualites.html';
+        }
     </script>
 </body>
 </html>

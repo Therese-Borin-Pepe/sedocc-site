@@ -145,7 +145,7 @@
     <section class="mission" id="association">
         <div class="container">
             <h2>Notre association</h2>
-            <a href="actualites.html#prix-france-association-sante" class="distinction-badge">
+            <a href="actualite.html?id=prix-france-association-sante" class="distinction-badge">
                 <span class="distinction-icon">🏆</span>
                 <span>Lauréat du <strong>prix France Association Santé 2026</strong>, avec Maladies Rares Occitanie</span>
             </a>
@@ -291,7 +291,7 @@
                         <div class="carousel-card-info">
                             ${a.date ? `<span class="carousel-card-date">${a.date}</span>` : ''}
                             <h3>${a.title}</h3>
-                            <a href="actualites.html#${a.id}" class="btn btn-primary">Découvrir</a>
+                            <a href="actualite.html?id=${a.id}" class="btn btn-primary">Découvrir</a>
                         </div>
                     </div>`).join('');
                 initCarousel(track);
