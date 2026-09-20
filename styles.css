@@ -683,22 +683,44 @@ a.btn-secondary:hover {
    Mission Section
    ========================================== */
 
-/* À la une (accueil) */
-.highlight-actu {
+/* Carrousels (accueil) : rendez-vous & actualités */
+.carousel-section {
     position: relative;
     z-index: 1;
-    padding: 0 0 var(--spacing-xl);
+    padding: var(--spacing-xl) 0;
 }
 
-.highlight-actu-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: var(--spacing-lg);
-    max-width: 1100px;
+.carousel-section-alt {
+    background: var(--bg-light);
+}
+
+.carousel-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    max-width: 1140px;
     margin: 0 auto;
 }
 
-.highlight-actu-card {
+.carousel-track {
+    display: flex;
+    gap: var(--spacing-lg);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 0.4rem;
+    flex: 1;
+    scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-card {
+    flex: 0 0 300px;
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     background: var(--bg-white);
@@ -708,19 +730,19 @@ a.btn-secondary:hover {
     transition: transform var(--transition-medium), box-shadow var(--transition-medium);
 }
 
-.highlight-actu-card:hover {
+.carousel-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--shadow-lg, var(--shadow-md));
 }
 
-.highlight-actu-image {
+.carousel-card-image {
     width: 100%;
     height: 170px;
     overflow: hidden;
     background: var(--bg-light);
 }
 
-.highlight-actu-image img {
+.carousel-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -728,11 +750,11 @@ a.btn-secondary:hover {
     transition: transform var(--transition-medium);
 }
 
-.highlight-actu-card:hover .highlight-actu-image img {
+.carousel-card:hover .carousel-card-image img {
     transform: scale(1.05);
 }
 
-.highlight-actu-info {
+.carousel-card-info {
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
@@ -741,54 +763,64 @@ a.btn-secondary:hover {
     flex: 1;
 }
 
-.highlight-actu-meta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    flex-wrap: wrap;
-    margin-bottom: var(--spacing-sm);
-}
-
-.highlight-actu-type {
+.carousel-card-date {
     display: inline-block;
-    padding: 0.2rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
+    font-size: 0.78rem;
+    color: var(--primary-color);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    color: #fff;
+    margin-bottom: var(--spacing-sm);
 }
 
-.highlight-actu-type-event {
-    background: #C05A1F;
-}
-
-.highlight-actu-type-news {
-    background: var(--heading-color);
-}
-
-.highlight-actu-date {
-    font-size: 0.8rem;
-    color: var(--text-light);
-    font-weight: 600;
-}
-
-.highlight-actu-info .btn {
-    margin-top: auto;
-}
-
-.highlight-actu-info h3 {
+.carousel-card-info h3 {
     margin-bottom: var(--spacing-md);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: var(--heading-color);
 }
 
-.highlight-actu-info p {
-    color: var(--text-medium);
-    margin-bottom: var(--spacing-md);
-    line-height: 1.6;
+.carousel-card-info .btn {
+    margin-top: auto;
+}
+
+.carousel-arrow {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    background: var(--bg-white);
+    color: var(--heading-color);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-medium);
+}
+
+.carousel-arrow:hover:not(:disabled) {
+    background: var(--primary-color);
+    color: #fff;
+    transform: scale(1.08);
+}
+
+.carousel-arrow:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
+@media (max-width: 640px) {
+    .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+    }
+    .carousel-card {
+        flex-basis: 240px;
+    }
 }
 
 .mission {
