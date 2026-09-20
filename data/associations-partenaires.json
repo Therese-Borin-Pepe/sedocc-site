@@ -16,5 +16,11 @@
     "name": "Vivre avec le Syndrome de POTS",
     "image": "images/partners/vivre-avec-le-syndrome-de-pots.jpg",
     "url": "https://www.syndrome-pots.fr/"
+  },
+  {
+    "id": "zebres-sed",
+    "name": "Les Zèbres SEd",
+    "image": "images/partners/zebres-sed.png",
+    "url": "https://leszebres-sed.fr/"
   }
 ]
