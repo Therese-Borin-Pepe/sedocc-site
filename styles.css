@@ -1116,12 +1116,11 @@ a.btn-secondary:hover {
 }
 
 .member-photo {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 230px;
     margin: 0 auto var(--spacing-md);
-    border-radius: 50%;
+    border-radius: 28px;
     overflow: hidden;
-    border: 4px solid var(--bg-light);
     box-shadow: 0 0 0 3px var(--border-color, #FFD1BF);
 }
 
