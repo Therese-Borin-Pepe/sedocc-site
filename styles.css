@@ -1116,12 +1116,12 @@ a.btn-secondary:hover {
 }
 
 .member-photo {
-    width: 150px;
-    height: 170px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto var(--spacing-md);
-    border-radius: 22px;
+    border-radius: 50%;
     overflow: hidden;
-    box-shadow: 0 0 0 3px var(--border-color, #FFD1BF);
+    box-shadow: 0 0 0 4px var(--bg-white), 0 0 0 7px var(--border-color, #FFD1BF), var(--shadow-sm);
 }
 
 .member-photo img {
@@ -1129,11 +1129,13 @@ a.btn-secondary:hover {
     height: 100%;
     object-fit: cover;
     object-position: center top;
-    transition: transform var(--transition-medium);
+    filter: grayscale(1) contrast(1.05);
+    transition: transform var(--transition-medium), filter var(--transition-medium);
 }
 
 .team-member:hover .member-photo img {
     transform: scale(1.08);
+    filter: grayscale(0);
 }
 
 .member-role {
