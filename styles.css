@@ -1345,7 +1345,23 @@ a.btn-secondary:hover {
     .mission,
     .team,
     .partners {
-        padding: var(--spacing-xl) 0;
+        padding: var(--spacing-md) 0;
+    }
+
+    .distinction-badge {
+        margin: 0 auto var(--spacing-sm);
+    }
+
+    .mission-with-photos {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .warning-box {
+        margin-top: var(--spacing-md);
+    }
+
+    .actions-section h3 {
+        margin-bottom: var(--spacing-sm);
     }
 
     .mission .section-header,
@@ -1357,6 +1373,10 @@ a.btn-secondary:hover {
     .mission-text,
     .actions-text {
         padding: var(--spacing-md);
+    }
+
+    .actions-text {
+        padding-top: var(--spacing-sm);
     }
 
     .mission-with-photos {
