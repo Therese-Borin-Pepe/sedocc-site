@@ -1311,10 +1311,9 @@ a.btn-secondary:hover {
 }
 
 .partner-logo img {
-    width: 100%;
-    max-width: 140px;
-    height: 70px;
-    object-fit: contain;
+    max-width: 100%;
+    height: auto;
+    max-height: 80px;
     transition: all var(--transition-medium);
 }
 
@@ -1350,6 +1349,14 @@ a.btn-secondary:hover {
     .mission-text,
     .actions-text {
         padding: var(--spacing-md);
+    }
+
+    .mission-with-photos {
+        gap: var(--spacing-md);
+    }
+
+    .actions-section {
+        margin-top: var(--spacing-md);
     }
 
     .mission-text p,

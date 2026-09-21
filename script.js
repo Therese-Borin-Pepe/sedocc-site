@@ -471,7 +471,7 @@ window.addEventListener('load', function() {
     document.body.appendChild(overlay);
 
     var lightboxImg = overlay.querySelector('.lightbox-img');
-    var excludeSelectors = '.logo, .navbar, .nav-container, .footer, .hero-logo, .lightbox-overlay, .cookie-banner, .partners-grid, .highlight-actu-image, .actualite-asso-image, .carousel-card-image, .member-photo';
+    var excludeSelectors = '.logo, .navbar, .nav-container, .footer, .hero-logo, .lightbox-overlay, .cookie-banner, .partners-grid, .highlight-actu-image, .actualite-asso-image, .carousel-card-image, .member-photo, .mosaic-item, .action-photo';
 
     function openLightbox(src, alt) {
         lightboxImg.src = src;
