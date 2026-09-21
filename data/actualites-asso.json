@@ -1,5 +1,13 @@
 [
   {
+    "id": "nouveau-depliant",
+    "title": "Notre nouveau dépliant de présentation est disponible !",
+    "date": "21 septembre 2026",
+    "image": "images/actualites/depliant-sedocc.jpg",
+    "content": "<p>Un nouveau dépliant pour présenter Sed'Occ France : qui nous sommes, nos objectifs, le syndrome d'Ehlers-Danlos et comment nous rejoindre ou nous rencontrer.</p><p>Vous le retrouverez lors de nos événements et permanences, et vous pouvez dès maintenant le consulter et le télécharger ci-dessous.</p>",
+    "link": "documents/depliant-sedocc.pdf"
+  },
+  {
     "id": "prix-france-association-sante",
     "title": "Sed'Occ France récompensée par le prix France Association Santé",
     "date": "27 août 2026",
