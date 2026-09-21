@@ -1284,6 +1284,10 @@ a.btn-secondary:hover {
     align-items: center;
 }
 
+.swipe-hint {
+    display: none;
+}
+
 .partner-logo {
     display: flex;
     flex-direction: column;
@@ -1334,6 +1338,10 @@ a.btn-secondary:hover {
    sans rien retirer : plus de colonnes pour les logos, cadres plus
    compacts pour les fiches equipe et les blocs de texte. */
 @media (max-width: 640px) {
+    .hero-content {
+        padding-bottom: var(--spacing-sm);
+    }
+
     .mission,
     .team,
     .partners {
@@ -1461,6 +1469,35 @@ a.btn-secondary:hover {
         flex: 0 0 78%;
         scroll-snap-align: center;
         padding: var(--spacing-sm);
+    }
+
+    .partners-carousel {
+        position: relative;
+    }
+
+    .swipe-hint {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 2px;
+        top: 45%;
+        transform: translateY(-50%);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--bg-white);
+        box-shadow: var(--shadow-md);
+        color: var(--primary-color);
+        font-size: 1.3rem;
+        line-height: 1;
+        pointer-events: none;
+        animation: swipe-hint-nudge 2.2s ease-in-out infinite;
+    }
+
+    @keyframes swipe-hint-nudge {
+        0%, 100% { opacity: 0.9; transform: translateY(-50%) translateX(0); }
+        50% { opacity: 0.4; transform: translateY(-50%) translateX(6px); }
     }
 
     .associations-partenaires-header {
