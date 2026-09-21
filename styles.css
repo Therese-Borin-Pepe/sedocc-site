@@ -821,6 +821,35 @@ a.btn-secondary:hover {
     .carousel-card {
         flex-basis: 240px;
     }
+
+    .carousel-section {
+        padding: var(--spacing-lg) 0;
+    }
+    .carousel-section .section-header {
+        margin-bottom: var(--spacing-md);
+    }
+    .carousel-card-image {
+        height: 140px;
+    }
+    .carousel-card-info {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    .carousel-card-date {
+        margin-bottom: var(--spacing-xs);
+    }
+    .carousel-card-info h3 {
+        font-size: 1.05rem;
+        margin-bottom: var(--spacing-xs);
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .carousel-card-info .btn {
+        margin-top: var(--spacing-xs);
+        padding: 0.5rem 1.25rem;
+        font-size: 0.85rem;
+    }
 }
 
 .mission {
