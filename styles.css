@@ -1447,6 +1447,11 @@ a.btn-secondary:hover {
         margin-bottom: var(--spacing-sm);
     }
 
+    .member-mission,
+    .member-quote {
+        margin-top: 4px !important;
+    }
+
     /* Logos partenaires : chaque logo garde sa taille d'origine, on
        les met en carrousel tactile (glisser sur le cote) plutot que
        de les serrer plusieurs par ligne. Le slide suivant depasse
@@ -3563,6 +3568,15 @@ p {
     margin-right: auto;
 }
 
+/* Sur mobile, 25px au-dessus de CHAQUE paragraphe (y compris dans des
+   blocs compacts : fiches equipe, cartes adhesion...) cree beaucoup
+   trop d'espace une fois empile plusieurs fois sur la meme page. */
+@media (max-width: 640px) {
+    p {
+        margin-top: 14px !important;
+    }
+}
+
 /* Paragraphes dans les sections de contenu : alignés à gauche */
 .ressource-section p,
 .tab-with-image p,
@@ -4107,6 +4121,13 @@ br.br-desktop {
     }
     .tab-with-image {
         grid-template-columns: 1fr;
+    }
+
+    /* 70px sous le titre "Pourquoi nous rejoindre ?" est pense pour
+       le desktop ; beaucoup trop large une fois la page empilee en
+       colonne unique sur mobile. */
+    .adhesion-modern .section-header {
+        margin-bottom: 28px;
     }
 
     /* Fix adhesion page overflow */
