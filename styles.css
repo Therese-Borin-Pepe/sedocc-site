@@ -1439,12 +1439,27 @@ a.btn-secondary:hover {
         margin-bottom: var(--spacing-sm);
     }
 
+    /* Logos partenaires : chaque logo garde sa taille d'origine, on
+       les met en carrousel tactile (glisser sur le cote) plutot que
+       de les serrer plusieurs par ligne. Le slide suivant depasse
+       legerement pour inviter au glissement. */
     .partners-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--spacing-sm);
+        display: flex;
+        grid-template-columns: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: var(--spacing-md);
+        padding: 0.4rem 0.4rem 0.75rem;
+        scrollbar-width: none;
+    }
+
+    .partners-grid::-webkit-scrollbar {
+        display: none;
     }
 
     .partner-logo {
+        flex: 0 0 78%;
+        scroll-snap-align: center;
         padding: var(--spacing-sm);
     }
 
