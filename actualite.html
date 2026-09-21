@@ -134,7 +134,7 @@
                             html += `<div class="evenement-text">${a.content}</div>`;
                         }
                         if (a.link) {
-                            html += `<p><a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-link">En savoir plus &rarr;</a></p>`;
+                            html += `<p><a href="${a.link}" target="_blank" rel="noopener" class="actualite-asso-link">${a.linkLabel || 'En savoir plus'} &rarr;</a></p>`;
                         }
                         html += `<div class="evenement-back"><a href="actualites.html" class="btn btn-primary">Retour aux actualités</a></div>`;
                         document.getElementById('actu-detail').innerHTML = html;
