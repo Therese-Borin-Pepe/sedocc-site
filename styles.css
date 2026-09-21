@@ -1138,6 +1138,16 @@ a.btn-secondary:hover {
     filter: grayscale(0);
 }
 
+/* Photo prise en lumiere de soiree tres sombre : eclaircie uniquement
+   en noir et blanc, la couleur au survol garde l'expo d'origine. */
+.member-photo img[src*="marjorie"] {
+    filter: grayscale(1) contrast(1.05) brightness(1.5);
+}
+
+.team-member:hover .member-photo img[src*="marjorie"] {
+    filter: grayscale(0);
+}
+
 .member-role {
     display: inline-block;
     padding: 0.2rem 0.8rem;
