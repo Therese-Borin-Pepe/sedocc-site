@@ -1358,12 +1358,64 @@ a.btn-secondary:hover {
         line-height: 1.6;
     }
 
+    /* Mission et Actions : au lieu d'une grille (espace vide quand le
+       nombre de photos ne remplit pas la derniere ligne), une seule
+       vignette avec un fondu automatique entre les photos. */
+    .mission-photos,
     .actions-grid {
-        grid-template-columns: 1fr 1fr;
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 220px;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
     }
 
+    .mosaic-item,
+    .action-photo {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        border-radius: 0;
+        box-shadow: none;
+        aspect-ratio: auto;
+    }
+
+    .mosaic-item img,
     .action-photo img {
-        height: 140px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mission-photos .mosaic-item {
+        animation: fade-cycle-4 12s infinite;
+    }
+    .mission-photos .mosaic-item:nth-child(1) { animation-delay: 0s; }
+    .mission-photos .mosaic-item:nth-child(2) { animation-delay: 3s; }
+    .mission-photos .mosaic-item:nth-child(3) { animation-delay: 6s; }
+    .mission-photos .mosaic-item:nth-child(4) { animation-delay: 9s; }
+
+    .actions-grid .action-photo {
+        animation: fade-cycle-3 9s infinite;
+    }
+    .actions-grid .action-photo:nth-child(1) { animation-delay: 0s; }
+    .actions-grid .action-photo:nth-child(2) { animation-delay: 3s; }
+    .actions-grid .action-photo:nth-child(3) { animation-delay: 6s; }
+
+    @keyframes fade-cycle-4 {
+        0%, 100% { opacity: 0; }
+        3% { opacity: 1; }
+        22% { opacity: 1; }
+        25% { opacity: 0; }
+    }
+
+    @keyframes fade-cycle-3 {
+        0%, 100% { opacity: 0; }
+        4% { opacity: 1; }
+        29% { opacity: 1; }
+        33% { opacity: 0; }
     }
 
     .team-grid {
