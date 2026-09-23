@@ -1177,19 +1177,25 @@ a.btn-secondary:hover {
     transition: transform var(--transition-medium), filter var(--transition-medium);
 }
 
-.team-member:hover .member-photo img {
-    transform: scale(1.08);
-    filter: grayscale(0);
-}
-
 /* Photo prise en lumiere de soiree tres sombre : eclaircie uniquement
    en noir et blanc, la couleur au survol garde l'expo d'origine. */
 .member-photo img[src*="marjorie"] {
     filter: grayscale(1) contrast(1.05) brightness(1.5);
 }
 
-.team-member:hover .member-photo img[src*="marjorie"] {
-    filter: grayscale(0);
+/* Le survol reel (souris) n'existe que sur les appareils a pointeur
+   fin. Sur tactile, :hover reste souvent "colle" apres un tap/scroll,
+   ce qui rendait les photos en couleur en permanence au lieu de
+   suivre le scroll (voir .in-view plus bas). */
+@media (hover: hover) and (pointer: fine) {
+    .team-member:hover .member-photo img {
+        transform: scale(1.08);
+        filter: grayscale(0);
+    }
+
+    .team-member:hover .member-photo img[src*="marjorie"] {
+        filter: grayscale(0);
+    }
 }
 
 /* Sur mobile (pas de survol), la couleur apparait progressivement
