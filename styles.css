@@ -1385,6 +1385,28 @@ a.btn-secondary:hover {
         padding-top: var(--spacing-sm);
     }
 
+    /* Puces standard : leur retrait cree une marge gauche qui ne
+       correspond a rien sur une carte centree. On reprend le style
+       fleche deja utilise sur la page Adhesion (.list-custom). */
+    .actions-text ul {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    .actions-text li {
+        display: flex;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .actions-text li::before {
+        content: "→";
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+
     .mission-with-photos {
         gap: var(--spacing-md);
     }
