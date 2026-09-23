@@ -347,6 +347,7 @@
                 }).join('');
 
                 if (window.matchMedia('(max-width: 640px)').matches) {
+                    document.documentElement.classList.add('team-scroll-reveal');
                     const teamObserver = new IntersectionObserver((entries) => {
                         entries.forEach(entry => {
                             if (entry.isIntersecting) {

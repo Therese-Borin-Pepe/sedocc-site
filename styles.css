@@ -1183,19 +1183,19 @@ a.btn-secondary:hover {
     filter: grayscale(1) contrast(1.05) brightness(1.5);
 }
 
-/* Le survol reel (souris) n'existe que sur les appareils a pointeur
-   fin. Sur tactile, :hover reste souvent "colle" apres un tap/scroll,
-   ce qui rendait les photos en couleur en permanence au lieu de
-   suivre le scroll (voir .in-view plus bas). */
-@media (hover: hover) and (pointer: fine) {
-    .team-member:hover .member-photo img {
-        transform: scale(1.08);
-        filter: grayscale(0);
-    }
+/* La detection CSS (hover: hover) s'est averee peu fiable sur
+   certains appareils tactiles reels (elle peut repondre "vrai" alors
+   qu'il n'y a pas de souris, ce qui collait les photos en couleur en
+   permanence). L'exclusion se fait desormais via la classe posee par
+   JS (meme detection que l'IntersectionObserver plus bas), fiable a
+   coup sur. */
+html:not(.team-scroll-reveal) .team-member:hover .member-photo img {
+    transform: scale(1.08);
+    filter: grayscale(0);
+}
 
-    .team-member:hover .member-photo img[src*="marjorie"] {
-        filter: grayscale(0);
-    }
+html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjorie"] {
+    filter: grayscale(0);
 }
 
 /* Sur mobile (pas de survol), la couleur apparait progressivement
