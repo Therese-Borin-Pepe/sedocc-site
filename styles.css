@@ -999,6 +999,10 @@ a.btn-secondary:hover {
     margin-bottom: 0.7rem;
 }
 
+.actions-text li strong {
+    color: var(--primary-color);
+}
+
 .actions-text li:last-child {
     margin-bottom: 0;
 }
@@ -1185,6 +1189,12 @@ a.btn-secondary:hover {
 }
 
 .team-member:hover .member-photo img[src*="marjorie"] {
+    filter: grayscale(0);
+}
+
+/* Sur mobile (pas de survol), la couleur apparait progressivement
+   au scroll grace a l'IntersectionObserver dans index.html. */
+.team-member.in-view .member-photo img {
     filter: grayscale(0);
 }
 
@@ -1468,15 +1478,15 @@ a.btn-secondary:hover {
 
     @keyframes fade-cycle-4 {
         0%, 100% { opacity: 0; }
-        3% { opacity: 1; }
-        22% { opacity: 1; }
+        7% { opacity: 1; }
+        18% { opacity: 1; }
         25% { opacity: 0; }
     }
 
     @keyframes fade-cycle-3 {
         0%, 100% { opacity: 0; }
-        4% { opacity: 1; }
-        29% { opacity: 1; }
+        9% { opacity: 1; }
+        24% { opacity: 1; }
         33% { opacity: 0; }
     }
 

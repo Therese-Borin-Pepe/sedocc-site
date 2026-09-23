@@ -345,6 +345,18 @@
                     html += `</div>`;
                     return html;
                 }).join('');
+
+                if (window.matchMedia('(max-width: 640px)').matches) {
+                    const teamObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('in-view');
+                                teamObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.4 });
+                    grid.querySelectorAll('.team-member').forEach(el => teamObserver.observe(el));
+                }
             });
 
     // Chargement des partenaires

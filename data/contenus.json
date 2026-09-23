@@ -10,7 +10,7 @@
   },
   "actions": {
     "titre": "Nos actions",
-    "texte": "<ul>\n<li>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</li>\n<li>Organisation de rencontres et de groupes de parole pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</li>\n<li>Coordination avec les structures référentes, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</li>\n</ul>"
+    "texte": "<ul>\n<li><strong>Création d'un parcours de soins adapté pour les personnes atteintes du Syndrome d'Ehlers-Danlos</strong>, en collaboration avec les hôpitaux, cliniques, médecins libéraux et professionnels paramédicaux, dans le but d'améliorer leur prise en charge et leur qualité de vie.</li>\n<li><strong>Organisation de rencontres et de groupes de parole</strong> pour les patients et leurs aidants, afin de leur apporter soutien et accompagnement.</li>\n<li><strong>Coordination avec les structures référentes</strong>, telles que Maladies Rares Occitanie, la filière Oscar et le centre de référence du Syndrome d'Ehlers-Danlos, dans le respect de leurs recommandations et protocoles.</li>\n</ul>"
   },
   "avertissement": {
     "texte": "<p>L'association n'a pas vocation à se substituer aux professionnels de santé, mais à compléter leurs actions par l'information, l'écoute et le soutien.</p>"
