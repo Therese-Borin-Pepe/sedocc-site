@@ -1378,11 +1378,7 @@ a.btn-secondary:hover {
 
     .mission-text,
     .actions-text {
-        padding: var(--spacing-md);
-    }
-
-    .actions-text {
-        padding-top: var(--spacing-sm);
+        padding: var(--spacing-sm);
     }
 
     /* Ni puce ni fleche : le moindre marqueur cree un retrait a
@@ -1484,7 +1480,9 @@ a.btn-secondary:hover {
     }
 
     .team-member {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.07);
     }
 
     .member-photo {
@@ -4298,30 +4296,47 @@ br.br-desktop {
         word-break: break-word;
     }
 
-    /* Vignettes/cartes utilisees sur les autres pages (initiatives,
-       droits, actualites medicales, livret enfant...) : meme souci
-       que partout ailleurs, du padding pense pour desktop (32-48px)
-       jamais resserre pour mobile. */
+    /* Refonte mobile des vignettes/cartes de tout le site : padding
+       uniformise a la marge de page (16px, la carte affleure le bord
+       plutot que de flotter avec un inset different a chaque fois),
+       et l'ombre portee (pensee pour un survol desktop qui n'existe
+       pas au doigt) remplacee par une bordure fine plus plate et
+       plus actuelle. */
     .stat-card,
-    .document-card {
-        padding: var(--spacing-md);
-    }
+    .document-card,
     .actu-card,
     .chanson-card,
-    .help-box {
-        padding: var(--spacing-sm) var(--spacing-md);
+    .help-box,
+    .warning-box,
+    .vignette-card,
+    .partenaire-contact,
+    .card-modern {
+        padding: var(--spacing-sm);
+        box-shadow: none;
     }
-    .vignette-card {
-        padding: 18px 16px;
+
+    /* Ces cartes ont deja un accent colore (bordure gauche ou haute) :
+       on ne touche pas a leur bordure, juste l'ombre et le padding
+       ci-dessus. Celles qui n'avaient qu'une ombre pour se definir
+       recoivent une bordure fine et neutre a la place. */
+    .stat-card,
+    .chanson-card,
+    .warning-box {
+        border: 1px solid rgba(0, 0, 0, 0.07);
     }
+
+    /* Cartes image-plein-cadre + texte separement rembourre : seule
+       l'ombre portee est remplacee, la structure (photo affleurante)
+       ne doit pas recevoir de padding direct. */
+    a.evenement-card,
+    .carousel-card,
+    .actualite-asso-card {
+        box-shadow: none;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+    }
+
     .vignette-inner,
     .tab-inner {
         gap: 16px;
-    }
-    .warning-box {
-        padding: var(--spacing-sm) var(--spacing-md);
-    }
-    .partenaire-contact {
-        padding: 16px;
     }
 }
