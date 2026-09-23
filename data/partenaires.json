@@ -2,19 +2,19 @@
   {
     "id": "chu-toulouse",
     "name": "CHU Toulouse",
-    "image": "images/partners/chu-toulouse.png",
+    "image": "images/partners/chu-toulouse.jpg",
     "url": ""
   },
   {
     "id": "mutaero",
     "name": "Mutaero",
-    "image": "images/partners/mutaero.png",
+    "image": "images/partners/mutaero.jpg",
     "url": ""
   },
   {
     "id": "ax-thermes",
     "name": "Centre Hospitalier d'Ax-les-Thermes Saint-Louis",
-    "image": "images/partners/ax-thermes.png",
+    "image": "images/partners/ax-thermes.jpg",
     "url": ""
   },
   {
@@ -26,25 +26,25 @@
   {
     "id": "clinique",
     "name": "Clinique de l'Union",
-    "image": "images/partners/clinique.png",
+    "image": "images/partners/clinique.jpg",
     "url": ""
   },
   {
     "id": "perier",
     "name": "Orthopédie Perier",
-    "image": "images/partners/perier.png",
+    "image": "images/partners/perier.jpg",
     "url": ""
   },
   {
     "id": "sos-oxygene",
     "name": "SOS Oxygène",
-    "image": "images/partners/sos-oxygene.png",
+    "image": "images/partners/sos-oxygene.jpg",
     "url": ""
   },
   {
     "id": "maladies-rares-occitanie",
     "name": "Maladies Rares Occitanie",
-    "image": "images/partners/maladies-rares-occitanie.png",
+    "image": "images/partners/maladies-rares-occitanie.jpg",
     "url": ""
   }
 ]
