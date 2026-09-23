@@ -1385,26 +1385,24 @@ a.btn-secondary:hover {
         padding-top: var(--spacing-sm);
     }
 
-    /* Puces standard : leur retrait cree une marge gauche qui ne
-       correspond a rien sur une carte centree. On reprend le style
-       fleche deja utilise sur la page Adhesion (.list-custom). */
+    /* Ni puce ni fleche : le moindre marqueur cree un retrait a
+       gauche qui ne correspond a rien a droite sur une carte etroite.
+       Un simple separateur suffit a distinguer les 3 actions. */
     .actions-text ul {
         padding-left: 0;
         list-style: none;
     }
 
     .actions-text li {
-        display: flex;
-        align-items: flex-start;
         text-align: left;
+        margin-bottom: 0;
+        padding-top: 0.7rem;
+        border-top: 1px solid rgba(139, 26, 43, 0.12);
     }
 
-    .actions-text li::before {
-        content: "→";
-        color: var(--primary-color);
-        font-weight: bold;
-        margin-right: 10px;
-        flex-shrink: 0;
+    .actions-text li:first-child {
+        padding-top: 0;
+        border-top: none;
     }
 
     .mission-with-photos {
