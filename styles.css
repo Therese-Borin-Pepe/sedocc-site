@@ -4286,7 +4286,7 @@ br.br-desktop {
         font-size: 1rem;
     }
     .card-modern {
-        padding: 25px 20px;
+        padding: 20px 16px;
     }
     .galerie-photos {
         grid-template-columns: repeat(2, 1fr);
@@ -4296,5 +4296,32 @@ br.br-desktop {
         font-size: 0.85rem;
         padding: 12px 20px;
         word-break: break-word;
+    }
+
+    /* Vignettes/cartes utilisees sur les autres pages (initiatives,
+       droits, actualites medicales, livret enfant...) : meme souci
+       que partout ailleurs, du padding pense pour desktop (32-48px)
+       jamais resserre pour mobile. */
+    .stat-card,
+    .document-card {
+        padding: var(--spacing-md);
+    }
+    .actu-card,
+    .chanson-card,
+    .help-box {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    .vignette-card {
+        padding: 18px 16px;
+    }
+    .vignette-inner,
+    .tab-inner {
+        gap: 16px;
+    }
+    .warning-box {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    .partenaire-contact {
+        padding: 16px;
     }
 }
