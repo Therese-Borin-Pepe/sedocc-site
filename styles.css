@@ -1199,7 +1199,13 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 /* Sur mobile (pas de survol), la couleur apparait progressivement
-   au scroll grace a l'IntersectionObserver dans index.html. */
+   au scroll grace a l'IntersectionObserver dans index.html. Transition
+   ralentie par rapport au survol desktop pour un effet plus doux,
+   plus visible qu'un simple changement instantane. */
+.team-scroll-reveal .member-photo img {
+    transition: filter 1.3s ease;
+}
+
 .team-member.in-view .member-photo img {
     filter: grayscale(0);
 }
