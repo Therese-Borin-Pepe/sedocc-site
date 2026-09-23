@@ -69,7 +69,6 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     max-width: 100%;
-    touch-action: pan-y;
 }
 
 /* ==========================================
@@ -722,7 +721,6 @@ a.btn-secondary:hover {
     padding: 0.4rem;
     flex: 1;
     scrollbar-width: none;
-    touch-action: pan-x;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -1535,7 +1533,6 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
         gap: var(--spacing-md);
         padding: 0.4rem 0.4rem 0.75rem;
         scrollbar-width: none;
-        touch-action: pan-x;
     }
 
     .partners-grid::-webkit-scrollbar {
