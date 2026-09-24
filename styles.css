@@ -2241,12 +2241,13 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 
 .bilan-item h4 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+    margin: 0;
     text-align: center;
 }
 
 .bilan-item ul {
-    margin-left: var(--spacing-md);
+    margin: 0;
+    padding-left: 18px;
 }
 
 .bilan-item li {
@@ -4243,6 +4244,17 @@ br.br-desktop {
 }
 
 @media (max-width: 768px) {
+    /* .tab-content.active a 30px de padding gauche/droite penses pour
+       le desktop (en plus des 16px du .container) : sur un telephone
+       ca grignote a lui seul prs d'un quart de la largeur d'ecran,
+       pour toutes les pages a onglets (Traitements, Initiatives,
+       Adhesion...). On la reduit et on ajuste en consequence la
+       marge negative de .adhesion-modern plus bas, qui compensait
+       ces 30px pour rester a plat. */
+    .tab-content.active {
+        padding: 20px 10px;
+    }
+
     .vignette-inner, .tab-inner {
         flex-direction: column;
     }
@@ -4294,8 +4306,8 @@ br.br-desktop {
 
     /* Adhesion-modern dans tab-content : contrer le padding du tab pour aligner avec adhesion.html */
     .tab-content.active .adhesion-modern {
-        margin-left: -30px;
-        margin-right: -30px;
+        margin-left: -10px;
+        margin-right: -10px;
     }
 
     /* Bulles mobile - réduites mais visibles */
