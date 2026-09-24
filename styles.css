@@ -3,25 +3,21 @@
    ========================================== */
 
 :root {
-    /* Colors - Palette SED'OCC (identique au WordPress sedocc.fr) */
-    --primary-color: #8B1A2B;        /* Rouge foncÃ© (liens, boutons) */
-    --primary-dark: #6b1420;         /* Rouge encore plus foncÃ© (hover) */
-    --primary-footer: #a31b27;       /* Rouge footer */
-    --heading-color: #8B1A2B;        /* Rouge foncÃ© pour les titres */
-    --accent-color: #e63946;         /* Rouge icÃ´nes sociales */
+    /* Rouge encore plus foncÃ© (hover) */
+    --primary-footer: #a31b27;
+    /* Rouge footer */
+    --heading-color: #8B1A2B;
+    /* Rouge foncÃ© pour les titres */
+    --accent-color: #e63946;
+    /* Rouge icÃ´nes sociales */
     --success-color: #4CAF50;
     --warning-color: #FFA726;
-
-    /* Neutrals - identiques WordPress */
-    --text-dark: #0F172A;
-    --text-medium: #3A3A3A;
     --text-light: #707070;
     --bg-white: #FFFFFF;
-    --bg-light: #FFF5EC;            /* Fond crÃ¨me/pÃªche plus chaud */
-    --bg-warm: #FFEDE6;             /* Fond sections colorÃ©es */
-    --bg-gray: #FFD1BF;             /* Beige bordures */
+    /* Fond sections colorÃ©es */
+    --bg-gray: #FFD1BF;
+    /* Beige bordures */
     --border-color: #FFD1BF;
-    
     /* Spacing */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -29,26 +25,27 @@
     --spacing-lg: 2rem;
     --spacing-xl: 3rem;
     --spacing-2xl: 4rem;
-    
-    /* Typography - identique WordPress (Lato, Open Sans, Montserrat) */
-    --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-heading: 'Poppins', -apple-system, sans-serif;
-    
     /* Transitions */
     --transition-fast: 0.2s ease;
     --transition-medium: 0.3s ease;
     --transition-slow: 0.5s ease;
-    
     /* Shadows */
     --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
-    
     /* Border Radius */
     --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 16px;
     --radius-xl: 24px;
+    --primary-color: #8B1A2B;
+    --primary-dark: #6b1420;
+    --text-dark: #0F172A;
+    --text-medium: #3A3A3A;
+    --bg-light: #FFF5EC;
+    --bg-warm: #FFEDE6;
+    --font-primary: 'Poppins', sans-serif;
 }
 
 * {
@@ -64,11 +61,12 @@ html {
 }
 
 body {
+    overflow-x: hidden;
+    max-width: 100%;
     font-family: var(--font-primary);
     color: var(--text-dark);
     line-height: 1.6;
-    overflow-x: hidden;
-    max-width: 100%;
+    background-color: var(--bg-light);
 }
 
 /* ==========================================
@@ -86,14 +84,24 @@ h1, h2, h3, h4, h5, h6 {
 h1, h2 { letter-spacing: -0.015em; }
 
 h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
-h2 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 {
+    font-size: 1.4rem !important;
+    color: var(--primary-color) !important;
+    text-align: center;
+    margin-bottom: 20px !important;
+    padding-bottom: 0px !important;
+    text-transform: uppercase;
+}
 h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
 h4 { font-size: 1.25rem; }
 
 p {
     margin-bottom: var(--spacing-sm);
     color: var(--text-medium);
-}
+    margin-top: 25px !important;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;}
 
 a {
     text-decoration: none;
@@ -137,14 +145,17 @@ a:hover {
    ========================================== */
 
 .navbar {
-    position: fixed;
-    top: 0;
     left: 0;
     right: 0;
-    background: rgba(255, 255, 255, 0.95);
-    box-shadow: var(--shadow-sm);
-    z-index: 1000;
     transition: all var(--transition-medium);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
 }
 
 .navbar.scrolled {
@@ -152,34 +163,35 @@ a:hover {
 }
 
 .nav-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 .logo img {
-    height: 130px;
     width: auto;
+    height: 55px;
 }
 
 .nav-menu {
+    align-items: center;
     display: flex;
     list-style: none;
     gap: 0.2rem;
-    align-items: center;
 }
 
 .nav-link {
-    color: var(--text-dark);
-    font-weight: 500;
     font-size: 0.88rem;
     padding: var(--spacing-xs) 0.7rem;
     border-radius: var(--radius-sm);
     transition: all var(--transition-fast);
     white-space: nowrap;
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
 }
 
 .nav-link:hover {
@@ -507,17 +519,21 @@ a:hover {
 }
 
 .hero {
-    position: relative;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding-top: 20px;
-    padding-bottom: 40px;
-    background: transparent;
+    /* min-height: 60vh;
+    — retiré : provoquait un grand espace vide entre la bannière et le logo */;
+    position: relative;
+    text-align: center;
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
+    padding: 100px 20px 60px;
     overflow: hidden;
-    /* min-height: 60vh; — retiré : provoquait un grand espace vide entre la bannière et le logo */
+    padding-bottom: 20px !important;
+    /* Réduit l'espace sous le logo et le texte du haut */;
 }
 
 .hero::after {
@@ -546,14 +562,20 @@ a:hover {
 }
 
 .bubble-1 {
-    width: 180px; height: 180px;
     background: radial-gradient(circle at 40% 35%, #F5D5A8, #E8B090);
-    top: 10%; left: 5%;
+    width: 80px;
+    height: 80px;
+    top: 10%;
+    left: 10%;
 }
 .bubble-2 {
-    width: 100px; height: 100px;
     background: radial-gradient(circle at 40% 35%, #F0C8A0, #E0A088);
-    top: 60%; left: 10%;
+    top: 60%;
+    left: 10%;
+    width: 120px;
+    height: 120px;
+    bottom: 15%;
+    right: 10%;
 }
 .bubble-3 {
     width: 140px; height: 140px;
@@ -593,6 +615,11 @@ a:hover {
     height: 160px;
     width: auto;
     margin-bottom: var(--spacing-xs);
+    position: relative;
+    z-index: 2;
+    animation: heroFloat 4s ease-in-out infinite;
+    filter: drop-shadow(0 10px 25px rgba(139, 26, 43, 0.15));
+    transition: transform 0.3s ease;
 }
 
 .hero-title {
@@ -610,11 +637,11 @@ a:hover {
     margin-top: 0 !important;
     margin-bottom: var(--spacing-lg);
     letter-spacing: 1px;
-}
+    animation: hero-rise 1s ease-out 0.5s both;}
 
 .hero-cta {
     margin-bottom: 0;
-}
+    animation: hero-rise 1s ease-out 0.8s both;}
 
 /* Mosaic items (used in mission-photos) */
 .mosaic-item {
@@ -644,14 +671,17 @@ a:hover {
    ========================================== */
 
 .btn {
-    display: inline-block;
-    padding: var(--spacing-sm) var(--spacing-lg);
-    border-radius: var(--radius-md);
-    font-weight: 600;
     text-align: center;
     transition: all var(--transition-medium);
     cursor: pointer;
     border: 2px solid transparent;
+    display: inline-block;
+    padding: 14px 35px;
+    background: var(--primary-color);
+    color: white !important;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
 }
 
 .btn-primary,
@@ -866,11 +896,13 @@ a.btn-secondary:hover {
     z-index: 1;
     padding: var(--spacing-2xl) 0;
     background: transparent;
-}
+    padding-top: 10px !important;
+    margin-top: 0 !important;}
 
 .mission > .container > h2 {
     text-align: center;
-    margin-bottom: var(--spacing-lg);
+    margin-top: 0 !important;
+    margin-bottom: 30px !important;
 }
 
 .mission > .container > h2::after,
@@ -923,7 +955,7 @@ a.btn-secondary:hover {
         max-width: 90%;
         flex-wrap: wrap;
         font-size: 0.9rem;
-    }
+    margin: 0 auto var(--spacing-sm);}
 }
 
 .mission-with-photos {
@@ -1217,18 +1249,14 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     padding: 0.2rem 0.8rem;
     border-radius: 999px;
     background: var(--bg-light);
-}
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);}
 
 .team-member h3 {
     font-size: 1.25rem;
     margin-bottom: var(--spacing-xs);
     color: var(--text-dark);
-}
-
-.member-role {
-    color: var(--primary-color);
-    font-weight: 600;
-    margin-bottom: var(--spacing-sm);
 }
 
 .member-mission {
@@ -1384,13 +1412,9 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
         padding: var(--spacing-md) 0;
     }
 
-    .distinction-badge {
-        margin: 0 auto var(--spacing-sm);
-    }
-
     .mission-with-photos {
         margin-bottom: var(--spacing-sm);
-    }
+    gap: var(--spacing-md);}
 
     .warning-box {
         margin-top: var(--spacing-md);
@@ -1429,10 +1453,6 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     .actions-text li:first-child {
         padding-top: 0;
         border-top: none;
-    }
-
-    .mission-with-photos {
-        gap: var(--spacing-md);
     }
 
     .actions-section {
@@ -1507,7 +1527,7 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 
     .team-grid {
         gap: var(--spacing-sm);
-    }
+    grid-template-columns: 1fr;}
 
     .team-member {
         padding: 12px;
@@ -1797,10 +1817,6 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     .mission-grid {
         grid-template-columns: 1fr;
     }
-
-    .team-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 /* ==========================================
@@ -1810,11 +1826,10 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 .page-header {
     position: relative;
     z-index: 1;
-    padding-top: 130px;
-    padding-bottom: 5px !important;
-    background: transparent;
+    background: linear-gradient(135deg, transparent 0%, transparent 100%);
     text-align: center;
-}
+    padding-top: 150px !important;
+    padding-bottom: 10px !important;
 }
 
 .page-header h1 {
@@ -1825,11 +1840,6 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 .page-content {
     position: relative;
     z-index: 1;
-    padding: var(--spacing-lg) 0 var(--spacing-2xl);
-    background: transparent;
-}
-
-.page-content {
     padding: 0px 0 var(--spacing-2xl) !important;
     background: transparent;
 }
@@ -1985,22 +1995,22 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-lg);
     border-bottom: 2px solid var(--border-color);
     padding-bottom: var(--spacing-xs);
+    margin-bottom: 15px;
 }
 
 .tab-btn {
-    padding: var(--spacing-xs) var(--spacing-md);
+    padding: 12px 22px;
+    cursor: pointer;
     border: none;
     background: none;
-    cursor: pointer;
-    font-size: 0.95rem;
     font-weight: 600;
+    font-size: 0.95rem;
+    font-family: var(--font-primary);
     color: var(--text-medium);
     border-bottom: 3px solid transparent;
     transition: all var(--transition-fast);
-    font-family: var(--font-primary);
 }
 
 .tab-btn:hover {
@@ -2008,8 +2018,10 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-btn.active {
-    color: var(--heading-color);
     border-bottom-color: var(--heading-color);
+    background: #8B1A2B !important;
+    color: white !important;
+    border-radius: 8px 8px 0 0;
 }
 
 .tab-content {
@@ -2017,8 +2029,9 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-content.active {
-    display: block;
     animation: tabFadeIn 0.4s ease forwards;
+    display: block !important;
+    padding: 25px 30px;
 }
 
 @keyframes tabFadeIn {
@@ -2220,8 +2233,10 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-content h3 {
-    margin-top: var(--spacing-md);
-    margin-bottom: var(--spacing-sm);
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: var(--spacing-md);
+    color: var(--heading-color);
 }
 
 /* Bilan section */
@@ -2491,7 +2506,12 @@ blockquote p {
 
 .support-banner.large {
     margin-top: 0;
-    padding: var(--spacing-lg) var(--spacing-xl);
+    background: linear-gradient(135deg, #8B1A2B 0%, #B22222 100%) !important;
+    padding: 60px 40px !important;
+    border-radius: 20px !important;
+    border: none !important;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
 }
 
 /* Accordion (Droits page) */
@@ -2647,9 +2667,9 @@ a.evenement-card:visited {
 }
 
 a.evenement-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
     color: inherit;
+    transform: translateY(-8px) scale(1.02) !important;
+    box-shadow: 0 20px 40px rgba(139, 26, 43, 0.18) !important;
 }
 
 .evenement-image {
@@ -2925,12 +2945,6 @@ a.evenement-card:hover {
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
 }
-.page-header {
-    padding-top: 140px;
-    padding-bottom: var(--spacing-sm);
-    background: linear-gradient(135deg, transparent 0%, transparent 100%);
-    text-align: center;
-}
 
 /* AJOUTE CETTE RÈGLE JUSTE ICI : */
 .page-header h1 + h2, 
@@ -3110,18 +3124,66 @@ a.evenement-card:hover {
     80% { transform: translate(20px, -50px) rotate(-2deg) scale(0.98); }
 }
 
-.page-bubbles .b1 { animation: float-bubble-1 12s ease-in-out infinite; }
-.page-bubbles .b2 { animation: float-bubble-2 14s ease-in-out infinite; }
-.page-bubbles .b3 { animation: float-bubble-3 10s ease-in-out infinite; }
-.page-bubbles .b4 { animation: float-bubble-4 13s ease-in-out infinite; }
-.page-bubbles .b5 { animation: float-bubble-5 16s ease-in-out infinite; }
-.page-bubbles .b6 { animation: float-bubble-1 11s ease-in-out infinite; }
-.page-bubbles .b7 { animation: float-bubble-3 13s ease-in-out infinite; }
-.page-bubbles .b8 { animation: float-bubble-4 9s ease-in-out infinite; }
-.page-bubbles .hero-b1 { animation: float-bubble-2 8s ease-in-out infinite; }
-.page-bubbles .hero-b2 { animation: float-bubble-3 7s ease-in-out infinite; }
-.page-bubbles .hero-b3 { animation: float-bubble-1 9s ease-in-out infinite; }
-.page-bubbles .hero-b4 { animation: float-bubble-4 8s ease-in-out infinite; }
+.page-bubbles .b1 { animation: float-bubble-1 12s ease-in-out infinite;
+    width: 200px; height: 200px;
+    top: 4%; right: 5%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.6), rgba(245,210,170,0.4) 40%, rgba(232,176,144,0.3) 70%, transparent);
+    box-shadow: inset -8px -8px 20px rgba(232,176,144,0.15), inset 4px 4px 15px rgba(255,255,255,0.3);}
+.page-bubbles .b2 { animation: float-bubble-2 14s ease-in-out infinite;
+    width: 120px; height: 120px;
+    top: 30%; left: 3%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,200,160,0.4) 45%, rgba(224,160,136,0.25) 75%, transparent);
+    box-shadow: inset -6px -6px 14px rgba(224,160,136,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);}
+.page-bubbles .b3 { animation: float-bubble-3 10s ease-in-out infinite;
+    width: 160px; height: 160px;
+    bottom: 15%; right: 8%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 42%, rgba(237,186,152,0.3) 72%, transparent);
+    box-shadow: inset -7px -7px 18px rgba(237,186,152,0.13), inset 4px 4px 12px rgba(255,255,255,0.28);}
+.page-bubbles .b4 { animation: float-bubble-4 13s ease-in-out infinite;
+    width: 110px; height: 110px;
+    top: 50%; left: 25%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
+    box-shadow: inset -3px -3px 8px rgba(232,168,120,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);}
+.page-bubbles .b5 { animation: float-bubble-5 16s ease-in-out infinite;
+    width: 130px; height: 130px;
+    bottom: 8%; left: 6%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
+    box-shadow: inset -6px -6px 16px rgba(229,184,152,0.12), inset 3px 3px 12px rgba(255,255,255,0.25);}
+.page-bubbles .b6 { animation: float-bubble-1 11s ease-in-out infinite;
+    width: 140px; height: 140px;
+    top: 15%; left: 40%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
+    box-shadow: inset -4px -4px 10px rgba(224,160,136,0.1), inset 2px 2px 8px rgba(255,255,255,0.22);}
+.page-bubbles .b7 { animation: float-bubble-3 13s ease-in-out infinite;
+    width: 170px; height: 170px;
+    top: 60%; right: -20px;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
+    box-shadow: inset -7px -7px 16px rgba(232,176,144,0.12), inset 3px 3px 12px rgba(255,255,255,0.22);}
+.page-bubbles .b8 { animation: float-bubble-4 9s ease-in-out infinite;
+    width: 100px; height: 100px;
+    top: 42%; right: 25%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
+    box-shadow: inset -3px -3px 8px rgba(229,184,152,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);}
+.page-bubbles .hero-b1 { animation: float-bubble-2 8s ease-in-out infinite;
+    width: 70px; height: 70px;
+    top: 12%; left: 28%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(245,210,170,0.4) 42%, rgba(232,176,144,0.25) 72%, transparent);
+    box-shadow: inset -4px -4px 10px rgba(232,176,144,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);}
+.page-bubbles .hero-b2 { animation: float-bubble-3 7s ease-in-out infinite;
+    width: 38px; height: 38px;
+    top: 8%; left: 48%;
+    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5), rgba(240,200,160,0.35) 45%, rgba(224,160,136,0.2) 75%, transparent);
+    box-shadow: inset -2px -2px 6px rgba(224,160,136,0.08), inset 1px 1px 4px rgba(255,255,255,0.15);}
+.page-bubbles .hero-b3 { animation: float-bubble-1 9s ease-in-out infinite;
+    width: 85px; height: 85px;
+    top: 20%; right: 20%;
+    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 40%, rgba(237,186,152,0.3) 70%, transparent);
+    box-shadow: inset -5px -5px 12px rgba(237,186,152,0.1), inset 3px 3px 8px rgba(255,255,255,0.2);}
+.page-bubbles .hero-b4 { animation: float-bubble-4 8s ease-in-out infinite;
+    width: 30px; height: 30px;
+    top: 28%; left: 18%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
+    box-shadow: inset -2px -2px 4px rgba(232,168,120,0.08), inset 1px 1px 3px rgba(255,255,255,0.15);}
 
 /* Hero d'accueil - bulles plus dynamiques */
 .hero-bubbles .bubble-1 { animation: float-bubble-1 10s ease-in-out infinite; }
@@ -3144,16 +3206,6 @@ a.evenement-card:hover {
     }
 }
 
-.hero-logo {
-    animation: hero-rise 1s ease-out 0.2s both;
-}
-.hero-subtitle {
-    animation: hero-rise 1s ease-out 0.5s both;
-}
-.hero-cta {
-    animation: hero-rise 1s ease-out 0.8s both;
-}
-
 /* Effet pulsation douce du logo (subtil) */
 @keyframes logo-breath {
     0%, 100% { transform: scale(1); }
@@ -3162,7 +3214,7 @@ a.evenement-card:hover {
 
 .hero-logo:hover {
     animation: logo-breath 2s ease-in-out infinite;
-}
+    transform: scale(1.05);}
 
 /* ==========================================
    Barre de progression au scroll
@@ -3185,7 +3237,7 @@ a.evenement-card:hover {
 .btn-primary {
     position: relative;
     overflow: hidden;
-}
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;}
 
 .btn-primary::before {
     content: '';
@@ -3207,10 +3259,6 @@ a.evenement-card:hover {
     left: 100%;
 }
 
-.btn-primary {
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
-
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(139, 26, 43, 0.35);
@@ -3222,11 +3270,6 @@ a.evenement-card:hover {
 a.evenement-card {
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
                 box-shadow 0.4s ease !important;
-}
-
-a.evenement-card:hover {
-    transform: translateY(-8px) scale(1.02) !important;
-    box-shadow: 0 20px 40px rgba(139, 26, 43, 0.18) !important;
 }
 
 a.evenement-card .evenement-image img {
@@ -3292,7 +3335,13 @@ section h2.scroll-reveal.revealed::after {
 
 .nav-btn-adherez {
     animation: adherer-pulse 2.5s ease-in-out infinite;
-}
+    background: var(--primary-color) !important;
+    color: white !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.55rem 1.4rem !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+    box-shadow: var(--shadow-sm);}
 
 /* ==========================================
    Indicateur de scroll (souris animée bas du hero)
@@ -3541,152 +3590,12 @@ section h2.scroll-reveal.revealed::after {
     border: 1px solid rgba(245, 200, 160, 0.2);
 }
 
-/* Grande bulle - haut droit */
-.page-bubbles .b1 {
-    width: 200px; height: 200px;
-    top: 4%; right: 5%;
-    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.6), rgba(245,210,170,0.4) 40%, rgba(232,176,144,0.3) 70%, transparent);
-    box-shadow: inset -8px -8px 20px rgba(232,176,144,0.15), inset 4px 4px 15px rgba(255,255,255,0.3);
-}
-/* Moyenne bulle - gauche */
-.page-bubbles .b2 {
-    width: 120px; height: 120px;
-    top: 30%; left: 3%;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,200,160,0.4) 45%, rgba(224,160,136,0.25) 75%, transparent);
-    box-shadow: inset -6px -6px 14px rgba(224,160,136,0.12), inset 3px 3px 10px rgba(255,255,255,0.25);
-}
-/* Grande bulle - bas droit */
-.page-bubbles .b3 {
-    width: 160px; height: 160px;
-    bottom: 15%; right: 8%;
-    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 42%, rgba(237,186,152,0.3) 72%, transparent);
-    box-shadow: inset -7px -7px 18px rgba(237,186,152,0.13), inset 4px 4px 12px rgba(255,255,255,0.28);
-}
-/* Bulle - centre gauche */
-.page-bubbles .b4 {
-    width: 110px; height: 110px;
-    top: 50%; left: 25%;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
-    box-shadow: inset -3px -3px 8px rgba(232,168,120,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
-}
-/* Moyenne bulle - bas gauche */
-.page-bubbles .b5 {
-    width: 130px; height: 130px;
-    bottom: 8%; left: 6%;
-    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
-    box-shadow: inset -6px -6px 16px rgba(229,184,152,0.12), inset 3px 3px 12px rgba(255,255,255,0.25);
-}
-/* Bulle - centre haut */
-.page-bubbles .b6 {
-    width: 140px; height: 140px;
-    top: 15%; left: 40%;
-    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(240,200,160,0.4) 42%, rgba(224,160,136,0.25) 72%, transparent);
-    box-shadow: inset -4px -4px 10px rgba(224,160,136,0.1), inset 2px 2px 8px rgba(255,255,255,0.22);
-}
-/* Grande bulle - milieu droit */
-.page-bubbles .b7 {
-    width: 170px; height: 170px;
-    top: 60%; right: -20px;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(245,210,170,0.35) 45%, rgba(232,176,144,0.2) 75%, transparent);
-    box-shadow: inset -7px -7px 16px rgba(232,176,144,0.12), inset 3px 3px 12px rgba(255,255,255,0.22);
-}
-/* Bulle - centre droit */
-.page-bubbles .b8 {
-    width: 100px; height: 100px;
-    top: 42%; right: 25%;
-    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.55), rgba(240,208,168,0.4) 40%, rgba(229,184,152,0.3) 70%, transparent);
-    box-shadow: inset -3px -3px 8px rgba(229,184,152,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);
-}
-
-/* Bulles supplémentaires autour du logo - page d'accueil uniquement */
-.page-bubbles .hero-b1 {
-    width: 70px; height: 70px;
-    top: 12%; left: 28%;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(245,210,170,0.4) 42%, rgba(232,176,144,0.25) 72%, transparent);
-    box-shadow: inset -4px -4px 10px rgba(232,176,144,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);
-}
-.page-bubbles .hero-b2 {
-    width: 38px; height: 38px;
-    top: 8%; left: 48%;
-    background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5), rgba(240,200,160,0.35) 45%, rgba(224,160,136,0.2) 75%, transparent);
-    box-shadow: inset -2px -2px 6px rgba(224,160,136,0.08), inset 1px 1px 4px rgba(255,255,255,0.15);
-}
-.page-bubbles .hero-b3 {
-    width: 85px; height: 85px;
-    top: 20%; right: 20%;
-    background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 40%, rgba(237,186,152,0.3) 70%, transparent);
-    box-shadow: inset -5px -5px 12px rgba(237,186,152,0.1), inset 3px 3px 8px rgba(255,255,255,0.2);
-}
-.page-bubbles .hero-b4 {
-    width: 30px; height: 30px;
-    top: 28%; left: 18%;
-    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
-    box-shadow: inset -2px -2px 4px rgba(232,168,120,0.08), inset 1px 1px 3px rgba(255,255,255,0.15);
-}
-
-/* ==========================================
-   DESIGN SED'OCC - PROPRE & MODERNE
-   ========================================== */
-
-:root {
-    --primary-color: #8B1A2B;
-    --primary-dark: #6b1420;
-    --text-dark: #0F172A;
-    --text-medium: #3A3A3A;
-    --bg-light: #FFF5EC;
-    --bg-warm: #FFEDE6;
-    --font-primary: 'Poppins', sans-serif;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-    font-family: var(--font-primary);
-    color: var(--text-dark);
-    line-height: 1.6;
-    background-color: var(--bg-light);
-}
-
-/* --- NAVIGATION --- */
-.navbar {
-    position: fixed; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px); padding: 15px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.1); z-index: 1000;
-}
-.nav-container { display: flex; justify-content: space-between; align-items: center; width: 100%; margin: 0 auto; padding: 0 20px; }
-.logo img { height: 55px; }
-.nav-menu { display: flex; list-style: none; gap: 0.2rem; }
-.nav-link { text-decoration: none; color: var(--text-dark); font-weight: 500; }
-
-/* --- SECTIONS (L'espace sous le menu) --- */
-.page-header {
-    padding-top: 150px !important;
-    padding-bottom: 10px !important;
-}
-
-/* --- TITRES (Correction du vide sur sed.html) --- */
-h2 {
-    font-size: 1.4rem !important;
-    color: var(--primary-color) !important;
-    text-align: center;
-    margin-bottom: 20px !important;
-    padding-bottom: 0px !important;
-    text-transform: uppercase;
-}
-
 /* On colle le titre noir/gris juste sous le bordeaux */
 h2 + h2, h2 + h3, .section-header h3 {
     margin-top: 5px !important;
     font-size: 1.2rem !important;
     color: var(--text-medium);
     text-align: center;
-}
-
-/* On laisse respirer les paragraphes de texte */
-p {
-    margin-top: 25px !important;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 /* Sur mobile, 25px au-dessus de CHAQUE paragraphe (y compris dans des
@@ -3727,27 +3636,10 @@ p {
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-xs);
 }
-
-/* --- ACCUEIL (Style spécial) --- */
-.hero {
-    position: relative; text-align: center;
-    background: linear-gradient(135deg, transparent 0%, transparent 100%);
-    padding: 100px 20px 60px; overflow: hidden;
-}
-.hero-logo {
-    position: relative;
-    z-index: 2;
-    animation: heroFloat 4s ease-in-out infinite;
-    filter: drop-shadow(0 10px 25px rgba(139, 26, 43, 0.15));
-    transition: transform 0.3s ease;
-}
 @media (min-width: 641px) {
     .hero-logo {
         height: 260px;
     }
-}
-.hero-logo:hover {
-    transform: scale(1.05);
 }
 @keyframes heroFloat {
     0%, 100% { transform: translateY(0); }
@@ -3757,40 +3649,6 @@ p {
 
 /* Les bulles jolies */
 .hero-bubbles .bubble { position: absolute; background: var(--primary-color); border-radius: 50%; opacity: 0.1; z-index: 1; }
-.bubble-1 { width: 80px; height: 80px; top: 10%; left: 10%; }
-.bubble-2 { width: 120px; height: 120px; bottom: 15%; right: 10%; }
-
-/* --- BOUTONS --- */
-.btn {
-    display: inline-block; padding: 14px 35px; background: var(--primary-color);
-    color: white !important; text-decoration: none; border-radius: 50px; font-weight: 600;
-}
-/* --- AJUSTEMENT PRÉCIS POUR L'ACCUEIL (index.html) --- */
-
-.hero {
-    padding-bottom: 20px !important; /* Réduit l'espace sous le logo et le texte du haut */
-}
-
-.mission {
-    padding-top: 10px !important;
-    margin-top: 0 !important;
-}
-
-.mission > .container > h2 {
-    margin-top: 0 !important;
-    margin-bottom: 30px !important;
-}
-/* ==========================================
-   DESIGN MODERNE POUR L'ENCART DON (ADHERER)
-   ========================================== */
-.support-banner.large {
-    background: linear-gradient(135deg, #8B1A2B 0%, #B22222 100%) !important;
-    padding: 60px 40px !important;
-    border-radius: 20px !important;
-    border: none !important;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
 
 .support-banner.large h2 {
     color: #FFFFFF !important; /* Force le titre en blanc */
@@ -3834,26 +3692,26 @@ p {
 .adhesion-modern .section-header .subtitle {
     color: var(--primary-color);
     text-transform: uppercase;
-    letter-spacing: 2px;
     font-weight: 700;
-    font-size: 1rem;
     display: block;
     margin-bottom: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 2.5px;
 }
 
 .adhesion-modern .section-header h2 {
     color: var(--primary-color) !important;
-    font-size: 2.8rem;
     font-weight: 700;
     margin-bottom: 30px;
+    font-size: 2.2rem !important;
 }
 
 .adhesion-modern .intro-p {
     max-width: 800px;
     margin: 0 auto;
     color: var(--text-dark);
-    font-size: 1.2rem;
     line-height: 1.8;
+    font-size: 1.1rem;
 }
 
 /* 3. La Grille (3 colonnes centrées et compactes) */
@@ -4018,17 +3876,6 @@ br.br-desktop {
 #adhesion-sections .quote-modern {
     margin-bottom: 10px;
 }
-
-/* Bouton Adhérer dans la nav */
-.nav-btn-adherez {
-    background: var(--primary-color) !important;
-    color: white !important;
-    border-radius: var(--radius-sm) !important;
-    padding: 0.55rem 1.4rem !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    box-shadow: var(--shadow-sm);
-}
 .nav-btn-adherez:hover {
     background: var(--primary-dark, #6b1220) !important;
     color: white !important;
@@ -4105,54 +3952,6 @@ br.br-desktop {
 .partenaire-contact a:hover {
     text-decoration: underline;
 }
-
-/* ==========================================
-   HARMONISATION ONGLETS & DESIGN
-   ========================================== */
-
-/* Onglets : mécanique */
-.tab-content {
-    display: none;
-}
-.tab-content.active {
-    display: block !important;
-    padding: 25px 30px;
-}
-
-/* Onglets : boutons */
-.tab-btn {
-    padding: 12px 22px;
-    cursor: pointer;
-    border: none;
-    background: none;
-    font-weight: 600;
-    font-size: 0.95rem;
-    font-family: var(--font-primary);
-    color: var(--text-medium);
-    border-bottom: 3px solid transparent;
-    transition: all var(--transition-fast);
-}
-.tab-btn:hover {
-    color: var(--heading-color);
-}
-.tab-btn.active {
-    background: #8B1A2B !important;
-    color: white !important;
-    border-radius: 8px 8px 0 0;
-}
-
-/* Onglets : réduction marche blanche */
-.tab-buttons {
-    margin-bottom: 15px;
-}
-
-/* Onglets : titres centrés et remontés */
-.tab-content h3 {
-    text-align: center;
-    margin-top: 10px;
-    margin-bottom: var(--spacing-md);
-    color: var(--heading-color);
-}
 .tab-content h3:first-child {
     margin-top: 0;
 }
@@ -4160,19 +3959,6 @@ br.br-desktop {
     color: var(--text-dark);
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-sm);
-}
-
-/* Onglets : image à côté du texte */
-.tab-with-image {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: var(--spacing-xl);
-    align-items: center;
-}
-.tab-with-image img {
-    width: 100%;
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
 }
 
 /* Vignettes blanches */
@@ -4229,18 +4015,6 @@ br.br-desktop {
     padding: 5px 14px;
     border-radius: 20px;
     border: 1px solid rgba(139, 26, 43, 0.15);
-}
-
-/* Adhésion : harmonie des polices */
-.adhesion-modern .section-header .subtitle {
-    font-size: 0.9rem;
-    letter-spacing: 2.5px;
-}
-.adhesion-modern .section-header h2 {
-    font-size: 2.2rem !important;
-}
-.adhesion-modern .intro-p {
-    font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
