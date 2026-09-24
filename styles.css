@@ -2174,11 +2174,11 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-content ul {
-    margin: var(--spacing-sm) 0 var(--spacing-lg) var(--spacing-md);
+    margin: 10px 0 20px 18px;
 }
 
 .tab-content li {
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: 4px;
     line-height: 1.8;
     color: var(--text-medium);
     padding-bottom: var(--spacing-xs);
