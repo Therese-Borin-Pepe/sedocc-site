@@ -1346,9 +1346,10 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .partner-logo img {
+    width: 160px;
     max-width: 100%;
-    height: auto;
-    max-height: 80px;
+    height: 80px;
+    object-fit: contain;
     transition: all var(--transition-medium);
 }
 
