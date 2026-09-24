@@ -2178,7 +2178,7 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-content li {
-    margin-bottom: 0;
+    margin-bottom: 8px;
     line-height: 1.8;
     color: var(--text-medium);
     padding-bottom: 0;
