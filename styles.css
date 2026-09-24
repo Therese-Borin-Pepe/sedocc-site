@@ -4217,6 +4217,7 @@ br.br-desktop {
     }
     .tab-with-image {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
 
     /* 70px sous le titre "Pourquoi nous rejoindre ?" est pense pour
