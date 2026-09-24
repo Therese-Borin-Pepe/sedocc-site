@@ -1547,7 +1547,6 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     .partner-logo {
         flex: 0 0 78%;
         scroll-snap-align: center;
-        padding: var(--spacing-sm);
     }
 
     .partners-carousel {
@@ -3919,6 +3918,18 @@ br.br-desktop {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+/* .list-custom porte deja sa propre puce (fleche) et son propre
+   espacement : la regle generique .tab-content ul/li (pensee pour du
+   texte courant) ne doit pas lui ajouter d'indentation ni de marge
+   supplementaire, sinon la vignette parait plus aeree que les autres. */
+.tab-content .list-custom {
+    margin: 10px 0 0;
+}
+
+.tab-content .list-custom li {
+    margin-bottom: 0;
+}
 /* ==========================================
    MISE EN VALEUR DE LA CITATION FINALE
    ========================================== */
@@ -4351,7 +4362,8 @@ br.br-desktop {
     .warning-box,
     .vignette-card,
     .partenaire-contact,
-    .card-modern {
+    .card-modern,
+    .partner-logo {
         padding: 12px;
         box-shadow: none;
     }
@@ -4362,7 +4374,8 @@ br.br-desktop {
        recoivent une bordure fine et neutre a la place. */
     .stat-card,
     .chanson-card,
-    .warning-box {
+    .warning-box,
+    .partner-logo {
         border: 1px solid rgba(0, 0, 0, 0.07);
     }
 
