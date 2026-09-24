@@ -2174,14 +2174,14 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 .tab-content ul {
-    margin: 10px 0 20px 18px;
+    margin: 0;
 }
 
 .tab-content li {
-    margin-bottom: 4px;
+    margin-bottom: 0;
     line-height: 1.8;
     color: var(--text-medium);
-    padding-bottom: var(--spacing-xs);
+    padding-bottom: 0;
 }
 
 .tab-content h3 {
@@ -4218,6 +4218,13 @@ br.br-desktop {
     .tab-with-image {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+    }
+
+    /* Citation (temoignage Marjorie) : le padding/margin pense pour
+       le desktop mange une bonne partie des 375px d'un telephone. */
+    blockquote {
+        padding: var(--spacing-sm);
+        margin: var(--spacing-md) 0;
     }
 
     /* 70px sous le titre "Pourquoi nous rejoindre ?" est pense pour
