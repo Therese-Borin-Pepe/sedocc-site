@@ -958,6 +958,10 @@ a.btn-secondary:hover {
     margin-bottom: var(--spacing-sm);
 }
 
+.mission-text p strong {
+    color: var(--primary-color);
+}
+
 .actions-section {
     margin-top: var(--spacing-xl);
     max-width: 1100px;
