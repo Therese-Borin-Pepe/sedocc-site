@@ -2242,6 +2242,7 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 .bilan-item h4 {
     color: var(--text-dark);
     margin-bottom: var(--spacing-sm);
+    text-align: center;
 }
 
 .bilan-item ul {
