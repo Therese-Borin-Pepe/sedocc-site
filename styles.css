@@ -2078,6 +2078,41 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     }
 }
 
+/* Variante "image flottante" : pour un onglet dont le texte (plusieurs
+   sous-parties/listes) est bien plus long que l'unique photo associee,
+   la grille 2 colonnes de .tab-with-image laisse un grand vide sous
+   l'image des que le texte la depasse. Ici l'image flotte en haut a
+   droite du premier paragraphe et le texte s'ecoule autour, puis pleine
+   largeur une fois l'image depassee. */
+.tab-float::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.tab-float img {
+    float: right;
+    width: 280px;
+    max-width: 40%;
+    margin: 4px 0 var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-content .tab-float h3,
+.tab-content .tab-float h4 {
+    text-align: left;
+}
+
+@media (max-width: 640px) {
+    .tab-float img {
+        float: none;
+        width: 100%;
+        max-width: none;
+        margin: 0 0 var(--spacing-md);
+    }
+}
+
 .image-clic-hint {
     font-size: 0.85rem;
     color: var(--text-medium);
