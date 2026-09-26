@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dépliant de présentation - SED'OCC</title>
+    <meta name="description" content="Découvrez SED'OCC en un coup d'œil : nos objectifs, le Syndrome d'Ehlers-Danlos, ses symptômes les plus fréquents et la filière Oscar. Dépliant à consulter ou à télécharger.">
+    <link rel="canonical" href="https://www.sedocc.fr/depliant.html">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .depliant-icon-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .depliant-oscar-logo {
+            display: block;
+            max-width: 260px;
+            width: 100%;
+            height: auto;
+            margin: 0 auto var(--spacing-md);
+        }
+        .depliant-beighton {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            margin: var(--spacing-md) auto 0;
+        }
+        .depliant-team-text {
+            max-width: 800px;
+            margin: var(--spacing-lg) auto 0;
+            text-align: center;
+        }
+        .depliant-follow {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .depliant-follow-socials {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+        .depliant-follow-socials a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            color: var(--primary-color);
+            transition: all var(--transition-fast);
+        }
+        .depliant-follow-socials a:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+        .depliant-emails {
+            list-style: none;
+            margin: var(--spacing-sm) 0;
+            padding: 0;
+        }
+        .depliant-emails li {
+            margin-bottom: 0.3rem;
+        }
+        .depliant-legal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-md);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-align: left;
+        }
+        .depliant-legal img {
+            width: 32px;
+            height: auto;
+            flex-shrink: 0;
+        }
+        .depliant-download-banner {
+            text-align: center;
+            margin: var(--spacing-2xl) auto 0;
+            padding: var(--spacing-lg);
+            background: var(--bg-light);
+            border-radius: var(--radius-lg);
+            max-width: 700px;
+        }
+        .depliant-download-banner p {
+            margin-bottom: var(--spacing-md);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="SED'OCC Logo"></a></div>
+            <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-dropdown">
+                    <a href="index.html" class="nav-link">L'association &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="index.html">Qui sommes-nous ?</a></li>
+                        <li><a href="depliant.html">Dépliant de présentation</a></li>
+                        <li><a href="adhesion.html">Adhésion &amp; soutien</a></li>
+                        <li><a href="initiatives.html">Initiatives &amp; Partenariats</a></li>
+                        <li><a href="comite-scientifique.html">Comité Scientifique</a></li>
+                        <li><a href="evenements/photo-valerie-aroca.html">Galerie &amp; Sensibilisation</a></li>
+                        <li><a href="actualites.html">Actualités de l'association</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="sed.html" class="nav-link">Le SED &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sed.html">Qu'est-ce que le SED ?</a></li>
+                        <li><a href="diagnostic.html">Diagnostic</a></li>
+                        <li><a href="traitements.html">Traitements &amp; prises en charge</a></li>
+                        <li><a href="actualites-medicales.html">Actualités médicales</a></li>
+                        <li><a href="impacts.html">Impacts sur la vie quotidienne &amp; témoignages</a></li>
+                        <li><a href="livret-enfant.html">Livret pour les enfants</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="droits.html" class="nav-link">Droits &amp; Ressources &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="droits.html">MDPH – ALD</a></li>
+                        <li><a href="ressources.html">Ressources pratiques</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="evenements.html" class="nav-link">Évènements &amp; Activités &#9662;</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="evenements.html">Tous les évènements</a></li>
+                        <li><a href="evenements/cure-balaruc-les-bains.html">Cure thermale Balaruc-les-Bains</a></li>
+                        <li><a href="evenements/conference-toulouse-replay.html">Conférence &amp; Replay</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="https://www.helloasso.com/associations/sed-occ-syndrome-ehlers-danslos-occitanie/adhesions/adhesion-sed-occ-2" class="nav-link nav-btn-adherez" target="_blank">Adhérer</a></li>
+            </ul>
+            <div class="nav-social">
+                <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="https://www.instagram.com/sed_occ31/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+
+    <div class="page-bubbles">
+        <span class="bubble b1"></span>
+        <span class="bubble b2"></span>
+        <span class="bubble b3"></span>
+        <span class="bubble b4"></span>
+        <span class="bubble b5"></span>
+        <span class="bubble b6"></span>
+        <span class="bubble b7"></span>
+        <span class="bubble b8"></span>
+    </div>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Dépliant de présentation</h1>
+        </div>
+    </section>
+
+    <section class="page-content">
+        <div class="container">
+            <div class="adhesion-modern">
+
+                <!-- Intro -->
+                <div class="section-header">
+                    <span class="subtitle">Syndrome d'Ehlers-Danlos — Types NV &amp; HSD</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">Vous informer. Vous soutenir. Vous représenter.</p>
+                </div>
+
+                <!-- Qui sommes-nous -->
+                <h2 style="text-align:center;">Qui sommes-nous&nbsp;?</h2>
+                <p style="text-align:center;max-width:800px;margin:0 auto var(--spacing-lg);">Nos objectifs</p>
+                <div class="benefits-grid">
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-objectif-soin.png" alt=""></div>
+                            <h3>Améliorer le parcours de soin</h3>
+                        </div>
+                        <p class="card-desc">Améliorer le parcours de soin des personnes atteintes du SED.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-objectif-sensibiliser.png" alt=""></div>
+                            <h3>Sensibiliser</h3>
+                        </div>
+                        <p class="card-desc">Sensibiliser les professionnels de santé au diagnostic et à la prise en charge.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-objectif-informer.png" alt=""></div>
+                            <h3>Informer</h3>
+                        </div>
+                        <p class="card-desc">Informer patients et proches sur le syndrome et les ressources disponibles.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-objectif-representer.png" alt=""></div>
+                            <h3>Représenter</h3>
+                        </div>
+                        <p class="card-desc">Représenter les patients auprès des institutions médicales et sociales.</p>
+                    </div>
+                </div>
+
+                <div class="depliant-team-text">
+                    <h3>L'équipe</h3>
+                    <p>Le bureau est composé de membres qui vivent eux-mêmes avec le Syndrome d'Ehlers-Danlos.</p>
+                    <p>Une association récente, avec de l'expérience depuis 2018 dans l'accompagnement et le parcours de soin.</p>
+                </div>
+
+                <!-- Rejoignez-nous -->
+                <div class="section-header" style="margin-top:var(--spacing-2xl);">
+                    <span class="subtitle">Êtes-vous concernés&nbsp;?</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">Rejoignez-nous</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon">💳</div>
+                            <h3>Adhérez en ligne</h3>
+                        </div>
+                        <p class="card-desc">Rejoignez l'association en quelques clics, via la plateforme HelloAsso.</p>
+                        <p style="text-align:center;margin-top:auto;"><a href="https://www.helloasso.com/associations/sed-occ-syndrome-ehlers-danslos-occitanie/adhesions/adhesion-sed-occ-2" target="_blank" class="btn btn-primary">Adhérer</a></p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon">🤝</div>
+                            <h3>Rencontrez-nous&nbsp;!</h3>
+                        </div>
+                        <p class="card-desc">Participez à nos cafés parole au CHU de Toulouse et dans d'autres lieux en Occitanie. Retrouvez-nous aussi en visioconférence ou lors de nos événements associatifs tout au long de l'année.</p>
+                        <p style="text-align:center;margin-top:auto;"><a href="evenements.html" class="btn btn-primary">Voir les évènements</a></p>
+                    </div>
+                </div>
+
+                <!-- Les symptômes du SED -->
+                <div class="section-header" style="margin-top:var(--spacing-2xl);">
+                    <span class="subtitle">Comprendre le SED</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">Les symptômes du SED</p>
+                </div>
+                <p style="max-width:800px;margin:0 auto var(--spacing-sm);text-align:center;">Le SED regroupe 13 formes différentes d'anomalies du tissu conjonctif (collagène). La forme hypermobile (SEDh) est la plus fréquente.</p>
+                <p style="max-width:800px;margin:0 auto var(--spacing-sm);text-align:center;">C'est une maladie rare, génétique, encore méconnue et sous-diagnostiquée. Prévalence&nbsp;: 1 personne sur 2000 à 5000.</p>
+                <p style="max-width:800px;margin:0 auto var(--spacing-lg);text-align:center;">Découverte récente de certains gènes impliqués dans le SED hypermobile&nbsp;; ils sont déjà connus pour les autres formes du SED.</p>
+
+                <div class="benefits-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="card-modern">
+                        <h3 style="text-align:center;">Qui est concerné&nbsp;?</h3>
+                        <p class="card-desc">98% des personnes vues en consultation sont des femmes, probablement en lien avec le rôle aggravant des œstrogènes.</p>
+                        <p style="text-align:center;font-size:0.85rem;color:var(--text-light);">Source&nbsp;: CHUV, Suisse</p>
+                    </div>
+                    <div class="card-modern">
+                        <h3 style="text-align:center;">Score de Beighton</h3>
+                        <p class="card-desc">Le test de référence pour évaluer l'hyperlaxité articulaire.</p>
+                        <img class="depliant-beighton" src="images/depliant/illustration-beighton.png" alt="Illustration des postures du test de Beighton">
+                    </div>
+                </div>
+
+                <!-- Symptômes fréquents -->
+                <div class="section-header" style="margin-top:var(--spacing-2xl);">
+                    <span class="subtitle">Au quotidien</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">Quels symptômes sont les plus fréquents&nbsp;?</p>
+                </div>
+                <div class="benefits-grid">
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-symptome-hypermobilite.png" alt=""></div>
+                            <h3>Hypermobilité articulaire</h3>
+                        </div>
+                        <p class="card-desc">Entorses, luxations, subluxations à répétition.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-symptome-douleurs.png" alt=""></div>
+                            <h3>Douleurs &amp; fatigue chroniques</h3>
+                        </div>
+                        <p class="card-desc"><em>(au moins trois mois consécutifs)</em><br>Articulations, dos, muscles, abdomen, céphalées. Fatigue intense, souvent dès le réveil.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-symptome-proprioception.png" alt=""></div>
+                            <h3>Troubles de la proprioception</h3>
+                        </div>
+                        <p class="card-desc">Perception du corps dans l'espace erronée, vertiges, troubles de la vision.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-symptome-peau.png" alt=""></div>
+                            <h3>Peau fragile</h3>
+                        </div>
+                        <p class="card-desc">Peau fine et extensible, cicatrisation difficile, hématomes et tendance aux saignements.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-symptome-autres.png" alt=""></div>
+                            <h3>Autres dysfonctionnements</h3>
+                        </div>
+                        <p class="card-desc">Troubles digestifs et urinaires, dysfonctionnements du système nerveux.</p>
+                    </div>
+                </div>
+
+                <!-- Filière Oscar -->
+                <div class="section-header" style="margin-top:var(--spacing-2xl);">
+                    <span class="subtitle">Vous accompagner</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">La filière Oscar</p>
+                </div>
+                <img class="depliant-oscar-logo" src="images/depliant/logo-oscar.png" alt="Oscar - Filière Santé Maladies Rares">
+                <p style="max-width:800px;margin:0 auto var(--spacing-lg);text-align:center;">À retrouver sur <a href="https://www.filiere-oscar.fr" target="_blank">www.filiere-oscar.fr</a> — Comment la filière Oscar peut vous aider&nbsp;:</p>
+                <div class="benefits-grid">
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-oscar-reseau.png" alt=""></div>
+                            <h3>Réseau national</h3>
+                        </div>
+                        <p class="card-desc">Centres experts coordonnés dans toute la France.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-oscar-diagnostic.png" alt=""></div>
+                            <h3>Diagnostic &amp; soins</h3>
+                        </div>
+                        <p class="card-desc">Concertations pluridisciplinaires et guides de référence.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-oscar-centre.png" alt=""></div>
+                            <h3>Un centre près de chez vous</h3>
+                        </div>
+                        <p class="card-desc">Annuaire des centres sur filiere-oscar.fr.</p>
+                    </div>
+                    <div class="card-modern">
+                        <div class="card-header-modern">
+                            <div class="card-icon"><img class="depliant-icon-img" src="images/depliant/icon-oscar-recherche.png" alt=""></div>
+                            <h3>Recherche &amp; formation</h3>
+                        </div>
+                        <p class="card-desc">Appels à projets, événements, newsletter scientifique.</p>
+                    </div>
+                </div>
+
+                <!-- Nous suivre -->
+                <div class="section-header" style="margin-top:var(--spacing-2xl);">
+                    <span class="subtitle">Restons en contact</span>
+                    <div class="header-line"></div>
+                    <p class="intro-p">Nous suivre &amp; nous contacter</p>
+                </div>
+                <div class="depliant-follow">
+                    <p>Sed'Occ France — <a href="https://www.instagram.com/sed_occ31/" target="_blank">@sed_occ31</a> — <a href="https://www.sedocc.fr">www.sedocc.fr</a></p>
+                    <div class="depliant-follow-socials">
+                        <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener" aria-label="Facebook"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                        <a href="https://www.instagram.com/sed_occ31/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    </div>
+                    <p><strong>Contactez-nous&nbsp;:</strong></p>
+                    <ul class="depliant-emails">
+                        <li><a href="mailto:sedocc31@gmail.com">sedocc31@gmail.com</a> (Haute-Garonne)</li>
+                        <li><a href="mailto:sedocc66@gmail.com">sedocc66@gmail.com</a> (Pyrénées-Orientales)</li>
+                        <li><a href="mailto:sedocc09@gmail.com">sedocc09@gmail.com</a> (Ariège)</li>
+                    </ul>
+                    <div class="depliant-legal">
+                        <img src="images/depliant/ruban-maladies-rares.png" alt="">
+                        <span>Association loi 1901 — SIRET&nbsp;: 943 891 861 00016 — Siège social&nbsp;: Portet-sur-Garonne</span>
+                    </div>
+                </div>
+
+                <!-- Téléchargement -->
+                <div class="depliant-download-banner">
+                    <p>Retrouvez toutes ces informations dans notre dépliant, à consulter lors de nos évènements et permanences.</p>
+                    <a href="documents/depliant-sedocc.pdf" download class="btn btn-primary">Télécharger le dépliant (PDF)</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <ul class="footer-links">
+                    <li><a href="sed.html">Qu'est-ce que le SED ?</a></li>
+                    <li><a href="adhesion.html">Adhésion et soutien</a></li>
+                    <li><a href="actualites-medicales.html">Actualités médicales</a></li>
+                    <li><a href="actualites.html">Actualités de l'association</a></li>
+                    <li><a href="ressources.html">Ressources</a></li>
+                    <li><a href="mentions-legales.html">Mentions légales</a></li>
+                    <li><a href="politique-cookies.html">Politique de cookies</a></li>
+                    <li><a href="politique-confidentialite.html">Politique de confidentialité</a></li>
+                </ul>
+                <div class="footer-social">
+                    <a href="https://www.facebook.com/people/SedOcc/61575013307674/" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/sed_occ31/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>Copyright &copy; 2026 | SED'OCC. Tous droits réservés. — Site réalisé par Florence Garnero</p></div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
