@@ -410,7 +410,7 @@
 
                     <div class="form-group">
                         <label style="font-weight:400;display:flex;align-items:center;gap:6px;cursor:pointer;">
-                            <input type="checkbox" id="vis-decor-cafe" onchange="updateVisuel()"> Décor Café Parole (ruban, zèbre, grains de café)
+                            <input type="checkbox" id="vis-decor-cafe" onchange="updateVisuel()"> Décor Café Parole (ruban, zèbre, tournesol, grains de café)
                         </label>
                     </div>
 
@@ -3760,7 +3760,8 @@ const decorCafeImages = {};
 [
     ['ruban', 'images/generateur/ruban-maladies-rares.png'],
     ['zebre', 'images/generateur/zebre.png'],
-    ['grain', 'images/generateur/grain-cafe.png']
+    ['grain', 'images/generateur/grain-cafe.png'],
+    ['tournesol', 'images/generateur/tournesol.png']
 ].forEach(function(entry) {
     const img = new Image();
     img.crossOrigin = 'anonymous';
@@ -3999,7 +4000,7 @@ function drawVisuel(ctx, fmt, style) {
         ctx.fillStyle = colorPrimary;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'top';
-        const titreFontSize = isStory ? 96 * scale : (isWide ? 70 * scale : 80 * scale);
+        const titreFontSize = isStory ? 72 * scale : (isWide ? 46 * scale : 56 * scale);
         ctx.font = 'bold ' + titreFontSize + 'px Poppins, sans-serif';
         const lineH = titreFontSize * 1.15;
         const titreLines = wrapText(ctx, titre, W - padX * 2);
@@ -4081,23 +4082,26 @@ function drawVisuel(ctx, fmt, style) {
     });
     const footerReserve = (showReseaux ? 155 : 55) * scale;
 
-    // Zèbre du décor "Café Parole" : posé APRÈS le texte, centré sous celui-ci, jamais avant —
-    // comme ça il ne peut jamais chevaucher le titre/date/lieu quelle que soit leur longueur.
-    // S'il n'y a pas assez de place au-dessus du pied de page (contenu trop long), on le
-    // saute plutôt que de risquer de pousser "sedocc.fr" et les icônes hors du visuel.
-    const zebreSize = 95 * scale;
-    const zebreGap = zebreSize + 35 * scale;
-    const fixedFooterTop = H - padY * 0.45 - footerReserve;
-    const showZebre = decorCafeOn && decorCafeImages.zebre && (contentBottomY + zebreGap + 20 * scale) < fixedFooterTop;
-    if (showZebre) {
-        drawDecorImage(ctx, decorCafeImages.zebre, W / 2, contentBottomY + zebreGap / 2, zebreSize, 0);
+    // Zèbre + tournesol du décor "Café Parole" : posés APRÈS le texte, l'un à côté de l'autre,
+    // jamais avant — comme ça ils ne peuvent jamais chevaucher le titre/date/lieu quelle que
+    // soit leur longueur. Toujours affichés (pas de condition de place) : leur espace est
+    // réservé dans le calcul du pied de page juste en dessous, pour qu'ils fassent systématiquement
+    // partie de la trame plutôt que de disparaître silencieusement sur un contenu plus long.
+    const zebreSize = 72 * scale;
+    const tournesolSize = 62 * scale;
+    const decorRowGap = Math.max(zebreSize, tournesolSize) + 28 * scale;
+    if (decorCafeOn && decorCafeImages.zebre) {
+        drawDecorImage(ctx, decorCafeImages.zebre, W / 2 + 36 * scale, contentBottomY + decorRowGap / 2, zebreSize, 0);
+    }
+    if (decorCafeOn && decorCafeImages.tournesol) {
+        drawDecorImage(ctx, decorCafeImages.tournesol, W / 2 - 78 * scale, contentBottomY + decorRowGap / 2, tournesolSize, -8);
     }
 
     // Le pied de page reste collé en bas si tout tient ; sinon il descend sous le contenu
     // (plutôt que de le chevaucher), au prix d'un léger débord accepté pour les cas extrêmes.
-    // 124*scale = marge de sécurité pour que le HAUT des icônes (qui dépassent de 72+25px
+    // 118*scale = marge de sécurité pour que le HAUT des icônes (qui dépassent de 72+25px
     // au-dessus de ce point d'ancrage) reste toujours sous le texte, pas seulement son point d'ancrage.
-    const footerBase = Math.max(H - padY * 0.45, contentBottomY + (showZebre ? zebreGap : 0) + 124 * scale);
+    const footerBase = Math.max(H - padY * 0.45, contentBottomY + (decorCafeOn ? decorRowGap : 0) + 118 * scale);
     if (activePartnerLogos.length) {
         const logoH = 55 * scale;
         const gap2 = 36 * scale;
