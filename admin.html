@@ -6,7 +6,7 @@
     <title>Administration - SED'OCC</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Baloo+2:wght@500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -3738,6 +3738,12 @@ const PARTNER_LOGO_OPTIONS = [
 ];
 const partnerLogoImages = {};
 
+// Redessine une fois la police "Baloo 2" (texte du lieu) effectivement chargée,
+// sinon le premier rendu peut utiliser la police de secours le temps du chargement.
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function() { if (typeof updateVisuel === 'function') updateVisuel(); });
+}
+
 // Préchargement du logo SED'OCC
 (function preloadLogo() {
     const img = new Image();
@@ -3966,6 +3972,7 @@ function drawVisuel(ctx, fmt, style) {
     const decorCafeOn = !!(document.getElementById('vis-decor-cafe') && document.getElementById('vis-decor-cafe').checked);
     if (decorCafeOn) {
         if (decorCafeImages.ruban) drawDecorImage(ctx, decorCafeImages.ruban, W * 0.90, H * 0.09, 85 * scale, 8);
+        if (decorCafeImages.tournesol) drawDecorImage(ctx, decorCafeImages.tournesol, W * 0.15, H * 0.10, 135 * scale, -6);
         if (decorCafeImages.grain) {
             drawDecorImage(ctx, decorCafeImages.grain, W * 0.04, H * 0.50, 38 * scale, 25);
             drawDecorImage(ctx, decorCafeImages.grain, W * 0.965, H * 0.60, 34 * scale, -18);
@@ -4018,19 +4025,20 @@ function drawVisuel(ctx, fmt, style) {
         cursorY += 46 * scale;
     }
 
-    // Lieu — police réduite automatiquement si le texte est long (adresse + précisions),
+    // Lieu — écriture "Baloo 2" plus ronde et ludique que le reste (au lieu du Poppins neutre),
+    // avec une police réduite automatiquement si le texte est long (adresse + précisions),
     // pour ne pas pousser le reste du visuel (icônes, sedocc.fr) hors du cadre.
     if (lieu) {
-        ctx.fillStyle = colorText;
-        let lieuFontSize = 32 * scale;
-        ctx.font = lieuFontSize + 'px Poppins, sans-serif';
+        let lieuFontSize = 30 * scale;
+        ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
         let lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         if (lieuLines.length > 1) {
-            lieuFontSize = 25 * scale;
-            ctx.font = lieuFontSize + 'px Poppins, sans-serif';
+            lieuFontSize = 23 * scale;
+            ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
             lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         }
-        const lineH = lieuFontSize * 1.18;
+        ctx.fillStyle = colorAccent;
+        const lineH = lieuFontSize * 1.25;
         lieuLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
         cursorY += lieuLines.length * lineH + 26 * scale;
     }
@@ -4082,19 +4090,15 @@ function drawVisuel(ctx, fmt, style) {
     });
     const footerReserve = (showReseaux ? 155 : 55) * scale;
 
-    // Zèbre + tournesol du décor "Café Parole" : posés APRÈS le texte, l'un à côté de l'autre,
-    // jamais avant — comme ça ils ne peuvent jamais chevaucher le titre/date/lieu quelle que
-    // soit leur longueur. Toujours affichés (pas de condition de place) : leur espace est
-    // réservé dans le calcul du pied de page juste en dessous, pour qu'ils fassent systématiquement
-    // partie de la trame plutôt que de disparaître silencieusement sur un contenu plus long.
-    const zebreSize = 72 * scale;
-    const tournesolSize = 62 * scale;
-    const decorRowGap = Math.max(zebreSize, tournesolSize) + 28 * scale;
+    // Zèbre du décor "Café Parole" : posé APRÈS le texte, centré, jamais avant — comme ça il ne
+    // peut jamais chevaucher le titre/date/lieu quelle que soit leur longueur. Toujours affiché
+    // (pas de condition de place) : son espace est réservé dans le calcul du pied de page juste
+    // en dessous, pour qu'il fasse systématiquement partie de la trame plutôt que de disparaître
+    // silencieusement sur un contenu plus long. (Le tournesol, lui, est fixe en haut à gauche.)
+    const zebreSize = 82 * scale;
+    const decorRowGap = zebreSize + 28 * scale;
     if (decorCafeOn && decorCafeImages.zebre) {
-        drawDecorImage(ctx, decorCafeImages.zebre, W / 2 + 36 * scale, contentBottomY + decorRowGap / 2, zebreSize, 0);
-    }
-    if (decorCafeOn && decorCafeImages.tournesol) {
-        drawDecorImage(ctx, decorCafeImages.tournesol, W / 2 - 78 * scale, contentBottomY + decorRowGap / 2, tournesolSize, -8);
+        drawDecorImage(ctx, decorCafeImages.zebre, W / 2, contentBottomY + decorRowGap / 2, zebreSize, 0);
     }
 
     // Le pied de page reste collé en bas si tout tient ; sinon il descend sous le contenu
