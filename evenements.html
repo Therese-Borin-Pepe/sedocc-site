@@ -133,6 +133,7 @@
                     <a href="${ev.link || 'evenement.html?id=' + ev.id}" class="evenement-card">
                         <div class="evenement-image">
                             <img src="${ev.image}" alt="${ev.title}">
+                            ${ev.recurring ? '<span class="recurring-badge">Activité régulière</span>' : ''}
                             ${hasVideo ? '<div class="video-badge"><span>▶</span> Vidéo</div>' : ''}
                         </div>
                         <div class="evenement-info">
