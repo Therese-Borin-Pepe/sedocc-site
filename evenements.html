@@ -136,7 +136,7 @@
                             ${hasVideo ? '<div class="video-badge"><span>▶</span> Vidéo</div>' : ''}
                         </div>
                         <div class="evenement-info">
-                            <span class="evenement-category">Évènements</span>
+                            ${ev.date ? `<span class="evenement-category">${ev.date}</span>` : ''}
                             <h3>${ev.title}</h3>
                         </div>
                     </a>`;

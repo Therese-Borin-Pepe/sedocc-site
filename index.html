@@ -130,20 +130,8 @@
         </div>
     </section>
 
-    <!-- Nos activités régulières -->
-    <section class="carousel-section carousel-section-alt">
-        <div class="container">
-            <div class="section-header">
-                <h2>Nos activités régulières</h2>
-            </div>
-            <div class="activites-grid" id="activites-carousel">
-                <!-- Chargé dynamiquement depuis data/evenements.json -->
-            </div>
-        </div>
-    </section>
-
     <!-- Actualités de l'association -->
-    <section class="carousel-section">
+    <section class="carousel-section carousel-section-alt">
         <div class="container">
             <div class="section-header">
                 <h2>Actualités de l'association</h2>
@@ -298,29 +286,6 @@
                         </div>
                     </div>`).join('');
                 initCarousel(track);
-            });
-
-        // Carrousel : Nos activités régulières (cours et ateliers récurrents)
-        fetch('data/evenements.json')
-            .then(r => r.json())
-            .then(evenements => {
-                const track = document.getElementById('activites-carousel');
-                const items = evenements.filter(e => e.recurring);
-                if (!track) return;
-                if (!items.length) {
-                    const section = track.closest('.carousel-section');
-                    if (section) section.style.display = 'none';
-                    return;
-                }
-                track.innerHTML = items.map(e => `
-                    <div class="carousel-card">
-                        ${e.image ? `<div class="carousel-card-image"><img src="${e.image}" alt="${e.title}"></div>` : ''}
-                        <div class="carousel-card-info">
-                            ${e.date ? `<span class="carousel-card-date">${e.date}</span>` : ''}
-                            <h3>${e.title}</h3>
-                            <a href="${e.link || 'evenement.html?id=' + e.id}" class="btn btn-primary">Découvrir</a>
-                        </div>
-                    </div>`).join('');
             });
 
         // Carrousel : Actualités de l'association (toutes, y compris les plus anciennes)
