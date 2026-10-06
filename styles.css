@@ -757,6 +757,17 @@ a.btn-secondary:hover {
     display: none;
 }
 
+/* Grille statique (pas de défilement) pour un petit nombre d'éléments fixes,
+   ex. les activités régulières — réutilise le style des .carousel-card. */
+.activites-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
 .carousel-card {
     flex: 0 0 300px;
     scroll-snap-align: start;

@@ -136,12 +136,8 @@
             <div class="section-header">
                 <h2>Nos activités régulières</h2>
             </div>
-            <div class="carousel-wrap">
-                <button type="button" class="carousel-arrow carousel-arrow-prev" data-target="activites-carousel" aria-label="Précédent">&#8249;</button>
-                <div class="carousel-track" id="activites-carousel">
-                    <!-- Chargé dynamiquement depuis data/evenements.json -->
-                </div>
-                <button type="button" class="carousel-arrow carousel-arrow-next" data-target="activites-carousel" aria-label="Suivant">&#8250;</button>
+            <div class="activites-grid" id="activites-carousel">
+                <!-- Chargé dynamiquement depuis data/evenements.json -->
             </div>
         </div>
     </section>
@@ -325,7 +321,6 @@
                             <a href="${e.link || 'evenement.html?id=' + e.id}" class="btn btn-primary">Découvrir</a>
                         </div>
                     </div>`).join('');
-                initCarousel(track);
             });
 
         // Carrousel : Actualités de l'association (toutes, y compris les plus anciennes)
