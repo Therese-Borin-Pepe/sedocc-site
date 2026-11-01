@@ -4202,11 +4202,11 @@ function drawVisuel(ctx, fmt, style) {
     // avec une police réduite automatiquement si le texte est long (adresse + précisions),
     // pour ne pas pousser le reste du visuel (icônes, sedocc.fr) hors du cadre.
     if (lieu) {
-        let lieuFontSize = 30 * scale;
+        let lieuFontSize = 36 * scale;
         ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
         let lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         if (lieuLines.length > 1) {
-            lieuFontSize = 23 * scale;
+            lieuFontSize = 29 * scale;
             ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
             lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         }
