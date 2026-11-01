@@ -123,10 +123,15 @@
     </footer>
     <script src="script.js"></script>
     <script>
-        // Les vignettes affichent les images en plein cadre (object-fit: cover), sauf pour les
-        // logos de partenaires/organismes qui doivent rester entiers, pas rognés.
+        // Les vignettes affichent les images en plein cadre (object-fit: cover), sauf pour :
+        // - les logos de partenaires/organismes, qui doivent rester entiers, pas rognés ;
+        // - les visuels carrés générés par l'admin (café parole...), composés avec du contenu
+        //   jusqu'aux bords (décor, réseaux sociaux) qui serait coupé par un cadrage large.
         function isLogoImage(path) {
-            return !!path && (/logo/i.test(path) || path.indexOf('images/partners/') === 0);
+            if (!path) return false;
+            if (/logo/i.test(path) || path.indexOf('images/partners/') === 0) return true;
+            if (/cafe-parole-\d{1,2}-[a-z]+-\d{4}\.(jpg|jpeg|png)$/i.test(path)) return true;
+            return false;
         }
 
         fetch('data/evenements.json')
