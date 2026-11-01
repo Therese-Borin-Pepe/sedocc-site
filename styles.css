@@ -804,11 +804,17 @@ a.carousel-card:visited {
     transition: transform var(--transition-medium);
 }
 
-/* Pour les vignettes qui sont un logo (pas une affiche) : on garde le logo entier visible
-   plutôt que de le rogner en le faisant remplir le cadre. */
+/* Pour les vignettes qui sont un logo ou un visuel carré généré (pas une affiche) : on garde
+   l'image entière visible plutôt que de la rogner, et on carre le cadre sur la forme de
+   l'image plutôt que de forcer une hauteur rectangulaire qui la ferait apparaître minuscule. */
+.carousel-card-image.logo-thumb {
+    height: auto;
+    aspect-ratio: 1 / 1;
+}
+
 .carousel-card-image.logo-thumb img {
     object-fit: contain;
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
     box-sizing: border-box;
 }
 
@@ -2786,8 +2792,15 @@ a.evenement-card:hover {
     border-radius: var(--radius-sm);
 }
 
-/* Pour les vignettes qui sont un logo (pas une affiche) : on garde le logo entier visible
-   plutôt que de le rogner en le faisant remplir le cadre. */
+/* Pour les vignettes qui sont un logo ou un visuel carré généré (pas une affiche) : on garde
+   l'image entière visible plutôt que de la rogner, et on carre le cadre sur la forme de
+   l'image plutôt que de forcer une hauteur rectangulaire qui la ferait apparaître minuscule. */
+.evenement-image.logo-thumb {
+    height: auto;
+    aspect-ratio: 1 / 1;
+    padding: var(--spacing-sm);
+}
+
 .evenement-image.logo-thumb img {
     object-fit: contain;
 }
