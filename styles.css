@@ -791,7 +791,8 @@ a.carousel-card:visited {
 
 .carousel-card-image {
     width: 100%;
-    height: 170px;
+    height: auto;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: var(--bg-light);
 }
@@ -805,13 +806,7 @@ a.carousel-card:visited {
 }
 
 /* Pour les vignettes qui sont un logo ou un visuel carré généré (pas une affiche) : on garde
-   l'image entière visible plutôt que de la rogner, et on carre le cadre sur la forme de
-   l'image plutôt que de forcer une hauteur rectangulaire qui la ferait apparaître minuscule. */
-.carousel-card-image.logo-thumb {
-    height: auto;
-    aspect-ratio: 1 / 1;
-}
-
+   l'image entière visible plutôt que de la rogner (le cadre est déjà carré pour toutes). */
 .carousel-card-image.logo-thumb img {
     object-fit: contain;
     padding: var(--spacing-sm);
@@ -942,9 +937,6 @@ a.carousel-card:visited {
     }
     .carousel-section .section-header {
         margin-bottom: var(--spacing-md);
-    }
-    .carousel-card-image {
-        height: 140px;
     }
     .carousel-card-info {
         padding: var(--spacing-sm) var(--spacing-md);
@@ -2745,7 +2737,8 @@ a.evenement-card:hover {
 
 .evenement-image {
     width: 100%;
-    height: 220px;
+    height: auto;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     position: relative;
     background: var(--bg-light);
@@ -2793,11 +2786,8 @@ a.evenement-card:hover {
 }
 
 /* Pour les vignettes qui sont un logo ou un visuel carré généré (pas une affiche) : on garde
-   l'image entière visible plutôt que de la rogner, et on carre le cadre sur la forme de
-   l'image plutôt que de forcer une hauteur rectangulaire qui la ferait apparaître minuscule. */
+   l'image entière visible plutôt que de la rogner (le cadre est déjà carré pour toutes). */
 .evenement-image.logo-thumb {
-    height: auto;
-    aspect-ratio: 1 / 1;
     padding: var(--spacing-sm);
 }
 
