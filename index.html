@@ -421,6 +421,43 @@
                 }
             });
 
+    // Points de pagination sous un carrousel de logos tactile (pas de flèches ici,
+    // seulement visible quand ça déborde vraiment, ex. sur mobile).
+    function initGridDots(grid) {
+        const wrap = grid.closest('.partners-carousel') || grid.parentElement;
+        const items = Array.from(grid.children);
+        let dotsWrap = wrap.nextElementSibling;
+        if (dotsWrap && dotsWrap.classList.contains('carousel-dots')) dotsWrap.remove();
+        if (items.length < 2) return;
+        dotsWrap = document.createElement('div');
+        dotsWrap.className = 'carousel-dots';
+        items.forEach((item, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.className = 'carousel-dot';
+            dot.setAttribute('aria-label', 'Aller au logo ' + (i + 1));
+            dot.addEventListener('click', () => item.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }));
+            dotsWrap.appendChild(dot);
+        });
+        wrap.insertAdjacentElement('afterend', dotsWrap);
+
+        const updateDots = () => {
+            const scrollable = grid.scrollWidth > grid.clientWidth + 10;
+            dotsWrap.style.display = scrollable ? 'flex' : 'none';
+            if (!scrollable) return;
+            const gridRect = grid.getBoundingClientRect();
+            let closest = 0, closestDist = Infinity;
+            items.forEach((item, i) => {
+                const dist = Math.abs(item.getBoundingClientRect().left - gridRect.left);
+                if (dist < closestDist) { closestDist = dist; closest = i; }
+            });
+            dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === closest));
+        };
+        grid.addEventListener('scroll', updateDots);
+        window.addEventListener('resize', updateDots);
+        updateDots();
+    }
+
     // Chargement des partenaires
     fetch('data/partenaires.json')
         .then(r => r.json())
@@ -435,6 +472,7 @@
                 }
                 return `<div class="partner-logo">${img}${name}</div>`;
             }).join('');
+            initGridDots(grid);
         });
 
     // Chargement des associations partenaires
@@ -451,6 +489,7 @@
                 }
                 return `<div class="partner-logo">${img}${name}</div>`;
             }).join('');
+            initGridDots(grid);
         });
 
     // Chargement des contenus éditables

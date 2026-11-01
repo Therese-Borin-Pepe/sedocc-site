@@ -902,14 +902,29 @@ a.carousel-card:visited {
 }
 
 @media (max-width: 640px) {
-    /* Sur mobile, les flèches laissent place aux points de pagination + au swipe :
-       la vignette prend alors (presque) toute la largeur, au lieu d'être compressée
-       entre deux boutons, pour un rendu plus "figé"/stable, une vignette bien posée. */
-    .carousel-arrow {
-        display: none;
-    }
+    /* Sur mobile, les flèches se posent en superposition sur l'image (comme sur
+       cpts-st.fr) plutôt que de prendre leur propre espace à côté : la vignette peut
+       alors prendre (presque) toute la largeur au lieu d'être compressée entre deux
+       boutons, pour un rendu plus "figé"/stable, une vignette bien posée — tout en
+       gardant les flèches, cumulées aux points de pagination et au swipe. */
     .carousel-wrap {
         gap: 0;
+    }
+    .carousel-arrow {
+        position: absolute;
+        top: 70px;
+        transform: translateY(-50%);
+        z-index: 2;
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        opacity: 0.92;
+    }
+    .carousel-arrow-prev {
+        left: 4px;
+    }
+    .carousel-arrow-next {
+        right: 4px;
     }
     a.carousel-card {
         flex-basis: 90%;
