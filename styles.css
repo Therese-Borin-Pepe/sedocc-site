@@ -928,6 +928,7 @@ a.carousel-card:visited {
     }
     a.carousel-card {
         flex-basis: 90%;
+        scroll-snap-align: center;
     }
 
     .carousel-section {
