@@ -870,14 +870,49 @@ a.carousel-card:visited {
     cursor: default;
 }
 
+/* Points de pagination sous le carrousel */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: var(--spacing-md);
+}
+
+.carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: var(--border-color, rgba(0, 0, 0, 0.15));
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.carousel-dot:hover {
+    background: var(--primary-color);
+    opacity: 0.6;
+}
+
+.carousel-dot.active {
+    background: var(--primary-color);
+    width: 22px;
+    border-radius: 4px;
+}
+
 @media (max-width: 640px) {
+    /* Sur mobile, les flèches laissent place aux points de pagination + au swipe :
+       la vignette prend alors (presque) toute la largeur, au lieu d'être compressée
+       entre deux boutons, pour un rendu plus "figé"/stable, une vignette bien posée. */
     .carousel-arrow {
-        width: 36px;
-        height: 36px;
-        font-size: 1.3rem;
+        display: none;
     }
-    .carousel-card {
-        flex-basis: 240px;
+    .carousel-wrap {
+        gap: 0;
+    }
+    a.carousel-card {
+        flex-basis: 90%;
     }
 
     .carousel-section {

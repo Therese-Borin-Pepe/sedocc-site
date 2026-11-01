@@ -350,6 +350,38 @@
             track.addEventListener('scroll', updateArrows);
             window.addEventListener('resize', updateArrows);
             updateArrows();
+
+            // Points de pagination sous le carrousel (un par carte), pour voir d'un coup d'œil
+            // combien de vignettes suivent et où on en est — repris du site cpts-st.fr.
+            const cards = Array.from(track.querySelectorAll('.carousel-card'));
+            let dotsWrap = wrap.parentElement.querySelector('.carousel-dots');
+            if (dotsWrap) dotsWrap.remove();
+            if (cards.length > 1) {
+                dotsWrap = document.createElement('div');
+                dotsWrap.className = 'carousel-dots';
+                cards.forEach((card, i) => {
+                    const dot = document.createElement('button');
+                    dot.type = 'button';
+                    dot.className = 'carousel-dot';
+                    dot.setAttribute('aria-label', 'Aller à la vignette ' + (i + 1));
+                    dot.addEventListener('click', () => card.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' }));
+                    dotsWrap.appendChild(dot);
+                });
+                wrap.insertAdjacentElement('afterend', dotsWrap);
+
+                const updateDots = () => {
+                    const trackRect = track.getBoundingClientRect();
+                    let closest = 0, closestDist = Infinity;
+                    cards.forEach((card, i) => {
+                        const dist = Math.abs(card.getBoundingClientRect().left - trackRect.left);
+                        if (dist < closestDist) { closestDist = dist; closest = i; }
+                    });
+                    dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => d.classList.toggle('active', i === closest));
+                };
+                track.addEventListener('scroll', updateDots);
+                window.addEventListener('resize', updateDots);
+                updateDots();
+            }
         }
 
         fetch('data/equipe.json')
