@@ -4165,7 +4165,7 @@ function drawVisuel(ctx, fmt, style) {
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillText(typeUpper, W / 2, cursorY + 2 * scale);
-        cursorY += bh / 2 + 36 * scale;
+        cursorY += bh / 2 + 28 * scale;
     }
 
     // Titre principal
@@ -4178,7 +4178,7 @@ function drawVisuel(ctx, fmt, style) {
         const lineH = titreFontSize * 1.15;
         const titreLines = wrapText(ctx, titre, W - padX * 2);
         titreLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
-        cursorY += titreLines.length * lineH + 28 * scale;
+        cursorY += titreLines.length * lineH + 20 * scale;
     }
 
     // Date + heure — la police rétrécit automatiquement si besoin pour ne jamais déborder
@@ -4202,18 +4202,18 @@ function drawVisuel(ctx, fmt, style) {
     // avec une police réduite automatiquement si le texte est long (adresse + précisions),
     // pour ne pas pousser le reste du visuel (icônes, sedocc.fr) hors du cadre.
     if (lieu) {
-        let lieuFontSize = 36 * scale;
+        let lieuFontSize = 44 * scale;
         ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
         let lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         if (lieuLines.length > 1) {
-            lieuFontSize = 29 * scale;
+            lieuFontSize = 34 * scale;
             ctx.font = '600 ' + lieuFontSize + 'px "Baloo 2", cursive, sans-serif';
             lieuLines = wrapText(ctx, '📍 ' + lieu, W - padX * 2);
         }
         ctx.fillStyle = colorAccent;
-        const lineH = lieuFontSize * 1.25;
+        const lineH = lieuFontSize * 1.15;
         lieuLines.forEach((l, i) => ctx.fillText(l, W / 2, cursorY + i * lineH));
-        cursorY += lieuLines.length * lineH + 26 * scale;
+        cursorY += lieuLines.length * lineH + 18 * scale;
     }
 
     // CTA
