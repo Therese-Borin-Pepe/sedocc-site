@@ -128,6 +128,12 @@
             window.location.replace('actualite.html?id=' + location.hash.slice(1));
         }
 
+        // Les vignettes affichent les images en plein cadre (object-fit: cover), sauf pour les
+        // logos de partenaires/organismes qui doivent rester entiers, pas rognés.
+        function isLogoImage(path) {
+            return !!path && (/logo/i.test(path) || path.indexOf('images/partners/') === 0);
+        }
+
         fetch('data/actualites-asso.json')
             .then(r => r.json())
             .then(actus => {
@@ -138,7 +144,7 @@
                 }
                 grid.innerHTML = actus.map(a => `
                     <a href="actualite.html?id=${a.id}" class="evenement-card">
-                        <div class="evenement-image">
+                        <div class="evenement-image${isLogoImage(a.image) ? ' logo-thumb' : ''}">
                             ${a.image ? `<img src="${a.image}" alt="${a.title}">` : ''}
                         </div>
                         <div class="evenement-info">
