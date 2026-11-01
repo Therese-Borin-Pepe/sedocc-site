@@ -300,14 +300,13 @@
                     return;
                 }
                 track.innerHTML = items.map(e => `
-                    <div class="carousel-card">
+                    <a href="${e.link || 'evenement.html?id=' + e.id}" class="carousel-card">
                         ${e.image ? `<div class="carousel-card-image${isLogoImage(e.image) ? ' logo-thumb' : ''}"><img src="${e.image}" alt="${e.title}"></div>` : ''}
                         <div class="carousel-card-info">
                             ${e.date ? `<span class="carousel-card-date">${e.date}</span>` : ''}
                             <h3>${e.title}</h3>
-                            <a href="${e.link || 'evenement.html?id=' + e.id}" class="btn btn-primary">Découvrir</a>
                         </div>
-                    </div>`).join('');
+                    </a>`).join('');
                 initCarousel(track);
             });
 
@@ -323,14 +322,13 @@
                     return;
                 }
                 track.innerHTML = actus.map(a => `
-                    <div class="carousel-card">
+                    <a href="actualite.html?id=${a.id}" class="carousel-card">
                         ${a.image ? `<div class="carousel-card-image${isLogoImage(a.image) ? ' logo-thumb' : ''}"><img src="${a.image}" alt="${a.title}"></div>` : ''}
                         <div class="carousel-card-info">
                             ${a.date ? `<span class="carousel-card-date">${a.date}</span>` : ''}
                             <h3>${a.title}</h3>
-                            <a href="actualite.html?id=${a.id}" class="btn btn-primary">Découvrir</a>
                         </div>
-                    </div>`).join('');
+                    </a>`).join('');
                 initCarousel(track);
             });
 

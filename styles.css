@@ -768,7 +768,8 @@ a.btn-secondary:hover {
     margin: 0 auto;
 }
 
-.carousel-card {
+a.carousel-card,
+a.carousel-card:visited {
     flex: 0 0 300px;
     scroll-snap-align: start;
     display: flex;
@@ -778,6 +779,9 @@ a.btn-secondary:hover {
     box-shadow: var(--shadow-md);
     overflow: hidden;
     transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
 }
 
 .carousel-card:hover {
@@ -832,13 +836,9 @@ a.btn-secondary:hover {
 }
 
 .carousel-card-info h3 {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: 0;
     font-size: 1.2rem;
     color: var(--heading-color);
-}
-
-.carousel-card-info .btn {
-    margin-top: auto;
 }
 
 .carousel-arrow {
@@ -897,16 +897,11 @@ a.btn-secondary:hover {
     }
     .carousel-card-info h3 {
         font-size: 1.05rem;
-        margin-bottom: var(--spacing-xs);
+        margin-bottom: 0;
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
-    }
-    .carousel-card-info .btn {
-        margin-top: var(--spacing-xs);
-        padding: 0.5rem 1.25rem;
-        font-size: 0.85rem;
     }
 }
 
