@@ -628,6 +628,18 @@ a:hover {
     box-shadow: 0 8px 24px rgba(139, 26, 43, 0.12);
 }
 
+.hero-banner-wrap::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 110px;
+    background: linear-gradient(to bottom, transparent, var(--bg-light));
+    pointer-events: none;
+    z-index: 2;
+}
+
 .hero-banner-img {
     width: 100%;
     height: auto;
