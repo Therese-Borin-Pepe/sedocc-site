@@ -264,12 +264,29 @@
 
     <script src="script.js"></script>
     <script>
-        // Carrousel : Nos prochains rendez-vous (évènements mis en avant)
+        // Convertit une date française "13 novembre 2026" en objet Date, pour pouvoir trier
+        // les évènements à venir du plus proche au plus lointain (au lieu de l'ordre du fichier).
+        const FR_MONTHS = { janvier: 0, février: 1, mars: 2, avril: 3, mai: 4, juin: 5, juillet: 6, août: 7, septembre: 8, octobre: 9, novembre: 10, décembre: 11 };
+        function parseFrDate(str) {
+            if (!str) return null;
+            const m = str.match(/(\d{1,2})\s+([a-zéûô]+)\s+(\d{4})/i);
+            if (!m || !(m[2].toLowerCase() in FR_MONTHS)) return null;
+            return new Date(parseInt(m[3], 10), FR_MONTHS[m[2].toLowerCase()], parseInt(m[1], 10));
+        }
+
+        // Carrousel : Nos prochains rendez-vous (évènements mis en avant, du plus proche au plus lointain)
         fetch('data/evenements.json')
             .then(r => r.json())
             .then(evenements => {
                 const track = document.getElementById('evenements-carousel');
                 const items = evenements.filter(e => e.highlight);
+                items.sort((a, b) => {
+                    const da = parseFrDate(a.date), db = parseFrDate(b.date);
+                    if (!da && !db) return 0;
+                    if (!da) return 1;
+                    if (!db) return -1;
+                    return da - db;
+                });
                 if (!track) return;
                 if (!items.length) {
                     const section = track.closest('.carousel-section');
