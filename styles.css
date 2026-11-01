@@ -3369,22 +3369,22 @@ a.evenement-card:hover {
     box-shadow: inset -3px -3px 8px rgba(229,184,152,0.1), inset 2px 2px 6px rgba(255,255,255,0.2);}
 .page-bubbles .hero-b1 { animation: float-bubble-2 8s ease-in-out infinite;
     width: 70px; height: 70px;
-    top: 12%; left: 28%;
+    top: 56%; left: 6%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), rgba(245,210,170,0.4) 42%, rgba(232,176,144,0.25) 72%, transparent);
     box-shadow: inset -4px -4px 10px rgba(232,176,144,0.1), inset 2px 2px 8px rgba(255,255,255,0.2);}
 .page-bubbles .hero-b2 { animation: float-bubble-3 7s ease-in-out infinite;
     width: 38px; height: 38px;
-    top: 8%; left: 48%;
+    top: 49%; right: 10%;
     background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.5), rgba(240,200,160,0.35) 45%, rgba(224,160,136,0.2) 75%, transparent);
     box-shadow: inset -2px -2px 6px rgba(224,160,136,0.08), inset 1px 1px 4px rgba(255,255,255,0.15);}
 .page-bubbles .hero-b3 { animation: float-bubble-1 9s ease-in-out infinite;
     width: 85px; height: 85px;
-    top: 20%; right: 20%;
+    top: 70%; right: 5%;
     background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.55), rgba(245,208,176,0.4) 40%, rgba(237,186,152,0.3) 70%, transparent);
     box-shadow: inset -5px -5px 12px rgba(237,186,152,0.1), inset 3px 3px 8px rgba(255,255,255,0.2);}
 .page-bubbles .hero-b4 { animation: float-bubble-4 8s ease-in-out infinite;
     width: 30px; height: 30px;
-    top: 28%; left: 18%;
+    top: 79%; left: 13%;
     background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.5), rgba(240,192,144,0.35) 45%, rgba(232,168,120,0.2) 75%, transparent);
     box-shadow: inset -2px -2px 4px rgba(232,168,120,0.08), inset 1px 1px 3px rgba(255,255,255,0.15);}
 
