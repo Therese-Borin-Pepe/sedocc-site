@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -95,13 +97,24 @@
     <!-- Hero / Notre association -->
     <section class="hero" id="accueil">
         <div class="hero-banner-wrap">
-            <img src="images/banniere-accueil.jpg" alt="SED'OCC France, Toulouse — Œuvrer et agir auprès des médicaux et paramédicaux pour faciliter le parcours de soin des personnes atteintes du Syndrome d'Ehlers-Danlos. Réunir, informer et soutenir les malades et leurs aidants." class="hero-banner-img">
+            <img src="images/banniere-fond.jpg" alt="Vue de Toulouse au coucher du soleil, le pont Saint-Pierre et le dôme de l'hôpital de la Grave." class="hero-banner-img">
+            <div class="hero-banner-overlay">
+                <div class="hero-banner-badge">
+                    <img src="images/logo.png" alt="SED'OCC France, Syndrome d'Ehlers-Danlos">
+                </div>
+                <div class="hero-banner-text">
+                    <p class="hero-banner-mission">
+                        <span class="hero-banner-line hero-banner-line-1">Œuvrer et agir auprès des médicaux et des paramédicaux afin de faciliter le parcours de soin des personnes atteintes du Syndrome d'Ehlers-Danlos.</span>
+                        <span class="hero-banner-line hero-banner-line-2">Réunir, informer et soutenir les malades et leurs aidants.</span>
+                    </p>
+                    <div class="hero-cta">
+                        <a href="https://www.helloasso.com/associations/sed-occ-france" class="btn btn-primary btn-large" target="_blank">Nous rejoindre</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <h1 class="sr-only">SED'OCC — Syndrome d'Ehlers-Danlos Occitanie</h1>
         <p class="hero-subtitle">Informer, soutenir, accompagner</p>
-        <div class="hero-cta">
-            <a href="https://www.helloasso.com/associations/sed-occ-france" class="btn btn-primary btn-large" target="_blank">Nous rejoindre</a>
-        </div>
     </section>
 
     <!-- Nos prochains rendez-vous -->

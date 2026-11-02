@@ -632,6 +632,9 @@ a:hover {
 .hero-banner-img {
     width: 100%;
     height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center 35%;
     display: block;
     animation: hero-banner-kenburns 22s ease-in-out infinite alternate;
     transform-origin: center center;
@@ -647,6 +650,140 @@ a:hover {
         animation: none;
     }
 }
+
+.hero-banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-lg);
+    padding: 0 var(--spacing-xl);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.hero-banner-badge {
+    position: relative;
+    flex: 0 0 auto;
+    width: 260px;
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: hero-rise 0.8s ease-out both, heroFloat 3.5s ease-in-out 0.8s infinite;
+}
+
+.hero-banner-badge::before {
+    content: '';
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.45), rgba(255,255,255,0.12) 55%, transparent 75%);
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.hero-banner-badge img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-banner-badge {
+        animation: none;
+    }
+}
+
+.hero-banner-text {
+    flex: 1 1 auto;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+}
+
+.hero-banner-mission {
+    display: block;
+    text-align: left;
+}
+
+.hero-banner-line {
+    display: block;
+    color: #fff;
+    font-family: 'Outfit', 'Poppins', sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    line-height: 1.6;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 1px 4px rgba(0,0,0,0.6);
+    animation: hero-rise 0.8s ease-out both;
+}
+
+.hero-banner-line-1 {
+    animation-delay: 0.3s;
+}
+
+.hero-banner-line-2 {
+    animation-delay: 0.55s;
+}
+
+.hero-banner-text .hero-cta {
+    margin: 0;
+    animation-delay: 0.8s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-banner-line,
+    .hero-banner-text .hero-cta {
+        animation: none !important;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-banner-img {
+        height: 370px;
+        max-height: 370px;
+    }
+
+    .hero-banner-overlay {
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+
+    .hero-banner-badge {
+        width: 120px;
+        height: 120px;
+        padding: 10px;
+    }
+
+    .hero-banner-text {
+        align-items: center;
+        gap: 10px;
+    }
+
+    .hero-banner-mission {
+        padding: 0 12px;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-banner-line {
+        font-size: 0.8rem;
+        line-height: 1.45;
+    }
+
+    .hero-banner-text .hero-cta .btn-large {
+        padding: 10px 20px;
+        font-size: 0.82rem;
+    }
 }
 
 .hero-logo-small {
