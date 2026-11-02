@@ -101,6 +101,26 @@
   status = 301
 
 [[redirects]]
+  from = "/evenements/toulouse-metropole-run-experience/"
+  to = "/evenements/run-experience.html"
+  status = 301
+
+[[redirects]]
+  from = "/category/evenements/"
+  to = "/evenements.html"
+  status = 301
+
+[[redirects]]
+  from = "/category/evenements/page/2/"
+  to = "/evenements.html"
+  status = 301
+
+[[redirects]]
+  from = "/evenements/page/2/"
+  to = "/evenements.html"
+  status = 301
+
+[[redirects]]
   from = "/ressources/"
   to = "/ressources.html"
   status = 301
