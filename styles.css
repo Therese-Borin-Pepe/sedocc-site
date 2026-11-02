@@ -545,6 +545,7 @@ a:hover {
     height: 80px;
     background: linear-gradient(to bottom, transparent, var(--bg-light));
     z-index: 1;
+    pointer-events: none;
 }
 
 .hero-bubbles {
