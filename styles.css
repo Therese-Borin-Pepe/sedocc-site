@@ -1917,23 +1917,86 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     z-index: 1;
     background: var(--heading-color);
     color: var(--bg-white);
-    padding: var(--spacing-lg) 0;
+    padding: var(--spacing-xl) 0 var(--spacing-md);
 }
 
-.footer-content {
+.footer-top {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+}
+
+.footer-brand {
+    display: flex;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    flex: 2 1 280px;
+    min-width: 260px;
+}
+
+.footer-logo {
+    width: auto;
+    height: 100px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.footer-brand-title {
+    color: var(--bg-white);
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-brand-desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+    max-width: 320px;
+}
+
+.footer-cta {
+    display: inline-block;
+    padding: 10px 24px;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    border-radius: 50px;
+    color: var(--bg-white) !important;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all var(--transition-fast);
+}
+
+.footer-cta:hover {
+    background: var(--bg-white);
+    color: var(--heading-color) !important;
+    border-color: var(--bg-white);
+}
+
+.footer-col {
+    flex: 1 1 160px;
+    min-width: 150px;
+}
+
+.footer-col-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--spacing-sm);
+}
+
+.footer-col-title-spaced {
+    margin-top: var(--spacing-md);
 }
 
 .footer-links {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     list-style: none;
-    gap: var(--spacing-xs) var(--spacing-md);
+    gap: var(--spacing-xs);
 }
 
 .footer-links a {
@@ -2066,12 +2129,25 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
         display: block;
     }
 
-    .footer-content {
+    .footer-top {
         flex-direction: column;
         text-align: center;
     }
 
+    .footer-brand {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-brand-desc {
+        max-width: none;
+    }
+
     .footer-links {
+        align-items: center;
+    }
+
+    .footer-social {
         justify-content: center;
     }
     
