@@ -2203,6 +2203,14 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
 }
 
 @media (max-width: 640px) {
+    .navbar {
+        padding: 12px 0;
+    }
+
+    .logo img {
+        height: 48px;
+    }
+
     .hero-logo {
         height: 190px;
     }
