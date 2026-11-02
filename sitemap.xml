@@ -71,6 +71,16 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>https://www.sedocc.fr/contact.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://www.sedocc.fr/livret-enfant.html</loc>
+    <priority>0.6</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>https://www.sedocc.fr/mentions-legales.html</loc>
     <priority>0.3</priority>
     <changefreq>yearly</changefreq>

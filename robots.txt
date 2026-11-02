@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
+Disallow: /test-banniere.html
+Disallow: /page-extra.html
 
 Sitemap: https://www.sedocc.fr/sitemap.xml
