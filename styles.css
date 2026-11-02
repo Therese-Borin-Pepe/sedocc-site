@@ -2211,6 +2211,10 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
         height: 48px;
     }
 
+    .hero {
+        padding-top: 80px;
+    }
+
     .hero-logo {
         height: 190px;
     }
