@@ -2,9 +2,25 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
+const crypto = require('crypto');
 
 const PORT = 3000;
 const ROOT = __dirname;
+
+// Jeton local requis pour les routes /api/* (lecture/ecriture du contenu du
+// site). Genere une seule fois et stocke hors du depot git (voir .gitignore).
+const TOKEN_FILE = path.join(ROOT, '.admin-token');
+let ADMIN_TOKEN;
+if (fs.existsSync(TOKEN_FILE)) {
+    ADMIN_TOKEN = fs.readFileSync(TOKEN_FILE, 'utf8').trim();
+} else {
+    ADMIN_TOKEN = crypto.randomBytes(24).toString('hex');
+    fs.writeFileSync(TOKEN_FILE, ADMIN_TOKEN, 'utf8');
+}
+
+function isAuthorized(req) {
+    return req.headers['authorization'] === `Bearer ${ADMIN_TOKEN}`;
+}
 
 const MIME_TYPES = {
     '.html': 'text/html',
@@ -40,6 +56,11 @@ const server = http.createServer((req, res) => {
 
     // API: Read JSON file
     if (req.method === 'GET' && pathname.startsWith('/api/read/')) {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorise' }));
+            return;
+        }
         const filePath = path.join(ROOT, pathname.replace('/api/read/', ''));
         if (!filePath.startsWith(ROOT)) {
             res.writeHead(403, { 'Content-Type': 'application/json' });
@@ -60,6 +81,11 @@ const server = http.createServer((req, res) => {
 
     // API: Write JSON file
     if (req.method === 'POST' && pathname.startsWith('/api/write/')) {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorise' }));
+            return;
+        }
         const filePath = path.join(ROOT, pathname.replace('/api/write/', ''));
         if (!filePath.startsWith(ROOT)) {
             res.writeHead(403, { 'Content-Type': 'application/json' });
@@ -86,6 +112,11 @@ const server = http.createServer((req, res) => {
 
     // API: Upload image (base64)
     if (req.method === 'POST' && pathname.startsWith('/api/upload/')) {
+        if (!isAuthorized(req)) {
+            res.writeHead(401, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Non autorise' }));
+            return;
+        }
         const filePath = path.join(ROOT, pathname.replace('/api/upload/', ''));
         if (!filePath.startsWith(ROOT)) {
             res.writeHead(403, { 'Content-Type': 'application/json' });
@@ -129,5 +160,7 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
     console.log(`Serveur SED'OCC demarre sur http://localhost:${PORT}`);
     console.log(`Admin: http://localhost:${PORT}/admin.html`);
+    console.log(`Jeton d'administration local : ${ADMIN_TOKEN}`);
+    console.log('(colle ce jeton dans la page Admin lors de la premiere connexion en mode local)');
     console.log('Appuyez sur Ctrl+C pour arreter.');
 });

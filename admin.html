@@ -256,7 +256,7 @@
 <div id="login-screen">
     <div class="login-box">
         <h2>Connexion</h2>
-        <p>Entrez le mot de passe d'administration pour gerer le site.</p>
+        <p>Entrez le mot de passe d'administration pour gerer le site (premiere visite : choisissez-en un, il restera uniquement dans ce navigateur).</p>
         <input type="password" id="token-input" placeholder="Mot de passe" onkeypress="if(event.key==='Enter')login()">
         <br>
         <button class="btn btn-primary" onclick="login()">Se connecter</button>
@@ -1186,7 +1186,6 @@ const EVENTS_PATH = 'data/evenements.json';
 const EQUIPE_PATH = 'data/equipe.json';
 const ACTUS_PATH = 'data/actualites.json';
 const ACTUS_ASSO_PATH = 'data/actualites-asso.json';
-const ADMIN_PASSWORD = 'SedOcc2025!';
 const PARTNERS_PATH = 'data/partenaires.json';
 const CONTENUS_PATH = 'data/contenus.json';
 
@@ -1289,19 +1288,51 @@ function changePassword() {
 }
 
 // ===== AUTH =====
+// Aucun mot de passe n'est stocke dans ce fichier : il est choisi par
+// l'administratrice a la premiere connexion et reste uniquement dans
+// son navigateur (localStorage), jamais dans le code source du site.
 function getAdminPassword() {
-    return localStorage.getItem('sedocc_admin_password') || ADMIN_PASSWORD;
+    return localStorage.getItem('sedocc_admin_password');
 }
+
+function getLocalToken() {
+    return localStorage.getItem('sedocc_local_token') || '';
+}
+
+// Quand true, la prochaine saisie dans le champ de connexion est traitee
+// comme le jeton local (affiche dans le terminal de server.js), pas le mot de passe.
+let awaitingLocalToken = false;
 
 async function login() {
     const input = document.getElementById('token-input').value.trim();
     if (!input) return;
 
-    // Check simple password first
-    if (input === getAdminPassword()) {
+    if (awaitingLocalToken) {
+        await submitLocalToken(input, false);
+        return;
+    }
+
+    const storedPassword = getAdminPassword();
+
+    // Premiere connexion : aucun mot de passe enregistre, l'utilisatrice en choisit un.
+    if (!storedPassword && !input.startsWith('github_pat_') && !input.startsWith('ghp_')) {
+        if (input.length < 6) {
+            showLoginError('Choisissez un mot de passe d\'au moins 6 caracteres.');
+            return;
+        }
+        localStorage.setItem('sedocc_admin_password', input);
         if (isLocalMode) {
-            localStorage.setItem('sedocc_admin_logged', 'true');
-            enterAdmin();
+            await proceedLocalLogin();
+        } else {
+            showLoginError('Mot de passe enregistre. Entrez maintenant votre token GitHub pour le mode en ligne.');
+        }
+        return;
+    }
+
+    // Check simple password first
+    if (storedPassword && input === storedPassword) {
+        if (isLocalMode) {
+            await proceedLocalLogin();
             return;
         }
         // Online mode: need GitHub token too
@@ -1331,6 +1362,43 @@ async function login() {
     }
 
     showLoginError('Mot de passe incorrect.');
+}
+
+async function proceedLocalLogin() {
+    // En mode local, server.js exige un jeton genere localement (affiche dans
+    // le terminal au demarrage) pour autoriser la lecture/ecriture du contenu.
+    const localToken = getLocalToken();
+    if (localToken) {
+        await submitLocalToken(localToken, true);
+        return;
+    }
+    awaitingLocalToken = true;
+    const field = document.getElementById('token-input');
+    field.value = '';
+    field.type = 'text';
+    field.placeholder = 'Jeton local (affiche dans le terminal)';
+    showLoginError('Mot de passe OK. Collez le jeton local affiche dans le terminal de server.js.');
+}
+
+async function submitLocalToken(tokenValue, silent) {
+    try {
+        const res = await fetch('/api/read/' + EVENTS_PATH, {
+            headers: { 'Authorization': `Bearer ${tokenValue}` }
+        });
+        if (!res.ok) {
+            localStorage.removeItem('sedocc_local_token');
+            awaitingLocalToken = true;
+            if (!silent) showLoginError('Jeton local invalide.');
+            return;
+        }
+    } catch (e) {
+        if (!silent) showLoginError('Impossible de contacter le serveur local.');
+        return;
+    }
+    localStorage.setItem('sedocc_local_token', tokenValue);
+    localStorage.setItem('sedocc_admin_logged', 'true');
+    awaitingLocalToken = false;
+    enterAdmin();
 }
 
 async function enterAdmin() {
@@ -1481,7 +1549,9 @@ function filterEvents(eventId, btn) {
 // ===== DATA HELPERS (supports local + GitHub) =====
 async function loadJsonFile(filePath) {
     if (isLocalMode) {
-        const res = await fetch('/api/read/' + filePath);
+        const res = await fetch('/api/read/' + filePath, {
+            headers: { 'Authorization': `Bearer ${getLocalToken()}` }
+        });
         if (!res.ok) throw new Error('Fichier non trouve');
         const result = await res.json();
         return { data: result.content, sha: '' };
@@ -1500,7 +1570,7 @@ async function saveJsonFile(filePath, data, sha, message) {
     if (isLocalMode) {
         const res = await fetch('/api/write/' + filePath, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getLocalToken()}` },
             body: JSON.stringify(data)
         });
         if (!res.ok) throw new Error('Erreur de sauvegarde');
@@ -1525,7 +1595,7 @@ async function uploadImage(filePath, file) {
     if (isLocalMode) {
         const res = await fetch('/api/upload/' + filePath, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${getLocalToken()}` },
             body: JSON.stringify({ base64 })
         });
         if (!res.ok) throw new Error('Erreur upload image');
@@ -3708,8 +3778,8 @@ function renderGalerieSections() {
 (function() {
     const saved = localStorage.getItem('sedocc_admin_token');
     const savedPwd = localStorage.getItem('sedocc_admin_logged');
-    if (isLocalMode && savedPwd === 'true') {
-        enterAdmin();
+    if (isLocalMode && savedPwd === 'true' && getLocalToken()) {
+        submitLocalToken(getLocalToken(), true);
     } else if (saved) {
         githubToken = saved;
         verifyToken();
