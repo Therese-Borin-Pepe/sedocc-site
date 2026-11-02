@@ -1956,7 +1956,12 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     .hero-buttons {
         justify-content: center;
     }
-    
+
+    .hero-cta .btn-large {
+        padding: 12px 24px;
+        font-size: 0.9rem;
+    }
+
     .sed-content {
         grid-template-columns: 1fr;
     }
