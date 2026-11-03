@@ -38,24 +38,67 @@ const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 const navLinks = document.querySelectorAll('.nav-link');
 
+// Fleche animee pour les sous-menus : on isole le dernier caractere (▾)
+// dans un <span> pour pouvoir le faire pivoter en CSS sans toucher le texte.
+document.querySelectorAll('.nav-dropdown > .nav-link').forEach(function(link) {
+    link.innerHTML = link.innerHTML.replace(/\s*▾\s*$/, ' <span class="dropdown-caret">▾</span>');
+});
+
+// Fond assombri derriere le panneau mobile deplie
+const navOverlay = document.createElement('div');
+navOverlay.className = 'nav-overlay';
+document.body.appendChild(navOverlay);
+
+function setHamburgerIcon(isOpen) {
+    if (!navToggle) return;
+    const spans = navToggle.querySelectorAll('span');
+    if (isOpen) {
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+        spans[1].style.opacity = '0';
+        spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+    } else {
+        spans[0].style.transform = 'none';
+        spans[1].style.opacity = '1';
+        spans[2].style.transform = 'none';
+    }
+}
+
+function openMobileMenu() {
+    navMenu.classList.add('active');
+    navOverlay.classList.add('active');
+    document.body.classList.add('nav-open');
+    if (navToggle) navToggle.setAttribute('aria-expanded', 'true');
+    setHamburgerIcon(true);
+}
+
+function closeMobileMenu() {
+    navMenu.classList.remove('active');
+    navOverlay.classList.remove('active');
+    document.body.classList.remove('nav-open');
+    if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+    setHamburgerIcon(false);
+}
+
 // Toggle menu
 if (navToggle) {
     navToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        
-        // Animate hamburger icon
-        const spans = this.querySelectorAll('span');
         if (navMenu.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            closeMobileMenu();
         } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
+            openMobileMenu();
         }
     });
 }
+
+// Fermer le menu en cliquant sur le fond assombri
+navOverlay.addEventListener('click', closeMobileMenu);
+
+// Fermer le menu avec la touche Echap
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+        closeMobileMenu();
+    }
+});
 
 // Close menu when clicking on a link
 navLinks.forEach(function(link) {
@@ -64,15 +107,7 @@ navLinks.forEach(function(link) {
         if (window.innerWidth <= 1380 && link.closest('.nav-dropdown')) {
             return;
         }
-        navMenu.classList.remove('active');
-
-        // Reset hamburger icon
-        if (navToggle) {
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
+        closeMobileMenu();
     });
 });
 
