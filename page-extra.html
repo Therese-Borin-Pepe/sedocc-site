@@ -4,8 +4,8 @@
     <meta name="robots" content="noindex, nofollow">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SED'OCC</title>
-    <meta name="description" content="SED'OCC – Syndrome d'Ehlers-Danlos Occitanie.">
+    <title>SED'OCC France</title>
+    <meta name="description" content="SED'OCC France – Syndrome d'Ehlers-Danlos Occitanie.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="SED'OCC Logo"></a></div>
+            <div class="logo"><a href="index.html"><img src="images/logo.png" alt="SED'OCC France Logo"></a></div>
             <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu" aria-expanded="false"><span></span><span></span><span></span></button>
             <ul class="nav-menu" id="navMenu">
                 <li class="nav-dropdown">
@@ -98,9 +98,9 @@
         <div class="container">
             <div class="footer-top">
                 <div class="footer-brand">
-                    <img src="images/logo.png" alt="SED'OCC Logo" class="footer-logo">
+                    <img src="images/logo.png" alt="SED'OCC France Logo" class="footer-logo">
                     <div>
-                        <p class="footer-brand-title">SED'OCC</p>
+                        <p class="footer-brand-title">SED'OCC France</p>
                         <p class="footer-brand-desc">Association loi 1901 dédiée au Syndrome d'Ehlers-Danlos en Occitanie : informer, soutenir, accompagner.</p>
                         <a href="contact.html" class="footer-cta">Nous contacter</a>
                     </div>
@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>Copyright © 2026 | SED'OCC. Tous droits réservés. — Site réalisé par Florence Garnero</p>
+                <p>Copyright © 2026 | SED'OCC France. Tous droits réservés. — Site réalisé par Florence Garnero</p>
             </div>
         </div>
     </footer>
@@ -152,7 +152,7 @@
             const res = await fetch('data/pages/extra/' + id + '.json?v=' + Date.now());
             if (!res.ok) throw new Error('not found');
             const data = await res.json();
-            document.title = (data.title || 'Page') + " - SED'OCC";
+            document.title = (data.title || 'Page') + " - SED'OCC France";
             document.getElementById('page-extra-title').textContent = data.title || '';
             document.getElementById('page-extra-content').innerHTML = data.content || '';
         } catch(e) {

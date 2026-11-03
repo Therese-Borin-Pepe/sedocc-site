@@ -158,7 +158,7 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`Serveur SED'OCC demarre sur http://localhost:${PORT}`);
+    console.log(`Serveur SED'OCC France demarre sur http://localhost:${PORT}`);
     console.log(`Admin: http://localhost:${PORT}/admin.html`);
     console.log(`Jeton d'administration local : ${ADMIN_TOKEN}`);
     console.log('(colle ce jeton dans la page Admin lors de la premiere connexion en mode local)');
