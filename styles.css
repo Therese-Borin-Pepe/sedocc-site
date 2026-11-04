@@ -819,8 +819,8 @@ body.nav-open {
 
 @media (max-width: 768px) {
     .hero-banner-img {
-        height: 370px;
-        max-height: 370px;
+        height: 440px;
+        max-height: 440px;
     }
 
     .hero-banner-overlay {
@@ -831,8 +831,8 @@ body.nav-open {
     }
 
     .hero-banner-badge {
-        width: 120px;
-        height: 120px;
+        width: 100px;
+        height: 100px;
         padding: 10px;
     }
 
