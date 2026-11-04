@@ -711,6 +711,17 @@ body.nav-open {
     box-shadow: 0 8px 24px rgba(139, 26, 43, 0.12);
 }
 
+/* Voile sombre sur la photo pour garantir la lisibilité du texte blanc,
+   quel que soit l'endroit de l'image (ciel clair, pierre claire...) où il tombe */
+.hero-banner-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(10, 8, 8, 0.4) 0%, rgba(10, 8, 8, 0.48) 45%, rgba(10, 8, 8, 0.28) 100%);
+    pointer-events: none;
+}
+
 .hero-banner-img {
     width: 100%;
     height: auto;
