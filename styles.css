@@ -817,6 +817,35 @@ body.nav-open {
     }
 }
 
+/* Apparition du texte de la bannière mot par mot (desktop, via script.js) */
+.hero-word {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(2px);
+    animation: hero-word-in 0.45s ease-out forwards;
+}
+
+@keyframes hero-word-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+        filter: blur(2px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-word {
+        animation: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-banner-img {
         height: 400px;

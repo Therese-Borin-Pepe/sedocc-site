@@ -755,3 +755,46 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
         })
         .catch(function() {}); // silencieux si fichier absent
 })();
+
+// ==========================================
+// Bannière hero : texte qui apparaît mot par mot (desktop uniquement)
+// ==========================================
+(function() {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var isDesktop = window.matchMedia('(min-width: 769px)').matches;
+    if (reduceMotion || !isDesktop) return;
+
+    var line1 = document.querySelector('.hero-banner-line-1');
+    var line2 = document.querySelector('.hero-banner-line-2');
+    if (!line1 || !line2) return;
+
+    var stepDelay = 0.045; // secondes entre chaque mot
+    var wordDuration = 0.45; // doit matcher la durée de hero-word-in en CSS
+
+    function revealWordByWord(el, baseDelay) {
+        var words = el.textContent.split(' ');
+        el.textContent = '';
+        words.forEach(function(word, i) {
+            var span = document.createElement('span');
+            span.className = 'hero-word';
+            span.textContent = word + (i < words.length - 1 ? ' ' : '');
+            span.style.animationDelay = (baseDelay + i * stepDelay) + 's';
+            el.appendChild(span);
+        });
+        return baseDelay + (words.length - 1) * stepDelay + wordDuration;
+    }
+
+    // On remplace le fondu ligne par ligne (CSS) par le reveal mot par mot
+    line1.style.animation = 'none';
+    line2.style.animation = 'none';
+    line1.style.opacity = 1;
+    line2.style.opacity = 1;
+
+    var afterLine1 = revealWordByWord(line1, 0.3);
+    var afterLine2 = revealWordByWord(line2, afterLine1 + 0.15);
+
+    var cta = document.querySelector('.hero-banner-text .hero-cta');
+    if (cta) {
+        cta.style.animationDelay = (afterLine2 + 0.15) + 's';
+    }
+})();
