@@ -848,8 +848,8 @@ body.nav-open {
     }
 
     .hero-banner-line {
-        font-size: 0.8rem;
-        line-height: 1.45;
+        font-size: 1rem;
+        line-height: 1.5;
     }
 
     .hero-banner-text .hero-cta .btn-large {
