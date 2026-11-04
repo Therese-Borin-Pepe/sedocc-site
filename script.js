@@ -777,9 +777,14 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
         words.forEach(function(word, i) {
             var span = document.createElement('span');
             span.className = 'hero-word';
-            span.textContent = word + (i < words.length - 1 ? ' ' : '');
+            // L'espace reste hors du span : un espace en fin de contenu d'un
+            // inline-block est ignoré par le navigateur (collapse CSS).
+            span.textContent = word;
             span.style.animationDelay = (baseDelay + i * stepDelay) + 's';
             el.appendChild(span);
+            if (i < words.length - 1) {
+                el.appendChild(document.createTextNode(' '));
+            }
         });
         return baseDelay + (words.length - 1) * stepDelay + wordDuration;
     }
