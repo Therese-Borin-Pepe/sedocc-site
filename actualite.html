@@ -155,7 +155,10 @@
                         document.getElementById('actu-title').textContent = a.title;
                         document.title = a.title + ' - SED\'OCC';
                         let html = `<p class="evenement-date">${a.date || ''}</p>`;
-                        if (a.image) {
+                        if (a.gallery && a.gallery.length) {
+                            html += `<div class="actu-gallery">${a.gallery.map(g => `
+                                <div class="actu-gallery-item"><img src="${g.src}" alt="${g.alt || a.title}" loading="lazy"></div>`).join('')}</div>`;
+                        } else if (a.image) {
                             html += `<div class="evenement-detail-image"><img src="${a.image}" alt="${a.title}"></div>`;
                         }
                         if (a.content) {

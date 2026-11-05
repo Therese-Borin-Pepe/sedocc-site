@@ -4,6 +4,16 @@
     "title": "Nouveauté : des goodies Sed'Occ France sont disponibles !",
     "date": "5 novembre 2026",
     "image": "images/actualites/goodies-collage.jpg",
+    "gallery": [
+      { "src": "images/boutique/teeshirt-blanc.jpeg", "alt": "Tee-shirt Sed'Occ France blanc" },
+      { "src": "images/boutique/teeshirt-noir.jpeg", "alt": "Tee-shirt Sed'Occ France noir" },
+      { "src": "images/boutique/teeshirt-sable.jpeg", "alt": "Tee-shirt Sed'Occ France sable" },
+      { "src": "images/boutique/sweat-blanc.jpeg", "alt": "Sweat à capuche Sed'Occ France blanc" },
+      { "src": "images/boutique/sweat-noir.jpeg", "alt": "Sweat à capuche Sed'Occ France noir" },
+      { "src": "images/boutique/sweat-sable.jpeg", "alt": "Sweat à capuche Sed'Occ France sable" },
+      { "src": "images/boutique/tote-bag.jpeg", "alt": "Tote bag Sed'Occ France" },
+      { "src": "images/boutique/mug.jpeg", "alt": "Eco-cup Sed'Occ France" }
+    ],
     "content": "<p>Affichez vos couleurs zébrées au quotidien ! Notre boutique en ligne sur HelloAsso propose désormais des goodies à l'effigie de Sed'Occ France : tee-shirt 100% coton (15€), sweat zippé à capuche (28€), eco cup (2€) et tote bag (3,50€), en plusieurs tailles (du XS au 2XL) et coloris (blanc, noir, sable).</p><p><strong>Les commandes sont groupées et passées une fois par mois</strong>, à la fin du mois. Pour être inclus dans la prochaine fournée, commandez avant le <strong>30 novembre</strong> ! Comptez ensuite environ un mois de délai avant réception.</p><p>Chaque achat soutient directement les actions de l'association : informer, accompagner et sensibiliser autour du syndrome d'Ehlers-Danlos.</p><p>Merci à <strong><a href=\"https://baless.fr/\" target=\"_blank\">Baless Personnalisation</a></strong>, entreprise toulousaine, pour son accompagnement sur ce projet.</p>",
     "link": "boutique.html",
     "linkLabel": "Voir la boutique"
