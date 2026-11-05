@@ -1,5 +1,14 @@
 [
   {
+    "id": "goodies-boutique",
+    "title": "Nouveauté : des goodies Sed'Occ France sont disponibles !",
+    "date": "5 novembre 2026",
+    "image": "images/boutique/sweat-blanc.jpeg",
+    "content": "<p>Affichez vos couleurs zébrées au quotidien ! Notre boutique en ligne sur HelloAsso propose désormais des goodies à l'effigie de Sed'Occ France : tee-shirts (15€), sweats à capuche (28€), mugs (2€) et tote bags (3,50€), en plusieurs tailles et coloris (blanc, noir, sable).</p><p>Chaque achat soutient directement les actions de l'association : informer, accompagner et sensibiliser autour du syndrome d'Ehlers-Danlos.</p>",
+    "link": "boutique.html",
+    "linkLabel": "Voir la boutique"
+  },
+  {
     "id": "nouveau-depliant",
     "title": "Notre nouveau dépliant de présentation est disponible !",
     "date": "21 septembre 2026",
