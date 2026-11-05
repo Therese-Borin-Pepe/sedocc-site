@@ -3314,7 +3314,7 @@ a.evenement-card:hover {
 }
 
 .evenement-detail-image {
-    max-width: 440px;
+    max-width: 320px;
     margin: 0 auto var(--spacing-xl);
 }
 
