@@ -196,6 +196,30 @@
                             galleryTrack.addEventListener('scroll', updateArrows);
                             window.addEventListener('resize', updateArrows);
                             updateArrows();
+
+                            // Défilement automatique, en boucle, avec pause au survol/toucher
+                            let autoplayTimer = null;
+                            const startAutoplay = () => {
+                                if (autoplayTimer) return;
+                                autoplayTimer = setInterval(() => {
+                                    const max = galleryTrack.scrollWidth - galleryTrack.clientWidth - 4;
+                                    if (galleryTrack.scrollLeft >= max) {
+                                        galleryTrack.scrollTo({ left: 0, behavior: 'smooth' });
+                                    } else {
+                                        galleryTrack.scrollBy({ left: scrollByCard(), behavior: 'smooth' });
+                                    }
+                                }, 2800);
+                            };
+                            const stopAutoplay = () => {
+                                clearInterval(autoplayTimer);
+                                autoplayTimer = null;
+                            };
+                            wrap.addEventListener('mouseenter', stopAutoplay);
+                            wrap.addEventListener('mouseleave', startAutoplay);
+                            wrap.addEventListener('touchstart', stopAutoplay, { passive: true });
+                            prevBtn.addEventListener('click', stopAutoplay);
+                            nextBtn.addEventListener('click', stopAutoplay);
+                            startAutoplay();
                         }
                     } else {
                         document.getElementById('actu-title').textContent = 'Actualité non trouvée';
