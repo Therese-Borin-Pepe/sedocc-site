@@ -156,8 +156,15 @@
                         document.title = a.title + ' - SED\'OCC';
                         let html = `<p class="evenement-date">${a.date || ''}</p>`;
                         if (a.gallery && a.gallery.length) {
-                            html += `<div class="actu-gallery">${a.gallery.map(g => `
-                                <div class="actu-gallery-item"><img src="${g.src}" alt="${g.alt || a.title}" loading="lazy"></div>`).join('')}</div>`;
+                            html += `<div class="actu-gallery-carousel">
+                                <div class="carousel-wrap">
+                                    <button type="button" class="carousel-arrow carousel-arrow-prev" data-target="actu-gallery-track" aria-label="Précédent">&#8249;</button>
+                                    <div class="carousel-track" id="actu-gallery-track">${a.gallery.map(g => `
+                                        <a href="${a.link || '#'}" class="carousel-card actu-gallery-card"><div class="carousel-card-image logo-thumb"><img src="${g.src}" alt="${g.alt || a.title}" loading="lazy"></div></a>`).join('')}
+                                    </div>
+                                    <button type="button" class="carousel-arrow carousel-arrow-next" data-target="actu-gallery-track" aria-label="Suivant">&#8250;</button>
+                                </div>
+                            </div>`;
                         } else if (a.image) {
                             html += `<div class="evenement-detail-image"><img src="${a.image}" alt="${a.title}"></div>`;
                         }
@@ -169,6 +176,27 @@
                         }
                         html += `<div class="evenement-back"><a href="actualites.html" class="btn btn-primary">Retour aux actualités</a></div>`;
                         document.getElementById('actu-detail').innerHTML = html;
+
+                        const galleryTrack = document.getElementById('actu-gallery-track');
+                        if (galleryTrack) {
+                            const wrap = galleryTrack.closest('.carousel-wrap');
+                            const prevBtn = wrap.querySelector('.carousel-arrow-prev');
+                            const nextBtn = wrap.querySelector('.carousel-arrow-next');
+                            const scrollByCard = () => {
+                                const card = galleryTrack.querySelector('.carousel-card');
+                                return card ? card.getBoundingClientRect().width + 16 : 150;
+                            };
+                            const updateArrows = () => {
+                                const max = galleryTrack.scrollWidth - galleryTrack.clientWidth - 4;
+                                prevBtn.disabled = galleryTrack.scrollLeft <= 4;
+                                nextBtn.disabled = galleryTrack.scrollLeft >= max;
+                            };
+                            prevBtn.addEventListener('click', () => galleryTrack.scrollBy({ left: -scrollByCard(), behavior: 'smooth' }));
+                            nextBtn.addEventListener('click', () => galleryTrack.scrollBy({ left: scrollByCard(), behavior: 'smooth' }));
+                            galleryTrack.addEventListener('scroll', updateArrows);
+                            window.addEventListener('resize', updateArrows);
+                            updateArrows();
+                        }
                     } else {
                         document.getElementById('actu-title').textContent = 'Actualité non trouvée';
                         document.getElementById('actu-detail').innerHTML = '<p>Cette actualité n\'existe pas.</p><div class="evenement-back"><a href="actualites.html" class="btn btn-primary">Retour aux actualités</a></div>';

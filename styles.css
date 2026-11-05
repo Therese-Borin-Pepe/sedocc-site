@@ -3327,34 +3327,23 @@ a.evenement-card:hover {
     box-shadow: var(--shadow-md);
 }
 
-.actu-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--spacing-md);
+.actu-gallery-carousel {
     margin-bottom: var(--spacing-xl);
 }
 
-.actu-gallery-item {
-    width: 150px;
-    aspect-ratio: 1 / 1;
-    background: var(--bg-white);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-    overflow: hidden;
+.actu-gallery-carousel .carousel-wrap {
+    max-width: 100%;
 }
 
-.actu-gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: var(--spacing-xs);
-    box-sizing: border-box;
+.actu-gallery-carousel a.carousel-card {
+    flex: 0 0 150px;
+    box-shadow: none;
+    border: 1px solid var(--border-color, #eee);
 }
 
 @media (max-width: 640px) {
-    .actu-gallery-item {
-        width: 120px;
+    .actu-gallery-carousel a.carousel-card {
+        flex: 0 0 120px;
     }
 }
 
