@@ -3314,12 +3314,15 @@ a.evenement-card:hover {
 }
 
 .evenement-detail-image {
-    margin-bottom: var(--spacing-xl);
+    max-width: 440px;
+    margin: 0 auto var(--spacing-xl);
 }
 
 .evenement-detail-image img {
+    display: block;
     max-width: 100%;
     height: auto;
+    margin: 0 auto;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
 }
