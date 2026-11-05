@@ -3942,6 +3942,27 @@ section h2.scroll-reveal.revealed::after {
     font-weight: 600 !important;
     box-shadow: var(--shadow-sm);}
 
+.nav-btn-boutique {
+    background: transparent !important;
+    color: var(--primary-color) !important;
+    border: 2px solid var(--primary-color) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: calc(0.55rem - 2px) calc(1.4rem - 2px) !important;
+    font-size: 0.95rem !important;
+    font-weight: 600 !important;
+}
+.nav-btn-boutique:hover {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
+@media (max-width: 1100px) {
+    .nav-btn-boutique {
+        display: block;
+        width: fit-content;
+        margin: 10px auto !important;
+    }
+}
+
 /* ==========================================
    Indicateur de scroll (souris animée bas du hero)
    ========================================== */
