@@ -131,7 +131,7 @@ a:hover {
 
 .section-header {
     text-align: center;
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
 }
 
 .section-subtitle {
@@ -923,7 +923,7 @@ body.nav-open {
     line-height: 1.15;
     letter-spacing: -0.5px;
     margin-top: 0 !important;
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     animation: hero-rise 1s ease-out 0.2s both;
     box-shadow: 0 0 40px 30px var(--bg-light);
 }
@@ -1094,7 +1094,7 @@ a.btn-secondary:hover {
 .carousel-section {
     position: relative;
     z-index: 1;
-    padding: var(--spacing-xl) 0;
+    padding: var(--spacing-md) 0;
 }
 
 .carousel-section-alt {
@@ -1328,7 +1328,7 @@ a.carousel-card:visited {
     padding: var(--spacing-2xl) 0;
     background: transparent;
     padding-top: 10px !important;
-    padding-bottom: var(--spacing-lg) !important;
+    padding-bottom: var(--spacing-md) !important;
     margin-top: 0 !important;}
 
 .mission > .container > h2 {
@@ -1357,7 +1357,7 @@ a.carousel-card:visited {
 
 .mission-section h3 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
     text-align: center;
 }
 
@@ -1367,7 +1367,7 @@ a.carousel-card:visited {
     gap: 70px;
     align-items: center;
     max-width: 1100px;
-    margin: 0 auto var(--spacing-lg);
+    margin: 0 auto var(--spacing-md);
 }
 
 .mission-photos {
@@ -1393,7 +1393,7 @@ a.carousel-card:visited {
 }
 
 .actions-section {
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-sm);
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
@@ -1401,7 +1401,7 @@ a.carousel-card:visited {
 
 .actions-section h3 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-xs);
     text-align: center;
 }
 
@@ -1560,7 +1560,8 @@ a.carousel-card:visited {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
-    padding-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
     background: transparent;
 }
 
@@ -1725,6 +1726,7 @@ html:not(.team-scroll-reveal) .team-member:hover .member-photo img[src*="marjori
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
+    padding-top: var(--spacing-md);
     background: transparent;
 }
 
