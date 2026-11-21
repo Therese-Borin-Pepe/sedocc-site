@@ -336,7 +336,13 @@
             .then(r => r.json())
             .then(evenements => {
                 const track = document.getElementById('evenements-carousel');
-                const items = evenements.filter(e => e.highlight);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const items = evenements.filter(e => {
+                    if (!e.highlight) return false;
+                    const d = parseFrDate(e.date);
+                    return !d || d >= today;
+                });
                 items.sort((a, b) => {
                     const da = parseFrDate(a.date), db = parseFrDate(b.date);
                     if (!da && !db) return 0;
