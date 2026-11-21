@@ -914,6 +914,8 @@ body.nav-open {
 }
 
 .hero-subtitle {
+    position: relative;
+    z-index: 2;
     color: var(--heading-color);
     font-size: clamp(2rem, 4vw, 2.75rem);
     font-weight: 700;
@@ -923,6 +925,7 @@ body.nav-open {
     margin-top: 0 !important;
     margin-bottom: var(--spacing-md);
     animation: hero-rise 1s ease-out 0.2s both;
+    box-shadow: 0 0 40px 30px var(--bg-light);
 }
 
 .hero-description {
@@ -1325,6 +1328,7 @@ a.carousel-card:visited {
     padding: var(--spacing-2xl) 0;
     background: transparent;
     padding-top: 10px !important;
+    padding-bottom: var(--spacing-lg) !important;
     margin-top: 0 !important;}
 
 .mission > .container > h2 {
@@ -1353,7 +1357,7 @@ a.carousel-card:visited {
 
 .mission-section h3 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     text-align: center;
 }
 
@@ -1363,7 +1367,7 @@ a.carousel-card:visited {
     gap: 70px;
     align-items: center;
     max-width: 1100px;
-    margin: 0 auto var(--spacing-xl);
+    margin: 0 auto var(--spacing-lg);
 }
 
 .mission-photos {
@@ -1389,7 +1393,7 @@ a.carousel-card:visited {
 }
 
 .actions-section {
-    margin-top: var(--spacing-xl);
+    margin-top: var(--spacing-md);
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
@@ -1397,7 +1401,7 @@ a.carousel-card:visited {
 
 .actions-section h3 {
     color: var(--text-dark);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
     text-align: center;
 }
 
@@ -1556,6 +1560,7 @@ a.carousel-card:visited {
     position: relative;
     z-index: 1;
     padding: var(--spacing-2xl) 0;
+    padding-top: var(--spacing-lg);
     background: transparent;
 }
 
