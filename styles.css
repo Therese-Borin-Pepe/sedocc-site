@@ -917,7 +917,7 @@ body.nav-open {
     position: relative;
     z-index: 2;
     color: var(--heading-color);
-    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-size: clamp(1.5rem, 4vw, 2.75rem);
     font-weight: 700;
     font-style: normal;
     line-height: 1.15;
